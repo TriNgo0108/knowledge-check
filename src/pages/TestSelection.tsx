@@ -1,58 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Topic } from '@/data/types';
-import { getTestsForTopic, GeneratedTest } from '@/data/generated';
+import { useTopics, useOriginalQuestions, useGeneratedTestsForTopic } from '@/hooks/useQuestions';
 import ThemeToggle from '@/components/ThemeToggle';
-
-// Import original question counts
-import grammar from '@/data/grammar';
-import pronunciation from '@/data/pronunciation';
-import pandas from '@/data/pandas';
-import sql from '@/data/sql';
-import postgres from '@/data/postgres';
-import aws from '@/data/aws';
-import python from '@/data/python';
-import javascript from '@/data/javascript';
-import typescript from '@/data/typescript';
-import react from '@/data/react';
-import systemdesign from '@/data/systemdesign';
-import designpatterns from '@/data/designpatterns';
-import algorithms from '@/data/algorithms';
-import aiagents from '@/data/aiagents';
-
-const originalQuestions: Record<string, number> = {
-  grammar: grammar.length,
-  pronunciation: pronunciation.length,
-  pandas: pandas.length,
-  sql: sql.length,
-  postgres: postgres.length,
-  aws: aws.length,
-  python: python.length,
-  javascript: javascript.length,
-  typescript: typescript.length,
-  react: react.length,
-  systemdesign: systemdesign.length,
-  designpatterns: designpatterns.length,
-  algorithms: algorithms.length,
-  aiagents: aiagents.length,
-};
-
-const topicMeta: Record<string, Topic> = {
-  grammar: { id: 'grammar', title: 'Grammar', icon: '📝', color: 'hsl(160, 70%, 45%)' },
-  pronunciation: { id: 'pronunciation', title: 'Pronunciation', icon: '🗣️', color: 'hsl(280, 70%, 60%)' },
-  pandas: { id: 'pandas', title: 'Pandas', icon: '🐼', color: 'hsl(200, 70%, 50%)' },
-  sql: { id: 'sql', title: 'SQL', icon: '🗄️', color: 'hsl(30, 80%, 60%)' },
-  postgres: { id: 'postgres', title: 'PostgreSQL', icon: '🐘', color: 'hsl(220, 70%, 60%)' },
-  aws: { id: 'aws', title: 'AWS', icon: '☁️', color: 'hsl(35, 100%, 50%)' },
-  python: { id: 'python', title: 'Python', icon: '🐍', color: 'hsl(55, 70%, 50%)' },
-  javascript: { id: 'javascript', title: 'JavaScript', icon: '⚡', color: 'hsl(50, 90%, 55%)' },
-  typescript: { id: 'typescript', title: 'TypeScript', icon: '🔷', color: 'hsl(210, 80%, 55%)' },
-  react: { id: 'react', title: 'React', icon: '⚛️', color: 'hsl(190, 90%, 55%)' },
-  systemdesign: { id: 'systemdesign', title: 'System Design', icon: '🏗️', color: 'hsl(340, 70%, 55%)' },
-  designpatterns: { id: 'designpatterns', title: 'Design Patterns', icon: '🧩', color: 'hsl(270, 60%, 55%)' },
-  algorithms: { id: 'algorithms', title: 'Algorithms', icon: '🔢', color: 'hsl(140, 60%, 45%)' },
-  aiagents: { id: 'aiagents', title: 'AI Agents', icon: '🤖', color: 'hsl(180, 70%, 45%)' },
-};
 
 interface TestProgress {
   correct: number;
@@ -160,19 +109,28 @@ function TestCard({ topicId, testId, displayName, questionCount, color, isOrigin
 
 export default function TestSelection() {
   const { topicId } = useParams<{ topicId: string }>();
-  const [generatedTests, setGeneratedTests] = useState<GeneratedTest[]>([]);
   
-  const topic = topicMeta[topicId || ''];
-  const originalCount = originalQuestions[topicId || ''] || 100;
+  // Fetch topic data and original questions
+  const { data: topics = [] } = useTopics();
+  const { data: originalQuestions = [], isLoading: loadingOriginal } = useOriginalQuestions(topicId || '');
+  const { data: generatedTests = [] } = useGeneratedTestsForTopic(topicId || '');
   
-  useEffect(() => {
-    if (topicId) {
-      const tests = getTestsForTopic(topicId);
-      setGeneratedTests(tests);
-    }
-  }, [topicId]);
+  const topic = topics.find(t => t.id === topicId);
+  const originalCount = originalQuestions.length;
   
-  if (!topic) {
+  // Loading state
+  if (loadingOriginal) {
+    return (
+      <div className="min-h-screen flex items-center justify-center fade-in">
+        <div className="card text-center max-w-md">
+          <div className="text-5xl mb-4 animate-float">📚</div>
+          <h2 className="text-2xl font-bold mb-4">Loading Tests...</h2>
+        </div>
+      </div>
+    );
+  }
+  
+  if (!topic && topics.length > 0) {
     return (
       <div className="min-h-screen flex items-center justify-center fade-in">
         <div className="card text-center max-w-md">
@@ -183,6 +141,11 @@ export default function TestSelection() {
       </div>
     );
   }
+  
+  // Use default values while loading topics
+  const topicIcon = topic?.icon || '📚';
+  const topicTitle = topic?.title || topicId || 'Topic';
+  const topicColor = topic?.color || 'hsl(200, 70%, 50%)';
   
   return (
     <div className="min-h-screen fade-in" style={{ background: 'var(--color-bg)' }}>
@@ -208,12 +171,12 @@ export default function TestSelection() {
       <main className="container mx-auto px-4 py-8 max-w-3xl">
         {/* Topic Header */}
         <div className="text-center mb-10">
-          <div className="text-6xl mb-4">{topic.icon}</div>
+          <div className="text-6xl mb-4">{topicIcon}</div>
           <h1
             className="text-3xl font-bold mb-2"
-            style={{ color: topic.color }}
+            style={{ color: topicColor }}
           >
-            {topic.title}
+            {topicTitle}
           </h1>
           <p style={{ color: 'var(--color-text-muted)' }}>
             Select a test to begin
@@ -228,7 +191,7 @@ export default function TestSelection() {
             testId="original"
             displayName="Original Test"
             questionCount={originalCount}
-            color={topic.color}
+            color={topicColor}
             isOriginal
           />
           
@@ -249,8 +212,8 @@ export default function TestSelection() {
                   topicId={topicId || ''}
                   testId={`week_${test.date.replace(/-/g, '_')}`}
                   displayName={test.displayName}
-                  questionCount={test.questions.length}
-                  color={topic.color}
+                  questionCount={100}
+                  color={topicColor}
                 />
               ))}
             </>

@@ -91,7 +91,7 @@ def main():
 
     # Update index file
     if not args.dry_run:
-        exporter.create_index()
+        exporter.update_index()
 
     print("\n✅ Generation complete!")
 

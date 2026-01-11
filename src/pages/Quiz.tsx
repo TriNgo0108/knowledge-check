@@ -1,41 +1,9 @@
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { Question } from '@/data/types';
 import { useQuizProgress } from '@/hooks/useQuizProgress';
+import { useQuestions } from '@/hooks/useQuestions';
 import QuestionNav from '@/components/QuestionNav';
 import ThemeToggle from '@/components/ThemeToggle';
-import grammar from '@/data/grammar';
-import pronunciation from '@/data/pronunciation';
-import pandas from '@/data/pandas';
-import sql from '@/data/sql';
-import postgres from '@/data/postgres';
-import aws from '@/data/aws';
-import python from '@/data/python';
-import javascript from '@/data/javascript';
-import typescript from '@/data/typescript';
-import react from '@/data/react';
-import systemdesign from '@/data/systemdesign';
-import designpatterns from '@/data/designpatterns';
-import algorithms from '@/data/algorithms';
-import aiagents from '@/data/aiagents';
-import { generatedTests } from '@/data/generated';
-
-const originalDataMap: Record<string, Question[]> = {
-  grammar,
-  pronunciation,
-  pandas,
-  sql,
-  postgres,
-  aws,
-  python,
-  javascript,
-  typescript,
-  react,
-  systemdesign,
-  designpatterns,
-  algorithms,
-  aiagents
-};
 
 const topicNames: Record<string, string> = {
   grammar: 'Grammar',
@@ -61,16 +29,8 @@ export default function Quiz() {
   const safeTopicId = topicId as string;
   const safeTestId = testId as string;
   
-  // Load questions based on testId
-  const questions = useMemo(() => {
-    if (safeTestId === 'original') {
-      return originalDataMap[safeTopicId] || [];
-    }
-    // Find generated test
-    const dateStr = safeTestId.replace('week_', '').replace(/_/g, '-');
-    const test = generatedTests.find(t => t.topic === safeTopicId && t.date === dateStr);
-    return test?.questions || [];
-  }, [safeTopicId, safeTestId]);
+  // Load questions using React Query
+  const { data: questions = [], isLoading, error } = useQuestions(safeTopicId, safeTestId);
   
   const topicName = topicNames[safeTopicId] || safeTopicId;
   const progressKey = `${safeTopicId}_${safeTestId}`;
@@ -186,7 +146,22 @@ export default function Quiz() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [currentQuestion, isAnswered, handleOptionClick, handleNext, handleSkip]);
 
-  if (questions.length === 0) {
+  // Loading state
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center fade-in">
+        <div className="card text-center max-w-md">
+          <div className="text-5xl mb-4 animate-float">📚</div>
+          <h2 className="text-2xl font-bold mb-4">Loading Questions...</h2>
+          <p className="mb-6" style={{ color: 'var(--color-text-muted)' }}>
+            Preparing your quiz experience
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || questions.length === 0) {
     return (
       <div className="min-h-screen flex items-center justify-center fade-in">
         <div className="card text-center max-w-md">
