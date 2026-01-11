@@ -1,0 +1,711 @@
+import { Question } from '@/data/types';
+
+const questions: Question[] = [
+  // ============ BEGINNER (1-35) ============
+  {
+    id: 1,
+    question: "What is the default port for PostgreSQL?",
+    options: ["3306", "5432", "5433", "8080"],
+    answer: "5432",
+    explanation: "PostgreSQL uses port 5432 by default."
+  },
+  {
+    id: 2,
+    question: "Which command connects to a PostgreSQL database from the command line?",
+    options: ["mysql", "psql", "pgsql", "postgres"],
+    answer: "psql",
+    explanation: "psql is the interactive terminal for PostgreSQL."
+  },
+  {
+    id: 3,
+    question: "How do you list all databases in psql?",
+    options: ["\\l", "\\d", "\\dt", "SHOW DATABASES"],
+    answer: "\\l",
+    explanation: "\\l (or \\list) shows all databases in the PostgreSQL server."
+  },
+  {
+    id: 4,
+    question: "Which command lists all tables in the current database?",
+    options: ["\\lt", "\\dt", "\\tables", "SHOW TABLES"],
+    answer: "\\dt",
+    explanation: "\\dt lists all tables in the current database schema."
+  },
+  {
+    id: 5,
+    question: "How do you connect to a specific database in psql?",
+    options: ["USE database", "\\c database", "CONNECT database", "SELECT database"],
+    answer: "\\c database",
+    explanation: "\\c (or \\connect) switches to a different database."
+  },
+  {
+    id: 6,
+    question: "What is the PostgreSQL data type for auto-incrementing integers?",
+    options: ["AUTO_INCREMENT", "SERIAL", "IDENTITY", "SEQUENCE"],
+    answer: "SERIAL",
+    explanation: "SERIAL is a shorthand for creating an auto-incrementing integer with a sequence."
+  },
+  {
+    id: 7,
+    question: "Which data type stores JSON in binary format?",
+    options: ["JSON", "JSONB", "BSON", "TEXT"],
+    answer: "JSONB",
+    explanation: "JSONB stores JSON in decomposed binary format for faster processing."
+  },
+  {
+    id: 8,
+    question: "How do you describe a table structure in psql?",
+    options: ["DESCRIBE table", "\\d table", "SHOW table", "INFO table"],
+    answer: "\\d table",
+    explanation: "\\d tablename shows the table structure including columns and constraints."
+  },
+  {
+    id: 9,
+    question: "What is the PostgreSQL equivalent of MySQL's SHOW CREATE TABLE?",
+    options: ["\\d+ table", "pg_dump -t table", "SHOW CREATE TABLE", "\\show table"],
+    answer: "pg_dump -t table",
+    explanation: "pg_dump with -t option outputs the CREATE TABLE statement."
+  },
+  {
+    id: 10,
+    question: "Which command exits the psql terminal?",
+    options: ["EXIT", "\\q", "QUIT", "\\exit"],
+    answer: "\\q",
+    explanation: "\\q quits the psql interactive terminal."
+  },
+  {
+    id: 11,
+    question: "What data type should you use for monetary values?",
+    options: ["FLOAT", "DECIMAL", "NUMERIC", "MONEY or NUMERIC"],
+    answer: "MONEY or NUMERIC",
+    explanation: "NUMERIC is recommended for precision. MONEY is available but has locale considerations."
+  },
+  {
+    id: 12,
+    question: "How do you create a database in PostgreSQL?",
+    options: ["NEW DATABASE db", "CREATE DATABASE db", "MAKE DATABASE db", "ADD DATABASE db"],
+    answer: "CREATE DATABASE db",
+    explanation: "CREATE DATABASE creates a new database in PostgreSQL."
+  },
+  {
+    id: 13,
+    question: "What is the boolean true value in PostgreSQL?",
+    options: ["1", "'true'", "TRUE", "All of the above"],
+    answer: "All of the above",
+    explanation: "PostgreSQL accepts TRUE, 'true', 't', 'yes', 'on', and 1 as true values."
+  },
+  {
+    id: 14,
+    question: "Which data type stores variable-length text with limit?",
+    options: ["CHAR(n)", "VARCHAR(n)", "TEXT", "STRING(n)"],
+    answer: "VARCHAR(n)",
+    explanation: "VARCHAR(n) stores variable-length strings up to n characters."
+  },
+  {
+    id: 15,
+    question: "What is the difference between TEXT and VARCHAR in PostgreSQL?",
+    options: ["TEXT is faster", "VARCHAR has length limit, but performance is same", "TEXT is deprecated", "VARCHAR stores unicode"],
+    answer: "VARCHAR has length limit, but performance is same",
+    explanation: "In PostgreSQL, TEXT and VARCHAR perform identically. VARCHAR can have a length constraint."
+  },
+  {
+    id: 16,
+    question: "How do you add a comment to a table?",
+    options: ["-- comment on table", "COMMENT ON TABLE table IS 'text'", "ALTER TABLE ADD COMMENT", "SET COMMENT ON table"],
+    answer: "COMMENT ON TABLE table IS 'text'",
+    explanation: "COMMENT ON adds descriptions to database objects."
+  },
+  {
+    id: 17,
+    question: "What data type is best for storing UUIDs?",
+    options: ["VARCHAR(36)", "CHAR(36)", "UUID", "TEXT"],
+    answer: "UUID",
+    explanation: "PostgreSQL has a native UUID type that's more efficient than storing as text."
+  },
+  {
+    id: 18,
+    question: "How do you generate a UUID in PostgreSQL?",
+    options: ["UUID()", "gen_random_uuid()", "NEWID()", "uuid_generate_v4()"],
+    answer: "gen_random_uuid()",
+    explanation: "gen_random_uuid() is built-in since PostgreSQL 13. uuid_generate_v4() requires extension."
+  },
+  {
+    id: 19,
+    question: "Which command shows all schemas in a database?",
+    options: ["\\ds", "\\dn", "\\schemas", "SHOW SCHEMAS"],
+    answer: "\\dn",
+    explanation: "\\dn lists all schemas in the current database."
+  },
+  {
+    id: 20,
+    question: "What is the default schema in PostgreSQL?",
+    options: ["default", "main", "public", "dbo"],
+    answer: "public",
+    explanation: "The 'public' schema is the default schema where objects are created."
+  },
+  {
+    id: 21,
+    question: "How do you perform case-insensitive LIKE?",
+    options: ["LIKE NOCASE", "ILIKE", "LCASE LIKE", "LOWER() with LIKE"],
+    answer: "ILIKE",
+    explanation: "ILIKE is PostgreSQL-specific for case-insensitive pattern matching."
+  },
+  {
+    id: 22,
+    question: "What data type stores an array of integers?",
+    options: ["INT[]", "ARRAY[INT]", "INTEGER ARRAY", "INT ARRAY"],
+    answer: "INT[]",
+    explanation: "PostgreSQL uses type[] notation for arrays, e.g., INTEGER[]."
+  },
+  {
+    id: 23,
+    question: "How do you access the first element of an array column?",
+    options: ["array[0]", "array[1]", "FIRST(array)", "array.first"],
+    answer: "array[1]",
+    explanation: "PostgreSQL arrays are 1-indexed, not 0-indexed."
+  },
+  {
+    id: 24,
+    question: "Which command shows PostgreSQL version?",
+    options: ["\\version", "SELECT VERSION()", "SHOW VERSION", "VERSION()"],
+    answer: "SELECT VERSION()",
+    explanation: "SELECT VERSION() returns the PostgreSQL version string."
+  },
+  {
+    id: 25,
+    question: "What is the data type for storing date and time with timezone?",
+    options: ["DATETIME", "TIMESTAMP", "TIMESTAMPTZ", "DATETIMETZ"],
+    answer: "TIMESTAMPTZ",
+    explanation: "TIMESTAMPTZ (or TIMESTAMP WITH TIME ZONE) stores timezone-aware timestamps."
+  },
+  {
+    id: 26,
+    question: "How do you get the current timestamp?",
+    options: ["GETDATE()", "NOW()", "CURRENT_DATE()", "SYSDATE"],
+    answer: "NOW()",
+    explanation: "NOW() returns the current date and time. CURRENT_TIMESTAMP also works."
+  },
+  {
+    id: 27,
+    question: "Which data type stores IP addresses efficiently?",
+    options: ["VARCHAR(15)", "TEXT", "INET", "IP"],
+    answer: "INET",
+    explanation: "INET type stores IPv4 and IPv6 addresses with network mask."
+  },
+  {
+    id: 28,
+    question: "How do you show query execution time in psql?",
+    options: ["\\time on", "\\timing", "SET TIMING ON", "SHOW TIMING"],
+    answer: "\\timing",
+    explanation: "\\timing toggles display of query execution time."
+  },
+  {
+    id: 29,
+    question: "What is a check constraint?",
+    options: ["Validates column values against condition", "Checks foreign key", "Checks for duplicates", "Checks data type"],
+    answer: "Validates column values against condition",
+    explanation: "CHECK constraint ensures column values satisfy a specified condition."
+  },
+  {
+    id: 30,
+    question: "How do you add a default value to a column?",
+    options: ["SET DEFAULT", "DEFAULT value", "ALTER COLUMN SET DEFAULT", "ADD DEFAULT"],
+    answer: "DEFAULT value",
+    explanation: "DEFAULT keyword specifies a default value in column definition or ALTER TABLE."
+  },
+  {
+    id: 31,
+    question: "What does RETURNING clause do?",
+    options: ["Returns to previous statement", "Returns modified rows", "Returns error code", "Returns transaction ID"],
+    answer: "Returns modified rows",
+    explanation: "RETURNING returns the rows affected by INSERT, UPDATE, or DELETE."
+  },
+  {
+    id: 32,
+    question: "How do you create an index?",
+    options: ["ADD INDEX", "CREATE INDEX name ON table(column)", "INDEX table(column)", "SET INDEX ON"],
+    answer: "CREATE INDEX name ON table(column)",
+    explanation: "CREATE INDEX creates an index on specified columns."
+  },
+  {
+    id: 33,
+    question: "What is pg_hba.conf used for?",
+    options: ["Query logging", "Client authentication configuration", "Performance tuning", "Backup settings"],
+    answer: "Client authentication configuration",
+    explanation: "pg_hba.conf controls client authentication methods and access rules."
+  },
+  {
+    id: 34,
+    question: "Which file contains main PostgreSQL configuration?",
+    options: ["pg.conf", "postgresql.conf", "postgres.ini", "config.pg"],
+    answer: "postgresql.conf",
+    explanation: "postgresql.conf contains server configuration parameters."
+  },
+  {
+    id: 35,
+    question: "How do you grant permissions to a user?",
+    options: ["PERMIT", "ALLOW", "GRANT", "GIVE"],
+    answer: "GRANT",
+    explanation: "GRANT assigns privileges to users or roles."
+  },
+
+  // ============ INTERMEDIATE (36-70) ============
+  {
+    id: 36,
+    question: "What is the difference between JSON and JSONB?",
+    options: ["No difference", "JSONB preserves whitespace", "JSONB is binary, faster queries, no duplicate keys", "JSON is faster"],
+    answer: "JSONB is binary, faster queries, no duplicate keys",
+    explanation: "JSONB stores binary representation, supports indexing, removes duplicates and whitespace."
+  },
+  {
+    id: 37,
+    question: "How do you extract a value from JSONB using a key?",
+    options: ["json.key", "json['key']", "json->>'key'", "GET(json, 'key')"],
+    answer: "json->>'key'",
+    explanation: "->> extracts JSON value as text. -> returns JSON object."
+  },
+  {
+    id: 38,
+    question: "What operator checks if JSONB contains a key?",
+    options: ["HAS KEY", "? operator", "CONTAINS", "EXISTS"],
+    answer: "? operator",
+    explanation: "The ? operator checks if a JSONB object contains a specific key."
+  },
+  {
+    id: 39,
+    question: "What is a SEQUENCE in PostgreSQL?",
+    options: ["Ordered list", "Auto-increment number generator", "Query sequence", "Transaction order"],
+    answer: "Auto-increment number generator",
+    explanation: "SEQUENCE generates sequential unique numbers, used by SERIAL types."
+  },
+  {
+    id: 40,
+    question: "How do you get the next value from a sequence?",
+    options: ["NEXT(seq)", "seq.next()", "nextval('seq')", "GET NEXT seq"],
+    answer: "nextval('seq')",
+    explanation: "nextval() advances the sequence and returns the next value."
+  },
+  {
+    id: 41,
+    question: "What does UPSERT mean in PostgreSQL?",
+    options: ["Update or Insert", "Upload and Insert", "User Insert", "Unique Insert"],
+    answer: "Update or Insert",
+    explanation: "UPSERT (INSERT...ON CONFLICT) inserts or updates if the row exists."
+  },
+  {
+    id: 42,
+    question: "How do you perform an UPSERT in PostgreSQL?",
+    options: ["MERGE INTO", "INSERT...ON CONFLICT", "UPSERT INTO", "INSERT OR UPDATE"],
+    answer: "INSERT...ON CONFLICT",
+    explanation: "INSERT...ON CONFLICT DO UPDATE/NOTHING handles conflicts."
+  },
+  {
+    id: 43,
+    question: "What is a materialized view?",
+    options: ["Dynamic view", "Cached query results stored on disk", "Temporary view", "Indexed view"],
+    answer: "Cached query results stored on disk",
+    explanation: "Materialized views store query results physically for faster access."
+  },
+  {
+    id: 44,
+    question: "How do you refresh a materialized view?",
+    options: ["UPDATE MATERIALIZED VIEW", "REFRESH MATERIALIZED VIEW name", "RELOAD VIEW", "SYNC VIEW"],
+    answer: "REFRESH MATERIALIZED VIEW name",
+    explanation: "REFRESH MATERIALIZED VIEW updates the stored data."
+  },
+  {
+    id: 45,
+    question: "What does CONCURRENTLY option do in REFRESH MATERIALIZED VIEW?",
+    options: ["Runs faster", "Allows reads during refresh", "Creates parallel refresh", "Automatic refresh"],
+    answer: "Allows reads during refresh",
+    explanation: "CONCURRENTLY allows the view to be queried during refresh (requires unique index)."
+  },
+  {
+    id: 46,
+    question: "What is a GIN index best suited for?",
+    options: ["Range queries", "JSONB, arrays, full-text search", "Numeric comparisons", "Foreign keys"],
+    answer: "JSONB, arrays, full-text search",
+    explanation: "GIN (Generalized Inverted Index) is optimal for containment queries."
+  },
+  {
+    id: 47,
+    question: "What is a GiST index used for?",
+    options: ["Text search only", "Geometric data, range types, full-text", "Simple equality", "Primary keys"],
+    answer: "Geometric data, range types, full-text",
+    explanation: "GiST (Generalized Search Tree) supports complex data types and operators."
+  },
+  {
+    id: 48,
+    question: "How do you create a partial index?",
+    options: ["CREATE INDEX ... PARTIAL", "CREATE INDEX ... WHERE condition", "CREATE PARTIAL INDEX", "INDEX ... FILTER"],
+    answer: "CREATE INDEX ... WHERE condition",
+    explanation: "Adding WHERE clause creates a partial index on matching rows only."
+  },
+  {
+    id: 49,
+    question: "What is an EXCLUSION constraint?",
+    options: ["Exclude duplicates", "Ensures no overlapping values using operator", "Exclude nulls", "Exclude foreign keys"],
+    answer: "Ensures no overlapping values using operator",
+    explanation: "EXCLUSION constraints prevent rows where specified columns conflict (e.g., overlapping ranges)."
+  },
+  {
+    id: 50,
+    question: "What is the difference between TRUNCATE and DELETE?",
+    options: ["No difference", "TRUNCATE is faster, can't rollback in some cases", "DELETE is faster", "TRUNCATE keeps indexes"],
+    answer: "TRUNCATE is faster, can't rollback in some cases",
+    explanation: "TRUNCATE removes all rows quickly without scanning. It's transactional in PostgreSQL."
+  },
+  {
+    id: 51,
+    question: "How do you create a function in PostgreSQL?",
+    options: ["CREATE PROCEDURE", "CREATE FUNCTION", "CREATE METHOD", "DEFINE FUNCTION"],
+    answer: "CREATE FUNCTION",
+    explanation: "CREATE FUNCTION defines a new user-defined function."
+  },
+  {
+    id: 52,
+    question: "What language is commonly used for PostgreSQL functions?",
+    options: ["SQL only", "PL/pgSQL", "Python only", "JavaScript"],
+    answer: "PL/pgSQL",
+    explanation: "PL/pgSQL is the default procedural language, but SQL, Python, Perl are also supported."
+  },
+  {
+    id: 53,
+    question: "What does EXPLAIN ANALYZE do?",
+    options: ["Explains syntax", "Shows actual execution time and plan", "Analyzes table statistics", "Explains errors"],
+    answer: "Shows actual execution time and plan",
+    explanation: "EXPLAIN ANALYZE actually runs the query and shows real execution metrics."
+  },
+  {
+    id: 54,
+    question: "What is a foreign data wrapper (FDW)?",
+    options: ["Foreign key wrapper", "Connects to external data sources", "Data format converter", "Security wrapper"],
+    answer: "Connects to external data sources",
+    explanation: "FDW allows querying external databases and files as if they were local tables."
+  },
+  {
+    id: 55,
+    question: "How do you create a read-only transaction?",
+    options: ["SET READONLY", "BEGIN READ ONLY", "START TRANSACTION READ ONLY", "LOCK READ"],
+    answer: "START TRANSACTION READ ONLY",
+    explanation: "READ ONLY mode prevents any data modifications in the transaction."
+  },
+  {
+    id: 56,
+    question: "What is pg_dump used for?",
+    options: ["Memory dump", "Database backup", "Query logging", "Core dump"],
+    answer: "Database backup",
+    explanation: "pg_dump creates logical backups of databases."
+  },
+  {
+    id: 57,
+    question: "How do you restore a pg_dump backup?",
+    options: ["pg_restore or psql", "RESTORE command", "IMPORT dump", "LOAD dump"],
+    answer: "pg_restore or psql",
+    explanation: "pg_restore for custom formats, psql for plain SQL dumps."
+  },
+  {
+    id: 58,
+    question: "What is COPY command used for?",
+    options: ["Copy tables", "Bulk import/export data to/from files", "Copy databases", "Copy schemas"],
+    answer: "Bulk import/export data to/from files",
+    explanation: "COPY efficiently moves data between tables and files."
+  },
+  {
+    id: 59,
+    question: "What is the difference between COPY and \\copy?",
+    options: ["No difference", "COPY runs on server, \\copy on client", "\\copy is faster", "COPY is deprecated"],
+    answer: "COPY runs on server, \\copy on client",
+    explanation: "COPY accesses server filesystem, \\copy uses client filesystem."
+  },
+  {
+    id: 60,
+    question: "How do you enable an extension?",
+    options: ["LOAD EXTENSION", "INSTALL EXTENSION", "CREATE EXTENSION", "ADD EXTENSION"],
+    answer: "CREATE EXTENSION",
+    explanation: "CREATE EXTENSION loads and initializes an extension."
+  },
+  {
+    id: 61,
+    question: "What extension provides full-text search?",
+    options: ["pg_fulltext", "Built-in (no extension needed)", "fts_postgres", "textsearch"],
+    answer: "Built-in (no extension needed)",
+    explanation: "Full-text search with tsvector and tsquery is built into PostgreSQL core."
+  },
+  {
+    id: 62,
+    question: "What is a DOMAIN in PostgreSQL?",
+    options: ["Network domain", "Custom data type with constraints", "Database domain", "Security domain"],
+    answer: "Custom data type with constraints",
+    explanation: "DOMAIN creates a custom type based on an existing type with constraints."
+  },
+  {
+    id: 63,
+    question: "How do you create an enum type?",
+    options: ["CREATE ENUM", "CREATE TYPE name AS ENUM ('val1', 'val2')", "DEFINE ENUM", "ENUM TYPE"],
+    answer: "CREATE TYPE name AS ENUM ('val1', 'val2')",
+    explanation: "CREATE TYPE with AS ENUM creates enumerated types."
+  },
+  {
+    id: 64,
+    question: "What is row-level security (RLS)?",
+    options: ["Row encryption", "Policies controlling row access per user", "Row locking", "Row validation"],
+    answer: "Policies controlling row access per user",
+    explanation: "RLS allows defining policies that filter rows based on user context."
+  },
+  {
+    id: 65,
+    question: "How do you enable row-level security on a table?",
+    options: ["SET RLS ON", "ALTER TABLE ENABLE ROW LEVEL SECURITY", "CREATE RLS ON", "GRANT ROW SECURITY"],
+    answer: "ALTER TABLE ENABLE ROW LEVEL SECURITY",
+    explanation: "ENABLE ROW LEVEL SECURITY activates RLS for the table."
+  },
+  {
+    id: 66,
+    question: "What is a tablespace?",
+    options: ["Table namespace", "Physical storage location for data", "Table partition", "Memory space"],
+    answer: "Physical storage location for data",
+    explanation: "Tablespaces define locations on the filesystem for storing database files."
+  },
+  {
+    id: 67,
+    question: "How do you check table size?",
+    options: ["SELECT size FROM table", "pg_table_size('table')", "\\size table", "SHOW TABLE SIZE"],
+    answer: "pg_table_size('table')",
+    explanation: "pg_table_size() returns the disk space used by the table."
+  },
+  {
+    id: 68,
+    question: "What does VACUUM do?",
+    options: ["Deletes data", "Reclaims storage from dead tuples", "Compresses data", "Archives data"],
+    answer: "Reclaims storage from dead tuples",
+    explanation: "VACUUM recovers space from deleted or updated rows."
+  },
+  {
+    id: 69,
+    question: "What is the difference between VACUUM and VACUUM FULL?",
+    options: ["No difference", "VACUUM FULL rewrites table, reclaims more space", "VACUUM is more thorough", "VACUUM FULL is faster"],
+    answer: "VACUUM FULL rewrites table, reclaims more space",
+    explanation: "VACUUM FULL rewrites the entire table, returning space to OS but locks the table."
+  },
+  {
+    id: 70,
+    question: "What does ANALYZE command do?",
+    options: ["Analyzes syntax", "Updates table statistics for query planner", "Analyzes performance", "Checks for errors"],
+    answer: "Updates table statistics for query planner",
+    explanation: "ANALYZE collects statistics about table contents for better query planning."
+  },
+
+  // ============ ADVANCED (71-100) ============
+  {
+    id: 71,
+    question: "What is WAL (Write-Ahead Logging)?",
+    options: ["Security log", "Transaction log for durability and recovery", "Error log", "Query log"],
+    answer: "Transaction log for durability and recovery",
+    explanation: "WAL ensures durability by logging changes before applying them."
+  },
+  {
+    id: 72,
+    question: "What is logical replication?",
+    options: ["Binary copy", "Replication of logical changes (inserts, updates, deletes)", "Full backup", "Sync replication"],
+    answer: "Replication of logical changes (inserts, updates, deletes)",
+    explanation: "Logical replication streams row-level changes, allowing selective replication."
+  },
+  {
+    id: 73,
+    question: "What is a publication in logical replication?",
+    options: ["Documentation", "Set of tables whose changes are published", "Subscriber list", "Backup point"],
+    answer: "Set of tables whose changes are published",
+    explanation: "Publications define which tables to replicate to subscribers."
+  },
+  {
+    id: 74,
+    question: "What does LISTEN/NOTIFY provide?",
+    options: ["Query listening", "Asynchronous notifications between sessions", "Log monitoring", "Replication"],
+    answer: "Asynchronous notifications between sessions",
+    explanation: "LISTEN/NOTIFY enables pub/sub messaging between database sessions."
+  },
+  {
+    id: 75,
+    question: "What is table partitioning used for?",
+    options: ["Security", "Splitting large tables for performance and management", "Backup", "Replication"],
+    answer: "Splitting large tables for performance and management",
+    explanation: "Partitioning divides large tables into smaller, more manageable pieces."
+  },
+  {
+    id: 76,
+    question: "What partitioning strategies does PostgreSQL support?",
+    options: ["Range only", "List only", "Range, List, Hash", "Hash only"],
+    answer: "Range, List, Hash",
+    explanation: "PostgreSQL supports RANGE, LIST, and HASH partitioning strategies."
+  },
+  {
+    id: 77,
+    question: "What is a BRIN index best for?",
+    options: ["Small tables", "Large tables with naturally ordered data", "JSONB columns", "Full-text search"],
+    answer: "Large tables with naturally ordered data",
+    explanation: "BRIN (Block Range Index) is efficient for large, physically ordered tables."
+  },
+  {
+    id: 78,
+    question: "What does pg_stat_statements extension provide?",
+    options: ["Statement syntax checking", "Query performance statistics", "Statement logging", "Statement caching"],
+    answer: "Query performance statistics",
+    explanation: "pg_stat_statements tracks query execution statistics for performance analysis."
+  },
+  {
+    id: 79,
+    question: "What is connection pooling?",
+    options: ["Combining connections", "Reusing database connections for efficiency", "Connection security", "Connection backup"],
+    answer: "Reusing database connections for efficiency",
+    explanation: "Connection pooling (e.g., PgBouncer) reduces connection overhead."
+  },
+  {
+    id: 80,
+    question: "What is a hot standby?",
+    options: ["Backup server", "Read-only replica that stays current", "Failover server", "Load balancer"],
+    answer: "Read-only replica that stays current",
+    explanation: "Hot standby allows read queries on a replica while it receives updates."
+  },
+  {
+    id: 81,
+    question: "What is pg_hba.conf 'trust' authentication?",
+    options: ["Password authentication", "No authentication required", "Certificate auth", "LDAP auth"],
+    answer: "No authentication required",
+    explanation: "Trust allows connection without password (use only for local development)."
+  },
+  {
+    id: 82,
+    question: "What is the difference between 'md5' and 'scram-sha-256' auth?",
+    options: ["No difference", "scram-sha-256 is more secure", "md5 is more secure", "md5 is faster"],
+    answer: "scram-sha-256 is more secure",
+    explanation: "SCRAM-SHA-256 is the recommended modern authentication method."
+  },
+  {
+    id: 83,
+    question: "What is an advisory lock?",
+    options: ["Automatic lock", "Application-defined lock not tied to transactions", "Advisory warning", "Lock recommendation"],
+    answer: "Application-defined lock not tied to transactions",
+    explanation: "Advisory locks let applications create custom locks for coordination."
+  },
+  {
+    id: 84,
+    question: "What does pg_trgm extension provide?",
+    options: ["Trigonometry functions", "Trigram-based text similarity and indexing", "Triggers management", "Trim functions"],
+    answer: "Trigram-based text similarity and indexing",
+    explanation: "pg_trgm enables similarity searches and fuzzy matching on text."
+  },
+  {
+    id: 85,
+    question: "How do you find slow queries?",
+    options: ["pg_stat_statements", "log_min_duration_statement", "auto_explain", "All of the above"],
+    answer: "All of the above",
+    explanation: "Multiple tools help identify slow queries: statistics, logging, and auto_explain."
+  },
+  {
+    id: 86,
+    question: "What is work_mem parameter?",
+    options: ["Total memory", "Memory for query operations like sorts", "Shared memory", "Cache memory"],
+    answer: "Memory for query operations like sorts",
+    explanation: "work_mem sets per-operation memory for sorts, hashes, etc."
+  },
+  {
+    id: 87,
+    question: "What is shared_buffers?",
+    options: ["Query buffer", "Shared memory for caching data", "Connection buffer", "Log buffer"],
+    answer: "Shared memory for caching data",
+    explanation: "shared_buffers is the main cache for database data pages."
+  },
+  {
+    id: 88,
+    question: "What does effective_cache_size represent?",
+    options: ["Actual cache size", "Planner's estimate of available cache", "Maximum cache", "Minimum cache"],
+    answer: "Planner's estimate of available cache",
+    explanation: "It helps the planner estimate how much data might be cached by OS."
+  },
+  {
+    id: 89,
+    question: "What is a system catalog?",
+    options: ["Product catalog", "Internal tables describing database objects", "User catalog", "Backup catalog"],
+    answer: "Internal tables describing database objects",
+    explanation: "System catalogs (pg_class, pg_attribute, etc.) store metadata."
+  },
+  {
+    id: 90,
+    question: "How do you view active queries?",
+    options: ["SHOW QUERIES", "SELECT * FROM pg_stat_activity", "\\queries", "LIST ACTIVE"],
+    answer: "SELECT * FROM pg_stat_activity",
+    explanation: "pg_stat_activity shows current sessions and their queries."
+  },
+  {
+    id: 91,
+    question: "What is a deferred constraint?",
+    options: ["Disabled constraint", "Constraint checked at transaction end", "Delayed creation", "Optional constraint"],
+    answer: "Constraint checked at transaction end",
+    explanation: "DEFERRABLE constraints can be checked at commit instead of immediately."
+  },
+  {
+    id: 92,
+    question: "What is the purpose of pg_repack extension?",
+    options: ["Backup compression", "Online table reorganization without locks", "Package management", "Data replication"],
+    answer: "Online table reorganization without locks",
+    explanation: "pg_repack removes bloat without blocking concurrent access."
+  },
+  {
+    id: 93,
+    question: "What is a composite type?",
+    options: ["Combined table", "Custom type with multiple fields", "Array type", "Joined type"],
+    answer: "Custom type with multiple fields",
+    explanation: "Composite types define structures similar to table rows."
+  },
+  {
+    id: 94,
+    question: "What is the @> operator for JSONB?",
+    options: ["Greater than", "Contains", "Append", "Extract"],
+    answer: "Contains",
+    explanation: "@> (contains) checks if left JSONB contains the right JSONB."
+  },
+  {
+    id: 95,
+    question: "What is parallel query execution?",
+    options: ["Multiple queries at once", "Single query using multiple CPU cores", "Distributed query", "Async query"],
+    answer: "Single query using multiple CPU cores",
+    explanation: "Parallel queries split work across workers for faster execution."
+  },
+  {
+    id: 96,
+    question: "What is a TOAST table?",
+    options: ["Temporary table", "Storage for large field values", "Toast notification table", "Backup table"],
+    answer: "Storage for large field values",
+    explanation: "TOAST (The Oversized-Attribute Storage Technique) stores large values separately."
+  },
+  {
+    id: 97,
+    question: "What is pg_upgrade used for?",
+    options: ["Extension upgrade", "Upgrading PostgreSQL version", "Schema upgrade", "Data upgrade"],
+    answer: "Upgrading PostgreSQL version",
+    explanation: "pg_upgrade migrates data to a new PostgreSQL major version."
+  },
+  {
+    id: 98,
+    question: "What is a JIT (Just-In-Time) compilation in PostgreSQL?",
+    options: ["Query planning", "Compiling queries to native code at runtime", "Index compilation", "Syntax checking"],
+    answer: "Compiling queries to native code at runtime",
+    explanation: "JIT compiles expressions and tuple deforming for CPU-intensive queries."
+  },
+  {
+    id: 99,
+    question: "What is pg_stat_user_tables used for?",
+    options: ["User management", "Statistics about user table access and modifications", "Table creation log", "User permissions"],
+    answer: "Statistics about user table access and modifications",
+    explanation: "pg_stat_user_tables shows access patterns: seq scans, index scans, updates, etc."
+  },
+  {
+    id: 100,
+    question: "How do you prevent SQL injection in PostgreSQL?",
+    options: ["ESCAPE function", "Prepared statements with parameters", "Input validation only", "FILTER function"],
+    answer: "Prepared statements with parameters",
+    explanation: "Parameterized queries separate SQL from data, preventing injection."
+  }
+];
+
+export default questions;
