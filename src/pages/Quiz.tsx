@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { Question } from '@/data/types';
 import { useQuizProgress } from '@/hooks/useQuizProgress';
@@ -18,8 +18,9 @@ import systemdesign from '@/data/systemdesign';
 import designpatterns from '@/data/designpatterns';
 import algorithms from '@/data/algorithms';
 import aiagents from '@/data/aiagents';
+import { generatedTests } from '@/data/generated';
 
-const dataMap: Record<string, Question[]> = {
+const originalDataMap: Record<string, Question[]> = {
   grammar,
   pronunciation,
   pandas,
@@ -54,14 +55,27 @@ const topicNames: Record<string, string> = {
 };
 
 export default function Quiz() {
-  const { topicId } = useParams<{ topicId: string }>(); 
+  const { topicId, testId } = useParams<{ topicId: string; testId: string }>(); 
   const navigate = useNavigate();
   
   const safeTopicId = topicId as string;
-  const questions = dataMap[safeTopicId] || [];
-  const topicName = topicNames[safeTopicId] || safeTopicId;
+  const safeTestId = testId as string;
   
-  // Progress tracking hook
+  // Load questions based on testId
+  const questions = useMemo(() => {
+    if (safeTestId === 'original') {
+      return originalDataMap[safeTopicId] || [];
+    }
+    // Find generated test
+    const dateStr = safeTestId.replace('week_', '').replace(/_/g, '-');
+    const test = generatedTests.find(t => t.topic === safeTopicId && t.date === dateStr);
+    return test?.questions || [];
+  }, [safeTopicId, safeTestId]);
+  
+  const topicName = topicNames[safeTopicId] || safeTopicId;
+  const progressKey = `${safeTopicId}_${safeTestId}`;
+  
+  // Progress tracking hook - using combined key for per-test progress
   const {
     currentIndex,
     stats,
@@ -70,7 +84,7 @@ export default function Quiz() {
     nextQuestion,
     getQuestionStatus,
     markComplete
-  } = useQuizProgress(safeTopicId, questions.length);
+  } = useQuizProgress(progressKey, questions.length);
 
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [isAnswered, setIsAnswered] = useState(false);

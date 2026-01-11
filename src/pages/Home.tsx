@@ -67,7 +67,7 @@ function TopicCard({ topic, progress }: { topic: Topic; progress?: { correct: nu
   
   return (
     <Link 
-      to={`/quiz/${topic.id}`} 
+      to={`/topic/${topic.id}`} 
       className="topic-card group"
       style={{ '--glow-color': topic.color } as React.CSSProperties}
     >

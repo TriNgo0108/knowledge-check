@@ -1,0 +1,52 @@
+name: Weekly Question Generation
+
+on:
+  schedule:
+    - cron: "0 2 * * 0" # Every Sunday at 2 AM UTC
+  workflow_dispatch: # Manual trigger
+    inputs:
+      topic:
+        description: "Specific topic to generate (leave empty for all)"
+        required: false
+        type: string
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: |
+          cd content_generator
+          pip install -e .
+
+      - name: Generate questions
+        env:
+          TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: |
+          cd content_generator
+          if [ -n "${{ inputs.topic }}" ]; then
+            python scripts/generate.py --topic ${{ inputs.topic }}
+          else
+            python scripts/generate.py --all
+          fi
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/data/generated/
+          git diff --staged --quiet || git commit -m "chore: generate weekly questions $(date +%Y-%m-%d)"
+          git push
