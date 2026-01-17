@@ -16,13 +16,13 @@ OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
 OPENROUTER_MODEL = "google/gemma-3-27b-it:free"
 
 # Output settings
-PROJECT_ROOT = Path(__file__).parent.parent.parent.parent
-OUTPUT_DIR = PROJECT_ROOT / os.getenv("OUTPUT_DIR", "src/data/generated")
+PROJECT_ROOT = Path(__file__).parent.parent.parent
+OUTPUT_DIR = PROJECT_ROOT / os.getenv("OUTPUT_DIR", "public/data/generated")
 
 # Topic configuration
 TOPICS = [
     "grammar",
-    "pronunciation", 
+    "pronunciation",
     "pandas",
     "sql",
     "postgres",

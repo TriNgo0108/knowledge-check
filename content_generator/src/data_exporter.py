@@ -4,15 +4,15 @@ import json
 from datetime import datetime
 from pathlib import Path
 
-from .config import PROJECT_ROOT
-from .models import GeneratedQuestions
+from config import OUTPUT_DIR
+from models import GeneratedQuestions
 
 
 class DataExporter:
     """Export questions to JSON files."""
 
     def __init__(self, output_dir: Path | None = None):
-        self.output_dir = output_dir or (PROJECT_ROOT / "data" / "generated")
+        self.output_dir = output_dir or OUTPUT_DIR
         self.output_dir.mkdir(parents=True, exist_ok=True)
 
     def export(self, data: GeneratedQuestions) -> Path:

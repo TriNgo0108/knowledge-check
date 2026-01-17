@@ -54,7 +54,7 @@ export default function QuestionNav({
       </div>
 
       {/* Grid */}
-      <div className="grid grid-cols-5 gap-1.5 max-h-[400px] overflow-y-auto pr-1">
+      <div className="grid grid-cols-5 gap-1.5 max-h-[400px] overflow-y-auto p-1">
         {Array.from({ length: totalQuestions }, (_, i) => {
           const status = getQuestionStatus(i + 1);
           const isCurrent = i === currentIndex;
