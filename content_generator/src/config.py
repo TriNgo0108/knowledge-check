@@ -12,7 +12,7 @@ TAVILY_API_KEY = os.getenv("TAVILY_API_KEY", "")
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
 
 # Gemini settings
-GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-3-flash-preview")
+GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemma-3-27b-it")
 
 # Output settings
 PROJECT_ROOT = Path(__file__).parent.parent.parent
