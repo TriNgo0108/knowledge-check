@@ -1,14 +1,31 @@
-name: Weekly Question Generation
+name: Daily Question Generation
 
 on:
   schedule:
-    - cron: "0 2 * * 0" # Every Sunday at 2 AM UTC
+    # Run daily at 2 AM UTC - generates 1 topic per day
+    - cron: "0 2 * * *"
   workflow_dispatch: # Manual trigger
     inputs:
       topic:
-        description: "Specific topic to generate (leave empty for all)"
+        description: "Specific topic to generate (leave empty for daily rotation)"
         required: false
-        type: string
+        type: choice
+        options:
+          - ""
+          - grammar
+          - pronunciation
+          - pandas
+          - sql
+          - postgres
+          - aws
+          - python
+          - javascript
+          - typescript
+          - react
+          - systemdesign
+          - designpatterns
+          - algorithms
+          - aiagents
 
 jobs:
   generate:
@@ -19,6 +36,25 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Determine today's topic
+        id: topic
+        run: |
+          # Topics array (14 topics = 2-week rotation)
+          TOPICS=("grammar" "pronunciation" "pandas" "sql" "postgres" "aws" "python" "javascript" "typescript" "react" "systemdesign" "designpatterns" "algorithms" "aiagents")
+
+          if [ -n "${{ inputs.topic }}" ]; then
+            # Manual trigger with specific topic
+            SELECTED_TOPIC="${{ inputs.topic }}"
+          else
+            # Auto-select based on day of month (1-31 -> 0-13 cycling)
+            DAY_OF_MONTH=$(date +%-d)
+            INDEX=$(( (DAY_OF_MONTH - 1) % 14 ))
+            SELECTED_TOPIC="${TOPICS[$INDEX]}"
+          fi
+
+          echo "topic=$SELECTED_TOPIC" >> $GITHUB_OUTPUT
+          echo "📅 Today's topic: $SELECTED_TOPIC"
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -31,22 +67,18 @@ jobs:
           cd content_generator
           pip install -e .
 
-      - name: Generate questions
+      - name: Generate questions for ${{ steps.topic.outputs.topic }}
         env:
           TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
         run: |
           cd content_generator
-          if [ -n "${{ inputs.topic }}" ]; then
-            python scripts/generate.py --topic ${{ inputs.topic }}
-          else
-            python scripts/generate.py --all
-          fi
+          python scripts/generate.py --topic ${{ steps.topic.outputs.topic }}
 
       - name: Commit and push changes
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add public/data/generated/
-          git diff --staged --quiet || git commit -m "chore: generate weekly questions $(date +%Y-%m-%d)"
+          git diff --staged --quiet || git commit -m "chore: generate ${{ steps.topic.outputs.topic }} questions $(date +%Y-%m-%d)"
           git push
