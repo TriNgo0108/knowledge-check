@@ -1,22 +1,20 @@
-"""OpenRouter LLM client for generating quiz questions."""
-
-import json
 import time
-from openai import OpenAI
+import json
+from google import genai
+from google.genai import types
 
-from .config import OPENROUTER_API_KEY, OPENROUTER_BASE_URL, OPENROUTER_MODEL
+from .config import GEMINI_API_KEY, GEMINI_MODEL
 from .models import Question
 
 
 class LLMClient:
-    """Client for generating questions using OpenRouter API."""
+    """Client for generating questions using Gemini API."""
 
     def __init__(self, api_key: str | None = None):
-        self.client = OpenAI(
-            api_key=api_key or OPENROUTER_API_KEY,
-            base_url=OPENROUTER_BASE_URL,
+        self.client = genai.Client(
+            api_key=api_key or GEMINI_API_KEY,
         )
-        self.model = OPENROUTER_MODEL
+        self.model = GEMINI_MODEL
 
     def generate_questions(
         self,
@@ -44,23 +42,18 @@ class LLMClient:
         max_retries = 3
         for attempt in range(max_retries):
             try:
-                response = self.client.chat.completions.create(
+                response = self.client.models.generate_content(
                     model=self.model,
-                    messages=[
-                        {
-                            "role": "system",
-                            "content": self._system_prompt(),
-                        },
-                        {
-                            "role": "user",
-                            "content": prompt,
-                        },
-                    ],
-                    temperature=0.7,
-                    max_tokens=8000,
+                    contents=prompt,
+                    config=types.GenerateContentConfig(
+                        system_instruction=self._system_prompt(),
+                        response_mime_type="application/json",
+                        temperature=0.7,
+                        max_output_tokens=8000,
+                    ),
                 )
 
-                content_text = response.choices[0].message.content
+                content_text = response.text
                 questions = self._parse_response(content_text)
 
                 # Validate questions
@@ -68,6 +61,7 @@ class LLMClient:
                 for q in questions:
                     try:
                         q["difficulty"] = difficulty
+                        # Ensure ID is unique and sequential if possible, or just trust the LLM/validation
                         Question(**q)
                         validated.append(q)
                     except Exception as e:
@@ -152,5 +146,12 @@ Requirements:
         if start != -1 and end > start:
             json_str = content[start:end]
             return json.loads(json_str)
+
+        # If headers/mime-type works perfectly, we might get pure JSON,
+        # but robust parsing is still good.
+        try:
+            return json.loads(content)
+        except:
+            pass
 
         raise ValueError("Could not find valid JSON array in response")

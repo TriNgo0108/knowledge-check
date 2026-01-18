@@ -9,11 +9,10 @@ load_dotenv()
 
 # API Keys
 TAVILY_API_KEY = os.getenv("TAVILY_API_KEY", "")
-OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY", "")
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
 
-# OpenRouter settings
-OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
-OPENROUTER_MODEL = "google/gemma-3-27b-it:free"
+# Gemini settings
+GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-3-flash-preview")
 
 # Output settings
 PROJECT_ROOT = Path(__file__).parent.parent.parent
