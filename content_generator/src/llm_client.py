@@ -1,20 +1,20 @@
 import time
 import json
-from google import genai
-from google.genai import types
+from zai import ZaiClient
 
-from .config import GEMINI_API_KEY, GEMINI_MODEL
+from .config import ZAI_API_KEY, GLM_MODEL, ZAI_BASE_URL
 from .models import Question
 
 
 class LLMClient:
-    """Client for generating questions using Gemini API."""
+    """Client for generating questions using GLM API via Z.AI SDK."""
 
     def __init__(self, api_key: str | None = None):
-        self.client = genai.Client(
-            api_key=api_key or GEMINI_API_KEY,
+        self.client = ZaiClient(
+            api_key=api_key or ZAI_API_KEY,
+            base_url=ZAI_BASE_URL,
         )
-        self.model = GEMINI_MODEL
+        self.model = GLM_MODEL
 
     def generate_questions(
         self,
@@ -39,21 +39,21 @@ class LLMClient:
         """
         prompt = self._build_prompt(topic, content, count, difficulty, start_id)
 
+        system_instruction = self._system_prompt()
+
         max_retries = 3
         for attempt in range(max_retries):
             try:
-                response = self.client.models.generate_content(
+                response = self.client.chat.completions.create(
                     model=self.model,
-                    contents=prompt,
-                    config=types.GenerateContentConfig(
-                        system_instruction=self._system_prompt(),
-                        response_mime_type="application/json",
-                        temperature=0.7,
-                        max_output_tokens=8000,
-                    ),
+                    messages=[
+                        {"role": "system", "content": system_instruction},
+                        {"role": "user", "content": prompt},
+                    ],
+                    temperature=0.7,
                 )
 
-                content_text = response.text
+                content_text = response.choices[0].message.content
                 questions = self._parse_response(content_text)
 
                 # Validate questions
@@ -136,8 +136,12 @@ Requirements:
 
         # Remove markdown code blocks if present
         if content.startswith("```"):
-            lines = content.split("\n")
-            content = "\n".join(lines[1:-1] if lines[-1] == "```" else lines[1:])
+            lines = content.splitlines()
+            if lines[0].strip().startswith("```"):
+                lines = lines[1:]
+            if lines and lines[-1].strip() == "```":
+                lines = lines[:-1]
+            content = "\n".join(lines)
 
         # Find JSON array
         start = content.find("[")

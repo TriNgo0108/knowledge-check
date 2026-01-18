@@ -9,10 +9,11 @@ load_dotenv()
 
 # API Keys
 TAVILY_API_KEY = os.getenv("TAVILY_API_KEY", "")
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
+ZAI_API_KEY = os.getenv("ZAI_API_KEY")
 
-# Gemini settings
-GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemma-3-27b-it")
+# GLM settings
+GLM_MODEL = os.getenv("GLM_MODEL", "glm-4.7")
+ZAI_BASE_URL = os.getenv("ZAI_BASE_URL", "https://api.z.ai/api/coding/paas/v4")
 
 # Output settings
 PROJECT_ROOT = Path(__file__).parent.parent.parent

@@ -6,11 +6,11 @@ load_dotenv()
 
 
 def test_generation():
-    print("Testing Gemini generation...")
+    print("Testing Z.AI generation...")
 
-    api_key = os.getenv("GEMINI_API_KEY")
+    api_key = os.getenv("ZAI_API_KEY")
     if not api_key:
-        print("Error: GEMINI_API_KEY is missing from environment.")
+        print("Error: ZAI_API_KEY is missing from environment.")
         return
 
     try:
