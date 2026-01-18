@@ -8,9 +8,7 @@ from pathlib import Path
 # Add src to path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from src.config import TOPICS
-from src.question_generator import QuestionGenerator
-from src.data_exporter import DataExporter
+from src import TOPICS, QuestionGenerator, DataExporter
 
 
 def main():

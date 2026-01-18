@@ -4,8 +4,8 @@ import json
 from datetime import datetime
 from pathlib import Path
 
-from config import OUTPUT_DIR
-from models import GeneratedQuestions
+from .config import OUTPUT_DIR
+from .models import GeneratedQuestions
 
 
 class DataExporter:
