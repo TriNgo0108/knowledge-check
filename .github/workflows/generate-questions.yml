@@ -2,8 +2,8 @@ name: Daily Question Generation
 
 on:
   schedule:
-    # Run daily at 2 AM UTC - generates 1 topic per day
-    - cron: "0 2 * * *"
+    # Run 4 times daily (0, 6, 12, 18 UTC) - generates 4 topics per day
+    - cron: "0 0,6,12,18 * * *"
   workflow_dispatch: # Manual trigger
     inputs:
       topic:
@@ -47,9 +47,14 @@ jobs:
             # Manual trigger with specific topic
             SELECTED_TOPIC="${{ inputs.topic }}"
           else
-            # Auto-select based on day of month (1-31 -> 0-13 cycling)
+            # Auto-select based on day and time (4 topics per day)
+            # 4 slots per day: 00-05, 06-11, 12-17, 18-23
             DAY_OF_MONTH=$(date +%-d)
-            INDEX=$(( (DAY_OF_MONTH - 1) % 14 ))
+            HOUR=$(date +%-H)
+            SLOT=$((HOUR / 6))
+            
+            # Calculate index: ((Day-1)*4 + Slot) % 14
+            INDEX=$(( ((DAY_OF_MONTH - 1) * 4 + SLOT) % 14 ))
             SELECTED_TOPIC="${TOPICS[$INDEX]}"
           fi
 
