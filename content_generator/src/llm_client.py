@@ -4,6 +4,7 @@ from zai import ZaiClient
 
 from .config import ZAI_API_KEY, GLM_MODEL, ZAI_BASE_URL
 from .models import Question
+from .prompts import SYSTEM_PROMPT, build_user_prompt
 
 
 class LLMClient:
@@ -79,26 +80,8 @@ class LLMClient:
         return []
 
     def _system_prompt(self) -> str:
-        return """You are an expert quiz question generator. Generate high-quality multiple choice questions based on the provided content.
-
-Rules:
-1. Each question must have exactly 4 options
-2. The answer must EXACTLY match one of the 4 options (character-for-character)
-3. Provide clear, educational explanations
-4. Questions should test understanding, not just memorization
-5. Avoid trick questions or ambiguous options
-6. Output must be valid JSON array
-
-Output format (JSON array):
-[
-  {
-    "id": 1,
-    "question": "What is...",
-    "options": ["Option A", "Option B", "Option C", "Option D"],
-    "answer": "Option B",
-    "explanation": "The answer is Option B because..."
-  }
-]"""
+        """Return the enhanced system prompt with expert persona and CoT guidance."""
+        return SYSTEM_PROMPT
 
     def _build_prompt(
         self,
@@ -108,26 +91,14 @@ Output format (JSON array):
         difficulty: str,
         start_id: int,
     ) -> str:
-        difficulty_guidance = {
-            "Beginner": "Basic concepts, definitions, and fundamental knowledge. Suitable for newcomers.",
-            "Intermediate": "Applied knowledge, common patterns, and practical usage. Requires working experience.",
-            "Advanced": "Deep understanding, edge cases, optimization, and expert-level concepts.",
-        }
-
-        return f"""Generate {count} {difficulty} level quiz questions about {topic}.
-
-Difficulty guidance: {difficulty_guidance.get(difficulty, "")}
-
-Base your questions on this recent content:
----
-{content[:6000]}
----
-
-Requirements:
-- Start question IDs from {start_id}
-- Create {count} unique questions
-- Difficulty level: {difficulty}
-- Output ONLY the JSON array, no other text"""
+        """Build user prompt with few-shot examples and structured guidance."""
+        return build_user_prompt(
+            topic=topic,
+            content=content,
+            count=count,
+            difficulty=difficulty,
+            start_id=start_id,
+        )
 
     def _parse_response(self, content: str) -> list[dict]:
         """Parse LLM response to extract JSON questions."""
