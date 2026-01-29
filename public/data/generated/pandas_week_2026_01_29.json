@@ -1,0 +1,912 @@
+[
+  {
+    "id": 1,
+    "question": "Which attribute of a pandas Series exposes the underlying NumPy array?",
+    "options": [
+      "df.array",
+      "df.values",
+      "df.to_numpy()",
+      "df.data"
+    ],
+    "answer": "df.to_numpy()",
+    "explanation": "`.to_numpy()` is the recommended method to retrieve the underlying NumPy ndarray. `.values` is a legacy attribute that may be deprecated or inconsistent with extension arrays, while `df.array` returns a pandas ExtensionArray (e.g., ArrowStringArray), not necessarily the raw NumPy object.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 2,
+    "question": "What is the result of adding a scalar value to a pandas Series?",
+    "options": [
+      "A TypeError",
+      "A scalar value",
+      "A new Series with the scalar added to every element",
+      "A Series of length 1"
+    ],
+    "answer": "A new Series with the scalar added to every element",
+    "explanation": "Pandas utilizes broadcasting to propagate the scalar operation across all elements in the Series. This is a vectorized operation that does not require an explicit loop.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 3,
+    "question": "Which parameter in `read_csv` allows you to load only specific columns into memory to optimize performance?",
+    "options": [
+      "columns",
+      "names",
+      "usecols",
+      "header"
+    ],
+    "answer": "usecols",
+    "explanation": "`usecols` accepts a list of column names or indices to filter the data during parsing, significantly reducing memory overhead. `columns` is not a valid parameter for `read_csv`, and `names` is used for renaming columns when `header=None`.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 4,
+    "question": "Why does a column containing `NaN` (Not a Number) values automatically cast to `float64` in pandas?",
+    "options": [
+      "Pandas defaults all numerical data to float64",
+      "Integer data types in NumPy (and thus pandas) do not support missing values natively",
+      "Float64 offers higher precision for scientific calculations",
+      "It is a bug in the pandas type inference system"
+    ],
+    "answer": "Integer data types in NumPy (and thus pandas) do not support missing values natively",
+    "explanation": "Standard NumPy integer dtypes cannot hold `NaN`. To preserve the missing value indicator, pandas upcasts the column to `float64`, which natively supports `NaN` via the IEEE 754 standard.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 5,
+    "question": "What is the primary advantage of using vectorized string operations (e.g., `df['col'].str.upper()`) over Python's native string methods in a loop?",
+    "options": [
+      "They support Unicode characters natively",
+      "They skip error handling for invalid inputs",
+      "They operate on the entire array at once using optimized C code, avoiding Python loops",
+      "They automatically convert the column to a categorical type"
+    ],
+    "answer": "They operate on the entire array at once using optimized C code, avoiding Python loops",
+    "explanation": "Vectorized string methods use optimized low-level routines and bypass the slow overhead of Python-level `for` loops. This significantly improves performance on large datasets compared to `apply()` with a lambda function.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 6,
+    "question": "Which index operator is label-based and inclusive of both the start and stop bounds when slicing?",
+    "options": [
+      "iloc",
+      "loc",
+      "ix",
+      "at"
+    ],
+    "answer": "loc",
+    "explanation": "`.loc` is label-based, meaning slicing includes both the start and stop labels. `.iloc` is position-based and follows standard Python slicing rules (exclusive of the stop index).",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 7,
+    "question": "Which method is preferred to reduce memory usage for a column containing repetitive string values (low cardinality)?",
+    "options": [
+      "Converting to 'object' dtype",
+      "Converting to 'category' dtype",
+      "Converting to 'string' dtype",
+      "Applying a hash function"
+    ],
+    "answer": "Converting to 'category' dtype",
+    "explanation": "The 'category' dtype stores data as integers mapping to a dictionary of unique values, utilizing significantly less memory than storing repeated strings. 'object' dtype stores pointers to full string objects, offering no memory optimization.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 8,
+    "question": "What does the `axis=1` parameter signify in a method like `df.drop()` or `df.apply()`?",
+    "options": [
+      "Operate on rows (index)",
+      "Operate on columns",
+      "Sort the DataFrame",
+      "Transpose the DataFrame"
+    ],
+    "answer": "Operate on columns",
+    "explanation": "In pandas, `axis=0` refers to the index (rows), while `axis=1` refers to the columns. Setting `axis=1` tells the method to traverse or apply logic horizontally across the column labels.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 9,
+    "question": "Which argument in `read_csv` enables processing a large file in smaller, manageable pieces to avoid MemoryError?",
+    "options": [
+      "nrows",
+      "skiprows",
+      "chunksize",
+      "iterator"
+    ],
+    "answer": "chunksize",
+    "explanation": "Specifying `chunksize` returns a `TextFileReader` object yielding an iterator of DataFrames. This allows processing data piece-by-piece without loading the entire dataset into RAM at once.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 10,
+    "question": "Why should you generally avoid using Python's native `and` / `or` operators when filtering pandas DataFrames?",
+    "options": [
+      "They perform bitwise operations instead of logical operations",
+      "They cannot handle Series objects and result in a ValueError regarding truth ambiguity",
+      "They are slower than bitwise operators",
+      "They do not support operator chaining"
+    ],
+    "answer": "They cannot handle Series objects and result in a ValueError regarding truth ambiguity",
+    "explanation": "Python's `and` operator attempts to evaluate the truthiness of a Series object as a whole, which is ambiguous. Pandas requires element-wise logical operators `&` (and) and `|` (or) to generate boolean masks.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 11,
+    "question": "What is the behavior of the `inplace=True` argument in pandas methods?",
+    "options": [
+      "It creates a new variable referencing the same object",
+      "It modifies the DataFrame in place and returns None",
+      "It modifies the DataFrame and returns the modified object",
+      "It creates a deep copy to preserve the original data"
+    ],
+    "answer": "It modifies the DataFrame in place and returns None",
+    "explanation": "When `inplace=True`, the operation modifies the object directly and returns `None` to prevent accidental chaining or assignment of a copy. This avoids allocating extra memory for the result.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 12,
+    "question": "How does pandas handle the alignment of two Series with different indices during an arithmetic operation?",
+    "options": [
+      "It raises an IndexError",
+      "It aligns them by index position (integer order)",
+      "It performs an outer join on indices, introducing NaN where indices do not overlap",
+      "It truncates the longer Series to match the shorter one"
+    ],
+    "answer": "It performs an outer join on indices, introducing NaN where indices do not overlap",
+    "explanation": "Pandas automatically aligns data based on the index labels. If an index exists in one Series but not the other, the result contains `NaN` for that position to preserve data integrity.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 13,
+    "question": "Which pandas function evaluates a string expression to potentially speed up complex operations involving large arrays?",
+    "options": [
+      "df.exec()",
+      "df.eval()",
+      "df.calculate()",
+      "df.run()"
+    ],
+    "answer": "df.eval()",
+    "explanation": "`eval()` parses string expressions and uses optimized engines (like numexpr) to perform calculations, often reducing memory usage by avoiding intermediate temporary arrays for complex arithmetic.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 14,
+    "question": "What is the default behavior of `groupby` if a column with missing values (NaN) is used as a grouper?",
+    "options": [
+      "It drops the rows with NaN values",
+      "It assigns NaN to its own group labeled 'NaN'",
+      "It excludes the NaN group from the aggregation result",
+      "It fills NaN with 0 before grouping"
+    ],
+    "answer": "It excludes the NaN group from the aggregation result",
+    "explanation": "By default, pandas excludes `NaN` keys during the groupby aggregation. Rows with missing values in the grouping column are simply dropped from the aggregation result.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 15,
+    "question": "Which method provides a concise summary of a DataFrame's memory usage and non-null counts?",
+    "options": [
+      "df.summary()",
+      "df.describe()",
+      "df.info()",
+      "df.profile()"
+    ],
+    "answer": "df.info()",
+    "explanation": "`.info()` prints the index dtype, column dtypes, non-null values, and memory usage. `.describe()` provides statistical summaries (mean, max, etc.) but does not show memory consumption.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 16,
+    "question": "What happens if you assign a scalar value to a slice of a DataFrame without using `.copy()`?",
+    "options": [
+      "It modifies the original DataFrame if the slice is a view (SettingWithCopyWarning)",
+      "It always creates a new independent copy",
+      "It raises an error because assignments to views are forbidden",
+      "It automatically calls `inplace=True`"
+    ],
+    "answer": "It modifies the original DataFrame if the slice is a view (SettingWithCopyWarning)",
+    "explanation": "Pandas slices often return views rather than copies. Assigning to a view modifies the original data. The 'SettingWithCopyWarning' alerts you that you might be modifying an object unintentionally in a chained assignment.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 17,
+    "question": "Which method is used to downcast numerical columns to the smallest sufficient dtype (e.g., float64 to float32)?",
+    "options": [
+      "df.convert_dtype()",
+      "pd.to_numeric(df, downcast='float')",
+      "df.optimize()",
+      "df.astype('auto')"
+    ],
+    "answer": "pd.to_numeric(df, downcast='float')",
+    "explanation": "`to_numeric` with the `downcast` parameter ('integer', 'signed', 'unsigned', 'float') automatically finds the smallest numerical dtype that can hold the data. `astype` requires an explicit target type.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 18,
+    "question": "In the context of missing data, what is the difference between `df.fillna(0)` and `df.dropna()`?",
+    "options": [
+      "`fillna` interpolates data, while `dropna` deletes rows",
+      "`fillna` replaces missing values with a scalar/statistic, while `dropna` removes axes containing missing values",
+      "`fillna` creates a copy, while `dropna` modifies in place",
+      "There is no significant difference in memory usage"
+    ],
+    "answer": "`fillna` replaces missing values with a scalar/statistic, while `dropna` removes axes containing missing values",
+    "explanation": "`fillna` imputes missing values, retaining the data structure size. `dropna` removes entire rows or columns that contain any missing values, potentially reducing the dataset size.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 19,
+    "question": "What does the `squeeze()` method do when applied to a DataFrame with a single column?",
+    "options": [
+      "It converts the DataFrame into a Series",
+      "It removes all NaN values",
+      "It aggregates the data into a single scalar",
+      "It compresses the file size on disk"
+    ],
+    "answer": "It converts the DataFrame into a Series",
+    "explanation": "When an object (like a single-column DataFrame or single-row DataFrame) can be reduced to a lower dimension without information loss, `squeeze()` converts it into a Series or scalar.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 20,
+    "question": "Which accessor is used to apply vectorized string methods to a Series?",
+    "options": [
+      "series.str",
+      "series.string",
+      "series.text",
+      "series.char"
+    ],
+    "answer": "series.str",
+    "explanation": "The `.str` accessor provides vectorized string manipulation capabilities (e.g., `.str.contains()`, `.str.split()`) optimized for pandas Series, which standard string methods lack.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 21,
+    "question": "What is the result of performing an arithmetic operation on two DataFrames with different shapes but compatible labels?",
+    "options": [
+      "A broadcasting error",
+      "Alignment by both index and columns, filling non-overlapping areas with NaN",
+      "Alignment by index only, ignoring column names",
+      "Automatic inner join on both axes"
+    ],
+    "answer": "Alignment by both index and columns, filling non-overlapping areas with NaN",
+    "explanation": "Pandas aligns DataFrames on both rows (index) and columns. The union of indices and columns is used, and any missing intersections result in `NaN` (float type promotion) in the output.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 22,
+    "question": "Which method allows you to filter a DataFrame using a string expression, similar to SQL?",
+    "options": [
+      "df.filter()",
+      "df.where()",
+      "df.query()",
+      "df.mask()"
+    ],
+    "answer": "df.query()",
+    "explanation": "`df.query()` evaluates a boolean expression string (e.g., 'A > 5 & B < 10') to filter rows. It is less verbose than boolean indexing and can be faster for complex expressions as it avoids intermediate copies.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 23,
+    "question": "Why is `df.iterrows()` generally discouraged for performance-critical operations?",
+    "options": [
+      "It does not support modification of the DataFrame",
+      "It returns a copy of the data instead of a view",
+      "It converts Series to rows individually, incurring significant Python overhead",
+      "It requires the index to be sorted"
+    ],
+    "answer": "It converts Series to rows individually, incurring significant Python overhead",
+    "explanation": "`iterrows()` yields tuples of (index, Series) for each row, converting data back and forth to Python objects. This is significantly slower than vectorized operations or optimized methods like `itertuples()`.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 24,
+    "question": "What is the primary purpose of the `pd.get_dummies()` function?",
+    "options": [
+      "To create sample data for testing",
+      "To convert categorical variables into dummy/indicator variables (0s and 1s)",
+      "To fill missing values with statistical mean",
+      "To generate a list of random numbers"
+    ],
+    "answer": "To convert categorical variables into dummy/indicator variables (0s and 1s)",
+    "explanation": "This function performs One-Hot Encoding, transforming a categorical column into multiple binary columns (0 or 1), which is necessary for many machine learning algorithms.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 25,
+    "question": "When using `pd.merge()`, which parameter controls the type of join to perform (e.g., inner, left, outer)?",
+    "options": [
+      "link",
+      "join_type",
+      "how",
+      "on"
+    ],
+    "answer": "how",
+    "explanation": "The `how` parameter specifies the merge logic: 'inner' (intersection of keys), 'left' (keep all left keys), 'right' (keep all right keys), or 'outer' (union of keys).",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 26,
+    "question": "Which method converts a DataFrame from a 'wide' format to a 'long' format (unpivoting)?",
+    "options": [
+      "df.pivot()",
+      "df.stack()",
+      "df.melt()",
+      "df.unstack()"
+    ],
+    "answer": "df.melt()",
+    "explanation": "`melt()` unpivots a DataFrame from wide to long format, turning column headers into identifier variables. `pivot()` performs the inverse operation (long to wide).",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 27,
+    "question": "What does `df.duplicated()` return by default?",
+    "options": [
+      "The duplicate rows as a DataFrame",
+      "A boolean Series marking duplicated rows (except the first occurrence)",
+      "The number of duplicate rows",
+      "A DataFrame with duplicates removed"
+    ],
+    "answer": "A boolean Series marking duplicated rows (except the first occurrence)",
+    "explanation": "It returns a Boolean mask where `True` indicates a row is a duplicate of a previously seen row. `keep='first'` is the default, marking the second and subsequent occurrences as duplicates.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 28,
+    "question": "How does the `ascending=False` parameter affect `df.sort_values()`?",
+    "options": [
+      "It sorts the index in descending order",
+      "It sorts the column values from highest to lowest",
+      "It reverses the column order",
+      "It places NaN values at the beginning"
+    ],
+    "answer": "It sorts the column values from highest to lowest",
+    "explanation": "Setting `ascending=False` sorts the data in descending order. This applies to the specified columns or the index if `sort_index` is used.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 29,
+    "question": "Which data type is best suited for efficient memory storage of timestamps in pandas?",
+    "options": [
+      "object (string)",
+      "datetime64[ns]",
+      "int64 (Unix epoch)",
+      "float64"
+    ],
+    "answer": "datetime64[ns]",
+    "explanation": "`datetime64[ns]` is the standard pandas dtype for timestamps, stored as 64-bit integers. It is memory-efficient and enables powerful time-series functionality like resampling and rolling windows, unlike generic `object` or `int` types.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 30,
+    "question": "What is the function of `df.isin(values)`?",
+    "options": [
+      "To check if the index is within a range",
+      "To filter rows where column values are present in the provided list/series",
+      "To check if the DataFrame is empty",
+      "To find integer indices of values"
+    ],
+    "answer": "To filter rows where column values are present in the provided list/series",
+    "explanation": "`isin()` returns a boolean DataFrame indicating whether each element is in the passed iterable. This is ideal for filtering based on multiple possible values.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 31,
+    "question": "What is the output of `df['A'].rank()`?",
+    "options": [
+      "The value of A sorted alphabetically",
+      "Numerical ranks of the values (1 to n) handling ties",
+      "The unique count of values in A",
+      "The row indices sorted by column A"
+    ],
+    "answer": "Numerical ranks of the values (1 to n) handling ties",
+    "explanation": "The `rank()` method computes numerical data ranks (1 through n) with options for handling ties (e.g., 'average', 'min', 'max'). It essentially sorts the data and assigns a position.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 32,
+    "question": "Which method is used to replace values based on a dictionary mapping old values to new values?",
+    "options": [
+      "df.replace()",
+      "df.map()",
+      "df.update()",
+      "df.change()"
+    ],
+    "answer": "df.replace()",
+    "explanation": "`.replace()` accepts a dictionary `{old_value: new_value}` to substitute specific values throughout the DataFrame or Series. `map()` is used for element-wise function application or mapping via a dict/Series on a Series.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 33,
+    "question": "What does the `na_values` parameter in `read_csv` do?",
+    "options": [
+      "It fills existing NaN values with a specified number",
+      "It parses specific strings (like 'N/A' or 'NULL') as NaN during import",
+      "It drops rows containing specified strings",
+      "It converts NaN to a string representation"
+    ],
+    "answer": "It parses specific strings (like 'N/A' or 'NULL') as NaN during import",
+    "explanation": "`na_values` allows defining additional strings to be interpreted as missing values (NaN). This is useful for datasets that use custom tokens for missing data.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 34,
+    "question": "Which method is used to bin continuous values into discrete intervals?",
+    "options": [
+      "df.cut()",
+      "df.bin()",
+      "df.group()",
+      "df.discretize()"
+    ],
+    "answer": "df.cut()",
+    "explanation": "`pd.cut()` is used to segment and sort data values into bins. It is useful for converting a continuous variable into a categorical variable (e.g., ages into age groups).",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 35,
+    "question": "What is the behavior of `.astype()` when converting a float column containing NaN to an integer type?",
+    "options": [
+      "It rounds the float and converts successfully",
+      "It raises a ValueError because integers cannot hold NaN",
+      "It converts the column, replacing NaN with 0",
+      "It automatically converts the column to the nullable Int64 type"
+    ],
+    "answer": "It raises a ValueError because integers cannot hold NaN",
+    "explanation": "Standard NumPy integer dtypes (int32, int64) do not support NaN. To convert, you must either fill NaNs first or use the nullable `Int64` (capital I) dtype.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 36,
+    "question": "Which condition must be met for converting a string object column to the 'category' dtype to reduce memory usage?",
+    "options": [
+      "The column must contain only unique values to ensure efficient hashing.",
+      "The column must have a cardinality significantly lower than the total number of rows.",
+      "The column must be sorted prior to conversion to optimize dictionary lookups.",
+      "The column must contain only alphanumeric characters without special symbols."
+    ],
+    "answer": "The column must have a cardinality significantly lower than the total number of rows.",
+    "explanation": "Categorical dtype stores data as integers mapping to a lookup table of unique values. Memory is saved only when the number of unique values (cardinality) is much smaller than the total row count, allowing the integers to be stored with fewer bits than the original strings.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 37,
+    "question": "In the context of pandas optimization, what is the primary performance benefit of using `df.eval()` for complex expressions involving multiple columns?",
+    "options": [
+      "It automatically parallelizes the operation across all available CPU cores.",
+      "It compiles the expression to machine code using JIT compilation.",
+      "It avoids allocating intermediate temporary arrays for each sub-expression.",
+      "It converts the DataFrame columns into sparse matrices for faster arithmetic."
+    ],
+    "answer": "It avoids allocating intermediate temporary arrays for each sub-expression.",
+    "explanation": "Standard pandas operations create temporary objects for intermediate steps (e.g., `temp = df.A + df.B`). `eval()` optimizes by evaluating the entire expression string at a lower level, avoiding these memory allocations.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 38,
+    "question": "When iterating over rows using `df.itertuples()`, how does the performance compare to `df.iterrows()`?",
+    "options": [
+      "`itertuples()` is slower because it returns a copy of the row data.",
+      "`itertuples()` is faster because it returns a namedtuple representing the row.",
+      "They are approximately equal in speed for DataFrames under 10,000 rows.",
+      "`itertuples()` is faster but cannot access columns by name."
+    ],
+    "answer": "`itertuples()` is faster because it returns a namedtuple representing the row.",
+    "explanation": "`itertuples()` returns a lightweight Python namedtuple, whereas `iterrows()` returns a Series for each row, which involves constructing a new Series object with dtype and index overhead for every iteration.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 39,
+    "question": "What is the specific behavior of the `usecols` parameter in `pd.read_csv()` regarding memory optimization?",
+    "options": [
+      "It loads columns into memory as sparse arrays by default.",
+      "It parses only the specified columns from the file into the DataFrame.",
+      "It loads all columns but drops the unspecified ones immediately after parsing.",
+      "It converts the unspecified columns to categorical dtype to save space."
+    ],
+    "answer": "It parses only the specified columns from the file into the DataFrame.",
+    "explanation": "Passing `usecols` ensures that `pandas` only allocates memory and performs parsing logic for the explicitly listed columns. This is significantly more efficient than filtering after loading the full DataFrame.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 40,
+    "question": "Which argument in `pd.read_csv()` should be utilized to process a file larger than available RAM in smaller, manageable pieces?",
+    "options": [
+      "linesize",
+      "buffer",
+      "chunksize",
+      "batch"
+    ],
+    "answer": "chunksize",
+    "explanation": "Setting `chunksize` returns a `TextFileReader` object, allowing iteration over the CSV in segments. This enables processing data that exceeds memory capacity without loading the entire file at once.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 41,
+    "question": "What is a prerequisite for performing a vectorized string operation (e.g., `df['col'].str.contains('pattern')`) to function correctly?",
+    "options": [
+      "The DataFrame must be sorted by the target column.",
+      "The column must be of object or string dtype.",
+      "The column must not contain any missing values (NaN).",
+      "The pattern must be a compiled regular expression object."
+    ],
+    "answer": "The column must be of object or string dtype.",
+    "explanation": "The `.str` accessor is optimized for pandas Series containing strings (stored as object dtype). If the column is numeric or another type, the accessor will raise an AttributeError.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 42,
+    "question": "When using `pd.to_numeric()` with the `downcast` parameter set to 'integer', what happens to floating-point values that are effectively integers (e.g., 5.0)?",
+    "options": [
+      "They are converted to the smallest unsigned integer type that can hold the value.",
+      "They are converted to float32 to save memory, retaining the decimal.",
+      "They raise a ValueError because integers cannot be downcast from floats.",
+      "They are converted to the smallest signed integer type that can hold the value."
+    ],
+    "answer": "They are converted to the smallest signed integer type that can hold the value.",
+    "explanation": "The 'integer' downcast option casts values to the smallest compatible signed integer type (int8, int16, int32) based on the value's magnitude. (Note: 'unsigned' is a separate option).",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 43,
+    "question": "How does the `copy-on-write` mechanism (experimental/modern pandas) affect chained assignment operations?",
+    "options": [
+      "It automatically converts chained assignment into `inplace=True` operations.",
+      "It triggers a SettingWithCopyWarning to prevent potential data corruption.",
+      "It ensures that modifications trigger a copy of the data only when the data is shared.",
+      "It forces all assignments to return a new DataFrame regardless of context."
+    ],
+    "answer": "It ensures that modifications trigger a copy of the data only when the data is shared.",
+    "explanation": "With Copy-on-Write enabled, pandas delays copying data until a modification is actually made to a view that is referenced elsewhere. This prevents the `SettingWithCopyWarning` and makes behavior more predictable.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 44,
+    "question": "Which pandas method allows for efficient grouping by a function applied to the index, rather than a column label?",
+    "options": [
+      "df.groupby(level=0)",
+      "df.groupby(by=df.index)",
+      "df.groupby(pd.Grouper(freq='D'))",
+      "df.set_index('col').groupby(level=0)"
+    ],
+    "answer": "df.groupby(by=df.index)",
+    "explanation": "Passing a Series or array of the same length as the index to the `by` argument allows grouping by computed values. `groupby(level=0)` groups by the index values themselves, not a function applied to them.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 45,
+    "question": "What is the primary distinction between `df.merge()` and `df.join()`?",
+    "options": [
+      "`merge` can only join on columns, while `join` can only join on the index.",
+      "`merge` is an inner join by default, while `join` is a left join by default.",
+      "`merge` is optimized for single-key joins, while `join` is for multi-key joins.",
+      "`merge` supports the 'how' argument, while `join` does not."
+    ],
+    "answer": "`merge` can only join on columns, while `join` can only join on the index.",
+    "explanation": "While `merge` is the underlying function for both, `join` is a convenience method specifically designed to merge on indices. `merge` is more flexible and is used to merge on columns.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 46,
+    "question": "In a MultiIndex DataFrame, what is the default behavior of the `droplevel()` method?",
+    "options": [
+      "It removes the specified levels and creates a flat Index.",
+      "It removes the specified levels and creates a MultiIndex with remaining levels.",
+      "It flattens the MultiIndex into a single level of tuples.",
+      "It drops rows where the specified index levels are NaN."
+    ],
+    "answer": "It removes the specified levels and creates a MultiIndex with remaining levels.",
+    "explanation": "`droplevel` removes the specified level(s) from the hierarchy. If more than one level remains, the result is still a MultiIndex; if only one remains, it becomes a standard Index.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 47,
+    "question": "When using `pd.cut()` to bin continuous data, which parameter determines whether the right edge of the bin interval is inclusive?",
+    "options": [
+      "closed",
+      "inclusive",
+      "right",
+      "side"
+    ],
+    "answer": "right",
+    "explanation": "By default, `pd.cut` includes the right edge of the bin interval `(a, b]`. The `right=False` parameter toggles this to include the left edge `[a, b)` instead. `closed` is used in `interval_range`, not `cut`.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 48,
+    "question": "What is the specific effect of passing `memory_usage='deep'` to the `df.info()` method?",
+    "options": [
+      "It scans system RAM to calculate the total memory footprint of the Python interpreter.",
+      "It performs a detailed analysis of object dtypes to calculate actual string memory usage.",
+      "It forces the garbage collector to run before calculating memory usage.",
+      "It converts object columns to category to estimate potential memory savings."
+    ],
+    "answer": "It performs a detailed analysis of object dtypes to calculate actual string memory usage.",
+    "explanation": "Object dtype memory usage is typically an estimate. The 'deep' argument introspects the actual strings held in the object columns to calculate the true memory consumption.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 49,
+    "question": "Which technique allows referencing an external variable inside a `df.query()` string?",
+    "options": [
+      "Prepending the variable name with a dollar sign ($var).",
+      "Prepending the variable name with an at sign (@var).",
+      "Passing the variable as a dictionary to the `vars` argument.",
+      "Using standard Python f-string formatting within the query string."
+    ],
+    "answer": "Prepending the variable name with an at sign (@var).",
+    "explanation": "The `query()` method uses the `@` character to distinguish variables from column names. This allows accessing Python variables in the local environment within the query expression.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 50,
+    "question": "What is the result of performing a boolean indexing operation where the boolean array is shorter than the DataFrame index?",
+    "options": [
+      "The operation raises an IndexError.",
+      "The operation aligns the boolean array based on the index labels, not position.",
+      "The operation recycles the boolean array values.",
+      "The operation applies the boolean mask only to the first N rows."
+    ],
+    "answer": "The operation aligns the boolean array based on the index labels, not position.",
+    "explanation": "Pandas aligns data based on index labels. If the boolean array is a Series with a matching index, it aligns; otherwise, if it is a raw list/np.array of different length, it raises an IndexError.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 51,
+    "question": "How does the `as_index=False` parameter in `df.groupby()` alter the output structure?",
+    "options": [
+      "It prevents the groupby keys from being used as the DataFrame index.",
+      "It resets the index of the original DataFrame before grouping.",
+      "It sorts the resulting DataFrame by the group keys.",
+      "It converts the grouped object into a NumPy array."
+    ],
+    "answer": "It prevents the groupby keys from being used as the DataFrame index.",
+    "explanation": "By default, `groupby` places the grouping keys in the index. Setting `as_index=False` keeps the grouping keys as standard columns and returns a RangeIndex.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 52,
+    "question": "Which method is most efficient for checking if a specific value exists anywhere in a DataFrame?",
+    "options": [
+      "df.isin([value]).any().any()",
+      "df.applymap(lambda x: x == value).any().any()",
+      "value in df.values",
+      "df.query('col == @value')"
+    ],
+    "answer": "df.isin([value]).any().any()",
+    "explanation": "While `value in df.values` works, it creates a list of every item first. `df.isin()` is vectorized and stops early if possible via `any()`, making it generally more robust and readable for this specific check.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 53,
+    "question": "What is the technical difference between `df.stack()` and `df.melt()`?",
+    "options": [
+      "`stack` pivots columns to rows creating a MultiIndex, while `melt` unpivots to a specific format.",
+      "`stack` converts wide to long format, while `melt` converts long to wide format.",
+      "`stack` requires unique index values, while `melt` handles duplicates automatically.",
+      "`stack` works only on numeric data, while `melt` works on strings."
+    ],
+    "answer": "`stack` pivots columns to rows creating a MultiIndex, while `melt` unpivots to a specific format.",
+    "explanation": "`stack()` compresses a level in the column axis onto the index axis, resulting in a MultiIndex Series/DataFrame. `melt()` turns specific columns into 'variable' and 'value' identifier columns, generally reshaping the dataframe without necessarily creating a MultiIndex.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 54,
+    "question": "When using `df.loc` to slice rows (e.g., `df.loc['A':'C']`), which of the following is true regarding the endpoints?",
+    "options": [
+      "The start index is inclusive and the end index is exclusive.",
+      "Both the start and end indices are inclusive.",
+      "Both the start and end indices are exclusive.",
+      "It depends on whether the index is sorted or not."
+    ],
+    "answer": "Both the start and end indices are inclusive.",
+    "explanation": "Pandas slicing with labels (via `.loc`) is inclusive of both the start and end points, unlike standard Python slicing which is end-exclusive. This applies to both numeric and string indices.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 55,
+    "question": "What is the function of the `errors='coerce'` argument in `pd.to_numeric()`?",
+    "options": [
+      "It raises an error if the column contains non-numeric types.",
+      "It converts non-convertible values to NaN.",
+      "It attempts to coerce the column into a categorical type.",
+      "It ignores rows containing errors and returns the rest."
+    ],
+    "answer": "It converts non-convertible values to NaN.",
+    "explanation": "The default behavior (`errors='raise'`) throws an exception. Setting `errors='coerce'` forces invalid parsing (like text) to become `NaN`, allowing the rest of the column to be converted to numeric.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 56,
+    "question": "Which method creates a CategoricalIndex from a DataFrame column?",
+    "options": [
+      "df.set_index('col', dtype='category')",
+      "df['col'].astype('category').set_index('col')",
+      "pd.CategoricalIndex(df['col'])",
+      "df.index = pd.Categorical(df['col'])"
+    ],
+    "answer": "df.index = pd.Categorical(df['col'])",
+    "explanation": "Setting `df.index` to a `pd.Categorical` object converts the index to a `CategoricalIndex`. While `astype('category')` converts the *column* data, it does not automatically move it to the index unless chained with `set_index`.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 57,
+    "question": "In the context of window functions, what does the `min_periods` parameter in `rolling()` control?",
+    "options": [
+      "The minimum size of the window before a calculation is performed.",
+      "The minimum number of non-NaN values required to calculate a result.",
+      "The minimum number of periods required to shift the window.",
+      "The minimum time offset for time-based windows."
+    ],
+    "answer": "The minimum number of non-NaN values required to calculate a result.",
+    "explanation": "While the window might be size N, if there are NaNs at the edges, fewer values exist. `min_periods` sets the threshold for how many valid observations are needed to produce a non-NaN result.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 58,
+    "question": "Which of the following correctly describes the behavior of the `transform()` method when applied to a GroupBy object?",
+    "options": [
+      "It returns a scalar value for each group.",
+      "It returns a DataFrame with the same shape as the input.",
+      "It returns a DataFrame reduced by the number of groups.",
+      "It filters the groups based on a boolean condition."
+    ],
+    "answer": "It returns a DataFrame with the same shape as the input.",
+    "explanation": "Unlike `agg()` or `apply()` which can reduce data, `transform()` returns a Series or DataFrame having the same index as the original object, filled with the grouped calculation results.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 59,
+    "question": "What is the primary use case for `pd.factorize()`?",
+    "options": [
+      "To perform one-hot encoding on a DataFrame.",
+      "To convert a 1D array into categorical numeric codes and unique values.",
+      "To normalize numerical data to a range between 0 and 1.",
+      "To find the prime factors of the integer values in a Series."
+    ],
+    "answer": "To convert a 1D array into categorical numeric codes and unique values.",
+    "explanation": "`factorize()` encodes object values as enumerative types (integers), identifying unique values. This is useful for converting string columns to integers for analysis or as a precursor to memory optimization.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 60,
+    "question": "When concatenating DataFrames using `pd.concat()`, what is the effect of `keys=['a', 'b']`?",
+    "options": [
+      "It filters the DataFrames to include only columns 'a' and 'b'.",
+      "It creates a hierarchical index (MultiIndex) on the concatenation axis.",
+      "It renames the columns of the first DataFrame to 'a' and the second to 'b'.",
+      "It performs an outer join specifically on columns 'a' and 'b'."
+    ],
+    "answer": "It creates a hierarchical index (MultiIndex) on the concatenation axis.",
+    "explanation": "The `keys` argument adds an outer level to the index, allowing you to identify which original DataFrame a specific row came from in the resulting concatenated object.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 61,
+    "question": "How does `df.append()` (deprecated) compare to `pd.concat()` in modern pandas versions?",
+    "options": [
+      "`df.append()` is faster for single-row additions.",
+      "`df.append()` creates a new object every time, while `pd.concat()` modifies in place.",
+      "`df.append()` was an alias for `pd.concat()` that was removed for performance reasons.",
+      "There is no difference; `pd.concat()` is just the newer name."
+    ],
+    "answer": "`df.append()` was an alias for `pd.concat()` that was removed for performance reasons.",
+    "explanation": "`append()` was inefficient because it created a new copy of the entire DataFrame every time it was called within a loop. `pd.concat()` is the explicit, optimized way to join objects.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 62,
+    "question": "What is the correct syntax to access the value at row label 5, column 'A' using the `at` accessor?",
+    "options": [
+      "df.at[5, 'A']",
+      "df.at['A', 5]",
+      "df.at[5]['A']",
+      "df.loc[5, 'A'].at"
+    ],
+    "answer": "df.at[5, 'A']",
+    "explanation": "The `at` accessor takes the row label first, then the column label (e.g., `at[row, col]`). It is optimized for fast scalar access compared to `loc`.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 63,
+    "question": "Which parameter in `read_csv` should be adjusted if a date column is being parsed incorrectly as 'MM/DD/YYYY' instead of 'DD/MM/YYYY'?",
+    "options": [
+      "date_parser",
+      "dayfirst",
+      "infer_datetime_format",
+      "format"
+    ],
+    "answer": "dayfirst",
+    "explanation": "Setting `dayfirst=True` indicates that the first value in the ambiguous date format is the day. Alternatively, providing an explicit `format` string (e.g., '%d/%m/%Y') is the most robust solution.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 64,
+    "question": "What is the impact of setting `dtype_backend='pyarrow'` in pandas operations (requires PyArrow installed)?",
+    "options": [
+      "It converts all objects to Categorical types automatically.",
+      "It uses Apache Arrow-backed data structures for reduced memory and faster operations.",
+      "It compiles all operations to C extensions.",
+      "It enforces strictly typed schemas preventing new columns."
+    ],
+    "answer": "It uses Apache Arrow-backed data structures for reduced memory and faster operations.",
+    "explanation": "The PyArrow backend utilizes zero-copy in-memory structures from Apache Arrow, which are generally more memory efficient and faster for string/hashing operations than standard NumPy-based pandas objects.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 65,
+    "question": "When using `df.sample(frac=0.5)`, which statistical concept is implicitly utilized to select rows?",
+    "options": [
+      "Systematic sampling",
+      "Stratified sampling",
+      "Simple random sampling without replacement",
+      "Simple random sampling with replacement"
+    ],
+    "answer": "Simple random sampling without replacement",
+    "explanation": "By default, `sample()` selects rows randomly without `replace=False`. It does not respect strata unless `weights` or group-wise application is used manually.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 66,
+    "question": "What is the purpose of the `inplace=True` argument in pandas methods?",
+    "options": [
+      "To modify the underlying data structure directly and return None.",
+      "To ensure the operation is atomic and thread-safe.",
+      "To modify the object and return a reference to the same object.",
+      "To suppress the SettingWithCopyWarning."
+    ],
+    "answer": "To modify the underlying data structure directly and return None.",
+    "explanation": "When `inplace=True`, the operation modifies the object directly and returns `None`. This prevents the creation of a copy of the data, saving memory, though modern pandas often prefers chaining `df = df.method()`.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 67,
+    "question": "Which method is specifically designed to handle \"ragged\" arrays (arrays with different lengths) in a DataFrame?",
+    "options": [
+      "df.explode()",
+      "df.unstack()",
+      "df.normalize()",
+      "df.fillna(method='ffill')"
+    ],
+    "answer": "df.explode()",
+    "explanation": "`explode()` takes a column containing lists (or tuples/series) and 'explodes' them so that each element in the list gets its own row, duplicating the index values for the other columns.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 68,
+    "question": "How does the `method='ffill'` argument in `df.reindex()` behave regarding missing labels?",
+    "options": [
+      "It raises a KeyError if labels are missing.",
+      "It propagates the last valid observation forward to fill missing labels.",
+      "It interpolates linearly between the nearest existing labels.",
+      "It fills missing labels with the mean of the column."
+    ],
+    "answer": "It propagates the last valid observation forward to fill missing labels.",
+    "explanation": "When reindexing, if new labels are introduced, `method='ffill'` (forward fill) carries the value from the previous valid index forward to cover the new missing index.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 69,
+    "question": "What is the result of `df.corrwith(series)`?",
+    "options": [
+      "A DataFrame of pairwise correlations between df columns and the series.",
+      "A Series of correlations computed between each df column and the series.",
+      "A scalar value representing the average correlation.",
+      "A boolean mask indicating significant correlations."
+    ],
+    "answer": "A Series of correlations computed between each df column and the series.",
+    "explanation": "`corrwith` computes pairwise correlations. If a Series is passed, it aligns the index with the DataFrame columns and returns a Series containing the correlation coefficients.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 70,
+    "question": "Which operator is overloaded in pandas to perform element-wise logical OR on two DataFrames?",
+    "options": [
+      "pipe",
+      "|",
+      "or",
+      "||"
+    ],
+    "answer": "|",
+    "explanation": "Pandas overloads the bitwise operators `|` (or), `&` (and), and `~` (not) to perform element-wise boolean logic. The keyword `or` cannot be overloaded in Python and checks truthiness of the whole object.",
+    "difficulty": "Intermediate"
+  }
+]
