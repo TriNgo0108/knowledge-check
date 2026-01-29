@@ -1,5 +1,6 @@
 import time
 import json
+import json_repair
 from zai import ZaiClient
 
 from .config import ZAI_API_KEY, GLM_MODEL, ZAI_BASE_URL
@@ -102,31 +103,22 @@ class LLMClient:
 
     def _parse_response(self, content: str) -> list[dict]:
         """Parse LLM response to extract JSON questions."""
-        # Try to find JSON array in response
-        content = content.strip()
-
-        # Remove markdown code blocks if present
-        if content.startswith("```"):
-            lines = content.splitlines()
-            if lines[0].strip().startswith("```"):
-                lines = lines[1:]
-            if lines and lines[-1].strip() == "```":
-                lines = lines[:-1]
-            content = "\n".join(lines)
-
-        # Find JSON array
-        start = content.find("[")
-        end = content.rfind("]") + 1
-
-        if start != -1 and end > start:
-            json_str = content[start:end]
-            return json.loads(json_str)
-
-        # If headers/mime-type works perfectly, we might get pure JSON,
-        # but robust parsing is still good.
         try:
-            return json.loads(content)
-        except:
-            pass
+            # Try to repair and parse JSON from the content
+            # json_repair handles markdown blocks, valid/invalid JSON, etc.
+            parsed = json_repair.repair_json(content, return_objects=True)
 
-        raise ValueError("Could not find valid JSON array in response")
+            if isinstance(parsed, list):
+                return parsed
+
+            # If it returned a single dict, check if it wraps the list
+            if isinstance(parsed, dict):
+                if "questions" in parsed and isinstance(parsed["questions"], list):
+                    return parsed["questions"]
+                return [parsed]
+
+            raise ValueError(f"Parsed content is not a list or dict: {type(parsed)}")
+
+        except Exception as e:
+            # If json_repair fails entirely, we likely really don't have JSON
+            raise ValueError(f"Failed to parse JSON response: {e}") from e
