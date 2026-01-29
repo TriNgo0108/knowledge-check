@@ -45,7 +45,7 @@ class QuestionGenerator:
         # Step 1: Search for latest content
         print(f"\n[1/3] Searching for latest {topic} content...")
         search_query = TOPIC_SEARCH_QUERIES.get(topic, topic)
-        content = self.search_client.search_topic(f"{search_query} 2026 latest trends")
+        content = self.search_client.search_topic(search_query)
         print(f"      Found {len(content)} characters of content")
 
         # Step 2: Generate questions by difficulty

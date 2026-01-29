@@ -39,20 +39,20 @@ TOPICS = [
 
 # Topic display names for search queries
 TOPIC_SEARCH_QUERIES = {
-    "grammar": "English grammar rules and common mistakes",
-    "pronunciation": "English pronunciation IPA phonetics",
-    "pandas": "Python pandas dataframe data analysis",
-    "sql": "SQL database queries best practices",
-    "postgres": "PostgreSQL database advanced features",
-    "aws": "AWS cloud services architecture",
-    "python": "Python programming best practices",
-    "javascript": "JavaScript ES6+ modern development",
-    "typescript": "TypeScript type system patterns",
-    "react": "React.js hooks components patterns",
-    "systemdesign": "system design architecture scalability",
-    "designpatterns": "software design patterns SOLID principles",
-    "algorithms": "algorithms data structures complexity",
-    "aiagents": "AI agents LLM autonomous systems",
+    "grammar": "advanced English grammar rules syntax nuances",
+    "pronunciation": "English phonetics IPA intonation rules patterns",
+    "pandas": "python pandas advanced patterns performance optimization",
+    "sql": "advanced sql query optimization window functions strategies",
+    "postgres": "postgresql internals architecture performance tuning features",
+    "aws": "aws solution architect professional deep dive services",
+    "python": "python advanced concepts garbage collection gil internals",
+    "javascript": "javascript engine internals event loop v8 optimization",
+    "typescript": "typescript utility types advanced patterns type gymnastics",
+    "react": "react internals reconciliation fiber concurrency patterns",
+    "systemdesign": "system design real world architectures scalability deep dive",
+    "designpatterns": "software design patterns enterprise architecture examples",
+    "algorithms": "advanced algorithms data structures competitive programming optimization",
+    "aiagents": "autonomous agents architecture cognitive architectures llm patterns",
 }
 
 # Question generation settings

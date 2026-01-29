@@ -83,48 +83,6 @@ function TopicCard({ topic, progress }: { topic: Topic; progress?: { correct: nu
       >
         {topic.title}
       </h3>
-      
-      {hasProgress ? (
-        <div className="w-full mt-1">
-          {/* Progress bar */}
-          <div className="w-full h-1.5 rounded-full overflow-hidden mb-2" style={{ background: 'var(--color-border)' }}>
-            <div 
-              className="h-full rounded-full transition-all duration-500"
-              style={{ 
-                width: `${progressPercent}%`,
-                background: `linear-gradient(90deg, ${topic.color}, ${topic.color}99)`
-              }}
-            />
-          </div>
-          {/* Stats */}
-          <div className="flex justify-center gap-3 text-xs font-medium">
-            <span className="text-correct flex items-center gap-1">
-              <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-              </svg>
-              {progress.correct}
-            </span>
-            <span className="text-wrong flex items-center gap-1">
-              <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
-              </svg>
-              {progress.wrong}
-            </span>
-            <span className="text-text-muted">{100 - answered} left</span>
-          </div>
-        </div>
-      ) : (
-        <span 
-          className="text-xs font-medium px-3 py-1 rounded-full transition-colors"
-          style={{ 
-            background: 'var(--color-bg-elevated)', 
-            color: 'var(--color-text-muted)',
-            border: '1px solid var(--color-border)'
-          }}
-        >
-          100 questions
-        </span>
-      )}
     </Link>
   );
 }
