@@ -127,6 +127,7 @@ Your goal is to test *precise technical knowledge* and *conceptual understanding
    - 3 Distractors: Plausible misconceptions or related but incorrect terms.
    - NO "All of the above", "None of the above", or "A and B".
    - NO ambiguity.
+   - Answer MUST be one of the options.
 3. **Explanation**:
    - Be extremely concise (max 3 sentences).
    - Explain strictly WHY the answer is correct and WHY the key distractors are wrong.
