@@ -1,0 +1,912 @@
+[
+  {
+    "id": 1,
+    "question": "What is the primary function of the Global Interpreter Lock (GIL) in CPython?",
+    "options": [
+      "To allow multiple threads to execute Python bytecodes simultaneously on multi-core CPUs",
+      "To prevent multiple threads from executing Python bytecodes at once",
+      "To manage automatic garbage collection of unreferenced objects",
+      "To synchronize access to file system resources during I/O operations"
+    ],
+    "answer": "To prevent multiple threads from executing Python bytecodes at once",
+    "explanation": "The GIL is a mutex that ensures only one thread executes Python bytecode at a time, simplifying memory management. It prevents parallelism for CPU-bound tasks but is released during I/O operations. It does not manage garbage collection directly, though it simplifies the GC implementation.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 2,
+    "question": "In CPython memory management, what is the primary mechanism used to deallocate memory immediately when an object is no longer referenced?",
+    "options": [
+      "Mark and Sweep garbage collection",
+      "Reference counting",
+      "Generational garbage collection",
+      "Biased reference counting"
+    ],
+    "answer": "Reference counting",
+    "explanation": "CPython primarily uses reference counting, where objects are deallocated as soon as their reference count reaches zero. Mark and sweep (generational GC) handles circular references that reference counting cannot resolve. Biased reference counting is an optimization for free-threaded Python, not the standard primary mechanism.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 3,
+    "question": "Which of the following data types is immutable in Python?",
+    "options": [
+      "List",
+      "Dictionary",
+      "Tuple",
+      "Set"
+    ],
+    "answer": "Tuple",
+    "explanation": "Tuples cannot be modified after creation, making them immutable. Lists, dictionaries, and sets are mutable, meaning their contents can be changed without changing their identity.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 4,
+    "question": "What determines the scope of a variable in Python?",
+    "options": [
+      "The data type of the variable",
+      "The indentation level where the variable is assigned",
+      "The naming convention used for the variable",
+      "The value assigned to the variable"
+    ],
+    "answer": "The indentation level where the variable is assigned",
+    "explanation": "In Python, scope is defined by the block of code determined by indentation (functions, classes, modules). Data types and naming conventions do not affect scope. Values assigned are irrelevant to scope determination.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 5,
+    "question": "Which built-in function allows you to iterate over multiple iterables in parallel, stopping when the shortest iterable is exhausted?",
+    "options": [
+      "map()",
+      "filter()",
+      "zip()",
+      "enumerate()"
+    ],
+    "answer": "zip()",
+    "explanation": "zip() aggregates elements from multiple iterables into tuples and stops when the shortest input iterable is exhausted. map() applies a function to all items, filter() filters items based on a predicate, and enumerate() adds a counter to an iterable.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 6,
+    "question": "What happens when you compare two objects using the `is` operator?",
+    "options": [
+      "It checks if the values of the objects are equal",
+      "It checks if the objects are the same instance in memory",
+      "It checks if the objects are of the same type",
+      "It checks if the objects have the same attributes"
+    ],
+    "answer": "It checks if the objects are the same instance in memory",
+    "explanation": "The `is` operator checks for identity (id(a) == id(b)), whereas `==` checks for value equality. Two distinct objects with the same value will return False for `is`.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 7,
+    "question": "Why is using a mutable default argument (e.g., `def func(lst=[])`) considered a bad practice in Python?",
+    "options": [
+      "It causes a syntax error during compilation",
+      "It creates a new list every time the function is called, hurting performance",
+      "The default list is created once at function definition, leading to shared state across calls",
+      "Mutable objects cannot be used as default arguments"
+    ],
+    "answer": "The default list is created once at function definition, leading to shared state across calls",
+    "explanation": "Default arguments are evaluated only once when the function is defined, not every time it is called. Consequently, the same list object is reused for all calls, causing unintended persistence of data between invocations.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 8,
+    "question": "Which type of exception is raised when a variable is referenced before it has been assigned a value?",
+    "options": [
+      "ValueError",
+      "TypeError",
+      "NameError",
+      "AttributeError"
+    ],
+    "answer": "NameError",
+    "explanation": "A NameError is raised when a local or global name is not found. ValueError occurs when an argument has the right type but an inappropriate value, and TypeError occurs when an operation is applied to an object of incorrect type.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 9,
+    "question": "How does Python handle integer division if you want to discard the fractional part (floor division)?",
+    "options": [
+      "Using the `/` operator",
+      "Using the `%` operator",
+      "Using the `//` operator",
+      "Using the `int()` function only"
+    ],
+    "answer": "Using the `//` operator",
+    "explanation": "The `//` operator performs floor division, returning the largest integer less than or equal to the result. The `/` operator always returns a float, and `%` returns the remainder.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 10,
+    "question": "What is the result of the boolean expression `not (True or False)`?",
+    "options": [
+      "True",
+      "False",
+      "None",
+      "Error"
+    ],
+    "answer": "False",
+    "explanation": "The expression inside the parentheses evaluates to `True` because `True or False` is True. The `not` operator inverts this, resulting in `False`.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 11,
+    "question": "In Python 3, what does the `print()` function return by default?",
+    "options": [
+      "The string printed to stdout",
+      "None",
+      "0",
+      "True"
+    ],
+    "answer": "None",
+    "explanation": "The `print()` function writes to the standard output stream but returns `None`. This allows `print()` to be used in expressions without affecting the logic flow, though it is rarely used for its return value.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 12,
+    "question": "Which method is used to add an element to the end of a list?",
+    "options": [
+      "append()",
+      "insert()",
+      "extend()",
+      "add()"
+    ],
+    "answer": "append()",
+    "explanation": "list.append(x) adds item x to the end of the list. insert(i, x) inserts at index i, and extend(iterable) adds multiple items. `add()` is a set method.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 13,
+    "question": "Which of the following correctly demonstrates the syntax for a list comprehension?",
+    "options": [
+      "[x for x in items]",
+      "{x for x in items}",
+      "(x for x in items)",
+      "x for x in items"
+    ],
+    "answer": "[x for x in items]",
+    "explanation": "List comprehensions use square brackets `[]`. Curly braces `{}` create a set/dict comprehension, and parentheses `()` create a generator expression. The syntax requires the brackets.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 14,
+    "question": "What is the purpose of the `pass` statement in Python?",
+    "options": [
+      "To skip the next iteration of a loop",
+      "To indicate a placeholder where code is required syntactically but no action is needed",
+      "To exit a function immediately",
+      "To raise an exception intentionally"
+    ],
+    "answer": "To indicate a placeholder where code is required syntactically but no action is needed",
+    "explanation": "pass is a null operation; when executed, nothing happens. It is useful as a placeholder in empty function bodies or control structures where syntax demands code.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 15,
+    "question": "Which module is used to work with regular expressions in Python?",
+    "options": [
+      "regex",
+      "re",
+      "pyregex",
+      "string"
+    ],
+    "answer": "re",
+    "explanation": "The `re` module provides Perl-style regular expression operations in Python. There is no standard module named `regex` (though a third-party one exists), `pyregex`, or `string` for regex.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 16,
+    "question": "What is the output of `bool([])`?",
+    "options": [
+      "True",
+      "False",
+      "None",
+      "TypeError"
+    ],
+    "answer": "False",
+    "explanation": "Empty collections (lists, tuples, sets, dicts) are evaluated as False in a boolean context. Non-empty collections are evaluated as True.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 17,
+    "question": "How do you define a class method that receives the class (`cls`) as the first argument rather than the instance (`self`)?",
+    "options": [
+      "Using the @staticmethod decorator",
+      "Using the @classmethod decorator",
+      "Using the @property decorator",
+      "Using the self argument"
+    ],
+    "answer": "Using the @classmethod decorator",
+    "explanation": "The @classmethod decorator transforms a method so that it receives the class (`cls`) as the first implicit argument. @staticmethod receives no implicit first argument, and @property creates a getter.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 18,
+    "question": "Which of the following best describes a 'Dictionary' in Python?",
+    "options": [
+      "An ordered collection of elements",
+      "An unordered collection of key-value pairs",
+      "A mutable sequence of characters",
+      "An immutable set of unique elements"
+    ],
+    "answer": "An unordered collection of key-value pairs",
+    "explanation": "Dictionaries map unique keys to values. As of Python 3.7, they maintain insertion order, but they are fundamentally defined as mappings, not just sequences. Sets are collections of unique elements.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 19,
+    "question": "What happens when you attempt to access a key in a dictionary that does not exist using `d['key']`?",
+    "options": [
+      "It returns None",
+      "It returns False",
+      "It raises a KeyError",
+      "It adds the key with a value of None"
+    ],
+    "answer": "It raises a KeyError",
+    "explanation": "Direct access via square brackets `[]` raises a KeyError if the key is missing. The `.get()` method returns `None` (or a default) if the key is not found.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 20,
+    "question": "What is the result of the `set` operation `set([1, 2, 2, 3])`?",
+    "options": [
+      "[1, 2, 2, 3]",
+      "{1, 2, 2, 3}",
+      "{1, 2, 3}",
+      "{1, 3}"
+    ],
+    "answer": "{1, 2, 3}",
+    "explanation": "Sets automatically remove duplicate elements. The output will be a set containing only the unique items from the input iterable.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 21,
+    "question": "Which keyword is used to import specific modules or attributes from a module into the current namespace?",
+    "options": [
+      "include",
+      "require",
+      "from",
+      "import"
+    ],
+    "answer": "from",
+    "explanation": "The `from` keyword is used in conjunction with `import` to import specific attributes (e.g., `from math import sqrt`). `import` alone imports the whole module namespace.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 22,
+    "question": "In the context of the GIL, why is multithreading effective for I/O-bound tasks?",
+    "options": [
+      "The GIL is released while waiting for I/O operations to complete",
+      "I/O-bound tasks do not require the CPU",
+      "Python creates multiple processes automatically for I/O",
+      "The GIL increases the speed of network connections"
+    ],
+    "answer": "The GIL is released while waiting for I/O operations to complete",
+    "explanation": "During I/O operations (reading/writing files, network requests), the interpreter releases the GIL, allowing other threads to run. This masks the I/O latency with concurrent execution.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 23,
+    "question": "Which of the following is NOT a valid variable name in Python?",
+    "options": [
+      "_my_var",
+      "my_var",
+      "2cool4school",
+      "cool4school"
+    ],
+    "answer": "2cool4school",
+    "explanation": "Variable names cannot start with a digit. They must start with a letter or an underscore.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 24,
+    "question": "What does the `__init__` method do in a Python class?",
+    "options": [
+      "It initializes the class instance attributes (constructor)",
+      "It destroys the class instance",
+      "It creates the class object",
+      "It returns a string representation of the object"
+    ],
+    "answer": "It initializes the class instance attributes (constructor)",
+    "explanation": "`__init__` is called after the instance is created to initialize its attributes. `__new__` creates the instance, `__del__` destroys it, and `__str__` returns the string representation.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 25,
+    "question": "Which function is used to open a file for reading in Python?",
+    "options": [
+      "open()",
+      "read()",
+      "file()",
+      "load()"
+    ],
+    "answer": "open()",
+    "explanation": "The `open()` function returns a file object and is the standard way to open files. `read()` is a method of the file object, and `file()` is the deprecated old class for files.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 26,
+    "question": "What happens when a `try` block raises an exception that does not match any of the `except` blocks associated with it?",
+    "options": [
+      "The program continues execution as if nothing happened",
+      "The exception is logged and ignored",
+      "The exception is propagated up to the calling scope",
+      "The finally block is skipped"
+    ],
+    "answer": "The exception is propagated up to the calling scope",
+    "explanation": "If no exception handler matches, the exception bubbles up the call stack. The `finally` block (if present) still executes before the exception propagates.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 27,
+    "question": "What is the output of `list(range(2, 5))`?",
+    "options": [
+      "[2, 3, 4, 5]",
+      "[2, 3, 4]",
+      "[3, 4, 5]",
+      "[0, 1, 2, 3, 4]"
+    ],
+    "answer": "[2, 3, 4]",
+    "explanation": "The `range(start, stop)` function generates numbers starting from `start` up to, but not including, `stop`. Therefore, it generates 2, 3, and 4.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 28,
+    "question": "What does the `len()` function return when applied to a string?",
+    "options": [
+      "The size of the string in bytes",
+      "The number of characters in the string",
+      "The memory address of the string",
+      "The type of the string"
+    ],
+    "answer": "The number of characters in the string",
+    "explanation": "For strings, `len()` returns the count of characters (code points). It does not return byte size (use `sys.getsizeof` or encoding length for that).",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 29,
+    "question": "Which comparison operator checks if two variables reference the exact same object in memory?",
+    "options": [
+      "==",
+      "=",
+      "is",
+      "==="
+    ],
+    "answer": "is",
+    "explanation": "The `is` operator checks object identity (memory address). `==` checks value equality. `=` is assignment, and `===` does not exist in Python.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 30,
+    "question": "What is the correct syntax for creating a function that accepts any number of positional arguments?",
+    "options": [
+      "def func(*args):",
+      "def func(**args):",
+      "def func(&args):",
+      "def func(args...):"
+    ],
+    "answer": "def func(*args):",
+    "explanation": "The single asterisk `*` syntax collects extra positional arguments into a tuple named `args`. The double asterisk `**` collects extra keyword arguments into a dictionary.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 31,
+    "question": "Which data structure is typically used to implement a Last-In, First-Out (LIFO) strategy in Python?",
+    "options": [
+      "Queue",
+      "List (used as a stack)",
+      "Dictionary",
+      "Set"
+    ],
+    "answer": "List (used as a stack)",
+    "explanation": "Lists support `append()` and `pop()`, making them efficient for stack behavior (LIFO). Queues are FIFO (First-In, First-Out).",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 32,
+    "question": "What is the term for the process of converting an object into a stream of bytes to store it in a file or database?",
+    "options": [
+      "Serialization (or pickling)",
+      "Compilation",
+      "Encoding",
+      "Encryption"
+    ],
+    "answer": "Serialization (or pickling)",
+    "explanation": "Serialization converts data structures into a format (bytes) suitable for storage/transmission. In Python, this is specifically called pickling. Encoding transforms text to bytes.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 33,
+    "question": "How do you write a single-line comment in Python?",
+    "options": [
+      "// This is a comment",
+      "# This is a comment",
+      "/* This is a comment */",
+      "-- This is a comment"
+    ],
+    "answer": "# This is a comment",
+    "explanation": "The hash symbol `#` denotes a single-line comment. `//` is used in JavaScript/C++, `/* */` for multi-line in C/Java, and `--` in SQL.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 34,
+    "question": "What is the result of `3 * 'a'`?",
+    "options": [
+      "Error",
+      "'aaa'",
+      "'3a'",
+      "9"
+    ],
+    "answer": "'aaa'",
+    "explanation": "Sequence types (like strings and lists) support repetition using the multiplication operator, repeating the content of the sequence the specified number of times.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 35,
+    "question": "Which keyword is used to manually raise an exception in Python?",
+    "options": [
+      "throw",
+      "raise",
+      "catch",
+      "error"
+    ],
+    "answer": "raise",
+    "explanation": "The `raise` keyword is used to trigger an exception manually. `throw` is used in JavaScript/Java. `catch` is not a keyword in Python (part of `except` syntax).",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 36,
+    "question": "Which mechanism in CPython specifically ensures thread safety during object reference counting by default?",
+    "options": [
+      "Atomic operations on reference counts",
+      "The Global Interpreter Lock (GIL)",
+      "Reference counting is inherently thread-safe without locks",
+      "Cycle detection algorithm"
+    ],
+    "answer": "The Global Interpreter Lock (GIL)",
+    "explanation": "The GIL prevents multiple threads from executing Python bytecode simultaneously, ensuring that reference counts are modified by only one thread at a time. Atomic operations are generally not used for standard reference counting in legacy CPython.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 37,
+    "question": "What is the primary limitation of CPython's reference counting mechanism that necessitates a generational garbage collector?",
+    "options": [
+      "It cannot handle reference cycles",
+      "It is too slow for high-traffic systems",
+      "It causes memory fragmentation",
+      "It does not support user-defined types"
+    ],
+    "answer": "It cannot handle reference cycles",
+    "explanation": "Reference counting only deallocates objects when the count reaches zero. If two or more objects reference each other (a cycle), their counts never reach zero without a cycle detector (the garbage collector).",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 38,
+    "question": "How does CPython 3.13's 'Biased Reference Counting' improve performance in a free-threaded (no-GIL) context?",
+    "options": [
+      "It stores reference counts in a global hash table",
+      "It uses atomic operations for every reference count change",
+      "It biases ownership of references to a single thread to avoid atomic operations",
+      "It disables garbage collection entirely"
+    ],
+    "answer": "It biases ownership of references to a single thread to avoid atomic operations",
+    "explanation": "Biased reference counting assumes a single thread 'owns' the object. Operations from the owning thread do not require atomic synchronization, significantly reducing overhead compared to globally atomic reference counting.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 39,
+    "question": "In the context of Python's `asyncio`, what must a coroutine object do to actually run its code?",
+    "options": [
+      "Be called directly like a standard function",
+      "Be awaited on or scheduled explicitly on the event loop",
+      "Be wrapped in a `threading.Thread` object",
+      "Be converted to a generator using `yield`"
+    ],
+    "answer": "Be awaited on or scheduled explicitly on the event loop",
+    "explanation": "Calling a coroutine function returns a coroutine object which does nothing until it is awaited (driving it with `__await__`) or scheduled on the event loop (e.g., `create_task`).",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 40,
+    "question": "What is the output resolution order (MRO) algorithm used by modern Python classes?",
+    "options": [
+      "Depth-First Left-to-Right",
+      "Breadth-First Search",
+      "C3 Linearization",
+      "Monotonic Class Resolution"
+    ],
+    "answer": "C3 Linearization",
+    "explanation": "Python uses the C3 Linearization algorithm (also known as C3 superclass linearization) to calculate the Method Resolution Order, ensuring a consistent order that preserves local precedence and monotonicity.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 41,
+    "question": "Which special method allows a class to intercept attribute access (dot notation) for instances, behaving like a proxy?",
+    "options": [
+      "`__get__`",
+      "`__getattr__`",
+      "`__getattribute__`",
+      "`__setattr__`"
+    ],
+    "answer": "`__getattribute__`",
+    "explanation": "`__getattribute__` is called for *every* attribute access on an instance, allowing full interception. `__getattr__` is only called as a fallback if the attribute is not found through normal means.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 42,
+    "question": "Why is `multiprocessing` preferred over `threading` for CPU-bound tasks in CPython?",
+    "options": [
+      "Threads cannot be created in CPython",
+      "Multiprocessing avoids the GIL by using separate memory spaces",
+      "Multiprocessing uses shared memory which is faster",
+      "Threads are only available on Unix systems"
+    ],
+    "answer": "Multiprocessing avoids the GIL by using separate memory spaces",
+    "explanation": "Each process has its own Python interpreter and memory space, bypassing the GIL. Threads in a single process are constrained by the GIL, preventing true parallelism for CPU-bound bytecode.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 43,
+    "question": "What is the specific behavior of a 'Stop-the-World' pause in a thread-safe Garbage Collector (PEP 703)?",
+    "options": [
+      "The application exits immediately if a cycle is found",
+      "All mutator threads are paused while the GC scans the heap",
+      "The GC runs incrementally alongside application threads",
+      "Only the thread allocating memory is paused"
+    ],
+    "answer": "All mutator threads are paused while the GC scans the heap",
+    "explanation": "To safely inspect and modify object references without race conditions in a free-threaded environment, the GC must pause all other threads ('stop-the-world') to ensure the heap state remains stable.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 44,
+    "question": "Which built-in function creates a slice object that can be used to slice sequences?",
+    "options": [
+      "`slice()`",
+      "`range()`",
+      "`span()`",
+      "`segment()`"
+    ],
+    "answer": "`slice()`",
+    "explanation": "The `slice(start, stop, step)` built-in function creates a slice object. This object can be passed to a sequence's `__getitem__` method (e.g., `my_list[slice(1, 5)]`).",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 45,
+    "question": "What is the primary difference between a list comprehension and a generator expression?",
+    "options": [
+      "Generator expressions use parentheses and produce values lazily",
+      "List comprehensions are faster for infinite sequences",
+      "Generator expressions return a list immediately",
+      "List comprehensions cannot handle filters"
+    ],
+    "answer": "Generator expressions use parentheses and produce values lazily",
+    "explanation": "Generator expressions `(x for x in ...)` yield items one at a time and do not store the whole sequence in memory, unlike list comprehensions `[x for x in ...]` which build the entire list immediately.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 46,
+    "question": "In Python's data model, how are dictionary keys and set elements hashed?",
+    "options": [
+      "By their memory address (`id()`)",
+      "By the return value of the `__hash__()` method",
+      "By the string representation of the object",
+      "By the `__eq__()` method return value"
+    ],
+    "answer": "By the return value of the `__hash__()` method",
+    "explanation": "Objects used as dictionary keys or set elements must implement `__hash__()`, which returns an integer used for hash table lookup. `__eq__` is used to resolve collisions.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 47,
+    "question": "What is the correct argument signature for the `__exit__` method in a context manager?",
+    "options": [
+      "`__exit__(self)`",
+      "`__exit__(self, exc_type)`",
+      "`__exit__(self, exc_type, exc_value, traceback)`",
+      "`__exit__(self, exception)`"
+    ],
+    "answer": "`__exit__(self, exc_type, exc_value, traceback)`",
+    "explanation": "The `__exit__` method receives three arguments describing any exception raised in the block. If no exception occurred, all three arguments are `None`.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 48,
+    "question": "Which statement regarding the `global` and `nonlocal` keywords is correct?",
+    "options": [
+      "`global` allows modification of a variable in an enclosing function's scope",
+      "`nonlocal` binds a variable to the module-level namespace",
+      "`nonlocal` is used to refer to a variable in an enclosing (but non-global) scope",
+      "`global` is required to read variables defined outside a function"
+    ],
+    "answer": "`nonlocal` is used to refer to a variable in an enclosing (but non-global) scope",
+    "explanation": "`nonlocal` assigns variables to the nearest enclosing scope excluding globals. `global` assigns variables to the module-level scope. Reading does not require keywords.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 49,
+    "question": "What is the function of `__slots__` in a class definition?",
+    "options": [
+      "To restrict method visibility",
+      "To save memory by preventing the creation of `__dict__` and fixing attributes",
+      "To define abstract methods that must be implemented",
+      "To enable operator overloading"
+    ],
+    "answer": "To save memory by preventing the creation of `__dict__` and fixing attributes",
+    "explanation": "`__slots__` declares a fixed list of valid attribute names, allowing Python to store them in a tuple-like structure rather than a per-instance dictionary, saving significant memory.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 50,
+    "question": "What is the result of `bool([0])` in Python?",
+    "options": [
+      "True",
+      "False",
+      "0",
+      "TypeError"
+    ],
+    "answer": "True",
+    "explanation": "While the integer 0 is falsy, a list containing 0 is a non-empty container. Non-empty containers are truthy in Python.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 51,
+    "question": "How does the `functools.lru_cache` decorator handle mutable arguments?",
+    "options": [
+      "It deep copies them automatically",
+      "It raises a `TypeError` if arguments are not hashable",
+      "It converts them to immutable tuples",
+      "It ignores the cache for mutable arguments"
+    ],
+    "answer": "It raises a `TypeError` if arguments are not hashable",
+    "explanation": "`lru_cache` relies on a dictionary to map arguments to results. Dictionary keys must be hashable; passing unhashable types (like lists) raises a `TypeError`.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 52,
+    "question": "What is the `__mro__` attribute?",
+    "options": [
+      "A list of base classes in the order they are defined",
+      "A tuple of classes showing the method resolution order",
+      "A boolean indicating if multiple inheritance is used",
+      "A dictionary of inherited methods"
+    ],
+    "answer": "A tuple of classes showing the method resolution order",
+    "explanation": "`Class.__mro__` is a tuple containing the class itself and its superclasses in the order Python searches for methods (C3 linearization).",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 53,
+    "question": "Which module is used for low-level synchronization primitives like locks and semaphores in Python?",
+    "options": [
+      "`threading`",
+      "`multiprocessing`",
+      "`concurrent.futures`",
+      "`asyncio`"
+    ],
+    "answer": "`threading`",
+    "explanation": "The `threading` module provides high-level synchronization primitives (Lock, RLock, Semaphore, Event) built on top of the low-level `_thread` module.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 54,
+    "question": "What happens when you attempt to pickle an object containing a file handle?",
+    "options": [
+      "It works perfectly, restoring the file pointer on unpickling",
+      "It pickles the file content instead of the handle",
+      "It raises a `PicklingError` because file handles are not picklable",
+      "It automatically closes the file before pickling"
+    ],
+    "answer": "It raises a `PicklingError` because file handles are not picklable",
+    "explanation": "File handles (and other OS resources) hold state external to Python's memory and cannot be serialized by default pickling routines.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 55,
+    "question": "What does the `yield from` expression delegate to?",
+    "options": [
+      "A generator function or sub-iterator",
+      "A specific exception handler",
+      "A global variable in the module",
+      "The main thread of execution"
+    ],
+    "answer": "A generator function or sub-iterator",
+    "explanation": "`yield from` allows a generator to delegate part of its operations to another generator or sub-iterator, transparently yielding values from it.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 56,
+    "question": "Why is the `__init__.py` file used in Python packages?",
+    "options": [
+      "It serves as the main entry point for the application",
+      "It marks the directory as a Python package and can execute initialization code",
+      "It is required for the Python interpreter to find the directory",
+      "It defines the package version number only"
+    ],
+    "answer": "It marks the directory as a Python package and can execute initialization code",
+    "explanation": "The presence of `__init__.py` (even if empty) tells Python to treat the directory as a package. It is also executed when the package is imported, allowing setup logic.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 57,
+    "question": "What is the behavior of the `bisect` module in the standard library?",
+    "options": [
+      "Sorting unsorted lists",
+      "Maintaining a list in sorted order without resorting after every insertion",
+      "Binary searching files on disk",
+      "Compressing data structures"
+    ],
+    "answer": "Maintaining a list in sorted order without resorting after every insertion",
+    "explanation": "The `bisect` module provides algorithms like `insort` to insert elements into a list at the correct position to keep it sorted, and `bisect` to find insertion points efficiently.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 58,
+    "question": "In the context of CPython memory management, what is `mimalloc`?",
+    "options": [
+      "A deprecated memory allocator",
+      "A general-purpose memory allocator used to improve performance and fragmentation",
+      "A tool for measuring memory leaks",
+      "A specialized allocator for network sockets"
+    ],
+    "answer": "A general-purpose memory allocator used to improve performance and fragmentation",
+    "explanation": "Context indicates mimalloc is considered (e.g., in PEP 703 discussions) to replace the default allocator because it offers better performance and structure traversal capabilities for the GC.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 59,
+    "question": "What is the specific impact of the GIL on I/O-bound Python programs?",
+    "options": [
+      "It makes them run slower than single-threaded programs",
+      "It has negligible impact because the GIL is released while waiting for I/O",
+      "It completely prevents I/O operations from working",
+      "It requires the use of the `select` module"
+    ],
+    "answer": "It has negligible impact because the GIL is released while waiting for I/O",
+    "explanation": "The GIL is released during I/O operations (waiting for network/disk), allowing other threads to execute bytecode, making multithreading effective for I/O-bound concurrency.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 60,
+    "question": "What distinguishes a `descriptor` from a simple attribute assignment?",
+    "options": [
+      "Descriptors must be defined in a class",
+      "Descriptors have `__get__`, `__set__`, or `__delete__` methods",
+      "Descriptors cannot be integers",
+      "Descriptors are only used for properties"
+    ],
+    "answer": "Descriptors have `__get__`, `__set__`, or `__delete__` methods",
+    "explanation": "Any object implementing at least one of `__get__`, `__set__`, or `__delete__` is a descriptor, allowing it to control attribute access logic at the class level.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 61,
+    "question": "What is the result of `1 < 2 < 3` in Python?",
+    "options": [
+      "True",
+      "False",
+      "SyntaxError",
+      "1"
+    ],
+    "answer": "True",
+    "explanation": "Python supports chained comparisons. `1 < 2 < 3` is evaluated as `(1 < 2) and (2 < 3)`, where `2` is evaluated only once.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 62,
+    "question": "Which special method is invoked when an object is called like a function (e.g., `obj()`)?",
+    "options": [
+      "`__call__`",
+      "`__invoke__`",
+      "`__init__`",
+      "`__run__`"
+    ],
+    "answer": "`__call__`",
+    "explanation": "The `__call__` method allows an instance of a class to be called as if it were a function.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 63,
+    "question": "What does the `gc` module's `get_count()` function return?",
+    "options": [
+      "The total number of objects in memory",
+      "A tuple of three integers representing the count of objects in each GC generation",
+      "The number of seconds since the last collection",
+      "The number of garbage collector threads running"
+    ],
+    "answer": "A tuple of three integers representing the count of objects in each GC generation",
+    "explanation": "`gc.get_count()` returns the current collection counts for the three generations (young, middle, old), triggering collection when thresholds are reached.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 64,
+    "question": "Which statement correctly describes the `__new__` method?",
+    "options": [
+      "It initializes an instance after creation",
+      "It creates and returns a new instance of the class",
+      "It is called only when the class is imported",
+      "It is the destructor for a class"
+    ],
+    "answer": "It creates and returns a new instance of the class",
+    "explanation": "`__new__` is responsible for creating the instance (allocating memory) and returning it. `__init__` is responsible for initializing the state of that instance.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 65,
+    "question": "How does `itertools.islice` differ from standard list slicing?",
+    "options": [
+      "`islice` returns a list immediately",
+      "`islice` works on any iterable and consumes elements lazily",
+      "`islice` cannot accept negative indices",
+      "`islice` modifies the original iterable"
+    ],
+    "answer": "`islice` works on any iterable and consumes elements lazily",
+    "explanation": "`islice` returns an iterator that produces the requested items on demand, whereas list slicing creates a new list in memory immediately.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 66,
+    "question": "What is the primary use of the `weakref` module?",
+    "options": [
+      "To create low-priority background threads",
+      "To maintain references to objects without preventing their garbage collection",
+      "To enforce type safety at runtime",
+      "To reduce the file size of the Python bytecode"
+    ],
+    "answer": "To maintain references to objects without preventing their garbage collection",
+    "explanation": "A weak reference allows access to an object but does not increase its reference count, allowing the GC to reclaim the object if no strong references exist.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 67,
+    "question": "Which protocol defines the behavior of the `with` statement?",
+    "options": [
+      "The Iterator Protocol",
+      "The Context Manager Protocol",
+      "The Descriptor Protocol",
+      "The Sequence Protocol"
+    ],
+    "answer": "The Context Manager Protocol",
+    "explanation": "The Context Manager Protocol defines the `__enter__` and `__exit__` methods required for an object to be used in a `with` statement.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 68,
+    "question": "What does the `async with` statement ensure?",
+    "options": [
+      "The context manager's `__aenter__` and `__aexit__` coroutine methods are called",
+      "The code runs in a separate process",
+      "The GIL is disabled for the duration of the block",
+      "Standard file I/O is non-blocking automatically"
+    ],
+    "answer": "The context manager's `__aenter__` and `__aexit__` coroutine methods are called",
+    "explanation": "`async with` is used with asynchronous context managers, relying on `__aenter__` and `__aexit__` coroutines rather than their synchronous counterparts.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 69,
+    "question": "In the CPython source, what is `ob_shash`?",
+    "options": [
+      "A reference to the object's shadow memory",
+      "A cached hash value for the object",
+      "The size of the object in bytes",
+      "A pointer to the object's class"
+    ],
+    "answer": "A cached hash value for the object",
+    "explanation": "In CPython structs (like PyUnicodeObject or PyTupleObject), `ob_shash` stores the computed hash value (often -1 if not yet computed) to avoid re-calculating it repeatedly.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 70,
+    "question": "What occurs during a 'full collection' in Python's generational garbage collector?",
+    "options": [
+      "Only the youngest generation (Gen 0) is scanned",
+      "All three generations (Gen 0, 1, and 2) are scanned and cycles are collected",
+      "The entire Python process is restarted",
+      "Only objects with `__del__` methods are processed"
+    ],
+    "answer": "All three generations (Gen 0, 1, and 2) are scanned and cycles are collected",
+    "explanation": "A full collection runs when the oldest generation threshold is exceeded. It scans all generations to identify and collect cyclic garbage across the entire heap.",
+    "difficulty": "Intermediate"
+  }
+]
