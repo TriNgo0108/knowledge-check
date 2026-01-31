@@ -1,0 +1,912 @@
+[
+  {
+    "id": 1,
+    "question": "Which TypeScript keyword is used to assert that a value is of a specific type, overriding the compiler's inferred type?",
+    "options": [
+      "cast",
+      "assert",
+      "as",
+      "is"
+    ],
+    "answer": "as",
+    "explanation": "The `as` keyword performs type assertions. `cast` and `assert` do not exist in TS, and `is` is used in type predicates, not assertions.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 2,
+    "question": "What is the primary difference between the `any` and `unknown` types?",
+    "options": [
+      "`any` is implicitly `any`, while `unknown` requires an explicit annotation",
+      "`unknown` forces type checking before use, while `any` allows any operation",
+      "`any` is for objects, `unknown` is for primitives",
+      "There is no difference; they are aliases"
+    ],
+    "answer": "`unknown` forces type checking before use, while `any` allows any operation",
+    "explanation": "`unknown` is the type-safe counterpart of `any`; you must narrow the type (via guards) to perform operations, whereas `any` bypasses all checks.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 3,
+    "question": "Given `type User = { id: number; name: string; }`, which utility type creates a new type with all properties optional?",
+    "options": [
+      "Optional<User>",
+      "Partial<User>",
+      "Maybe<User>",
+      "Nullable<User>"
+    ],
+    "answer": "Partial<User>",
+    "explanation": "`Partial` maps all properties of a type to optional. `Optional` and `Maybe` are not standard built-ins, and `Nullable` makes a type itself null/undefined, not its properties.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 4,
+    "question": "Which type correctly describes a tuple containing a string followed by a number?",
+    "options": [
+      "[string, number]",
+      "[string | number]",
+      "(string, number)",
+      "Array<string | number>"
+    ],
+    "answer": "[string, number]",
+    "explanation": "Tuples use array syntax `[T1, T2]` to specify a fixed order and length. `[string | number]` implies an array of mixed types, and `Array` is for standard lists.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 5,
+    "question": "What happens when `strictNullChecks` is enabled in `tsconfig.json`?",
+    "options": [
+      "All variables become non-nullable by default",
+      "The compiler throws an error if `null` or `undefined` are assigned to non-nullable types",
+      "The compiler automatically converts `null` to `undefined`",
+      "Functions are forced to return `void`"
+    ],
+    "answer": "The compiler throws an error if `null` or `undefined` are assigned to non-nullable types",
+    "explanation": "This flag makes `null` and `undefined` distinct values that cannot be assigned to other types (like `number`) without explicit typing.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 6,
+    "question": "Which operator allows you to access a property of an object only if that object exists, preventing runtime errors?",
+    "options": [
+      "Elvis operator (`?:`)",
+      "Optional chaining (`?.`)",
+      "Nullish coalescing (`??`)",
+      "Safe navigation (`?.` syntax only)"
+    ],
+    "answer": "Optional chaining (`?.`)",
+    "explanation": "Optional chaining (`?.`) short-circuits to `undefined` if the reference is `null` or `undefined`. `??` is for default values, and `?:` is not valid syntax for property access.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 7,
+    "question": "What is the result type of `ReturnType<() => string>`?",
+    "options": [
+      "string",
+      "function",
+      "unknown",
+      "string[]"
+    ],
+    "answer": "string",
+    "explanation": "The `ReturnType` utility extracts the return type of a function. Since the function returns `string`, the result is `string`.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 8,
+    "question": "In an interface, what symbol indicates that a property is optional?",
+    "options": [
+      "`?`",
+      "`!`",
+      "`:`",
+      "`*`"
+    ],
+    "answer": "`?`",
+    "explanation": "Appending a `?` to the property name (e.g., `prop?: type`) marks it as optional. `!` is for definite assignment assertions.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 9,
+    "question": "Which utility type constructs a type by picking a set of properties `K` from type `T`?",
+    "options": [
+      "Select<T, K>",
+      "Pick<T, K>",
+      "Extract<T, K>",
+      "Filter<T, K>"
+    ],
+    "answer": "Pick<T, K>",
+    "explanation": "`Pick<T, K>` creates a new type with only the specified keys `K` from `T`. `Extract` is for union types, and `Select` does not exist.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 10,
+    "question": "What is the inferred return type of `function getId(): { id: number } | never` if the function always returns an object?",
+    "options": [
+      "never",
+      "number",
+      "{ id: number }",
+      "unknown"
+    ],
+    "answer": "{ id: number }",
+    "explanation": "If a function is declared to return `A | B` but only `A` is possible, the compiler infers `A`. `never` is unreachable; it wouldn't be the inferred type if `A` is returned.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 11,
+    "question": "Which keyword is used to create an alias for a type?",
+    "options": [
+      "interface",
+      "type",
+      "alias",
+      "typedef"
+    ],
+    "answer": "type",
+    "explanation": "`type` declares a type alias for primitives, unions, or object shapes. `interface` defines a contract for objects, and `typedef` is not valid TS syntax.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 12,
+    "question": "How do you define a function that accepts any object but ensures you do not try to access properties without narrowing?",
+    "options": [
+      "function foo(obj: object)",
+      "function foo(obj: any)",
+      "function foo(obj: {})",
+      "function foo(obj: Object)"
+    ],
+    "answer": "function foo(obj: object)",
+    "explanation": "`object` (lowercase) specifies a non-primitive type but allows no property access. `{}` allows access to properties that don't exist, and `any` is unsafe.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 13,
+    "question": "What does the `Omit<Type, Keys>` utility type do?",
+    "options": [
+      "Removes `null` and `undefined` from the type",
+      "Constructs a type by picking all properties from `Type` and then removing `Keys`",
+      "Makes specified keys optional",
+      "Creates a readonly version of the type"
+    ],
+    "answer": "Constructs a type by picking all properties from `Type` and then removing `Keys`",
+    "explanation": "`Omit` is essentially `Pick<T, Exclude<keyof T, K>>`. It excludes the specified keys rather than just making them optional.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 14,
+    "question": "Which syntax creates a Readonly version of an array?",
+    "options": [
+      "const arr: readonly number[]",
+      "const arr: frozen number[]",
+      "const arr: const number[]",
+      "const arr: fixed number[]"
+    ],
+    "answer": "const arr: readonly number[]",
+    "explanation": "The `readonly` modifier before an array type prevents mutation methods like `push` or `pop`. `frozen` and `fixed` are not standard keywords.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 15,
+    "question": "What is the purpose of the `never` type?",
+    "options": [
+      "To represent any value",
+      "To represent the absence of a value (like void)",
+      "To represent values that never occur (e.g., throw error or infinite loop)",
+      "To represent uninitialized variables"
+    ],
+    "answer": "To represent values that never occur (e.g., throw error or infinite loop)",
+    "explanation": "`never` is the bottom type, indicating code is unreachable. `void` is for functions returning nothing, and `any` is the top type.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 16,
+    "question": "Which type operator extracts the parameter types of a function type `T`?",
+    "options": [
+      "Parameters<T>",
+      "Args<T>",
+      "Arguments<T>",
+      "ParamTypes<T>"
+    ],
+    "answer": "Parameters<T>",
+    "explanation": "`Parameters<T>` is a built-in utility that returns a tuple type of the function's arguments. `Args` and `Arguments` are not standard.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 17,
+    "question": "What is the difference between `interface` and `type` regarding merging?",
+    "options": [
+      "Types can be merged, interfaces cannot",
+      "Interfaces can be merged (declaration merging), types cannot",
+      "Both support merging identically",
+      "Neither supports merging"
+    ],
+    "answer": "Interfaces can be merged (declaration merging), types cannot",
+    "explanation": "Declaring an interface with the same name twice merges their properties. Types with the same name cause a duplicate identifier error.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 18,
+    "question": "How do you specify that a generic type must extend a specific class or interface?",
+    "options": [
+      "function foo<T implements SomeType>",
+      "function foo<T : SomeType>",
+      "function foo<T extends SomeType>",
+      "function foo(T inherits SomeType)"
+    ],
+    "answer": "function foo<T extends SomeType>",
+    "explanation": "`extends` constrains the generic type `T`. `implements` is for classes, and `:` is used in other languages (like C# or Java for bounds, but not TS syntax).",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 19,
+    "question": "What does the `readonly` modifier on a class property do?",
+    "options": [
+      "Makes the property private",
+      "Prevents assignment to the property after initialization",
+      "Allows the property to be deleted",
+      "Makes the property static"
+    ],
+    "answer": "Prevents assignment to the property after initialization",
+    "explanation": "`readonly` signifies the property can only be assigned during construction or declaration. It does not affect visibility (private/public).",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 20,
+    "question": "Which utility type makes all properties of a type `T` required (removing optional modifiers)?",
+    "options": [
+      "Mandatory<T>",
+      "Required<T>",
+      "Strict<T>",
+      "Ensure<T>"
+    ],
+    "answer": "Required<T>",
+    "explanation": "`Required` sets all optional properties (`?`) to required. `Mandatory` and `Strict` are not built-in utility types.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 21,
+    "question": "How do you define a string Literal Type?",
+    "options": [
+      "let x: String = 'hello'",
+      "let x: 'hello' = 'hello'",
+      "let x: string('hello')",
+      "let x = cast('hello', 'hello')"
+    ],
+    "answer": "let x: 'hello' = 'hello'",
+    "explanation": "A string literal type is defined by the string value itself in quotes (`'hello'`). `String` refers to the global String object.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 22,
+    "question": "What does the `NonNullable` utility type do?",
+    "options": [
+      "Removes `null` and `undefined` from the type",
+      "Ensures the type is an object",
+      "Creates a type that cannot be `void`",
+      "Checks if the type is `any`"
+    ],
+    "answer": "Removes `null` and `undefined` from the type",
+    "explanation": "`NonNullable` constructs a type by excluding `null` and `undefined` from `T`. It does not strictly check for object types.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 23,
+    "question": "Which keyword imports types specifically for type-checking only, removing them from the compiled JavaScript?",
+    "options": [
+      "import type",
+      "import { type }",
+      "type import",
+      "import (type)"
+    ],
+    "answer": "import type",
+    "explanation": "`import type { ... }` ensures the import is erased in JS. Standard imports always exist at runtime (even if unused), though tree-shaking may remove them later.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 24,
+    "question": "What is the output type of `keyof { name: string; age: number }`?",
+    "options": [
+      "string | number",
+      "'name' | 'age'",
+      "string",
+      "Array<'name', 'age'>"
+    ],
+    "answer": "'name' | 'age'",
+    "explanation": "`keyof` returns a union of string literal types representing the property names. It does not return the types of the values.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 25,
+    "question": "Which operator returns the right-hand operand if the left-hand operand is `null` or `undefined`?",
+    "options": [
+      "||",
+      "??",
+      "?:",
+      "&&"
+    ],
+    "answer": "??",
+    "explanation": "The nullish coalescing operator (`??`) checks strictly for `null`/`undefined`. `||` checks for all falsy values (like `0` or `''`).",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 26,
+    "question": "How do you assert that a property is assigned before use, bypassing `strictPropertyInitialization`?",
+    "options": [
+      "Using the `!` definite assignment assertion",
+      "Using the `?` optional modifier",
+      "Using the `@ts-ignore` comment",
+      "Using the `declare` keyword"
+    ],
+    "answer": "Using the `!` definite assignment assertion",
+    "explanation": "The postfix `!` tells the compiler you are sure the property is assigned (e.g., via a framework setup) even if the compiler can't see it.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 27,
+    "question": "What is the difference between `interface X { y(): void }` and `interface X { y: () => void }`?",
+    "options": [
+      "No difference, they are identical",
+      "One is a method, the other is a property holding a function",
+      "The first returns a callback, the second executes it",
+      "The first is private, the second is public"
+    ],
+    "answer": "One is a method, the other is a property holding a function",
+    "explanation": "The syntax `y(): void` defines a method (can be called with super, easier to override in classes), while `y: () => void` defines a property type that happens to be a function.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 28,
+    "question": "Which utility type creates a new type with `K` as keys and `T` as values?",
+    "options": [
+      "MapType<K, T>",
+      "Record<K, T>",
+      "Dictionary<K, T>",
+      "ObjectMap<K, T>"
+    ],
+    "answer": "Record<K, T>",
+    "explanation": "`Record<K, T>` constructs an object type where keys are `K` and values are `T`. `Dictionary` and `MapType` are not standard TS built-ins.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 29,
+    "question": "What is a Type Predicate (`parameterName is Type`) used for?",
+    "options": [
+      "To convert a value to a different type at runtime",
+      "To narrow the type of a parameter within a type guard function",
+      "To validate function arguments",
+      "To define a generic constraint"
+    ],
+    "answer": "To narrow the type of a parameter within a type guard function",
+    "explanation": "Type predicates allow user-defined type guards to explicitly return boolean while informing the compiler of the type narrowing.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 30,
+    "question": "What does `Extract<Type, Union>` do?",
+    "options": [
+      "Removes types from the union",
+      "Extracts types from `Type` that are assignable to `Union`",
+      "Creates a new type based on a specific value",
+      "Turns a union into an intersection"
+    ],
+    "answer": "Extracts types from `Type` that are assignable to `Union`",
+    "explanation": "`Extract` selects the subset of `Type` that matches `Union`. It is the opposite of `Exclude`.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 31,
+    "question": "How do you define an Enum in TypeScript?",
+    "options": [
+      "const enum Color { Red, Green }",
+      "enum Color { Red, Green }",
+      "type Enum Color { Red, Green }",
+      "create Enum Color { Red, Green }"
+    ],
+    "answer": "enum Color { Red, Green }",
+    "explanation": "The `enum` keyword defines a group of named constants. `const enum` is valid but secondary to the base syntax; `type` is for aliases.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 32,
+    "question": "Which access modifier allows a property to be accessed from anywhere, including outside the class?",
+    "options": [
+      "private",
+      "protected",
+      "public",
+      "internal"
+    ],
+    "answer": "public",
+    "explanation": "`public` is the default modifier and allows unrestricted access. `protected` limits to subclasses, and `private` limits to the class itself.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 33,
+    "question": "What does the `as const` assertion do to object literals?",
+    "options": [
+      "Converts the object to a JSON string",
+      "Makes all properties `readonly` and sets literal types (e.g., '10' instead of number)",
+      "Casts the object to `const`",
+      "Prevents the object from being compiled"
+    ],
+    "answer": "Makes all properties `readonly` and sets literal types (e.g., '10' instead of number)",
+    "explanation": "`as const` infers the most specific literal types for primitives and makes the structure immutable, rather than widening primitives (like `string`) to generic types.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 34,
+    "question": "Which utility type creates a tuple type from the types of a function's arguments?",
+    "options": [
+      "Parameters",
+      "Arguments",
+      "Tuple",
+      "Args"
+    ],
+    "answer": "Parameters",
+    "explanation": "`Parameters` returns a tuple. `Arguments` is not a standard utility type (and `arguments` is the legacy runtime object).",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 35,
+    "question": "In TypeScript, `void` represents the absence of any type at the return value position. What does it typically transpile to in JavaScript?",
+    "options": [
+      "null",
+      "undefined",
+      "nothing (removes the return statement)",
+      "false"
+    ],
+    "answer": "undefined",
+    "explanation": "Functions returning `void` in JS typically return `undefined` implicitly. The `void` type enforces this at compile time.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 36,
+    "question": "Which mapped type modifier removes the optional flag from properties in a generic type T?",
+    "options": [
+      "-?",
+      "+?",
+      "?",
+      "!?"
+    ],
+    "answer": "-?",
+    "explanation": "In mapped types, `-?` removes the optional modifier, effectively making properties required. `+?` adds the optional modifier (default behavior when using `?`).",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 37,
+    "question": "What is the result type of `Omit<User, 'email'>` if `User` is `{ id: number; name: string; email: string; }`?",
+    "options": [
+      "{ id: number; name: string; }",
+      "{ id: number; name: string; email?: string; }",
+      "{ email: string; }",
+      "never"
+    ],
+    "answer": "{ id: number; name: string; }",
+    "explanation": "Omit constructs a type by picking all properties from T and then removing K. It is equivalent to `Pick<T, Exclude<keyof T, K>>`.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 38,
+    "question": "Which TypeScript feature allows defining a type that ensures a value is `null` or `undefined` for type narrowing?",
+    "options": [
+      "Type Guards",
+      "Assertion Functions",
+      "Type Predicates",
+      "Declaration Merging"
+    ],
+    "answer": "Assertion Functions",
+    "explanation": "Assertion functions (using `asserts condition` or `asserts val is Type`) tell the compiler that a condition is true after the function runs, narrowing types in the subsequent scope. Type guards are checks (often runtime), while assertions specifically perform this compile-time side-effect.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 39,
+    "question": "What is the primary difference between `Exclude<UnionType, ExcludedMembers>` and `Omit<Type, Keys>`?",
+    "options": [
+      "Exclude operates on unions; Omit operates on object properties",
+      "Exclude removes nulls; Omit removes undefined",
+      "Omit is for primitives; Exclude is for interfaces",
+      "There is no difference"
+    ],
+    "answer": "Exclude operates on unions; Omit operates on object properties",
+    "explanation": "Exclude filters out specific members from a union type (e.g., `string | number`). Omit filters keys from an object type (interface/type), effectively constructing a new object type.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 40,
+    "question": "In a conditional type `T extends U ? X : Y`, what does `infer R` inside `X` allow you to do?",
+    "options": [
+      "Check if R is assignable to T",
+      "Infer the type of a generic parameter from the `extends` clause",
+      "Cast R to type X",
+      "Create a recursive type definition"
+    ],
+    "answer": "Infer the type of a generic parameter from the `extends` clause",
+    "explanation": "`infer` declares a type variable to be inferred by TypeScript within the `true` branch of a conditional type. This is how utilities like `ReturnType` extract return types without explicitly passing them.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 41,
+    "question": "How does the `as const` assertion affect an object literal?",
+    "options": [
+      "It casts the object to a generic `any` type",
+      "It makes all properties readonly and sets literal types instead of primitives",
+      "It enables strict null checking on that object",
+      "It deep clones the object"
+    ],
+    "answer": "It makes all properties readonly and sets literal types instead of primitives",
+    "explanation": "`as const` creates a const assertion, widening literals (e.g., 'foo') to their primitive (string) by default. It specifically prevents widening, locking in the exact literal value and readonly status.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 42,
+    "question": "Which utility type constructs a type by picking the set of properties K from T?",
+    "options": [
+      "Partial",
+      "Pick",
+      "Record",
+      "Extract"
+    ],
+    "answer": "Pick",
+    "explanation": "`Pick<T, K>` creates a new type by lifting a subset of properties K from T. `Record<K, T>` creates an object type with property keys K and type T.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 43,
+    "question": "What distinguishes `unknown` from `any` in TypeScript?",
+    "options": [
+      "`unknown` allows any operation but is implicitly any",
+      "`unknown` is the top type but requires type narrowing before use",
+      "`any` causes compile-time errors while `unknown` does not",
+      "There is no difference; they are aliases"
+    ],
+    "answer": "`unknown` is the top type but requires type narrowing before use",
+    "explanation": "`unknown` is type-safe (top type), forcing the developer to prove the type via narrowing before usage. `any` effectively turns off type checking, allowing arbitrary operations.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 44,
+    "question": "Which of the following correctly enforces that an object is a Promise?",
+    "options": [
+      "obj instanceof Promise",
+      "typeof obj === 'Promise'",
+      "obj.then is a function",
+      "obj instanceof Promise || (obj && typeof obj.then === 'function')"
+    ],
+    "answer": "obj instanceof Promise || (obj && typeof obj.then === 'function')",
+    "explanation": "While `instanceof Promise` works for native promises, it fails for cross-realm (iframe) promises or non-standard thenables. Checking for a callable `.then` property is the robust structural check for a thenable.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 45,
+    "question": "What happens to the `this` context in a standard function passed as a callback?",
+    "options": [
+      "It inherits the `this` from the parent class",
+      "It is implicitly bound to the global object or undefined (strict mode)",
+      "It remains bound to the object where it was defined",
+      "It is automatically bound by TypeScript"
+    ],
+    "answer": "It is implicitly bound to the global object or undefined (strict mode)",
+    "explanation": "TypeScript mimics JavaScript behavior: standard functions lose their `this` context when passed around. Arrow functions or explicit `bind`/`this` parameter typing are required to maintain context.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 46,
+    "question": "What is the output type of `Parameters<() => Promise<string>>`?",
+    "options": [
+      "[string]",
+      "[]",
+      "[Promise<string>]",
+      "string"
+    ],
+    "answer": "[]",
+    "explanation": "The function takes no arguments. The return type is `Promise<string>`, but `Parameters` extracts the argument types into a tuple. Since there are no arguments, the result is an empty tuple `[]`.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 47,
+    "question": "Which mapped type syntax makes all properties of Type `T` optional?",
+    "options": [
+      "{ [K in keyof T]: T[K] }",
+      "{ [K in keyof T]?: T[K] }",
+      "{ [P in keyof T]?: T[P] }",
+      "Both B and C are valid"
+    ],
+    "answer": "{ [K in keyof T]?: T[K] }",
+    "explanation": "While both B and C are technically valid syntaxes, the standard convention and utility definition use `K` as the key variable. The `?` after the key denotes optionality.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 48,
+    "question": "In TypeScript, declaration merging applies to which of the following?",
+    "options": [
+      "Type Aliases",
+      "Interfaces",
+      "Enums",
+      "Both B and C"
+    ],
+    "answer": "Both B and C",
+    "explanation": "Interfaces and Enums support declaration merging (allowing multiple definitions with the same name to be combined). Type aliases (using `type`) cannot be merged and must be unique.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 49,
+    "question": "What does the `NonNullable` utility type do?",
+    "options": [
+      "Removes `null` and `undefined` from the type",
+      "Ensures the type is not `void`",
+      "Makes the type strictly `any`",
+      "Removes `false` from boolean types"
+    ],
+    "answer": "Removes `null` and `undefined` from the type",
+    "explanation": "`NonNullable` constructs a type by excluding `null` and `undefined` from the provided type. It is shorthand for `T & {}` or `Exclude<T, null | undefined>`.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 50,
+    "question": "When using template literal types, what is the result of `${'a' | 'b'}${'c' | 'd'}`?",
+    "options": [
+      "ac | bd",
+      "ac | ad | bc | bd",
+      "acd | bcd",
+      "string"
+    ],
+    "answer": "ac | ad | bc | bd",
+    "explanation": "Template literal types distribute over unions. Every member of the first union is combined with every member of the second union.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 51,
+    "question": "What is the type of `const arr = [1, 'hello', true]`?",
+    "options": [
+      "(number | string | boolean)[]",
+      "[number, string, boolean]",
+      "any[]",
+      "unknown[]"
+    ],
+    "answer": "[number, string, boolean]",
+    "explanation": "When initializing an array with mixed literals, TypeScript infers a Tuple type with specific lengths and types, not a general array of unions.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 52,
+    "question": "Which `tsconfig.json` option disallows implicitly having 'any' type?",
+    "options": [
+      "strictNullChecks",
+      "noImplicitAny",
+      "strict",
+      "noImplicitThis"
+    ],
+    "answer": "noImplicitAny",
+    "explanation": "The `noImplicitAny` flag raises an error when the type of a variable cannot be inferred and is implicitly treated as `any`. `strictNullChecks` specifically handles null/undefined assignments.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 53,
+    "question": "What does `Extract<Type, Union>` return?",
+    "options": [
+      "A type excluding members from Union",
+      "A type including only members from Type that are assignable to Union",
+      "A type excluding null and undefined",
+      "The base Type"
+    ],
+    "answer": "A type including only members from Type that are assignable to Union",
+    "explanation": "`Extract` selects the subset of Type that is present in Union. It is the opposite of `Exclude`, which removes the subset.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 54,
+    "question": "How can you type a function parameter that accepts any object but prevents extension with new properties?",
+    "options": [
+      "Record<string, unknown>",
+      "object",
+      "Object",
+      "{ [key: string]: any }"
+    ],
+    "answer": "object",
+    "explanation": "The primitive type `object` matches any non-primitive value (array, function, object) but does not allow accessing unknown properties. `Record<string, unknown>` allows any string key.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 55,
+    "question": "Which keyword is used to import a type only for type checking, ensuring it is erased in compilation?",
+    "options": [
+      "import type",
+      "import { type }",
+      "type",
+      "const"
+    ],
+    "answer": "import type",
+    "explanation": "`import type { Foo }` ensures `Foo` is completely removed during compilation if not used in value positions. Standard imports can retain runtime dependencies.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 56,
+    "question": "What is the `Required` utility type equivalent to in mapped types?",
+    "options": [
+      "{ [P in keyof T]-?: T[P] }",
+      "{ [P in keyof T]+?: T[P] }",
+      "{ [P in keyof T]: T[P] }",
+      "{ readonly [P in keyof T]: T[P] }"
+    ],
+    "answer": "{ [P in keyof T]-?: T[P] }",
+    "explanation": "The `-?` modifier removes the optional flag from all properties in T, making them required. `+?` would make them optional.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 57,
+    "question": "What is a key limitation of TypeScript's `enum` compared to a union of string literals?",
+    "options": [
+      "Enums cannot have numeric values",
+      "Enums generate extra runtime code and can cause bundle size bloat",
+      "Enums are not type-safe",
+      "Enums cannot be computed"
+    ],
+    "answer": "Enums generate extra runtime code and can cause bundle size bloat",
+    "explanation": "Standard `enum`s are reversed-mapped at runtime, emitting JavaScript objects. Union types (`type A = 'x' | 'y'`) are purely compile-time constructs and vanish in the output.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 58,
+    "question": "What does the `ThisType` utility marker do?",
+    "options": [
+      "It enforces the type of `this` in the entire file",
+      "It signals that the contained object methods should use a specific type for `this`",
+      "It casts `this` to `any`",
+      "It creates a new class"
+    ],
+    "answer": "It signals that the contained object methods should use a specific type for `this`",
+    "explanation": "`ThisType` acts as a marker on an object literal. It does not change the runtime behavior but informs the compiler how to infer the `this` type inside methods of that object.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 59,
+    "question": "Which utility type returns the type of a function's `this` parameter?",
+    "options": [
+      "ThisParameterType",
+      "OmitThisParameter",
+      "InstanceType",
+      "AbstractConstructorType"
+    ],
+    "answer": "ThisParameterType",
+    "explanation": "`ThisParameterType` extracts the type of the `this` parameter for a function type. If the function type has no `this` parameter, it returns `unknown`.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 60,
+    "question": "In the type `type Readonly<T> = { readonly [P in keyof T]: T[P] }`, which keyword makes the properties immutable?",
+    "options": [
+      "const",
+      "static",
+      "readonly",
+      "freeze"
+    ],
+    "answer": "readonly",
+    "explanation": "The `readonly` modifier in a mapped type prevents reassignment to the properties of the object. It only applies to the immediate property, not deep nested objects.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 61,
+    "question": "What is the effect of using a Type Assertion (`as string`) on a variable of type `unknown`?",
+    "options": [
+      "It performs a runtime check",
+      "It forces the compiler to treat the variable as `string` without checks",
+      "It casts the variable to a string object",
+      "It removes the `unknown` wrapper permanently"
+    ],
+    "answer": "It forces the compiler to treat the variable as `string` without checks",
+    "explanation": "Type assertions (using `as`) opt-out of compile-time type checking. They do not perform any runtime verification, potentially leading to type errors if the assumption is wrong.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 62,
+    "question": "How do you define a mapped type that adds a specific method `log` to every property of type T?",
+    "options": [
+      "type T = { log(): void }",
+      "{ [K in keyof T]: T[K] & { log(): void } }",
+      "{ [K in keyof T]: T[K] } & { log(): void }",
+      "interface T extends Loggable {}"
+    ],
+    "answer": "{ [K in keyof T]: T[K] } & { log(): void }",
+    "explanation": "To add a method to the object itself (cross-cutting concern), you intersect the mapped type of the original properties with a new type containing the method.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 63,
+    "question": "What is `infer` used for within conditional types?",
+    "options": [
+      "Creating a recursive loop",
+      "Capturing a type variable from the extends clause for use in the true branch",
+      "Checking if a type is a class",
+      "Defining a generic constraint"
+    ],
+    "answer": "Capturing a type variable from the extends clause for use in the true branch",
+    "explanation": "`infer` introduces a generic type variable that TypeScript infers from the structure being checked in the `extends` condition, allowing extraction of subtypes.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 64,
+    "question": "What does `type T = Record<string, never>` signify?",
+    "options": [
+      "An object that cannot be indexed",
+      "An object with no properties that can be assigned any object",
+      "An object that can have any string key but no values",
+      "A type error"
+    ],
+    "answer": "An object with no properties that can be assigned any object",
+    "explanation": "A value of type `{ [x: string]: never }` cannot have any properties defined on it. However, an empty object `{}` satisfies `Record<string, never>` because it doesn't define any conflicting keys.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 65,
+    "question": "Why might you use `interface` over `type`?",
+    "options": [
+      "Interfaces support declaration merging; types do not",
+      "Interfaces support tuples; types do not",
+      "Types do not support generics",
+      "Interfaces are faster at compile time"
+    ],
+    "answer": "Interfaces support declaration merging; types do not",
+    "explanation": "Interfaces allow extending their definitions across multiple blocks (merging), useful for augmenting library types. `type` aliases are unique and cannot be reopened.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 66,
+    "question": "Which utility type takes a constructor function and returns its instance type?",
+    "options": [
+      "ReturnType",
+      "InstanceType",
+      "ThisType",
+      "ParameterType"
+    ],
+    "answer": "InstanceType",
+    "explanation": "`InstanceType` constructs a type consisting of the instance type of a constructor function in `T`. `ReturnType` extracts the return type of a function.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 67,
+    "question": "What is the result of `keyof { [x: string]: number }`?",
+    "options": [
+      "string | number",
+      "string",
+      "number",
+      "any"
+    ],
+    "answer": "string | number",
+    "explanation": "When an index signature is the only declaration, `keyof` returns that specific type (`string`). However, if a specific string key is defined, `keyof` becomes a union of that key and `string`. The prompt implies a pure index signature, which usually results in `string` (and potentially `number` as JS coerces it), but TS technically returns `string | number` for `[x: string]`.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 68,
+    "question": "In the context of `ReadonlyArray`, which method is NOT available?",
+    "options": [
+      "push",
+      "map",
+      "forEach",
+      "slice"
+    ],
+    "answer": "push",
+    "explanation": "`ReadonlyArray` removes all methods that mutate the array length or content, such as `push`, `pop`, `splice`, and `shift`.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 69,
+    "question": "What does the `Uppercase` utility type do?",
+    "options": [
+      "Converts a string literal type to uppercase",
+      "Converts all keys of an object to uppercase",
+      "Converts a string to uppercase at runtime",
+      "Creates a union of all uppercase strings"
+    ],
+    "answer": "Converts a string literal type to uppercase",
+    "explanation": "`Uppercase<StringType>` transforms a string literal type to its uppercase equivalent purely at the type level.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 70,
+    "question": "When using `tsc --noEmit`, what is the primary purpose?",
+    "options": [
+      "To compile without generating files, checking only for type errors",
+      "To generate declarations only",
+      "To minify the output",
+      "To ignore type errors"
+    ],
+    "answer": "To compile without generating files, checking only for type errors",
+    "explanation": "The `--noEmit` flag instructs the TypeScript compiler to perform type checking and semantic analysis without emitting JavaScript or declaration files.",
+    "difficulty": "Intermediate"
+  }
+]
