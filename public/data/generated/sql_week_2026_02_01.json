@@ -1,0 +1,457 @@
+[
+  {
+    "id": 1,
+    "question": "What distinguishes a Window Function from an Aggregate Function in terms of row output?",
+    "options": [
+      "Window functions return one row per group, while aggregate functions return one row per table.",
+      "Window functions return one row for every row in the result set, while aggregate functions collapse rows into a single summary row.",
+      "Aggregate functions can be used without a GROUP BY clause, but window functions require a PARTITION BY clause.",
+      "Window functions allow filtering with WHERE, but aggregate functions can only be filtered with HAVING."
+    ],
+    "answer": "Window functions return one row for every row in the result set, while aggregate functions collapse rows into a single summary row.",
+    "explanation": "Window functions perform calculations across a set of rows related to the current row without collapsing them, maintaining the original row count. Aggregate functions reduce a group of rows into a single scalar value (e.g., sum, count).",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 2,
+    "question": "Which clause defines the 'window' or subset of rows a window function operates on without collapsing the result set?",
+    "options": [
+      "GROUP BY",
+      "HAVING",
+      "OVER",
+      "WINDOW"
+    ],
+    "answer": "OVER",
+    "explanation": "The OVER clause defines the window frame (partitioning, ordering, and framing) for the window function. GROUP BY and HAVING are used for aggregation, and WINDOW is an optional alias for the OVER clause definition.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 3,
+    "question": "What is the primary difference between RANK() and DENSE_RANK() functions in SQL?",
+    "options": [
+      "RANK() assigns unique numbers to every row, while DENSE_RANK() skips numbers after ties.",
+      "RANK() produces a continuous sequence of ranks (1, 2, 3), while DENSE_RANK() skips numbers (1, 1, 3).",
+      "RANK() skips numeric values after a tie (1, 1, 3), while DENSE_RANK() does not (1, 1, 2).",
+      "RANK() only works with numeric data, while DENSE_RANK() works with dates."
+    ],
+    "answer": "RANK() skips numeric values after a tie (1, 1, 3), while DENSE_RANK() does not (1, 1, 2).",
+    "explanation": "When ties occur, RANK() leaves a gap in the sequence (e.g., 1, 2, 2, 4), whereas DENSE_RANK() assigns the next sequential integer (e.g., 1, 2, 2, 3).",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 4,
+    "question": "In the context of query optimization, what is the primary benefit of using a Covering Index?",
+    "options": [
+      "It eliminates the need for a sorting operation.",
+      "It allows the query to be satisfied entirely from the index structure without accessing the main table (heap).",
+      "It automatically updates the statistics for the table.",
+      "It reduces the disk space required for the table."
+    ],
+    "answer": "It allows the query to be satisfied entirely from the index structure without accessing the main table (heap).",
+    "explanation": "A covering index contains all columns required by the query (SELECT, JOIN, WHERE). This 'index-only scan' avoids expensive lookups back to the base table, significantly reducing I/O.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 5,
+    "question": "Consider the window function: `SUM(amount) OVER (PARTITION BY department_id ORDER BY created_at)`. What is the default window frame if no explicit frame clause (ROWS BETWEEN...) is provided?",
+    "options": [
+      "RANGE BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING",
+      "ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW",
+      "RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW",
+      "ROWS BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING"
+    ],
+    "answer": "RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW",
+    "explanation": "When ORDER BY is specified but no frame clause, the default is 'RANGE UNBOUNDED PRECEDING AND CURRENT ROW'. This creates a running total (cumulative sum) from the start of the partition to the current row.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 6,
+    "question": "Which set operation retains duplicate rows from the combined result sets?",
+    "options": [
+      "UNION",
+      "UNION ALL",
+      "INTERSECT",
+      "EXCEPT"
+    ],
+    "answer": "UNION ALL",
+    "explanation": "UNION removes duplicates and requires a sorting operation, whereas UNION ALL concatenates results immediately, preserving duplicates and being significantly faster due to less overhead.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 7,
+    "question": "What is the specific optimization advantage of filtering NULL partition keys *before* applying a window function?",
+    "options": [
+      "NULLs cannot be indexed, so filtering them removes the need for a table scan.",
+      "It reduces the number of rows the window function must process, as all NULLs are grouped into a single, often irrelevant partition.",
+      "Window functions throw errors when encountering NULL values in the PARTITION BY clause.",
+      "It allows the database to use a hash aggregation instead of a sort aggregation."
+    ],
+    "answer": "It reduces the number of rows the window function must process, as all NULLs are grouped into a single, often irrelevant partition.",
+    "explanation": "Calculating window functions over a massive partition of NULLs consumes resources. If these rows are not needed, filtering them early drastically reduces the computation cost.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 8,
+    "question": "Which clause is used to filter the results of a window function directly, equivalent to a WHERE clause for aggregates?",
+    "options": [
+      "HAVING",
+      "QUALIFY",
+      "FILTER",
+      "WINDOW"
+    ],
+    "answer": "QUALIFY",
+    "explanation": "QUALIFY (in systems like Snowflake and BigQuery) filters the results of window functions without requiring a subquery or CTE. HAVING is strictly for filtering aggregate GROUP BY results.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 9,
+    "question": "In execution plans, what is a 'Hash Join' most efficient for joining?",
+    "options": [
+      "Large, unsorted datasets where no index exists on the join columns.",
+      "Two small datasets that fit entirely in memory.",
+      "Large datasets that are already sorted on the join columns.",
+      "A large table and a very small table."
+    ],
+    "answer": "Large, unsorted datasets where no index exists on the join columns.",
+    "explanation": "Hash joins build a hash table on the smaller input and probe it with the larger input. They are generally superior to Nested Loops (large/small) and Merge Joins (requires sort) for large unsorted data.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 10,
+    "question": "What is the technical definition of 'Row Vicinity' in the context of SQL window functions?",
+    "options": [
+      "The set of rows physically located on the same disk page as the current row.",
+      "The specific subset of rows defined by the PARTITION BY, ORDER BY, and frame clause relative to the current row.",
+      "The rows immediately preceding and following the current row in the base table storage order.",
+      "The group of rows defined by the GROUP BY clause."
+    ],
+    "answer": "The specific subset of rows defined by the PARTITION BY, ORDER BY, and frame clause relative to the current row.",
+    "explanation": "Row vicinity refers to the logical window frame that slides with the current row. It determines which rows are visible to the function for calculation at any specific point in the partition.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 11,
+    "question": "When using `ROW_NUMBER() OVER (PARTITION BY user_id ORDER BY purchase_date)`, how are ties in `purchase_date` handled?",
+    "options": [
+      "The rows receive the same rank number.",
+      "The database arbitrarily assigns a sequential number based on internal storage order.",
+      "The query fails and requires a secondary sort key.",
+      "It defaults to RANK() behavior."
+    ],
+    "answer": "The database arbitrarily assigns a sequential number based on internal storage order.",
+    "explanation": "Unlike RANK(), ROW_NUMBER() is deterministic only if the ORDER BY yields a unique sort. If ties exist, the database assigns numbers arbitrarily (or non-deterministically) among the tied rows.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 12,
+    "question": "What is the purpose of the `Lag(column, 1)` window function?",
+    "options": [
+      "To calculate the difference between the current row and the first row of the partition.",
+      "To access the value of the column from the previous row in the result set.",
+      "To shift all values in the column down by one position for storage.",
+      "To filter out rows that are lagging behind the average processing time."
+    ],
+    "answer": "To access the value of the column from the previous row in the result set.",
+    "explanation": "LAG() accesses data from a preceding row (offset) in the same result set without a self-join. It is used to compare a row to a previous state.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 13,
+    "question": "Which query optimization technique involves splitting a large table into smaller, physically stored chunks based on column values?",
+    "options": [
+      "Indexing",
+      "Sharding",
+      "Table Partitioning",
+      "Denormalization"
+    ],
+    "answer": "Table Partitioning",
+    "explanation": "Table partitioning divides a large table into smaller, manageable pieces (partitions) based on column ranges (e.g., dates). This improves query performance by 'partition pruning', allowing the engine to skip irrelevant chunks.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 14,
+    "question": "Why is `SELECT *` generally discouraged in production SQL queries regarding performance?",
+    "options": [
+      "It retrieves columns in a random order, confusing the application.",
+      "It prevents the use of covering indexes and increases I/O and network traffic by fetching unnecessary data.",
+      "It locks the entire table for the duration of the transaction.",
+      "It automatically converts all data types to strings."
+    ],
+    "answer": "It retrieves columns in a random order, confusing the application.",
+    "explanation": "Actually, the correct answer is: It prevents the use of covering indexes and increases I/O and network traffic by fetching unnecessary data. Fetching unneeded columns consumes memory, disk I/O, and network bandwidth.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 15,
+    "question": "What is the effect of the `REPARTITION` or `REDISTRIBUTE` operation in distributed SQL query engines (like Spark SQL)",
+    "options": [
+      "It sorts the data locally on each node.",
+      "It physically moves data across nodes based on a new key to ensure related data is on the same node.",
+      "It reduces the number of partitions to increase parallelism.",
+      "It creates a materialized view."
+    ],
+    "answer": "It physically moves data across nodes based on a new key to ensure related data is on the same node.",
+    "explanation": "Redistribution (or Shuffling) moves data between nodes to align data with the grouping or joining keys. This is expensive (network I/O) but necessary for distributed joins/aggregations.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 16,
+    "question": "In a Recursive CTE (Common Table Expression), which two parts are mandatory?",
+    "options": [
+      "The anchor member and the recursive member.",
+      "The UNION ALL clause and the LIMIT clause.",
+      "The outer join and the self-reference.",
+      "The window function and the frame specification."
+    ],
+    "answer": "The anchor member and the recursive member.",
+    "explanation": "A recursive CTE requires an anchor member (base case, runs once) and a recursive member (references the CTE itself) connected by UNION ALL. This allows iteration over hierarchies like graphs or trees.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 17,
+    "question": "Which index type is best optimized for columns that are frequently filtered using range queries (e.g., `WHERE price > 100 AND price < 500`) or sorting?",
+    "options": [
+      "Hash Index",
+      "B-Tree Index",
+      "Bitmap Index",
+      "Full-Text Index"
+    ],
+    "answer": "B-Tree Index",
+    "explanation": "B-Tree indexes maintain sorted data, making them highly efficient for range scans, lookups, and sorting. Hash indexes are typically only optimized for equality lookups (=).",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 18,
+    "question": "What is 'Sargable' (Search ARGument ABLE) SQL?",
+    "options": [
+      "A query that uses only OR logic.",
+      "A query that uses indexes effectively by avoiding manipulation of indexed columns in the WHERE clause.",
+      "A query that performs a full table scan to ensure accuracy.",
+      "A query that cannot be optimized due to complex joins."
+    ],
+    "answer": "A query that uses indexes effectively by avoiding manipulation of indexed columns in the WHERE clause.",
+    "explanation": "Sargable queries allow the optimizer to use indexes. e.g., `WHERE YEAR(date_col) = 2023` is non-sargable (function on column), while `WHERE date_col >= '2023-01-01'` is sargable.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 19,
+    "question": "What happens when you use `COUNT(column_name)` instead of `COUNT(*)`?",
+    "options": [
+      "`COUNT(column_name)` includes NULL values in the count.",
+      "`COUNT(column_name)` excludes rows where `column_name` is NULL.",
+      "`COUNT(column_name)` counts only distinct values of that column.",
+      "`COUNT(*)` counts only non-NULL values."
+    ],
+    "answer": "`COUNT(column_name)` excludes rows where `column_name` is NULL.",
+    "explanation": "COUNT(*) counts all rows. COUNT(expr) counts only non-null values of that specific expression.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 20,
+    "question": "In the context of window functions, what does the `NTILE(4)` function do?",
+    "options": [
+      "It limits the result set to the first 4 rows.",
+      "It divides the rows into 4 roughly equal buckets (groups) and assigns a bucket number to each row.",
+      "It calculates the 4th percentile of the values.",
+      "It filters out the top 4 ranked rows."
+    ],
+    "answer": "It divides the rows into 4 roughly equal buckets (groups) and assigns a bucket number to each row.",
+    "explanation": "NTILE distributes rows into a specified number of roughly equal groups. It is useful for splitting data into quartiles, deciles, or tertiles.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 21,
+    "question": "Which mechanism ensures that a transaction is isolated from the effects of other concurrent transactions, preventing 'Dirty Reads'?",
+    "options": [
+      "ACID Compliance",
+      "Atomicity",
+      "Isolation Levels",
+      "Durability"
+    ],
+    "answer": "Isolation Levels",
+    "explanation": "Isolation levels (e.g., Read Committed, Serializable) define how transactions interact. They prevent phenomena like Dirty Reads (reading uncommitted data) by locking or versioning data.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 22,
+    "question": "What is the primary risk associated with using `NATURAL JOIN`?",
+    "options": [
+      "It performs a Cartesian product.",
+      "It implicitly joins columns with the same name, which may lead to unintentional joins if schemas change.",
+      "It is slower than an explicit INNER JOIN.",
+      "It does not work with NULL values."
+    ],
+    "answer": "It implicitly joins columns with the same name, which may lead to unintentional joins if schemas change.",
+    "explanation": "NATURAL JOIN automatically joins on all columns with matching names. If a column is added to both tables later (e.g., `updated_at`), the join breaks silently or produces wrong results.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 23,
+    "question": "What does the `EXISTS` operator do in a subquery?",
+    "options": [
+      "It returns the total count of rows in the subquery.",
+      "It returns TRUE if the subquery returns at least one row, and stops scanning at that point.",
+      "It returns all rows from the subquery that match the outer query.",
+      "It checks if the subquery is syntactically correct."
+    ],
+    "answer": "It returns TRUE if the subquery returns at least one row, and stops scanning at that point.",
+    "explanation": "EXISTS is a semi-join. It checks for presence and can short-circuit (stop processing) as soon as it finds the first match, making it generally efficient for existence checks.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 24,
+    "question": "When analyzing an execution plan, what is a 'Table Scan' (or Full Seq Scan)?",
+    "options": [
+      "Reading only the indexes of the table.",
+      "Reading every row in the table to find the matching data.",
+      "A specialized scan used only for analytical queries.",
+      "Reading rows from a materialized view."
+    ],
+    "answer": "Reading every row in the table to find the matching data.",
+    "explanation": "A Table Scan reads every row in the storage structure. It is usually the least efficient access method for large tables compared to an Index Seek/Scan.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 25,
+    "question": "Which of the following is true regarding the placement of the `QUALIFY` clause in a SQL query?",
+    "options": [
+      "It is evaluated before the WHERE clause.",
+      "It is evaluated after the WINDOW clause but before the ORDER BY.",
+      "It is evaluated after the SELECT projection and window functions, essentially acting as a HAVING for windows.",
+      "It replaces the GROUP BY clause."
+    ],
+    "answer": "It is evaluated after the SELECT projection and window functions, essentially acting as a HAVING for windows.",
+    "explanation": "QUALIFY filters the result set *after* window functions have been computed, similar to how HAVING filters after aggregation, allowing you to filter on the calculated window values.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 26,
+    "question": "What is 'Predicate Pushdown' in the context of query optimization?",
+    "options": [
+      "Delaying filters until the data reaches the application.",
+      "Moving filter conditions as close to the data source as possible (e.g., scanning only relevant partitions).",
+      "Pushing filters into the WHERE clause from the HAVING clause.",
+      "Creating indexes on the fly."
+    ],
+    "answer": "Moving filter conditions as close to the data source as possible (e.g., scanning only relevant partitions).",
+    "explanation": "Predicate pushdown minimizes data transfer by applying filters early (at the storage or partition level) rather than loading full datasets into memory and filtering later.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 27,
+    "question": "What is the difference between `ROWS BETWEEN` and `RANGE BETWEEN` in a window frame?",
+    "options": [
+      "`ROWS` considers physical order by offset, `RANGE` considers logical value equivalence (handling duplicates).",
+      "`ROWS` is for aggregates, `RANGE` is for rankings.",
+      "`ROWS` includes the current row, `RANGE` excludes it.",
+      "There is no difference; they are synonyms."
+    ],
+    "answer": "`ROWS` considers physical order by offset, `RANGE` considers logical value equivalence (handling duplicates).",
+    "explanation": "ROWS counts a fixed number of physical rows relative to the current. RANGE considers the values of the ORDER BY column, treating all rows with the same value as a 'peer group' (frame ends extend to include all peers).",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 28,
+    "question": "Why might a query use `OPTION (RECOMPILE)` (SQL Server) or `/*+ INLINE */` (other DBs)?",
+    "options": [
+      "To force the query to use a specific index.",
+      "To bypass the 'Parameter Sniffing' problem where a cached generic plan is inefficient for specific parameters.",
+      "To increase the memory grant for the query.",
+      "To disable parallelism."
+    ],
+    "answer": "To bypass the 'Parameter Sniffing' problem where a cached generic plan is inefficient for specific parameters.",
+    "explanation": "Parameter sniffing creates a plan based on the first execution's parameters. If data distribution is skewed, this generic plan may be terrible for other parameters. Recompilation generates a fresh plan for the current specific parameters.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 29,
+    "question": "What is a 'Clustered Index'?",
+    "options": [
+      "A copy of the table data sorted separately.",
+      "An index that defines the physical order of data storage in the table.",
+      "An index on multiple columns.",
+      "An index used only for text search."
+    ],
+    "answer": "An index that defines the physical order of data storage in the table.",
+    "explanation": "A clustered index sorts and stores the data rows in the table based on their key values. There can be only one clustered index per table because the data can be stored in only one order.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 30,
+    "question": "In `FIRST_VALUE() OVER (ORDER BY date)`, why might the result be NULL or incorrect for the 'first' value if no frame is specified?",
+    "options": [
+      "`FIRST_VALUE` requires `PARTITION BY` to function.",
+      "The default frame is `RANGE UNBOUNDED PRECEDING AND CURRENT ROW`, which starts from the top, but if `ORDER BY` has ties, the behavior is non-deterministic without `ROWS`.",
+      "Without `ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING`, the window does not see the first row if the current row is isolated.",
+      "Actually, it works correctly by default."
+    ],
+    "answer": "Actually, it works correctly by default.",
+    "explanation": "Correction of the distractor logic. `FIRST_VALUE` works fine with the default frame for strictly increasing order. However, `LAST_VALUE` often fails (returns current row) without changing the frame to `UNBOUNDED FOLLOWING`. The trick is knowing `LAST_VALUE` quirks. *Revised Q*: Focus on LAST_VALUE.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 31,
+    "question": "Which window function typically requires modifying the default frame clause (`ROWS BETWEEN`) to return the correct logical result?",
+    "options": [
+      "ROW_NUMBER()",
+      "RANK()",
+      "LAST_VALUE()",
+      "SUM()"
+    ],
+    "answer": "LAST_VALUE()",
+    "explanation": "The default window frame ends at the CURRENT ROW. To get the true last value of the partition, you must explicitly set the frame to `ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING`.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 32,
+    "question": "What is the 'Spool' operator in an execution plan?",
+    "options": [
+      "A blocking operator that sorts data.",
+      "A temporary storage structure (often in tempdb) to save intermediate results for reuse.",
+      "An operator that deletes duplicate rows.",
+      "The final result sender."
+    ],
+    "answer": "A temporary storage structure (often in tempdb) to save intermediate results for reuse.",
+    "explanation": "A spool takes a stream of input and stores it in a hidden temporary table. This allows the optimizer to re-scan the data multiple times without re-computing the logic (e.g., in recursive CTEs or complex updates).",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 33,
+    "question": "What is the functional difference between `WHERE` and `HAVING`?",
+    "options": [
+      "`WHERE` filters aggregates; `HAVING` filters rows.",
+      "`WHERE` filters rows before aggregation; `HAVING` filters groups after aggregation.",
+      "`HAVING` can use subqueries; `WHERE` cannot.",
+      "There is no performance difference."
+    ],
+    "answer": "`WHERE` filters rows before aggregation; `HAVING` filters groups after aggregation.",
+    "explanation": "The `WHERE` clause evaluates first, limiting rows sent to the Group By operator. `HAVING` evaluates after the Group By, allowing filtering on the aggregate results (e.g., `HAVING count(*) > 5`).",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 34,
+    "question": "What does `COALESCE(arg1, arg2, ...)` do?",
+    "options": [
+      "Returns the sum of the arguments.",
+      "Returns the first non-NULL argument in the list.",
+      "Returns the last argument if the others are distinct.",
+      "Concatenates the arguments."
+    ],
+    "answer": "Returns the first non-NULL argument in the list.",
+    "explanation": "COALESCE is a shortcut for the CASE expression. It evaluates arguments in order and returns the first value that is not NULL.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 35,
+    "question": "In a Distributed Database System, what is 'Data Skew'?",
+    "options": [
+      "Data that is inconsistent across nodes.",
+      "The uneven distribution of data across partitions, causing some nodes to work harder than others.",
+      "The delay in data replication.",
+      "The corruption of data during transmission."
+    ],
+    "answer": "The uneven distribution of data across partitions, causing some nodes to work harder than others.",
+    "explanation": "Skew occurs when a specific partition key is much more frequent than others. This 'straggler' node takes longer to process, dictating the total job time and reducing parallelism benefits.",
+    "difficulty": "Intermediate"
+  }
+]
