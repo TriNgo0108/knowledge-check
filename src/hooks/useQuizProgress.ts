@@ -1,61 +1,39 @@
-import { useState, useCallback, useEffect } from 'react';
-import { TopicProgress, QuestionProgress, QuestionStatus, TopicId } from '@/data/types';
+import { useState, useCallback, useEffect, useMemo } from 'react';
+import { QuestionStatus } from '@/data/types';
+import { useQuizProgressStore } from '@/store/quizProgressStore';
 
-const STORAGE_KEY = 'quiz-progress';
+export function useQuizProgress(progressKey: string, totalQuestions: number) {
+  // Use selective subscriptions to prevent unnecessary re-renders
+  const progressByKey = useQuizProgressStore((state) => state.progressByKey);
+  const saveQuestionResultAction = useQuizProgressStore((state) => state.saveQuestionResult);
+  const setLastQuestionIndexAction = useQuizProgressStore((state) => state.setLastQuestionIndex);
+  const markCompleteAction = useQuizProgressStore((state) => state.markComplete);
+  const resetProgressAction = useQuizProgressStore((state) => state.resetProgress);
+  
+  // Get stored progress for this key
+  const storedProgress = progressByKey[progressKey] || null;
+  const [currentIndex, setCurrentIndex] = useState(storedProgress?.lastQuestionIndex || 0);
 
-function getAllProgress(): Record<string, TopicProgress> {
-  try {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    return stored ? JSON.parse(stored) : {};
-  } catch {
-    return {};
-  }
-}
-
-function saveAllProgress(progress: Record<string, TopicProgress>) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
-}
-
-export function useQuizProgress(topicId: string, totalQuestions: number) {
-  const [progress, setProgress] = useState<TopicProgress>(() => {
-    const all = getAllProgress();
-    return all[topicId] || {
-      topicId: topicId as TopicId,
-      questions: {},
-      lastQuestionIndex: 0,
-      completedAt: undefined
-    };
-  });
-
-  const [currentIndex, setCurrentIndex] = useState(progress.lastQuestionIndex);
-
-  // Sync progress to localStorage whenever it changes
+  // Sync currentIndex when progressKey changes
   useEffect(() => {
-    const all = getAllProgress();
-    all[topicId] = progress;
-    saveAllProgress(all);
-  }, [topicId, progress]);
+    const progress = progressByKey[progressKey];
+    setCurrentIndex(progress?.lastQuestionIndex || 0);
+  }, [progressKey, progressByKey]);
 
   const saveQuestionResult = useCallback((
     questionId: number,
     status: QuestionStatus,
     selectedAnswer?: string
   ) => {
-    setProgress(prev => ({
-      ...prev,
-      questions: {
-        ...prev.questions,
-        [questionId]: { questionId, status, selectedAnswer }
-      }
-    }));
-  }, []);
+    saveQuestionResultAction(progressKey, questionId, status, selectedAnswer);
+  }, [progressKey, saveQuestionResultAction]);
 
   const jumpToQuestion = useCallback((index: number) => {
     if (index >= 0 && index < totalQuestions) {
       setCurrentIndex(index);
-      setProgress(prev => ({ ...prev, lastQuestionIndex: index }));
+      setLastQuestionIndexAction(progressKey, index);
     }
-  }, [totalQuestions]);
+  }, [totalQuestions, progressKey, setLastQuestionIndexAction]);
 
   const nextQuestion = useCallback(() => {
     if (currentIndex < totalQuestions - 1) {
@@ -66,36 +44,51 @@ export function useQuizProgress(topicId: string, totalQuestions: number) {
   }, [currentIndex, totalQuestions, jumpToQuestion]);
 
   const getQuestionStatus = useCallback((questionId: number): QuestionStatus => {
-    return progress.questions[questionId]?.status || 'unanswered';
-  }, [progress.questions]);
+    const progress = progressByKey[progressKey];
+    return progress?.questions[questionId]?.status || 'unanswered';
+  }, [progressKey, progressByKey]);
 
   const markComplete = useCallback(() => {
-    setProgress(prev => ({ ...prev, completedAt: Date.now() }));
-  }, []);
+    markCompleteAction(progressKey);
+  }, [progressKey, markCompleteAction]);
 
   const resetProgress = useCallback(() => {
-    const freshProgress: TopicProgress = {
-      topicId: topicId as TopicId,
-      questions: {},
-      lastQuestionIndex: 0,
-      completedAt: undefined
-    };
-    setProgress(freshProgress);
+    resetProgressAction(progressKey);
     setCurrentIndex(0);
-  }, [topicId]);
+  }, [progressKey, resetProgressAction]);
 
-  // Calculate stats
-  const stats = {
-    total: totalQuestions,
-    answered: Object.keys(progress.questions).length,
-    correct: Object.values(progress.questions).filter(q => q.status === 'correct').length,
-    wrong: Object.values(progress.questions).filter(q => q.status === 'wrong').length,
-    skipped: Object.values(progress.questions).filter(q => q.status === 'skipped').length,
-    unanswered: totalQuestions - Object.keys(progress.questions).length
-  };
+  // Calculate stats - memoized to prevent recalculation
+  const stats = useMemo(() => {
+    const progress = progressByKey[progressKey];
+    if (!progress) {
+      return {
+        total: totalQuestions,
+        answered: 0,
+        correct: 0,
+        wrong: 0,
+        skipped: 0,
+        unanswered: totalQuestions,
+      };
+    }
+    
+    const questions = Object.values(progress.questions);
+    const correct = questions.filter((q) => q.status === 'correct').length;
+    const wrong = questions.filter((q) => q.status === 'wrong').length;
+    const skipped = questions.filter((q) => q.status === 'skipped').length;
+    const answered = correct + wrong + skipped;
+    
+    return {
+      total: totalQuestions,
+      answered,
+      correct,
+      wrong,
+      skipped,
+      unanswered: totalQuestions - answered,
+    };
+  }, [progressByKey, progressKey, totalQuestions]);
 
   return {
-    progress,
+    progress: storedProgress,
     currentIndex,
     stats,
     saveQuestionResult,
@@ -107,12 +100,8 @@ export function useQuizProgress(topicId: string, totalQuestions: number) {
   };
 }
 
-// Utility to get progress for display on Home page
-export function getTopicProgress(topicId: string): TopicProgress | null {
-  const all = getAllProgress();
-  return all[topicId] || null;
-}
 
-export function getAllTopicsProgress(): Record<string, TopicProgress> {
-  return getAllProgress();
+// Utility to get all topics progress for display (e.g., on Home page)
+export function getAllTopicsProgress(): Record<string, { questions: Record<number, { status: string }> }> {
+  return useQuizProgressStore.getState().progressByKey;
 }

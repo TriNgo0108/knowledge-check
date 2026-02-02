@@ -1,36 +1,7 @@
-import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { useTopics, useOriginalQuestions, useGeneratedTestsForTopic } from '@/hooks/useQuestions';
+import { useTopics, useOriginalQuestions, useGeneratedTestsForTopic } from '@hooks';
+import { useTestProgressStats } from '@store';
 import ThemeToggle from '@/components/ThemeToggle';
-
-interface TestProgress {
-  correct: number;
-  wrong: number;
-  skipped: number;
-  total: number;
-}
-
-function getTestProgress(topicId: string, testId: string): TestProgress {
-  const key = `quiz_progress_${topicId}_${testId}`;
-  const stored = localStorage.getItem(key);
-  
-  if (!stored) {
-    return { correct: 0, wrong: 0, skipped: 0, total: 0 };
-  }
-  
-  try {
-    const data = JSON.parse(stored);
-    const questions = Object.values(data.questions || {}) as Array<{ status: string }>;
-    return {
-      correct: questions.filter(q => q.status === 'correct').length,
-      wrong: questions.filter(q => q.status === 'wrong').length,
-      skipped: questions.filter(q => q.status === 'skipped').length,
-      total: questions.length,
-    };
-  } catch {
-    return { correct: 0, wrong: 0, skipped: 0, total: 0 };
-  }
-}
 
 interface TestCardProps {
   topicId: string;
@@ -42,10 +13,12 @@ interface TestCardProps {
 }
 
 function TestCard({ topicId, testId, displayName, questionCount, color, isOriginal }: TestCardProps) {
-  const progress = getTestProgress(topicId, testId);
-  const answered = progress.correct + progress.wrong + progress.skipped;
-  const progressPercent = questionCount > 0 ? (answered / questionCount) * 100 : 0;
+  const progressKey = `${topicId}_${testId}`;
+  const stats = useTestProgressStats(progressKey, questionCount);
   
+  // Use stats.answered directly - already computed in the hook
+  const progressPercent = questionCount > 0 ? (stats.answered / questionCount) * 100 : 0;
+
   return (
     <Link
       to={`/quiz/${topicId}/${testId}`}
@@ -67,7 +40,10 @@ function TestCard({ topicId, testId, displayName, questionCount, color, isOrigin
         {isOriginal && (
           <span
             className="px-2 py-1 text-xs font-medium rounded-full"
-            style={{ background: color + '20', color }}
+            style={{ 
+              background: 'rgba(255, 255, 255, 0.1)', 
+              color 
+            }}
           >
             Original
           </span>
@@ -80,7 +56,7 @@ function TestCard({ topicId, testId, displayName, questionCount, color, isOrigin
           className="h-full rounded-full transition-all duration-500"
           style={{
             width: `${progressPercent}%`,
-            background: `linear-gradient(90deg, ${color}, ${color}99)`,
+            background: color,
           }}
         />
       </div>
@@ -91,16 +67,16 @@ function TestCard({ topicId, testId, displayName, questionCount, color, isOrigin
           <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
             <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
           </svg>
-          {progress.correct}
+          {stats.correct}
         </span>
         <span className="flex items-center gap-1" style={{ color: 'var(--color-wrong)' }}>
           <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
             <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
           </svg>
-          {progress.wrong}
+          {stats.wrong}
         </span>
         <span style={{ color: 'var(--color-text-muted)' }}>
-          {questionCount - answered} remaining
+          {stats.unanswered} remaining
         </span>
       </div>
     </Link>
