@@ -1,0 +1,899 @@
+[
+  {
+    "id": 1,
+    "question": "Which clause is mandatory to convert an aggregate function into a window function?",
+    "options": [
+      "PARTITION BY",
+      "ORDER BY",
+      "OVER",
+      "FRAME"
+    ],
+    "answer": "OVER",
+    "explanation": "The OVER clause is required to define the window for an aggregate function. PARTITION BY and ORDER BY are optional sub-clauses within OVER.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 2,
+    "question": "Which window function is guaranteed to return a unique integer for every row within a partition, regardless of duplicate values?",
+    "options": [
+      "RANK()",
+      "DENSE_RANK()",
+      "ROW_NUMBER()",
+      "NTILE()"
+    ],
+    "answer": "ROW_NUMBER()",
+    "explanation": "ROW_NUMBER() assigns a unique sequential integer to rows (1, 2, 3) regardless of ties. RANK() and DENSE_RANK() assign the same value to ties.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 3,
+    "question": "In the context of a window function, what is the default frame if an ORDER BY clause is specified but no explicit frame (ROWS BETWEEN) is defined?",
+    "options": [
+      "ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING",
+      "ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW",
+      "RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW",
+      "ROWS CURRENT ROW"
+    ],
+    "answer": "RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW",
+    "explanation": "With ORDER BY, the default scope is from the start of the partition to the current row. Without ORDER BY, the default is the entire partition.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 4,
+    "question": "Which clause is used to restrict the rows of a window function to a specific subset based on a condition?",
+    "options": [
+      "WHERE",
+      "HAVING",
+      "FILTER",
+      "RESTRICT"
+    ],
+    "answer": "FILTER",
+    "explanation": "FILTER (WHERE ...) is a specific clause used inside aggregate functions to apply a condition to a subset of rows before aggregation. WHERE applies to the whole row set before aggregation.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 5,
+    "question": "What is the impact of using PARTITION BY inside a window function's OVER clause?",
+    "options": [
+      "It sorts the rows within the window",
+      "It groups rows into partitions to perform calculations independently per group",
+      "It filters out NULL values from the calculation",
+      "It limits the total number of rows returned by the query"
+    ],
+    "answer": "It groups rows into partitions to perform calculations independently per group",
+    "explanation": "PARTITION BY divides the result set into partitions (similar to GROUP BY), and the window function is applied to each partition separately.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 6,
+    "question": "Which index strategy is most effective for a query using a window function with PARTITION BY department_id ORDER BY salary?",
+    "options": [
+      "A single column index on department_id",
+      "A single column index on salary",
+      "A composite index on (salary, department_id)",
+      "A composite index on (department_id, salary)"
+    ],
+    "answer": "A composite index on (department_id, salary)",
+    "explanation": "Composite indexes should generally lead with the partition column followed by the sort column to optimize the window operation.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 7,
+    "question": "How does a window function differ from a standard GROUP BY clause regarding result set granularity?",
+    "options": [
+      "Window functions reduce the number of rows, GROUP BY does not",
+      "GROUP BY reduces rows; window functions retain the original row count",
+      "Window functions cannot use aggregates",
+      "There is no difference in granularity"
+    ],
+    "answer": "GROUP BY reduces rows; window functions retain the original row count",
+    "explanation": "GROUP BY collapses rows into a single row per group. Window functions perform calculations while keeping the detail rows intact.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 8,
+    "question": "Which function is used to access a value from a subsequent row without using a self-join?",
+    "options": [
+      "LAG()",
+      "LEAD()",
+      "FIRST_VALUE()",
+      "LAST_VALUE()"
+    ],
+    "answer": "LEAD()",
+    "explanation": "LEAD() accesses data from a row following the current row at a specified offset. LAG() accesses previous rows.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 9,
+    "question": "What is a 'Covering Index'?",
+    "options": [
+      "An index that includes all columns of the table",
+      "An index containing all columns required by a specific query (SELECT, JOIN, WHERE)",
+      "An index used to cover multiple tables in a view",
+      "An index that enforces a Unique constraint"
+    ],
+    "answer": "An index containing all columns required by a specific query (SELECT, JOIN, WHERE)",
+    "explanation": "A covering index allows the engine to satisfy the query purely from the index structure without accessing the main table (heap), improving performance.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 10,
+    "question": "In a composite index (A, B, C), which query scenario effectively utilizes the index?",
+    "options": [
+      "WHERE B = 1 AND C = 2",
+      "WHERE C = 1",
+      "WHERE A = 1 AND C = 1",
+      "WHERE A = 1 AND B = 1"
+    ],
+    "answer": "WHERE A = 1 AND B = 1",
+    "explanation": "B-tree indexes require using the leftmost columns (leading columns) to be efficient. Querying on B and C without A skips the leading column A.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 11,
+    "question": "What is the primary trade-off when creating many indexes on a table?",
+    "options": [
+      "Read performance decreases",
+      "Write performance (INSERT/UPDATE/DELETE) degrades",
+      "Storage usage decreases",
+      "Query planning takes less time"
+    ],
+    "answer": "Write performance (INSERT/UPDATE/DELETE) degrades",
+    "explanation": "Indexes must be updated on every data modification. More indexes increase the overhead for write operations.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 12,
+    "question": "Which of the following is a valid reason to use a Partial Index (Filtered Index)?",
+    "options": [
+      "To index all NULL values in a column",
+      "To reduce index size by indexing only rows meeting a specific condition",
+      "To enforce uniqueness across multiple columns",
+      "To automatically partition the table"
+    ],
+    "answer": "To reduce index size by indexing only rows meeting a specific condition",
+    "explanation": "Partial indexes index a subset of data (e.g., WHERE status = 'active'), making them smaller and faster for specific queries.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 13,
+    "question": "What is the result of the COALESCE(column1, column2, 0) function?",
+    "options": [
+      "Returns the sum of column1 and column2",
+      "Returns the first non-NULL value in the list",
+      "Returns 0 if both column1 and column2 are NULL",
+      "Returns both column1 and column2 as an array"
+    ],
+    "answer": "Returns the first non-NULL value in the list",
+    "explanation": "COALESCE iterates through arguments and returns the first one that is not NULL. If all are NULL, it returns NULL (unless a default like 0 is the last arg).",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 14,
+    "question": "Which join type returns all rows from the left table, and matched rows from the right table, filling with NULLs if there is no match?",
+    "options": [
+      "INNER JOIN",
+      "FULL OUTER JOIN",
+      "LEFT JOIN",
+      "CROSS JOIN"
+    ],
+    "answer": "LEFT JOIN",
+    "explanation": "A LEFT JOIN prioritizes the left table, ensuring all its rows appear. Unmatched rows from the right table return NULLs.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 15,
+    "question": "What happens when you use UNION instead of UNION ALL between two queries?",
+    "options": [
+      "It retrieves rows faster by skipping the sort phase",
+      "It removes duplicate rows from the combined result set",
+      "It automatically sorts the result by the first column",
+      "It includes columns that do not match in data type"
+    ],
+    "answer": "It removes duplicate rows from the combined result set",
+    "explanation": "UNION performs a sort (or hash aggregation) to identify and remove duplicates. UNION ALL concatenates results without checking for duplicates.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 16,
+    "question": "Which clause is used to filter the results of a GROUP BY query based on an aggregate condition?",
+    "options": [
+      "WHERE",
+      "HAVING",
+      "ORDER BY",
+      "LIMIT"
+    ],
+    "answer": "HAVING",
+    "explanation": "The WHERE clause filters rows *before* aggregation. The HAVING clause filters groups *after* aggregation.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 17,
+    "question": "What is the purpose of the NULLIF(expression1, expression2) function?",
+    "options": [
+      "To return NULL if expression1 is greater than expression2",
+      "To return NULL if the two expressions are equal, otherwise expression1",
+      "To convert expression1 to NULL if it matches any value in a list",
+      "To replace NULL values with expression2"
+    ],
+    "answer": "To return NULL if the two expressions are equal, otherwise expression1",
+    "explanation": "NULLIF is commonly used to prevent division-by-zero errors (e.g., NULLIF(denom, 0)) by returning NULL if the denominator is 0.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 18,
+    "question": "In SQL, which constraint ensures that a column (or group of columns) uniquely identifies each row in a table?",
+    "options": [
+      "FOREIGN KEY",
+      "UNIQUE",
+      "PRIMARY KEY",
+      "CHECK"
+    ],
+    "answer": "PRIMARY KEY",
+    "explanation": "The PRIMARY KEY constraint uniquely identifies rows and implicitly enforces NOT NULL. UNIQUE allows NULLs.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 19,
+    "question": "Which of the following accurately describes the 'Clustered Index'?",
+    "options": [
+      "It creates a copy of the data separate from the table",
+      "It dictates the physical storage order of the table's data",
+      "It is always created on a column with duplicates",
+      "It cannot be disabled"
+    ],
+    "answer": "It dictates the physical storage order of the table's data",
+    "explanation": "A clustered index sorts and stores the data rows in the table based on their key values. There can be only one per table.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 20,
+    "question": "What is the default behavior of a window function if no PARTITION BY sub-clause is specified?",
+    "options": [
+      "It partitions by the primary key",
+      "It applies the calculation to the entire result set as a single partition",
+      "It returns an error",
+      "It defaults to partitioning by the first column"
+    ],
+    "answer": "It applies the calculation to the entire result set as a single partition",
+    "explanation": "Omitting PARTITION BY treats the whole result set as one group, applying the window function across all rows.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 21,
+    "question": "Which aggregate function ignores NULL values in its calculation?",
+    "options": [
+      "COUNT(*)",
+      "COUNT(column_name)",
+      "SUM(*)",
+      "AVG(*)"
+    ],
+    "answer": "COUNT(column_name)",
+    "explanation": "COUNT(column) counts only non-NULL values. COUNT(*) counts all rows regardless of NULLs.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 22,
+    "question": "Which keyword is used to rename a column or table in the output result set?",
+    "options": [
+      "DEFINE",
+      "RENAME",
+      "AS",
+      "ALIAS"
+    ],
+    "answer": "AS",
+    "explanation": "AS is the standard SQL keyword for aliasing columns or tables (e.g., SELECT col AS name).",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 23,
+    "question": "What does the 'N' prefix represent in SQL strings (e.g., N'text')?",
+    "options": [
+      "National language character set (Unicode)",
+      "Number format",
+      "Not Null constraint",
+      "New line character"
+    ],
+    "answer": "National language character set (Unicode)",
+    "explanation": "The N prefix denotes that the string is a Unicode value (NVARCHAR/NCHAR), supporting multi-byte characters.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 24,
+    "question": "Which operator checks if a value exists within a list of specific values?",
+    "options": [
+      "BETWEEN",
+      "LIKE",
+      "IN",
+      "EXISTS"
+    ],
+    "answer": "IN",
+    "explanation": "The IN operator returns true if the value matches any value in the subquery or list (e.g., WHERE id IN (1, 2, 3)).",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 25,
+    "question": "In a transaction, which command saves all changes since the BEGIN TRANSACTION?",
+    "options": [
+      "SAVEPOINT",
+      "COMMIT",
+      "ROLLBACK",
+      "TRUNCATE"
+    ],
+    "answer": "COMMIT",
+    "explanation": "COMMIT makes the changes performed in the transaction permanent. ROLLBACK undoes them.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 26,
+    "question": "Which statement is used to remove a table and all its data from the database permanently?",
+    "options": [
+      "DELETE",
+      "TRUNCATE",
+      "DROP",
+      "REMOVE"
+    ],
+    "answer": "DROP",
+    "explanation": "DROP removes the table definition, data, and associated metadata. DELETE and TRUNCATE only remove data.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 27,
+    "question": "What is the primary difference between DELETE and TRUNCATE?",
+    "options": [
+      "TRUNCATE cannot be rolled back (in most databases)",
+      "DELETE is DDL, TRUNCATE is DML",
+      "TRUNCATE scans every row before deleting",
+      "DELETE resets the identity seed, TRUNCATE does not"
+    ],
+    "answer": "TRUNCATE cannot be rolled back (in most databases)",
+    "explanation": "TRUNCATE is a DDL operation that deallocates data pages, making it faster and non-transactional in logging compared to the row-by-row logging of DELETE.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 28,
+    "question": "Which function returns the number of characters in a string?",
+    "options": [
+      "LEN()",
+      "LENGTH()",
+      "CHAR_LENGTH()",
+      "Both A and B depending on SQL dialect"
+    ],
+    "answer": "Both A and B depending on SQL dialect",
+    "explanation": "SQL Server uses LEN(). PostgreSQL and MySQL use LENGTH(). The concept is identical, but the keyword varies.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 29,
+    "question": "What is a 'Materialized View'?",
+    "options": [
+      "A standard view that runs a query every time it is accessed",
+      "A pre-computed view that stores the result of a query physically",
+      "A view that can only be used with Materialized Design patterns",
+      "A temporary view that expires after 24 hours"
+    ],
+    "answer": "A pre-computed view that stores the result of a query physically",
+    "explanation": "Unlike standard views (virtual tables), materialized views store the result set on disk and must be refreshed.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 30,
+    "question": "Which wildcard character matches exactly one character in a LIKE pattern?",
+    "options": [
+      "%",
+      "_",
+      "*",
+      "?"
+    ],
+    "answer": "_",
+    "explanation": "The underscore (_) represents a single character. The percent sign (%) represents zero or more characters.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 31,
+    "question": "What does the EXISTS operator do in a subquery?",
+    "options": [
+      "Returns the number of rows found in the subquery",
+      "Returns TRUE if the subquery returns at least one row",
+      "Returns the list of values found in the subquery",
+      "Returns TRUE if the subquery contains NULL values"
+    ],
+    "answer": "Returns TRUE if the subquery returns at least one row",
+    "explanation": "EXISTS is a boolean operator that checks for the presence of rows, typically used for correlated subqueries.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 32,
+    "question": "When optimizing a query with a WHERE clause using an index, which operator generally prevents the index from being used (SARG-killer)?",
+    "options": [
+      ">",
+      "<",
+      "LIKE 'pattern%'",
+      "LIKE '%pattern'"
+    ],
+    "answer": "LIKE '%pattern'",
+    "explanation": "A leading wildcard (%) requires the database to inspect every row, rendering a standard B-Tree index ineffective.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 33,
+    "question": "Which clause is used to limit the number of rows returned by a query in MySQL and PostgreSQL?",
+    "options": [
+      "TOP",
+      "LIMIT",
+      "FETCH FIRST",
+      "ROWNUM"
+    ],
+    "answer": "LIMIT",
+    "explanation": "LIMIT is the syntax used by MySQL, PostgreSQL, and SQLite. Oracle uses ROWNUM, SQL Server uses TOP.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 34,
+    "question": "What is the purpose of the VACUUM command (specifically in PostgreSQL)?",
+    "options": [
+      "To delete the database",
+      "To reclaim storage occupied by dead tuples (dead rows)",
+      "To compress the backup file",
+      "To create a new index"
+    ],
+    "answer": "To reclaim storage occupied by dead tuples (dead rows)",
+    "explanation": "In MVCC databases like PostgreSQL, VACUUM cleans up dead rows left behind by updates and deletes to prevent table bloat.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 35,
+    "question": "Which clause explicitly defines the subset of rows within a partition that a window function operates on, relative to the current row?",
+    "options": [
+      "PARTITION BY",
+      "ORDER BY",
+      "FRAME CLAUSE",
+      "GROUP BY"
+    ],
+    "answer": "FRAME CLAUSE",
+    "explanation": "The frame clause (e.g., `ROWS BETWEEN ...`) determines the specific rows in the partition visible to the function. `PARTITION BY` groups rows, and `ORDER BY` sorts them, but the frame defines the sliding window scope.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 36,
+    "question": "What is the primary performance advantage of using the `ROWS` frame clause over `RANGE` when defining window bounds?",
+    "options": [
+      "`ROWS` automatically parallelizes across all CPU cores.",
+      "`ROWS` uses physical offsets, avoiding peer-evaluation overhead.",
+      "`RANGE` requires indexing all distinct values in the table.",
+      "`ROWS` allows aggregation on non-numeric data types."
+    ],
+    "answer": "`ROWS` uses physical offsets, avoiding peer-evaluation overhead.",
+    "explanation": "`ROWS` uses fixed physical offsets (row numbers), which is computationally cheaper than `RANGE`, which must evaluate logical value equality to determine peer rows.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 37,
+    "question": "When optimizing a query using `SUM(amount) OVER (PARTITION BY department ORDER BY created_at)`, which composite index structure is most effective?",
+    "options": [
+      "(created_at, amount)",
+      "(department, created_at)",
+      "(amount, department)",
+      "(created_at, department)"
+    ],
+    "answer": "(department, created_at)",
+    "explanation": "The index should match the sort order of the operation: Partition by `department` first, then order by `created_at`. This allows the database to perform an Index Scan without an explicit sort operation.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 38,
+    "question": "In the context of window functions, what causes 'disk spilling' during execution?",
+    "options": [
+      "Using unbounded frames on large partitions that exceed `work_mem`.",
+      "Creating an index on the window function's result set.",
+      "Using `PARTITION BY` on a column with high cardinality.",
+      "Applying the `DISTINCT` keyword to the window function."
+    ],
+    "answer": "Using unbounded frames on large partitions that exceed `work_mem`.",
+    "explanation": "If the working data required to compute the window (especially for sorts or hashing in large partitions) exceeds the available memory, the database writes temporary data to disk, significantly degrading performance.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 39,
+    "question": "What is the output difference between `RANK()` and `DENSE_RANK()` when identical values exist?",
+    "options": [
+      "`RANK()` produces unique numbers; `DENSE_RANK()` skips numbers.",
+      "`RANK()` assigns unique sequential integers; `DENSE_RANK()` assigns the same number.",
+      "`RANK()` skips numbers after a tie; `DENSE_RANK()` does not.",
+      "`RANK()` includes NULLs in ranking; `DENSE_RANK()` excludes them."
+    ],
+    "answer": "`RANK()` skips numbers after a tie; `DENSE_RANK()` does not.",
+    "explanation": "If two rows tie for rank 1, `RANK()` jumps to 3 for the next row, while `DENSE_RANK()` assigns rank 2. `RANK()` reflects the count of rows preceding the current row + 1.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 40,
+    "question": "Why must window functions generally appear in the `SELECT` clause or `ORDER BY` clause, but NOT in the `WHERE` clause?",
+    "options": [
+      "`WHERE` executes before windowing, so the window value is not yet calculated.",
+      "Window functions cannot handle the filtering logic of `WHERE`.",
+      "The `WHERE` clause requires aggregate functions, not analytic functions.",
+      "Window functions return a table, not a scalar value."
+    ],
+    "answer": "`WHERE` executes before windowing, so the window value is not yet calculated.",
+    "explanation": "The logical order of operations processes `WHERE` (filtering) before `SELECT` (projection) and Window Functions. Filtering on a window calculation requires moving the filter to a subquery or CTE.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 41,
+    "question": "Which function returns a unique integer for each row, regardless of duplicate values in the `ORDER BY` column?",
+    "options": [
+      "`RANK()`",
+      "`DENSE_RANK()`",
+      "`ROW_NUMBER()`",
+      "`NTILE(100)`"
+    ],
+    "answer": "`ROW_NUMBER()`",
+    "explanation": "Unlike `RANK()` or `DENSE_RANK()`, `ROW_NUMBER()` is nondeterministic regarding ties (unless additional tie-breakers are provided) and assigns a strictly increasing unique integer.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 42,
+    "question": "What is the default frame clause if an `ORDER BY` is specified but no explicit frame (`ROWS BETWEEN`) is defined?",
+    "options": [
+      "ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING",
+      "ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW",
+      "RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW",
+      "RANGE BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING"
+    ],
+    "answer": "RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW",
+    "explanation": "Standard SQL defaults to `RANGE UNBOUNDED PRECEDING AND CURRENT ROW` when `ORDER BY` is used. This creates a running total calculation from the start of the partition to the current row.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 43,
+    "question": "How does the `NTILE(n)` function distribute rows?",
+    "options": [
+      "Assigns a rank based on the value magnitude.",
+      "Divides rows into `n` roughly equal buckets.",
+      "Calculates the percentile rank (0 to 1) of the row.",
+      "Filters the top `n` rows based on the sort order."
+    ],
+    "answer": "Divides rows into `n` roughly equal buckets.",
+    "explanation": "`NTILE` creates groups (buckets) of roughly equal size. If the row count is not divisible by `n`, the remainder is distributed one-by-one to the first buckets.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 44,
+    "question": "What is the computational complexity risk of replacing a correlated subquery with a window function?",
+    "options": [
+      "Window functions always result in a full table scan.",
+      "Window functions prevent query parallelism.",
+      "Correlated subqueries are quadratic; window functions are usually linear.",
+      "Window functions generate more temp I/O than subqueries."
+    ],
+    "answer": "Correlated subqueries are quadratic; window functions are usually linear.",
+    "explanation": "Correlated subqueries often execute the inner query once for every row in the outer query (O(n*m) or worse). Window functions typically process data in a single pass (O(n)) over the partitioned data.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 45,
+    "question": "Which scenario justifies using a Materialized View instead of a standard Window Function query?",
+    "options": [
+      "The query runs frequently on data that changes rarely.",
+      "The data volume is small and fits in memory.",
+      "The query requires real-time latency.",
+      "The window function uses `ROW_NUMBER()` only."
+    ],
+    "answer": "The query runs frequently on data that changes rarely.",
+    "explanation": "Materialized views pre-calculate and store the result on disk. This is beneficial for expensive aggregations (like complex windowing) on slowly changing data, trading real-time accuracy for read speed.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 46,
+    "question": "What does the `LAG(col, 1)` function achieve without the use of a self-join?",
+    "options": [
+      "Calculates the difference between the current row and the first row.",
+      "Accesses the value of `col` from the previous row in the partition.",
+      "Filters out the first row of the partition.",
+      "Groups the data into lagging buckets."
+    ],
+    "answer": "Accesses the value of `col` from the previous row in the partition.",
+    "explanation": "`LAG` provides access to a row at a given physical offset preceding the current row, enabling comparisons between current and prior states efficiently.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 47,
+    "question": "Consider `SUM(val) OVER ()`. What does the empty parentheses `()` signify?",
+    "options": [
+      "The window frame is limited to the current row only.",
+      "The entire result set is treated as a single partition.",
+      "The function defaults to `PARTITION BY RAND()`.",
+      "The query will fail due to syntax error."
+    ],
+    "answer": "The entire result set is treated as a single partition.",
+    "explanation": "Omitting the `OVER` clause content or leaving it empty defines the window scope as the whole result set. The calculation is applied globally across all rows.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 48,
+    "question": "When using `PARTITION BY`, how does it impact the execution strategy of the query engine?",
+    "options": [
+      "It forces a full table scan regardless of indexes.",
+      "It allows the engine to process and reset calculations independently for each group.",
+      "It prevents the engine from using the `ORDER BY` index.",
+      "It creates a separate temp table for each partition on disk."
+    ],
+    "answer": "It allows the engine to process and reset calculations independently for each group.",
+    "explanation": "Partitions break the problem into isolated segments. The engine computes the window function for one partition completely before resetting state (rank, sum, etc.) for the next.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 49,
+    "question": "Why might you use `ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING` in a time-series analysis?",
+    "options": [
+      "To calculate a moving average centered on the current row.",
+      "To filter out future data points.",
+      "To reduce the total number of rows returned.",
+      "To prevent data skew in the partitions."
+    ],
+    "answer": "To calculate a moving average centered on the current row.",
+    "explanation": "This symmetric frame includes the previous, current, and next rows. This is typically used for smoothing (moving average) or outlier detection using neighbors.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 50,
+    "question": "What is a specific optimization strategy when partitioning a table for window function performance?",
+    "options": [
+      "Partition by the `ORDER BY` column.",
+      "Create indexes matching the `PARTITION BY` and `ORDER BY` columns.",
+      "Always use `RANGE` frames instead of `ROWS`.",
+      "Disable parallelism for window functions."
+    ],
+    "answer": "Create indexes matching the `PARTITION BY` and `ORDER BY` columns.",
+    "explanation": "Matching the index sort order (Partition Key -> Order Key) allows the database to read data sequentially (index scan) rather than performing expensive sort operations for the window.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 51,
+    "question": "Which of the following accurately describes the behavior of `PERCENT_RANK()`?",
+    "options": [
+      "Returns a value from 0 to 1 representing the percentage of rows with lower values.",
+      "Returns the percentile (0 to 100) of the current row.",
+      "Returns the rank divided by the total number of rows in the partition.",
+      "Returns the cumulative percentage of the total sum."
+    ],
+    "answer": "Returns the rank divided by the total number of rows in the partition.",
+    "explanation": "`PERCENT_RANK()` returns a value between 0 and 1, calculated as `(Rank - 1) / (Total Rows - 1)`. It indicates the relative rank of the row within the partition.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 52,
+    "question": "What happens if you use a window function in a `HAVING` clause?",
+    "options": [
+      "The query executes but ignores the window function.",
+      "The database engine optimizes it to a subquery automatically.",
+      "It returns a syntax error or logical error.",
+      "It performs the window calculation before grouping."
+    ],
+    "answer": "It returns a syntax error or logical error.",
+    "explanation": "Window functions are not allowed in `HAVING` clauses because `HAVING` filters groups after aggregation, while window functions operate on the result set post-aggregation but pre-final-order. Use a CTE or subquery instead.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 53,
+    "question": "How does `COUNT(*) OVER (PARTITION BY id)` behave differently from `GROUP BY id`?",
+    "options": [
+      "`GROUP BY` reduces rows; the window function retains the original row count.",
+      "The window function is faster than `GROUP BY`.",
+      "`GROUP BY` allows ordering; window functions do not.",
+      "There is no difference in the result set shape."
+    ],
+    "answer": "`GROUP BY` reduces rows; the window function retains the original row count.",
+    "explanation": "`GROUP BY` collapses rows so that one row represents the group. A window function calculates the metric but appends it to every existing row in the partition, maintaining granularity.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 54,
+    "question": "What is the 'Window Alias' used for in SQL?",
+    "options": [
+      "To rename the output column of the window function.",
+      "To define the window specification once and reuse it for multiple functions.",
+      "To create a nickname for the table being queried.",
+      "To join two window functions together."
+    ],
+    "answer": "To define the window specification once and reuse it for multiple functions.",
+    "explanation": "The `WINDOW` clause allows you to name a specific window definition (e.g., `ORDER BY time`), preventing code repetition when multiple functions share the same window logic.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 55,
+    "question": "When optimizing a query, why is it recommended to avoid `UNBOUNDED FOLLOWING` in the frame clause for large datasets?",
+    "options": [
+      "It forces the database to read the entire partition into memory.",
+      "It prevents the use of indexes.",
+      "It is syntactically incorrect.",
+      "It creates a circular dependency."
+    ],
+    "answer": "It forces the database to read the entire partition into memory.",
+    "explanation": "A frame ending at `UNBOUNDED FOLLOWING` typically requires the database to have access to all rows in the partition up to the end before calculating the result, increasing memory and sort requirements.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 56,
+    "question": "Which function allows you to assign a specific value (not just a number) based on specific row ranking logic without a join?",
+    "options": [
+      "`FIRST_VALUE()`",
+      "`MAX()`",
+      "`ROW_NUMBER()`",
+      "`COALESCE()`"
+    ],
+    "answer": "`FIRST_VALUE()`",
+    "explanation": "`FIRST_VALUE()` (and `LAST_VALUE`) returns the value of a specific expression from the first (or last) row of the window frame, allowing access to specific peer data without a self-join.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 57,
+    "question": "How do NULLs generally behave in the `ORDER BY` clause of a window function?",
+    "options": [
+      "They are always ordered first.",
+      "They are always ordered last.",
+      "Behavior is database-specific (NULLS FIRST/LAST).",
+      "They cause the window function to error out."
+    ],
+    "answer": "Behavior is database-specific (NULLS FIRST/LAST).",
+    "explanation": "While standard SQL uses `NULLS FIRST` or `LAST`, the default behavior (ascending or descending placement of NULLs) varies by database system (e.g., Postgres vs SQL Server vs MySQL).",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 58,
+    "question": "If a query uses `ROW_NUMBER() OVER (PARTITION BY category ORDER BY sales DESC)`, what ensures the deterministic ordering of rows with identical `sales` values?",
+    "options": [
+      "The database automatically uses the primary key.",
+      "Nothing, ordering is non-deterministic for ties without a secondary sort key.",
+      "`ROW_NUMBER()` automatically splits ties based on insertion time.",
+      "The `PARTITION BY` clause acts as a tie-breaker."
+    ],
+    "answer": "Nothing, ordering is non-deterministic for ties without a secondary sort key.",
+    "explanation": "If `sales` values are identical, the database is free to order those tied rows in any way. To ensure determinism, a second column (e.g., `ORDER BY sales DESC, id ASC`) is required.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 59,
+    "question": "What is the result of `SUM(amount) OVER (ORDER BY date)` without a `PARTITION BY` clause?",
+    "options": [
+      "A grand total of all `amount` values repeated for every row.",
+      "A running total of `amount` calculated from the start of the dataset to the current row.",
+      "The sum of `amount` grouped by `date`.",
+      "The daily sum of `amount` independent of other dates."
+    ],
+    "answer": "A running total of `amount` calculated from the start of the dataset to the current row.",
+    "explanation": "With `ORDER BY` and default framing, the window starts at the beginning of the dataset (no partition resets) and grows up to the current row.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 60,
+    "question": "Which statement is true regarding nesting aggregate functions within window functions?",
+    "options": [
+      "It is not permitted.",
+      "You can nest an aggregate inside a window function (e.g., `SUM(SUM(x))`).",
+      "You can nest a window function inside an aggregate (e.g., `SUM(ROW_NUMBER())`).",
+      "Nesting requires a `GROUP BY` on the same columns."
+    ],
+    "answer": "You can nest an aggregate inside a window function (e.g., `SUM(SUM(x))`).",
+    "explanation": "You can calculate an aggregate (like SUM) and then perform a window function over that result (e.g., a running total of sums). You cannot nest a window function inside an aggregate function directly.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 61,
+    "question": "In the context of parallel execution, how do window functions utilize multiple cores?",
+    "options": [
+      "By partitioning the data and processing each partition on a separate core.",
+      "By splitting the frame calculation across rows.",
+      "By creating multiple indexes simultaneously.",
+      "Window functions are strictly single-threaded operations."
+    ],
+    "answer": "By partitioning the data and processing each partition on a separate core.",
+    "explanation": "Parallel execution typically assigns distinct partitions or chunks of data to different worker processes/cores. If there are few partitions, parallelism is limited.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 62,
+    "question": "What is the difference between `CUME_DIST()` and `PERCENT_RANK()`?",
+    "options": [
+      "`CUME_DIST` returns a rank; `PERCENT_RANK` returns a count.",
+      "`CUME_DIST` calculates the relative position of a value as a percentage (0 to 1), `PERCENT_RANK` calculates the relative rank.",
+      "They are identical.",
+      "`CUME_DIST` can only be used with integers."
+    ],
+    "answer": "`CUME_DIST` calculates the relative position of a value as a percentage (0 to 1), `PERCENT_RANK` calculates the relative rank.",
+    "explanation": "`CUME_DIST` returns the percentage of rows with values less than or equal to the current row. `PERCENT_RANK` returns the percentage rank of the row (0 for the first, 1 for the last, with a step of 1/(N-1)).",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 63,
+    "question": "Why is it generally inefficient to use window functions inside a `CASE` statement in the `WHERE` clause?",
+    "options": [
+      "`CASE` statements do not support logic.",
+      "Window functions cannot be filtered by `WHERE`.",
+      "It prevents the optimizer from pushing predicates down.",
+      "It forces the use of a cursor."
+    ],
+    "answer": "Window functions cannot be filtered by `WHERE`.",
+    "explanation": "Execution order makes this impossible. To filter on a window function result, you must wrap the logic in a subquery/CTE and filter the outer query.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 64,
+    "question": "What is the purpose of `EXCLUDE CURRENT ROW` in a frame clause?",
+    "options": [
+      "To remove duplicates from the result set.",
+      "To calculate a metric over the window frame excluding the row being evaluated.",
+      "To delete the current row from the table.",
+      "To skip the current partition."
+    ],
+    "answer": "To calculate a metric over the window frame excluding the row being evaluated.",
+    "explanation": "This clause excludes the current row from the window frame calculation. For example, calculating the average of 'other' rows to compare against the current row's value.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 65,
+    "question": "Which technique helps mitigate the performance impact of 'skew' when partitioning data for window functions?",
+    "options": [
+      "Using `NTILE` to balance row counts.",
+      "Using an 'Extended Distribution Key' (adding columns to partition key).",
+      "Disabling indexes.",
+      "Sorting by the partition key descending."
+    ],
+    "answer": "Using an 'Extended Distribution Key' (adding columns to partition key).",
+    "explanation": "If one partition has significantly more data than others (skew), parallelism suffers. Adding columns to the `PARTITION BY` key increases the number of distinct partitions, distributing the load more evenly.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 66,
+    "question": "When calculating a Year-over-Year (YoY) growth using window functions, which function is most critical?",
+    "options": [
+      "`SUM() OVER (ORDER BY date)`",
+      "`LAG() OVER (PARTITION BY entity ORDER BY date)`",
+      "`ROW_NUMBER() OVER (PARTITION BY year)`",
+      "`RANK() OVER (ORDER BY date)`"
+    ],
+    "answer": "`LAG() OVER (PARTITION BY entity ORDER BY date)`",
+    "explanation": "YoY growth requires comparing a value (e.g., revenue) with the value from the same time period in a previous cycle. `LAG` retrieves the prior period's value, while `PARTITION BY` ensures you compare the correct entity.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 67,
+    "question": "What is the impact of `IGNORE NULLS` within a `LAG` or `LEAD` function?",
+    "options": [
+      "It removes NULLs from the partition entirely.",
+      "It skips NULL values when looking for the offset row.",
+      "It converts NULLs to zero.",
+      "It causes an error if NULLs are present."
+    ],
+    "answer": "It skips NULL values when looking for the offset row.",
+    "explanation": "`IGNORE NULLS` (supported in some dialects like Snowflake/Oracle/Postgres 14+) ensures that if the row at the specific offset is NULL, the function looks further back (or forward) to find a non-null value.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 68,
+    "question": "Why are `BRIN` indexes sometimes preferred over `B-TREE` indexes for time-series data used in window functions?",
+    "options": [
+      "BRIN is smaller and maintains good performance for naturally ordered data.",
+      "BRIN allows parallel scans where B-TREE does not.",
+      "B-TREE cannot handle date columns.",
+      "BRIN stores the entire table in memory."
+    ],
+    "answer": "BRIN is smaller and maintains good performance for naturally ordered data.",
+    "explanation": "Block Range INdexes (BRIN) are very compact because they only store summaries of ranges. For time-series data (inserted in order), a BRIN index is small and efficient enough to satisfy the `ORDER BY` requirement of window functions.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 69,
+    "question": "In a sessionization analysis (identifying gaps in user activity), which window function technique is most commonly used?",
+    "options": [
+      "`FIRST_VALUE() OVER (ORDER BY timestamp)`",
+      "Calculating time difference between `ROW_NUMBER()` and actual timestamp (Gap and Isolate problem).",
+      "`NTILE(10) OVER (ORDER BY timestamp)`",
+      "`SUM() OVER (ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)`"
+    ],
+    "answer": "Calculating time difference between `ROW_NUMBER()` and actual timestamp (Gap and Isolate problem).",
+    "explanation": "To detect gaps, one common technique is to compare the actual timestamp with a theoretical continuous sequence (generated via `ROW_NUMBER`). If the difference jumps, a new session starts.",
+    "difficulty": "Intermediate"
+  }
+]
