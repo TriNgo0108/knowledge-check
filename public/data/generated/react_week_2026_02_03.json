@@ -1,0 +1,1289 @@
+[
+  {
+    "id": 1,
+    "question": "In React JSX, why must the `class` attribute be written as `className`?",
+    "options": [
+      "To comply with XHTML naming conventions",
+      "Because `class` is a reserved keyword in JavaScript",
+      "To differentiate between CSS classes and component classes",
+      "To ensure compatibility with older browsers"
+    ],
+    "answer": "Because `class` is a reserved keyword in JavaScript",
+    "explanation": "JSX is syntactic sugar for JavaScript function calls and object creation. Since `class` is a reserved keyword in ES6+ JavaScript (used for class declarations), React maps `className` to the DOM `class` attribute to avoid syntax errors.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 2,
+    "question": "What is the primary reason a React component must return a single parent element (or a Fragment) when returning JSX?",
+    "options": [
+      "React only supports monolithic component structures",
+      "The `return` statement in JavaScript functions can only return one value",
+      "Virtual DOM diffing requires a single root node for performance",
+      "CSS selectors fail on sibling elements"
+    ],
+    "answer": "The `return` statement in JavaScript functions can only return one value",
+    "explanation": "JSX compiles to `React.createElement` calls. A JavaScript function can only return a single value. To return multiple elements, they must be wrapped in a parent element (like a `<div>`) or a React Fragment (`<>...</>`) to treat them as a single node.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 3,
+    "question": "Which property syntax is required when setting inline styles in JSX?",
+    "options": [
+      "String syntax with hyphens (e.g., 'background-color')",
+      "CSS-in-JS syntax with underscores (e.g., background_color)",
+      "CamelCase property names in an object (e.g., backgroundColor)",
+      "Kebab-case property names in an object (e.g., background-color)"
+    ],
+    "answer": "CamelCase property names in an object (e.g., backgroundColor)",
+    "explanation": "Inline styles in React accept a JavaScript object, not a string. Hyphenated CSS properties like `font-size` are invalid as object keys, so they must be converted to camelCase (e.g., `fontSize`) to comply with JavaScript syntax rules.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 4,
+    "question": "What is the correct syntax to embed a JavaScript expression within JSX?",
+    "options": [
+      "Using double curly braces {{ expression }}",
+      "Using a dollar sign and parentheses $(expression)",
+      "Using single curly braces { expression }",
+      "Using the `expr` attribute"
+    ],
+    "answer": "Using single curly braces { expression }",
+    "explanation": "Curly braces `{}` are the delimiter in JSX that signals to the transpiler (like Babel) to switch from HTML-like syntax to JavaScript mode, evaluating the contained expression and rendering the result.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 5,
+    "question": "What is the purpose of the `key` prop when rendering a list of elements in React?",
+    "options": [
+      "To serve as a unique ID for CSS styling",
+      "To help React identify which items have changed, been added, or been removed",
+      "To automatically generate sequential numbers for the list items",
+      "To enforce a strict sort order on the DOM nodes"
+    ],
+    "answer": "To help React identify which items have changed, been added, or been removed",
+    "explanation": "Keys help React's reconciliation algorithm match elements in the virtual DOM tree to the previous version. Stable keys allow React to update the DOM efficiently by reusing existing nodes rather than destroying and recreating them unnecessarily.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 6,
+    "question": "Why is using the array index as a `key` considered an anti-pattern for dynamic lists?",
+    "options": [
+      "It causes the application to crash if the list is empty",
+      "It prevents the list from being rendered in the correct order",
+      "It negatively impacts performance by triggering a re-render of all items",
+      "It can lead to UI bugs and state corruption if the list order changes or items are inserted"
+    ],
+    "answer": "It can lead to UI bugs and state corruption if the list order changes or items are inserted",
+    "explanation": "Using indices as keys works for static lists but fails for dynamic lists (filtering/sorting). If the order changes, React relies on the index to identify items, potentially mismatching data, mutating the wrong DOM nodes, and destroying component state associated with the wrong item.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 7,
+    "question": "What is the technical mechanism that allows React to update the browser without reloading the page?",
+    "options": [
+      "Direct DOM Manipulation via imperative API calls",
+      "The Virtual DOM and Reconciliation algorithm",
+      "Server-Side Rendering (SSR) by default",
+      "WebSockets for real-time DOM updates"
+    ],
+    "answer": "The Virtual DOM and Reconciliation algorithm",
+    "explanation": "React creates an in-memory representation of the DOM (Virtual DOM). When state changes, React diffs the new Virtual DOM against the previous one (Reconciliation) and calculates the minimal set of changes to apply to the real DOM.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 8,
+    "question": "In the context of React hooks, what is the strict rule regarding where they can be called?",
+    "options": [
+      "Only inside class components",
+      "Only at the top level of a function component or custom hook",
+      "Only within `useEffect` callbacks",
+      "Anywhere in the JavaScript file"
+    ],
+    "answer": "Only at the top level of a function component or custom hook",
+    "explanation": "Hooks rely on the call order to preserve state between renders. Calling them inside loops, conditions, or nested functions would change the call order between renders, breaking the logic that associates state with the correct hook instance.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 9,
+    "question": "Which hook is specifically designed to perform side effects such as data fetching, subscriptions, or manually changing the DOM?",
+    "options": [
+      "useState",
+      "useContext",
+      "useEffect",
+      "useReducer"
+    ],
+    "answer": "useEffect",
+    "explanation": "`useEffect` is the dedicated hook for side effects. It runs after the render is committed to the screen, ensuring that operations like API calls or DOM mutations do not block the browser from painting the UI.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 10,
+    "question": "What happens if you omit the dependency array in the `useEffect` hook?",
+    "options": [
+      "The effect runs once on mount and never again",
+      "The effect runs on every render of the component",
+      "The effect never runs",
+      "The component throws a runtime error"
+    ],
+    "answer": "The effect runs on every render of the component",
+    "explanation": "Without a dependency array, React has no way to know if the inputs to the effect have changed. Therefore, it defaults to scheduling the effect after every single render cycle, which can lead to performance issues or infinite loops.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 11,
+    "question": "What does `useState` return when called?",
+    "options": [
+      "The current state value only",
+      "An array containing the current state value and a function to update it",
+      "An object with the state and a dispatch method",
+      "A promise that resolves to the state value"
+    ],
+    "answer": "An array containing the current state value and a function to update it",
+    "explanation": "`useState` returns an array (technically a tuple) where the first element is the current state value and the second element is the setter function (`setState`) used to update that value and trigger a re-render.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 12,
+    "question": "Why is it incorrect to modify React state directly (e.g., `state.count = 5`)?",
+    "options": [
+      "It causes a memory leak in the browser",
+      "It does not trigger a re-render, so the UI does not update",
+      "It violates JavaScript strict mode requirements",
+      "It causes the component to unmount immediately"
+    ],
+    "answer": "It does not trigger a re-render, so the UI does not update",
+    "explanation": "React relies on internal state change detection to know when to schedule a re-render. Direct mutation bypasses React's internal tracking mechanisms, so the UI remains out of sync with the data until something else forces an update.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 13,
+    "question": "How does the `useReducer` hook differ from `useState`?",
+    "options": [
+      "`useReducer` is for local UI state, while `useState` is for global state",
+      "`useReducer` manages complex state logic involving sub-values or next state dependent on the previous one via a reducer function",
+      "`useReducer` cannot be used with TypeScript",
+      "`useState` is synchronous while `useReducer` is asynchronous"
+    ],
+    "answer": "`useReducer` manages complex state logic involving sub-values or next state dependent on the previous one via a reducer function",
+    "explanation": "While `useState` is ideal for independent primitive values, `useReducer` is preferred for complex state logic where the next state depends on the previous one, managing a state object with multiple sub-values, or centralizing update logic.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 14,
+    "question": "What is the purpose of the `children` prop in React?",
+    "options": [
+      "To pass data from child to parent components",
+      "To render nested elements between the opening and closing tags of a component",
+      "To define CSS styles for the component",
+      "To create a list of sibling components"
+    ],
+    "answer": "To render nested elements between the opening and closing tags of a component",
+    "explanation": "The `children` prop allows components to be composed together. Any JSX elements passed between a component's opening and closing tags are passed to that component as the `props.children` prop, enabling generic container components.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 15,
+    "question": "In React, 'props' are:",
+    "options": [
+      "Mutable variables that define a component's internal state",
+      "Read-only inputs passed from a parent component to a child component",
+      "Functions that are called when a component mounts",
+      "Global variables accessible to any component"
+    ],
+    "answer": "Read-only inputs passed from a parent component to a child component",
+    "explanation": "Props (properties) are the mechanism for passing data down the component tree. They are read-only (immutable) from the perspective of the receiver; a component must never modify its own props directly to ensure predictable data flow.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 16,
+    "question": "What is the correct way to handle events in React?",
+    "options": [
+      "Using lowercase HTML attribute names like `onclick`",
+      "Using lowercase function names like `onclick`",
+      "Using camelCase named event props like `onClick`",
+      "Using event listeners in the constructor only"
+    ],
+    "answer": "Using camelCase named event props like `onClick`",
+    "explanation": "React uses SyntheticEvent, a wrapper around native browser events. React event handlers are named using camelCase (e.g., `onClick`, `onSubmit`) rather than lowercase, and they pass functions as references, not strings.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 17,
+    "question": "When passing a function to an event handler like `onClick`, why is using `onClick={myFunction()}` incorrect?",
+    "options": [
+      "It will cause a syntax error",
+      "It executes the function immediately during rendering rather than on the click event",
+      "React does not support arrow functions",
+      "The function will lose access to component props"
+    ],
+    "answer": "It executes the function immediately during rendering rather than on the click event",
+    "explanation": "Including `()` in JSX invokes the function immediately. React expects a reference to the function (e.g., `onClick={myFunction}`) or an anonymous arrow function wrapping the call (e.g., `onClick={() => myFunction()}`) to delay execution until the event fires.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 18,
+    "question": "What is the concept of 'Lifting State Up' in React?",
+    "options": [
+      "Moving state to a higher-level component to share it between sibling components",
+      "Increasing the z-index of a component to bring it to the front",
+      "Using a web worker to offload state calculations",
+      "Moving state from a parent component to a child component"
+    ],
+    "answer": "Moving state to a higher-level component to share it between sibling components",
+    "explanation": "When multiple components need to reflect the same changing data, the state should be lifted to their closest common ancestor. The ancestor passes the state down via props, ensuring consistency across the UI.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 19,
+    "question": "What distinguishes a 'Controlled Component' in React forms?",
+    "options": [
+      "The form element's value is controlled by the component's state via the `value` prop",
+      "The form element cannot be modified by the user",
+      "The form element is rendered in a `StrictMode`",
+      "The form element relies on the DOM to maintain its own state"
+    ],
+    "answer": "The form element's value is controlled by the component's state via the `value` prop",
+    "explanation": "In a controlled component, the form data is handled by a React component state. The input's `value` is bound to the state, and changes are updated via an `onChange` handler, making React the 'single source of truth'.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 20,
+    "question": "What is an 'Uncontrolled Component' in the context of React forms?",
+    "options": [
+      "A component that does not render any output",
+      "A component where the form data is handled by the DOM itself, accessed via refs",
+      "A component that throws an error if state is updated",
+      "A component that uses `useState` for inputs"
+    ],
+    "answer": "A component where the form data is handled by the DOM itself, accessed via refs",
+    "explanation": "Uncontrolled components store their own state internally in the DOM. You query the DOM using a `ref` to find the current value (e.g., on submit), rather than updating state on every keystroke like controlled components.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 21,
+    "question": "What does the `useContext` hook allow you to do?",
+    "options": [
+      "Create a new context provider",
+      "Subscribe to React context without introducing nesting",
+      "Pass props manually to deeply nested components",
+      "Force a re-render of the entire application"
+    ],
+    "answer": "Subscribe to React context without introducing nesting",
+    "explanation": "`useContext` accepts a context object and returns the current context value for that context. It allows functional components to consume context values, bypassing the need to wrap consumers in a `<Context.Consumer>` component or manually pass props down.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 22,
+    "question": "When using `useEffect` for a subscription (like a timer or socket), why is returning a function necessary?",
+    "options": [
+      "To update the state after the effect runs",
+      "To clean up the subscription when the component unmounts or before the next effect runs",
+      "To catch errors thrown by the subscription",
+      "To optimize the rendering performance"
+    ],
+    "answer": "To clean up the subscription when the component unmounts or before the next effect runs",
+    "explanation": "The optional return function from `useEffect` is the cleanup mechanism. React runs this function to perform cleanup (clearing timers, canceling subscriptions) before the component is removed from the UI to prevent memory leaks.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 23,
+    "question": "What is the main benefit of `React.memo` for a functional component?",
+    "options": [
+      "It automatically memoizes the component's state",
+      "It prevents the component from re-rendering if its props have not changed",
+      "It allows the component to use hooks inside it",
+      "It enables server-side rendering for that component"
+    ],
+    "answer": "It prevents the component from re-rendering if its props have not changed",
+    "explanation": "`React.memo` is a higher-order component that performs a shallow comparison of props. If the props haven't changed, React skips rendering the component and reuses the last rendered result, optimizing performance.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 24,
+    "question": "What is the definition of 'Reconciliation' in React?",
+    "options": [
+      "The process of synchronizing the application's state with local storage",
+      "The algorithm React uses to diff one tree with another to determine which parts need to change",
+      "The process of merging two branches of code in Git",
+      "The lifecycle method that runs before a component unmounts"
+    ],
+    "answer": "The algorithm React uses to diff one tree with another to determine which parts need to change",
+    "explanation": "When state or props change, React creates a new React element tree. Reconciliation (or diffing) compares this new tree with the previous one to calculate the minimal set of DOM operations required to update the UI.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 25,
+    "question": "Which operator in React allows conditional rendering without using an `else` block or ternary operator?",
+    "options": [
+      "The `||` (OR) operator",
+      "The `&&` (AND) operator",
+      "The `??` (Nullish Coalescing) operator",
+      "The `===` (Strict Equality) operator"
+    ],
+    "answer": "The `&&` (AND) operator",
+    "explanation": "The logical AND (`&&`) operator renders the right-hand operand only if the left-hand operand is truthy. This is commonly used for `condition && <Component />` to render something conditionally.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 26,
+    "question": "Why must component names start with a capital letter in React?",
+    "options": [
+      "To distinguish built-in HTML tags (lowercase) from custom React components",
+      "Because JavaScript requires all classes to start with a capital letter",
+      "To ensure CSS selectors target the component correctly",
+      "It is a convention strictly for readability"
+    ],
+    "answer": "To distinguish built-in HTML tags (lowercase) from custom React components",
+    "explanation": "JSX treats lowercase tags (e.g., `<div>`) as HTML native elements and capitalized tags (e.g., `<MyButton />`) as React components. This distinction allows React to differentiate between DOM nodes and user-defined components.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 27,
+    "question": "What is the `dangerouslySetInnerHTML` attribute used for?",
+    "options": [
+      "To render unescaped HTML strings directly into the DOM",
+      "To improve security by sanitizing HTML inputs",
+      "To override CSS styling of a component",
+      "To set the innerHTML of a script tag"
+    ],
+    "answer": "To render unescaped HTML strings directly into the DOM",
+    "explanation": "It is React's replacement for `innerHTML`. It is named 'dangerously' to explicitly warn developers that using it exposes the application to Cross-Site Scripting (XSS) attacks if the HTML content is not sanitized.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 28,
+    "question": "Which method is used to render multiple components without adding extra nodes to the DOM?",
+    "options": [
+      "`<div>` wrapper",
+      "`React.Fragment` or `<>`",
+      "`renderMany`",
+      "`<span>` wrapper"
+    ],
+    "answer": "`React.Fragment` or `<>`",
+    "explanation": "Fragments (`<React.Fragment>` or `<>`) let you group a list of children without adding extra nodes to the DOM. This keeps the DOM structure flat while satisfying React's single-parent return requirement.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 29,
+    "question": "What is a 'Synthetic Event' in React?",
+    "options": [
+      "An event created by the browser that React ignores",
+      "A cross-browser wrapper around the browser's native event",
+      "A custom event type specific to React's internal messaging",
+      "An event that does not propagate up the DOM tree"
+    ],
+    "answer": "A cross-browser wrapper around the browser's native event",
+    "explanation": "SyntheticEvents normalize browser inconsistencies, providing a consistent API across different browsers. They wrap the browser's native events and combine the behavior of different browsers into a single API.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 30,
+    "question": "Which lifecycle method is conceptually replaced by `useEffect` in functional components?",
+    "options": [
+      "All class lifecycle methods (componentDidMount, componentDidUpdate, componentWillUnmount)",
+      "Only `componentDidMount`",
+      "Only `shouldComponentUpdate`",
+      "Only `getDerivedStateFromProps`"
+    ],
+    "answer": "All class lifecycle methods (componentDidMount, componentDidUpdate, componentWillUnmount)",
+    "explanation": "`useEffect` unifies the logic of mounting, updating, and unmounting. By controlling the dependency array, you can mimic the behavior of `componentDidMount` (empty deps), `componentDidUpdate` (props/state in deps), and `componentWillUnmount` (return function).",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 31,
+    "question": "In React, what is 'Prop Drilling'?",
+    "options": [
+      "A technique for creating holes in components to pass data",
+      "Passing data through multiple layers of components to reach a deeply nested child",
+      "Using a drill to optimize bundle size",
+      "The process of validating prop types"
+    ],
+    "answer": "Passing data through multiple layers of components to reach a deeply nested child",
+    "explanation": "Prop drilling occurs when you pass data (props) down through intermediate components that do not need the data themselves, just to get it to a component further down the tree. It is often solved by Context API or state management libraries.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 32,
+    "question": "What is the default behavior when a state update is triggered in React?",
+    "options": [
+      "The DOM updates synchronously and immediately",
+      "React batches the update and may defer the re-render for performance",
+      "The component unmounts and remounts",
+      "The update is ignored if the value is the same as the previous one"
+    ],
+    "answer": "React batches the update and may defer the re-render for performance",
+    "explanation": "React state updates are asynchronous. React batches multiple state updates together and schedules a render. This allows React to optimize performance by avoiding unnecessary work or painting frames too frequently.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 33,
+    "question": "What is the purpose of the `useRef` hook?",
+    "options": [
+      "To create a reference to another function component",
+      "To access a DOM element directly or persist a value across renders without causing a re-render",
+      "To reset the state of a component to initial values",
+      "To fetch data from an API"
+    ],
+    "answer": "To access a DOM element directly or persist a value across renders without causing a re-render",
+    "explanation": "`useRef` returns a mutable ref object that persists for the full lifetime of the component. It is commonly used to access DOM nodes directly (via the `ref` attribute) or to store a mutable value that does not trigger a re-render when changed.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 34,
+    "question": "How does React determine if a component's output needs to be updated in the DOM?",
+    "options": [
+      "By re-rendering the entire Virtual DOM and comparing it to the previous one",
+      "By checking the timestamp of the file",
+      "By listening to DOM mutation events",
+      "By comparing the component's internal ID"
+    ],
+    "answer": "By re-rendering the entire Virtual DOM and comparing it to the previous one",
+    "explanation": "React creates a new Virtual DOM tree on every state/prop change. It then 'diffs' (compares) this new tree against the old one to identify the minimal set of changes required to update the real DOM.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 35,
+    "question": "What does the 'StrictMode' component do in React?",
+    "options": [
+      "Enforces strict type checking for props",
+      "Runs additional checks and warnings for its descendants (only in development)",
+      "Prevents the application from building if errors are found",
+      "Forces all components to update synchronously"
+    ],
+    "answer": "Runs additional checks and warnings for its descendants (only in development)",
+    "explanation": "`StrictMode` is a tool for highlighting potential problems in an application. It activates additional development-only checks (like detecting side effects in render) but does not render any visible UI and does not affect the production build.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 36,
+    "question": "In the context of React Fiber, what is the primary distinction between the 'reconciliation' phase and the 'commit' phase?",
+    "options": [
+      "Reconciliation calculates changes asynchronously; Commit applies them synchronously.",
+      "Reconciliation updates the DOM; Commit creates the virtual DOM.",
+      "Reconciliation is synchronous; Commit is interruptible.",
+      "Reconciliation handles user events; Commit handles lifecycle methods."
+    ],
+    "answer": "Reconciliation calculates changes asynchronously; Commit applies them synchronously.",
+    "explanation": "The reconciliation (render) phase determines what changed and can be interrupted, paused, or aborted. The commit phase is synchronous and applies those changes to the DOM/host tree without interruption.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 37,
+    "question": "What is the technical purpose of 'double buffering' in React Fiber's architecture?",
+    "options": [
+      "To store two copies of the DOM for faster read operations.",
+      "To hold the 'current' tree while building a 'work-in-progress' tree.",
+      "To allow React to render to two different DOM nodes simultaneously.",
+      "To prevent memory leaks by doubling the garbage collection frequency."
+    ],
+    "answer": "To hold the 'current' tree while building a 'work-in-progress' tree.",
+    "explanation": "React maintains the 'current' tree (visible to the user) and the 'work-in-progress' tree (being calculated). Once calculation completes, React swaps the pointers, making the work-in-progress tree the current one.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 38,
+    "question": "How does the Stack Reconciler differ fundamentally from the Fiber Reconciler regarding execution flow?",
+    "options": [
+      "The Stack Reconciler uses recursion; Fiber uses an iterative approach linked by fibers.",
+      "The Stack Reconciler prioritizes rendering; Fiber prioritizes committing.",
+      "The Stack Reconciler is async; Fiber is synchronous.",
+      "The Stack Reconciler uses a linked list; Fiber uses a heap data structure."
+    ],
+    "answer": "The Stack Reconciler uses recursion; Fiber uses an iterative approach linked by fibers.",
+    "explanation": "The Stack Reconciler relied on the synchronous call stack, making it impossible to interrupt. Fiber implements its own stack frame logic via a linked list of Fiber nodes, allowing pausing and resuming.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 39,
+    "question": "What is the result when React encounters two elements of different types (e.g., `<a>` vs `<div>`) during reconciliation?",
+    "options": [
+      "React attempts to patch the attributes of the existing node.",
+      "React destroys the old subtree and builds a new one from scratch.",
+      "React reuses the DOM node but clears the event listeners.",
+      "React merges the props of the new element with the old element."
+    ],
+    "answer": "React destroys the old subtree and builds a new one from scratch.",
+    "explanation": "If the element type changes, React assumes the resulting tree is fundamentally different. It tears down the old DOM nodes and destroys any associated component instances before rebuilding.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 40,
+    "question": "Which hook is specifically designed to defer a part of the update tree to avoid blocking high-priority interactions?",
+    "options": [
+      "useMemo",
+      "useTransition",
+      "useCallback",
+      "useLayoutEffect"
+    ],
+    "answer": "useTransition",
+    "explanation": "useTransition allows React to mark state updates as non-urgent transitions, keeping the interface responsive for urgent interactions (like typing) while deferring heavier rendering.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 41,
+    "question": "What mechanism does React use to identify list items during reconciliation, ensuring stable rendering?",
+    "options": [
+      "The component's internal state ID.",
+      "The `key` prop.",
+      "The element's index in the array.",
+      "The component name."
+    ],
+    "answer": "The `key` prop.",
+    "explanation": "Keys help React identify which items have changed, are added, or are removed. Using a stable key (like an ID) allows React to reorder elements rather than destroying and recreating them.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 42,
+    "question": "Why is direct state mutation forbidden in React components?",
+    "options": [
+      "It violates immutable programming principles required by JavaScript.",
+      "It prevents React from detecting changes, skipping re-renders.",
+      "It causes the Virtual DOM to crash immediately.",
+      "It triggers an infinite loop in the reconciler."
+    ],
+    "answer": "It prevents React from detecting changes, skipping re-renders.",
+    "explanation": "React relies on reference equality to determine if state/props have changed. Direct mutation modifies the object in place without changing the reference, so React's diffing algorithm assumes nothing changed.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 43,
+    "question": "What specific behavior defines the `useLayoutEffect` hook compared to `useEffect`?",
+    "options": [
+      "It runs before DOM mutations.",
+      "It runs synchronously after all DOM mutations but before the browser paints.",
+      "It runs asynchronously after the browser paints.",
+      "It only runs on the server."
+    ],
+    "answer": "It runs synchronously after all DOM mutations but before the browser paints.",
+    "explanation": "useLayoutEffect fires synchronously after DOM changes are computed but before the browser displays them (paint), blocking the visual update to read layout.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 44,
+    "question": "In the context of React internals, what is a 'Fiber node'?",
+    "options": [
+      "A graphical thread used for GPU acceleration.",
+      "A JavaScript object containing a component's props, state, and queue of work.",
+      "A micro-task scheduled by the browser.",
+      "A unit of measurement for layout reflow."
+    ],
+    "answer": "A JavaScript object containing a component's props, state, and queue of work.",
+    "explanation": "A Fiber node represents a unit of work. It holds the component's state, props, the side-effects queue, and pointers to siblings, children, and parents.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 45,
+    "question": "What happens when a component's `render` method returns `null` or `false`?",
+    "options": [
+      "React throws a rendering error.",
+      "The component renders an empty `<noscript>` tag.",
+      "React renders nothing to the DOM, preserving lifecycle methods.",
+      "The component unmounts completely."
+    ],
+    "answer": "React renders nothing to the DOM, preserving lifecycle methods.",
+    "explanation": "Returning `null` or `false` prevents React from rendering any DOM nodes (resulting in no children), but the lifecycle methods (or effects) of the component still execute.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 46,
+    "question": "Which utility allows a parent component to pass a ref to a child component via a prop other than `ref`?",
+    "options": [
+      "forwardRef",
+      "createRef",
+      "useImperativeHandle",
+      "cloneElement"
+    ],
+    "answer": "forwardRef",
+    "explanation": "forwardRef creates a React component that forwards the `ref` attribute it receives to another component in its render function, allowing refs to penetrate deeper.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 47,
+    "question": "What is the primary performance risk of using an inline arrow function in the JSX props of a child component?",
+    "options": [
+      "It causes the child to re-render unnecessarily due to new reference equality.",
+      "It blocks the main thread.",
+      "It prevents the use of `useEffect`.",
+      "It creates a memory leak in the fiber tree."
+    ],
+    "answer": "It causes the child to re-render unnecessarily due to new reference equality.",
+    "explanation": "A new function instance is created on every parent render. If the child uses `React.memo` or `PureComponent`, the prop comparison fails, forcing a re-render.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 48,
+    "question": "What is the 'render phase' in React Fiber?",
+    "options": [
+      "The process of writing to the DOM.",
+      "The calculation of which changes need to be applied to the UI.",
+      "The execution of `componentDidMount`.",
+      "The final paint of the screen."
+    ],
+    "answer": "The calculation of which changes need to be applied to the UI.",
+    "explanation": "The render phase involves generating the React tree and creating a list of effects. It does not touch the DOM; it merely prepares the list of changes.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 49,
+    "question": "How does `React.memo` optimize functional components?",
+    "options": [
+      "It automatically memoizes the component's internal state.",
+      "It skips re-rendering if the props have not changed (shallow comparison).",
+      "It converts the component into a class component.",
+      "It caches the DOM output."
+    ],
+    "answer": "It skips re-rendering if the props have not changed (shallow comparison).",
+    "explanation": "React.memo is a Higher Order Component that performs a shallow comparison of props; if they are equal, it reuses the last rendered result, skipping the render phase.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 50,
+    "question": "What does the `key` prop *not* do in list rendering?",
+    "options": [
+      "Identify elements to reorder them efficiently.",
+      "Reset internal component state for that element.",
+      "Help React match elements in the old tree to the new tree.",
+      "Improve accessibility attributes."
+    ],
+    "answer": "Improve accessibility attributes.",
+    "explanation": "The `key` prop is strictly for React's internal reconciliation algorithm to identify items. It has no direct effect on DOM accessibility attributes unless manually mapped.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 51,
+    "question": "What is the consequence of calling `setState` inside `render`?",
+    "options": [
+      "It triggers a recursive loop leading to a stack overflow or infinite re-render.",
+      "It is optimized away by React.",
+      "It updates the state synchronously.",
+      "It causes the component to unmount."
+    ],
+    "answer": "It triggers a recursive loop leading to a stack overflow or infinite re-render.",
+    "explanation": "Setting state triggers a re-render. Doing so inside render triggers another render, creating an infinite loop.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 52,
+    "question": "Which phase of React Fiber is interruptible?",
+    "options": [
+      "Commit Phase",
+      "Reconciliation (Render) Phase",
+      "Layout Effects Phase",
+      "Pre-commit Phase"
+    ],
+    "answer": "Reconciliation (Render) Phase",
+    "explanation": "The reconciliation phase is interruptible, allowing React to pause execution to handle higher-priority work. The commit phase is always synchronous and atomic.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 53,
+    "question": "What is the `useId` hook designed for?",
+    "options": [
+      "Generating unique IDs for accessibility attributes (like `htmlFor`).",
+      "Identifying the specific Fiber node in the React DevTools.",
+      "Tracking component instance lifecycles.",
+      "Generating unique keys for list items."
+    ],
+    "answer": "Generating unique IDs for accessibility attributes (like `htmlFor`).",
+    "explanation": "useId generates a stable, unique ID string across server and client, primarily used for linking form inputs with their labels without ID collisions.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 54,
+    "question": "What determines if a React Component is 'controlled'?",
+    "options": [
+      "Its state is managed by a parent via props.",
+      "It implements the `shouldComponentUpdate` method.",
+      "It uses the Context API.",
+      "It has no internal state."
+    ],
+    "answer": "Its state is managed by a parent via props.",
+    "explanation": "A controlled component receives its current value and change callbacks via props. The parent is the 'single source of truth' for the component's state.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 55,
+    "question": "In the context of Synthetic Events in React, why does React wrap native browser events?",
+    "options": [
+      "To make events asynchronous.",
+      "To ensure consistent cross-browser behavior and interface.",
+      "To increase the speed of event bubbling.",
+      "To prevent the default action automatically."
+    ],
+    "answer": "To ensure consistent cross-browser behavior and interface.",
+    "explanation": "SyntheticEvents provide a unified API (stopPropagation, preventDefault) that normalizes inconsistencies between different browsers' native event implementations.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 56,
+    "question": "What is the primary difference between `useCallback(fn, deps)` and `useMemo(fn, deps)`?",
+    "options": [
+      "useCallback returns a memoized value; useMemo returns a memoized function.",
+      "useCallback is for side effects; useMemo is for calculation.",
+      "useCallback returns the function itself; useMemo returns the result of the function.",
+      "There is no functional difference; they are aliases."
+    ],
+    "answer": "useCallback returns the function itself; useMemo returns the result of the function.",
+    "explanation": "useCallback(fn, deps) is equivalent to useMemo(() => fn, deps). One returns the function reference, the other executes it and returns the value.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 57,
+    "question": "When using the Context API, what causes a Consumer component to re-render?",
+    "options": [
+      "Any state change in the Provider component.",
+      "A change in the `value` prop of the nearest matching Provider.",
+      "The consumer component receiving new props.",
+      "The unmounting of a sibling component."
+    ],
+    "answer": "A change in the `value` prop of the nearest matching Provider.",
+    "explanation": "Consumers subscribe to context changes. If the `value` object passed to a Provider changes (by reference equality), all descendants consume re-render.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 58,
+    "question": "Why is it recommended that the `key` prop be stable and unique, rather than using the array index?",
+    "options": [
+      "Using indexes violates the rule of hooks.",
+      "Using indexes causes React to destroy and recreate components if the list order changes.",
+      "Using indexes increases memory consumption.",
+      "Using indexes prevents the reconciliation phase from finishing."
+    ],
+    "answer": "Using indexes causes React to destroy and recreate components if the list order changes.",
+    "explanation": "As a heuristic, keys should match the data. Array indices are unstable relative to data content; sorting or inserting items causes React to mistakenly identify components based on position.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 59,
+    "question": "What is the behavior of ' batching' in React 18+ regarding state updates?",
+    "options": [
+      "Updates inside promises, setTimeout, or native event handlers are batched automatically.",
+      "Only updates inside React event handlers are batched.",
+      "Batching is disabled by default for all asynchronous operations.",
+      "Updates are batched only if they occur in the same component."
+    ],
+    "answer": "Updates inside promises, setTimeout, or native event handlers are batched automatically.",
+    "explanation": "React 18 introduced Automatic Batching, which groups state updates even across async operations (like promises or timeouts), preventing multiple renders.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 60,
+    "question": "Which hook would you use to read the layout of a DOM node synchronously after mutations?",
+    "options": [
+      "useEffect",
+      "useLayoutEffect",
+      "useRef",
+      "useDebugValue"
+    ],
+    "answer": "useLayoutEffect",
+    "explanation": "useLayoutEffect reads layout from the DOM and synchronously re-renders before the browser has a chance to paint.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 61,
+    "question": "In the 'Effect List' of a Fiber node, what information is stored?",
+    "options": [
+      "All previous state values.",
+      "The side effects that need to be performed during the commit phase.",
+      "A list of child fibers to process.",
+      "The CSS style strings to apply."
+    ],
+    "answer": "The side effects that need to be performed during the commit phase.",
+    "explanation": "During the render phase, React tags nodes with side effects (insertion, update, deletion). These are linked together into an Effect List to iterate quickly during commit.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 62,
+    "question": "How does `React.lazy()` function technically?",
+    "options": [
+      "It downloads the component code in the background after the initial render.",
+      "It takes a function that returns a Promise and renders it as a regular component.",
+      "It preloads the component into the browser cache.",
+      "It converts a class component into a functional component."
+    ],
+    "answer": "It takes a function that returns a Promise and renders it as a regular component.",
+    "explanation": "React.lazy takes a dynamic import function (returning a Promise) and returns a React component that suspends while waiting for the promise to resolve.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 63,
+    "question": "What is 'time slicing' in the context of React Fiber?",
+    "options": [
+      "A technique to divide rendering work into small chunks to avoid blocking the main thread.",
+      "A method to throttle API calls.",
+      "The process of optimizing images for faster loading.",
+      "A way to slow down animations for debugging."
+    ],
+    "answer": "A technique to divide rendering work into small chunks to avoid blocking the main thread.",
+    "explanation": "Time slicing (or scheduling) allows React to break up rendering work into units. It yields back to the main thread periodically to handle high-priority user input.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 64,
+    "question": "What happens when a React component throws an error during rendering (in a development environment with Error Boundaries)?",
+    "options": [
+      "The entire application unloads.",
+      "The error is logged to the console and the white screen of death appears.",
+      "The Error Boundary catches it and displays a fallback UI.",
+      "The component retries rendering automatically."
+    ],
+    "answer": "The Error Boundary catches it and displays a fallback UI.",
+    "explanation": "Error Boundaries are components that catch JavaScript errors anywhere in their child component tree, log those errors, and display a fallback UI instead of crashing the whole app.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 65,
+    "question": "Which `ref` attribute usage allows DOM nodes to be accessed immediately after the render phase commits?",
+    "options": [
+      "Callback refs",
+      "String refs",
+      "Object refs (createRef)",
+      "Both Callback refs and Object refs"
+    ],
+    "answer": "Both Callback refs and Object refs",
+    "explanation": "Both `createRef()` (object refs) and callback refs provide access to the DOM node. The difference is that callback refs fire when the node changes, while object refs are updated.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 66,
+    "question": "What is the 'lanes' model in React 18?",
+    "options": [
+      "A rendering strategy for 3D graphics.",
+      "A priority mechanism used by Fiber to schedule work.",
+      "A CSS layout technique.",
+      "A way to parallelize network requests."
+    ],
+    "answer": "A priority mechanism used by Fiber to schedule work.",
+    "explanation": "Lanes represent the priority of an update. React uses lanes to determine which updates are high priority and should be processed first vs. deferred.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 67,
+    "question": "Why is `useReducer` preferred over `useState` when managing complex state logic?",
+    "options": [
+      "useReducer is faster than useState.",
+      "useReducer allows state logic to be separated from component logic via a reducer function.",
+      "useState cannot handle objects.",
+      "useReducer automatically persists state to local storage."
+    ],
+    "answer": "useReducer allows state logic to be separated from component logic via a reducer function.",
+    "explanation": "useReducer lets you manage state logic involving multiple sub-values or complex transition logic in a centralized reducer, making testing and separation of concerns easier.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 68,
+    "question": "What does the `children` prop technically represent in React?",
+    "options": [
+      "An array of DOM nodes.",
+      "The opaque data structure passed between components.",
+      "A special prop containing props.props.children.",
+      "A reserved keyword that cannot be renamed."
+    ],
+    "answer": "The opaque data structure passed between components.",
+    "explanation": "Technically, `children` is an opaque data structure (could be an array, object, or function) representing the content between the opening and closing tags.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 69,
+    "question": "What is 'Static Hoisting' regarding the JSX compilation?",
+    "options": [
+      "Moving static constants to the top of the file.",
+      "The compiler hoisting static elements out of the render function to avoid constant recreation.",
+      "Lifting state up to a parent component.",
+      "Using the `static` keyword in classes."
+    ],
+    "answer": "The compiler hoisting static elements out of the render function to avoid constant recreation.",
+    "explanation": "Modern React compilers can recognize elements that never change and hoist them outside the component so they are not recreated on every render.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 70,
+    "question": "What is the primary purpose of the 'double buffering' technique utilized in React Fiber's reconciliation process?",
+    "options": [
+      "To maintain two separate Virtual DOM trees to allow rollback if a runtime error occurs during rendering",
+      "To store the current rendered tree and a work-in-progress tree simultaneously, minimizing memory thrashing during updates",
+      "To allow the browser to paint the current frame while React calculates the next frame in a background thread",
+      "To keep a snapshot of the initial state for time-travel debugging while the current state updates"
+    ],
+    "answer": "To store the current rendered tree and a work-in-progress tree simultaneously, minimizing memory thrashing during updates",
+    "explanation": "Fiber maintains an in-memory 'current' tree (flushed to DOM) and a 'work-in-progress' tree. React performs work on the WIP tree, and upon completion, swaps the pointers, making the WIP tree the current one. This ensures the UI remains consistent during calculation.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 71,
+    "question": "In the context of React Fiber, which specific phase of the rendering lifecycle is considered 'interruptible' and allows the browser to handle high-priority events?",
+    "options": [
+      "The Commit phase, where DOM mutations are applied",
+      "The Pre-commit phase, where `getSnapshotBeforeUpdate` is executed",
+      "The Reconciliation (Render) phase, where React calculates changes to the Virtual DOM",
+      "The Passive Effects phase, where `useEffect` cleanup functions run"
+    ],
+    "answer": "The Reconciliation (Render) phase, where React calculates changes to the Virtual DOM",
+    "explanation": "The Reconciliation (or Render) phase creates the Fiber tree and determines what changed; Fiber can pause, abort, or resume this work. The Commit phase is always synchronous and cannot be interrupted to prevent UI inconsistencies.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 72,
+    "question": "Which statement accurately describes how React Fiber handles component type changes during the reconciliation of two element trees?",
+    "options": [
+      "React diffs the props of the old component instance and updates it if the `shouldComponentUpdate` returns true",
+      "React destroys the old component instance and constructs a new one from scratch, re-mounting the subtree",
+      "React reuses the old component instance but resets its state to the initial `this.state` or `useState` defaults",
+      "React attempts to patch the DOM elements directly without unmounting the component to preserve focus and scroll position"
+    ],
+    "answer": "React destroys the old component instance and constructs a new one from scratch, re-mounting the subtree",
+    "explanation": "If the element type changes (e.g., from `<div>` to `<span>` or `<ComponentA>` to `<ComponentB>`), React assumes the entire subtree is different. It tears down the old tree (unmounting) and builds a new one.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 73,
+    "question": "What is the specific role of the `effectTag` property on a Fiber node?",
+    "options": [
+      "To store the calculated layout styles (width, height) before committing to the DOM",
+      "To track the side effects associated with the Fiber node, such as updates, deletions, or ref changes",
+      "To prioritize the rendering of specific components based on user interaction timestamps",
+      "To link the Fiber node to its corresponding JavaScript Class instance or functional closure"
+    ],
+    "answer": "To track the side effects associated with the Fiber node, such as updates, deletions, or ref changes",
+    "explanation": "The `effectTag` (represented as `flags` in modern versions) is a bitmask that identifies what work needs to be done on the node during the Commit phase (e.g., Placement, Update, Deletion).",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 74,
+    "question": "How does the `startTransition` API improve perceived application performance in React 18+?",
+    "options": [
+      "It defers the execution of the state update to a Web Worker, keeping the main thread free for UI paints",
+      "It marks a state update as non-urgent, allowing React to interrupt it if higher-priority updates (like typing) occur",
+      "It automatically code-splits the component tree associated with the state update to reduce the initial bundle size",
+      "It converts the state update into a passive effect, ensuring it only runs after the browser has painted the next frame"
+    ],
+    "answer": "It marks a state update as non-urgent, allowing React to interrupt it if higher-priority updates (like typing) occur",
+    "explanation": "Transitions allow React to prioritize interactions. If a user interrupt occurs (e.g., another keystroke), React will pause the lower-priority transition work to handle the urgent update, then resume the transition later.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 75,
+    "question": "Which method is used by React Fiber to efficiently traverse the tree of Fiber nodes without causing deep call stack recursion?",
+    "options": [
+      "Depth-First Search (DFS) using the system's native call stack",
+      "Breadth-First Search (BFS) using a queue data structure",
+      "A linked list traversal using `return`, `sibling`, and `child` pointers",
+      "A binary tree traversal algorithm utilizing an in-order iterator"
+    ],
+    "answer": "A linked list traversal using `return`, `sibling`, and `child` pointers",
+    "explanation": "Fiber nodes form a linked list structure. React traverses this tree using a loop that follows `child` (down), `sibling` (right), and `return` (up) pointers, enabling the implementation of a custom stack to support pausing and resuming.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 76,
+    "question": "What specific optimization technique does React use to minimize the cost of traversing the Fiber tree during the Commit phase?",
+    "options": [
+      "It traverses only the nodes that have a non-zero `effectTag` linked in a linear 'Effect List'",
+      "It performs a full tree traversal but skips nodes where `memo` comparison returns true",
+      "It creates a proxy of the DOM tree and diffs the proxy against the real DOM",
+      "It relies on the browser's `MutationObserver` API to identify only the changed nodes"
+    ],
+    "answer": "It traverses only the nodes that have a non-zero `effectTag` linked in a linear 'Effect List'",
+    "explanation": "During the Render phase, React builds a linked list of side effects (the Effect List). During the Commit phase, React iterates solely over this linear list to apply DOM mutations, ignoring the vast majority of the tree.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 77,
+    "question": "In the context of Concurrent Features, what is the primary function of `useDeferredValue`?",
+    "options": [
+      "To debounce a value, ensuring it only updates after the user has stopped typing for 500ms",
+      "To defer the calculation of a value to a Web Worker to avoid blocking the main thread",
+      "To keep a stale version of a value visible while urgent updates are processed, re-rendering with the new value later",
+      "To lazy-load the component that renders the value, reducing the initial Time to Interactive (TTI)"
+    ],
+    "answer": "To keep a stale version of a value visible while urgent updates are processed, re-rendering with the new value later",
+    "explanation": "`useDeferredValue` allows React to prioritize other updates. It accepts a value and returns a deferred copy; React will update the UI with the new value only after more urgent work (like input) is done.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 78,
+    "question": "What distinguishes `useLayoutEffect` from `useEffect` regarding the React rendering lifecycle?",
+    "options": [
+      "`useLayoutEffect` runs asynchronously after the browser has painted, while `useEffect` runs synchronously before paint",
+      "`useLayoutEffect` runs synchronously after all DOM mutations but before the browser paints, while `useEffect` runs after paint",
+      "`useLayoutEffect` is deprecated in React 18 in favor of `useInsertionEffect` for all use cases",
+      "`useLayoutEffect` can only be used on the client side, whereas `useEffect` supports Server-Side Rendering (SSR)"
+    ],
+    "answer": "`useLayoutEffect` runs synchronously after all DOM mutations but before the browser paints, while `useEffect` runs after paint",
+    "explanation": "`useLayoutEffect` fires synchronously after DOM changes are committed but before the browser reads the layout. This is useful for reading layout from the DOM and synchronously re-rendering.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 79,
+    "question": "When does React 18's 'Automatic Batching' occur?",
+    "options": [
+      "Only during event handlers in React components",
+      "Only within `async` functions and promises",
+      "For all state updates, regardless of where they originate (promises, timeouts, native events)",
+      "Only for class components, not functional components using Hooks"
+    ],
+    "answer": "For all state updates, regardless of where they originate (promises, timeouts, native events)",
+    "explanation": "Prior versions only batched updates during React event handlers. React 18 introduced automatic batching via `createRoot`, batching updates in promises, `setTimeout`, and native event listeners as well.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 80,
+    "question": "What is the purpose of the 'Lane Model' introduced in React Fiber for prioritization?",
+    "options": [
+      "To divide the React component tree into separate 'lanes' that can be rendered by different CPU cores",
+      "To represent priorities using a 32-bit integer bitmask, allowing for granular concurrent scheduling",
+      "To isolate network requests so that data fetching in one component does not block another",
+      "To create a separate memory heap for different types of components (Class vs. Function)"
+    ],
+    "answer": "To represent priorities using a 32-bit integer bitmask, allowing for granular concurrent scheduling",
+    "explanation": "Lanes replace the older expiration time model. They use bitmasks to define priority levels, enabling React to easily determine if an update includes higher-priority work that should interrupt lower-priority rendering.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 81,
+    "question": "How does Strict Mode in React 18 (with `createRoot`) differ from previous versions regarding component effects?",
+    "options": [
+      "It renders components twice in development to detect side effects, but only mounts once",
+      "It forces all components to use `useLayoutEffect` instead of `useEffect`",
+      "It disables concurrent rendering to ensure deterministic state updates",
+      "It automatically enables 'Profiling' mode in the production build"
+    ],
+    "answer": "It renders components twice in development to detect side effects, but only mounts once",
+    "explanation": "React 18 Strict Mode mounts, unmounts, and remounts components in development (simulating an immediate remount) with a new lifecycle. This helps expose issues where cleanup logic or effects are not resilient to being re-invoked.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 82,
+    "question": "Which term describes the process of converting a React Element tree into a Fiber tree?",
+    "options": [
+      "Rehydration",
+      "Committing",
+      "Induction",
+      "Scheduling"
+    ],
+    "answer": "Induction",
+    "explanation": "Induction (or sometimes just 'rendering' in specific contexts) refers to the process of creating Fiber nodes from React Elements. This builds the initial Fiber tree structure that represents the component hierarchy.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 83,
+    "question": "Why does `Suspense` require a mechanism to 'throw' a Promise during the render phase?",
+    "options": [
+      "To trigger an error boundary that catches the Promise and converts it into a rejected state",
+      "To interrupt the current render and signal to React that the component is waiting for data, allowing React to skip rendering that subtree",
+      "To force the component to unmount and remount when the data arrives",
+      "To bypass the `shouldComponentUpdate` optimization and force a re-render"
+    ],
+    "answer": "To interrupt the current render and signal to React that the component is waiting for data, allowing React to skip rendering that subtree",
+    "explanation": "When a data fetching library throws a Promise, React catches it at the Suspense boundary. It halts rendering of that subtree, displays the fallback, and resumes the render when the Promise resolves.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 84,
+    "question": "What is the technical limitation of the legacy 'Stack Reconciler' that Fiber was designed to solve?",
+    "options": [
+      "Inability to use Functional Components with Hooks",
+      "Synchronous recursion that blocks the main thread until the entire stack is empty",
+      "Lack of support for Server-Side Rendering (SSR)",
+      "Inability to manage component state efficiently"
+    ],
+    "answer": "Synchronous recursion that blocks the main thread until the entire stack is empty",
+    "explanation": "The Stack Reconciler used the browser's call stack. Once rendering started, it couldn't stop until finished. If the tree was deep, it blocked the main thread, causing dropped frames. Fiber implements a custom stack to enable pausing.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 85,
+    "question": "What specific attribute enables React to correlate a specific DOM node with its corresponding Fiber node during the reconciliation of a list?",
+    "options": [
+      "The `id` attribute",
+      "The `ref` prop",
+      "The `key` prop",
+      "The `data-reactid` attribute (deprecated in legacy versions)"
+    ],
+    "answer": "The `key` prop",
+    "explanation": "While `key` is a prop, internally React uses it to determine if an element corresponds to a previous instance in a list. A stable key allows React to reuse DOM nodes and state; a changing key forces React to destroy and recreate the element.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 86,
+    "question": "What is the 'Effect List' in the context of React Fiber?",
+    "options": [
+      "A list of all event listeners attached to the Virtual DOM",
+      "A linked list of Fiber nodes that have side effects (DOM updates, refs) to be processed during the Commit phase",
+      "The queue of state updates stored in the `updateQueue` of a Class Component",
+      "The internal list of Hooks executed during the Render phase"
+    ],
+    "answer": "A linked list of Fiber nodes that have side effects (DOM updates, refs) to be processed during the Commit phase",
+    "explanation": "During the Render phase, React links all nodes with a non-zero `effectTag` into a linear linked list called the Effect List. This allows the Commit phase to run in O(N) time where N is only the number of changes, not the total tree size.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 87,
+    "question": "Which of the following accurately describes `Suspense`'s behavior regarding the 'fallback' prop?",
+    "options": [
+      "The fallback component is rendered permanently alongside the children if the Promise is rejected",
+      "The fallback component is pre-rendered and hidden via CSS (`display: none`) until the children are ready",
+      "The fallback component is rendered immediately when a child suspends, replacing the suspended children in the DOM",
+      "The fallback component is rendered only if the Error Boundary catches an error"
+    ],
+    "answer": "The fallback component is rendered immediately when a child suspends, replacing the suspended children in the DOM",
+    "explanation": "When a child component suspends (throws a Promise), React commits the fallback UI to the DOM in place of the suspended content. Once the data resolves, React re-renders the tree and swaps the fallback for the actual content.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 88,
+    "question": "How does React handle `forwardRef` internally in the Fiber tree?",
+    "options": [
+      "It creates a standard Fiber node but assigns the 'ref' prop directly to the child DOM element",
+      "It creates a special Fiber node type that acts as a proxy, passing the 'ref' through to its child without creating an additional DOM node",
+      "It modifies the `parent` pointer of the child Fiber node to point to the grandparent",
+      "It forces the component to re-render every time the ref changes"
+    ],
+    "answer": "It creates a special Fiber node type that acts as a proxy, passing the 'ref' through to its child without creating an additional DOM node",
+    "explanation": "`forwardRef` is a specific tag in Fiber. It allows a parent component to pass a ref down to a child. The Fiber node for the `forwardRef` component doesn't correspond to a DOM node but facilitates the transfer of the ref object to the underlying host component.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 89,
+    "question": "What is the function of the `beginWork` function in the Fiber reconciliation algorithm?",
+    "options": [
+      "To process the current Fiber node, compare props, and reconcile its children",
+      "To finalize the work on a Fiber node and create a DOM node",
+      "To flush the Effect List to the browser",
+      "To schedule a low-priority update using `requestIdleCallback`"
+    ],
+    "answer": "To process the current Fiber node, compare props, and reconcile its children",
+    "explanation": "`beginWork` is the entry point for processing a Fiber node. It determines if the node needs an update, reconciles the current children with the new children (diffing), and sets up the next unit of work.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 90,
+    "question": "Which condition triggers a re-render of a component in React Fiber?",
+    "options": [
+      "A change in the component's internal context dependencies",
+      "A call to `setState` or `dispatch` (from `useReducer`), or a change in parent props passed down",
+      "A mutation of a prop object passed by the parent",
+      "The browser window being resized"
+    ],
+    "answer": "A call to `setState` or `dispatch` (from `useReducer`), or a change in parent props passed down",
+    "explanation": "Re-renders are triggered by state updates or new props. While Context changes cause consumers to update, the root cause is a state update in the provider. Mutating props directly violates React principles and won't trigger a render.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 91,
+    "question": "What is `isInputPending` in the context of React Concurrent Mode?",
+    "options": [
+      "A scheduler API used to check if the user has typed something, allowing React to yield to input events",
+      "A method to check if a form input is valid before allowing a state transition",
+      "A hook that returns a boolean indicating if an async action is currently pending",
+      "A browser API that React polyfills to detect if the main thread is blocked"
+    ],
+    "answer": "A scheduler API used to check if the user has typed something, allowing React to yield to input events",
+    "explanation": "React uses the `isInputPending` API (or a polyfill) inside the scheduling loop. Before starting a new unit of work, it checks if the user has provided input (like typing). If so, React yields execution to handle the input immediately.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 92,
+    "question": "Why is it generally unsafe to call `setState` inside the `render` method of a component?",
+    "options": [
+      "Because it causes a memory leak by retaining the component instance indefinitely",
+      "Because it triggers an infinite loop, as `setState` triggers a render, which calls `setState` again",
+      "Because Fiber does not allow state updates during the 'Begin Work' phase",
+      "Because it violates the One-Way Data Flow rule of React"
+    ],
+    "answer": "Because it triggers an infinite loop, as `setState` triggers a render, which calls `setState` again",
+    "explanation": "State updates trigger a re-render. If an update occurs *during* a render, it queues another render immediately. If this condition is met on every frame, it creates an infinite loop, freezing the application.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 93,
+    "question": "What is the primary function of `hydrateRoot` in React 18?",
+    "options": [
+      "To create a new Fiber tree and immediately append it to an empty DOM container",
+      "To upgrade a server-rendered application to use Concurrent React features (hydration)",
+      "To force a synchronous hydration of all Suspense boundaries before any user interaction",
+      "To re-render the entire application tree ignoring the existing server HTML"
+    ],
+    "answer": "To upgrade a server-rendered application to use Concurrent React features (hydration)",
+    "explanation": "`hydrateRoot` is the new API in React 18 for hydrating server-rendered markup. It enables Concurrent Features (like Suspense on the server) and replaces the legacy `hydrate` method.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 94,
+    "question": "How does `React.memo` differ from `PureComponent` regarding class components?",
+    "options": [
+      "`React.memo` is a Higher-Order Component (HOC) for functional components, while `PureComponent` is a base class for class components",
+      "`React.memo` performs a deep comparison of props, while `PureComponent` performs a shallow comparison",
+      "`PureComponent` is deprecated in favor of `React.memo` in React 18",
+      "There is no difference; they both implement the exact same `shouldComponentUpdate` logic"
+    ],
+    "answer": "`React.memo` is a Higher-Order Component (HOC) for functional components, while `PureComponent` is a base class for class components",
+    "explanation": "Functionally they are similar (both shallow compare props). However, `PureComponent` is defined via class inheritance (`class MyComp extends PureComponent`), whereas `React.memo` is a higher-order function wrapping a functional component.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 95,
+    "question": "Which statement best describes 'Context Propagation' (or 'bailing out') in React Fiber?",
+    "options": [
+      "If a component consumes Context but the value has not changed, React will skip rendering that component and its children",
+      "Context propagation is the process of passing a callback prop down three levels of the component tree",
+      "React always re-renders all consumers of a Context Provider whenever the Provider re-renders, regardless of value change",
+      "If a Provider component is memoized, its consumers will not receive updates"
+    ],
+    "answer": "If a component consumes Context but the value has not changed, React will skip rendering that component and its children",
+    "explanation": "React optimizes Context by checking if the value provided to a consumer has actually changed (reference equality). If the value is the same, React bails out on rendering the consumers of that context, preventing unnecessary work.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 96,
+    "question": "What is the `current` property on a Fiber node (Host Root) used for?",
+    "options": [
+      "To store the current props passed to the component",
+      "To point to the corresponding DOM node (for host components) or the class instance (for class components)",
+      "To reference the alternative tree (WorkInProgress) being built",
+      "To store the return value of the component's render function"
+    ],
+    "answer": "To point to the corresponding DOM node (for host components) or the class instance (for class components)",
+    "explanation": "The `stateNode` property of a Fiber node holds the instance. For Host Components (like `div`), `stateNode` is the DOM node. For Class Components, it is the class instance. `current` usually refers to the tree, but `stateNode` is the instance link.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 97,
+    "question": "What happens to a 'Stale' work-in-progress (WIP) tree if a higher-priority update interrupts the current rendering process?",
+    "options": [
+      "The stale WIP tree is immediately committed to the DOM to ensure data consistency",
+      "The stale WIP tree is discarded as the root of the work-in-progress tree is switched to the new update",
+      "The stale WIP tree is persisted in a cache to be used for the Undo/Redo functionality",
+      "The stale WIP tree is merged with the new update using a specialized diffing algorithm"
+    ],
+    "answer": "The stale WIP tree is discarded as the root of the work-in-progress tree is switched to the new update",
+    "explanation": "When an interrupt occurs (e.g., user click), React restarts rendering from the root using the current `alternate` tree as a base. The previous WIP work (which was based on older state) is aborted and thrown away.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 98,
+    "question": "In the context of the 'Scheduler' package used by React, what does 'time slicing' refer to?",
+    "options": [
+      "Splitting a heavy task into chunks that run within 5ms frames to yield to the main thread",
+      "Reducing the execution time of all lifecycle methods by half",
+      "Using `setTimeout` to break up long-running loops in user code",
+      "Scheduling the rendering of different components on different CPU threads"
+    ],
+    "answer": "Splitting a heavy task into chunks that run within 5ms frames to yield to the main thread",
+    "explanation": "Time slicing involves breaking up rendering work into small units. The scheduler runs a unit of work and checks if the allocated time (usually ~5ms) has expired. If so, it yields to the browser so the browser can handle user input or paint.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 99,
+    "question": "Which of the following best describes the relationship between `React.createElement` and JSX?",
+    "options": [
+      "JSX is a preprocessor syntax that compiles down to `React.createElement` function calls (or `_jsx` in newer transforms)",
+      "`React.createElement` is a legacy polyfill used by browsers that do not support JSX syntax natively",
+      "JSX runs at runtime to create elements, while `React.createElement` is a build-time optimization",
+      "They are unrelated; JSX creates DOM nodes directly while `React.createElement` creates Virtual DOM nodes"
+    ],
+    "answer": "JSX is a preprocessor syntax that compiles down to `React.createElement` function calls (or `_jsx` in newer transforms)",
+    "explanation": "JSX is syntactic sugar. Babel (or similar compilers) transforms JSX tags into calls to the React runtime (historically `React.createElement`, now often `_jsx` in the new JSX transform) to create React Elements.",
+    "difficulty": "Advanced"
+  }
+]

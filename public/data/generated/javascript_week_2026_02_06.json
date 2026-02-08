@@ -1,0 +1,457 @@
+[
+  {
+    "id": 1,
+    "question": "What is the primary benefit of V8's Just-In-Time (JIT) compilation strategy over a pure interpreter?",
+    "options": [
+      "It eliminates the need for parsing source code into an Abstract Syntax Tree",
+      "It converts frequently executed bytecode into optimized machine code",
+      "It compiles the entire script into machine code before any execution begins",
+      "It automatically fixes memory leaks in long-running applications"
+    ],
+    "answer": "It converts frequently executed bytecode into optimized machine code",
+    "explanation": "JIT compilation identifies 'hot' code paths during runtime and compiles them to efficient machine code, offering performance closer to native code. Pure interpreters execute bytecode directly without this optimization step.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 2,
+    "question": "Which component in the V8 engine is responsible for generating bytecode from the Abstract Syntax Tree?",
+    "options": [
+      "TurboFan",
+      "Libuv",
+      "Ignition",
+      "Sparkplug"
+    ],
+    "answer": "Ignition",
+    "explanation": "Ignition is V8's interpreter. It takes the AST produced by the parser and generates bytecode, which is a low-level, intermediate representation of the source code.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 3,
+    "question": "In the V8 execution pipeline, what role does TurboFan serve?",
+    "options": [
+      "It manages the asynchronous Event Loop",
+      "It handles memory deallocation during Garbage Collection",
+      "It optimizes 'hot' bytecode by compiling it into machine code",
+      "It parses JavaScript strings into executable tokens"
+    ],
+    "answer": "It optimizes 'hot' bytecode by compiling it into machine code",
+    "explanation": "TurboFan is the optimizing compiler. It takes bytecode identified as 'hot' (frequently executed) and compiles it into highly optimized machine code for superior performance.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 4,
+    "question": "What specific condition triggers the optimization of a function by V8's optimizing compiler?",
+    "options": [
+      "The function is declared as an async method",
+      "The function's 'hotness' counter reaches a defined threshold",
+      "The function contains more than 10 lines of code",
+      "The function is called recursively at least once"
+    ],
+    "answer": "The function's 'hotness' counter reaches a defined threshold",
+    "explanation": "V8 monitors function execution frequency. When a function is called often enough (incrementing its hotness counter), it is flagged as 'hot' and sent to the optimizing compiler.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 5,
+    "question": "What is the result of V8 'deoptimizing' a function?",
+    "options": [
+      "The function is garbage collected and removed from memory",
+      "The optimized machine code is discarded, and execution reverts to bytecode",
+      "The function is re-parsed from the original source code",
+      "The function is moved from the heap to the stack"
+    ],
+    "answer": "The optimized machine code is discarded, and execution reverts to bytecode",
+    "explanation": "Deoptimization occurs when an assumption made by the optimizer (like a variable's type) proves false. V8 discards the optimized code and falls back to the safer, slower bytecode execution.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 6,
+    "question": "What is the primary function of the 'Creation Phase' in the Global Execution Context?",
+    "options": [
+      "Executing the code line-by-line",
+      "Allocating memory for variables and function declarations",
+      "Compiling JavaScript to machine code",
+      "Managing the Callback Queue"
+    ],
+    "answer": "Allocating memory for variables and function declarations",
+    "explanation": "Before execution, V8 scans the code to allocate memory for variables (initializing them to undefined) and functions (storing the entire function in memory), a process often associated with hoisting.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 7,
+    "question": "Where are JavaScript primitive values (e.g., numbers, booleans) typically stored in V8's memory management model?",
+    "options": [
+      "The Heap",
+      "The Call Stack",
+      "The Event Queue",
+      "The Callback Registry"
+    ],
+    "answer": "The Call Stack",
+    "explanation": "Primitive values are fixed-size and are stored directly on the Call Stack (inside execution contexts) for fast access and automatic cleanup when the context is popped.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 8,
+    "question": "Where are JavaScript objects and reference data types stored in V8's memory management model?",
+    "options": [
+      "The Call Stack",
+      "The Instruction Set",
+      "The Heap",
+      "The Register File"
+    ],
+    "answer": "The Heap",
+    "explanation": "Objects are dynamic and can grow in size. V8 stores them in the Heap, while the Call Stack holds a reference (pointer) to that memory location.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 9,
+    "question": "Which mechanism allows the Event Loop to manage asynchronous operations without blocking the main thread?",
+    "options": [
+      "Multi-threaded JavaScript execution",
+      "Offloading tasks to external system APIs (like Libuv)",
+      "Synchronous code parsing",
+      "Inline caching"
+    ],
+    "answer": "Offloading tasks to external system APIs (like Libuv)",
+    "explanation": "JS is single-threaded. Asynchronous heavy lifting is delegated to external APIs (like Libuv in Node.js or browser Web APIs), allowing the main thread to continue executing other code.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 10,
+    "question": "In the context of the Event Loop, what is the 'Job Queue' (Microtask Queue) primarily used for?",
+    "options": [
+      "Handling click events and DOM manipulations",
+      "Processing Promise callbacks and queueMicrotask",
+      "Executing timer functions like setTimeout",
+      "Managing network I/O operations"
+    ],
+    "answer": "Processing Promise callbacks and queueMicrotask",
+    "explanation": "Microtasks are used for operations that must complete immediately after the current script completes but before the next macrotask (like setTimeout or I/O), such as Promise resolution handlers.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 11,
+    "question": "What happens when a resolved Promise's callback is added to the Microtask Queue?",
+    "options": [
+      "It executes immediately, pausing the currently running function",
+      "It waits until the Call Stack is empty and the current macrotask finishes",
+      "It is discarded if the Call Stack is not empty",
+      "It moves to the end of the standard Task Queue"
+    ],
+    "answer": "It waits until the Call Stack is empty and the current macrotask finishes",
+    "explanation": "The Event Loop processes all Microtasks only when the Call Stack is clear and after the current macrotask completes, before moving to the next macrotask.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 12,
+    "question": "What is 'On-Stack Replacement' (OSR) in the context of V8?",
+    "options": [
+      "Replacing the currently running function with a recursive call",
+      "Swapping interpreted bytecode for optimized machine code mid-execution",
+      "Moving variables from the Heap to the Stack",
+      "Re-parsing the source code while the application is running"
+    ],
+    "answer": "Swapping interpreted bytecode for optimized machine code mid-execution",
+    "explanation": "OSR allows V8 to switch a running loop from bytecode to optimized machine code without waiting for the function to restart, useful for long-running loops that become 'hot'.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 13,
+    "question": "What is a 'Hidden Class' in V8 and why is it useful?",
+    "options": [
+      "A private property on an object inaccessible to the user",
+      "An internal object description that optimizes property access",
+      "A CSS class applied to hidden DOM elements",
+      "A backup of the bytecode stored on the disk"
+    ],
+    "answer": "An internal object description that optimizes property access",
+    "explanation": "Hidden Classes (or Maps) define the structure of an object. If objects share the same Hidden Class, V8 can optimize property access using inline caching.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 14,
+    "question": "Which coding pattern will likely cause V8 to generate a new Hidden Class, potentially degrading performance?",
+    "options": [
+      "Initializing all object properties in the constructor",
+      "Adding properties to an object dynamically after instantiation",
+      "Using the same property types across objects",
+      "Reading properties sequentially"
+    ],
+    "answer": "Adding properties to an object dynamically after instantiation",
+    "explanation": "Changing an object's structure (adding/deleting properties) forces V8 to create a new Hidden Class, preventing optimizations that rely on stable object shapes.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 15,
+    "question": "What is 'Inline Caching' (IC) in V8?",
+    "options": [
+      "A method to cache the entire HTML of a webpage",
+      "An optimization relying on the assumption that methods called on the same object will be the same",
+      "A storage mechanism for HTTP cookies",
+      "A way to inline CSS into JavaScript"
+    ],
+    "answer": "An optimization relying on the assumption that methods called on the same object will be the same",
+    "explanation": "Inline caching caches the result of a property lookup directly at the call site. If the object shape matches the cache, the lookup is skipped, drastically speeding up execution.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 16,
+    "question": "How does V8's Garbage Collector (GC) primarily manage memory?",
+    "options": [
+      "Using a single pass that scans the entire heap every time",
+      "Using a generational strategy (New Space vs. Old Space)",
+      "Requiring the developer to manually free memory",
+      "Moving all objects to the stack after execution"
+    ],
+    "answer": "Using a generational strategy (New Space vs. Old Space)",
+    "explanation": "V8 splits memory into 'New Space' (short-lived objects) and 'Old Space' (long-lived objects). It cleans New Space frequently (Scavenge) and Old Space less frequently (Mark-Sweep-Compact).",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 17,
+    "question": "What is the primary role of Libuv in a Node.js environment utilizing V8?",
+    "options": [
+      "It compiles TypeScript to JavaScript",
+      "It provides the Event Loop and handles asynchronous I/O operations",
+      "It renders HTML to the browser window",
+      "It manages the V8 memory heap"
+    ],
+    "answer": "It provides the Event Loop and handles asynchronous I/O operations",
+    "explanation": "Libuv is a C library that handles asynchronous tasks (file system, network) in Node.js, managing the thread pool and the Event Loop to keep V8 non-blocking.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 18,
+    "question": "During the 'Creation Phase' of the Execution Context, how are `var` variables initialized in memory?",
+    "options": [
+      "They are set to null",
+      "They are set to undefined",
+      "They are not allocated memory until execution",
+      "They throw a ReferenceError"
+    ],
+    "answer": "They are set to undefined",
+    "explanation": "In the creation phase, V8 allocates memory for `var` declarations and automatically initializes them with the value `undefined` before the code is executed.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 19,
+    "question": "What differentiates a `ReferenceError` from an `undefined` value in the V8 execution context?",
+    "options": [
+      "`undefined` means the variable exists in memory but has no value; `ReferenceError` means the variable does not exist in the scope",
+      "`undefined` is a syntax error; `ReferenceError` is a runtime error",
+      "`ReferenceError` means the variable is null; `undefined` means the variable is true",
+      "There is no difference; they are interchangeable"
+    ],
+    "answer": "`undefined` means the variable exists in memory but has no value; `ReferenceError` means the variable does not exist in the scope",
+    "explanation": "V8 throws a ReferenceError when you try to access a variable that hasn't been declared (hoisted). Accessing a declared but unassigned variable results in undefined.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 20,
+    "question": "What is the function of the 'Maglev' compiler tier mentioned in modern V8 architecture?",
+    "options": [
+      "It serves as the baseline interpreter (Ignition)",
+      "It is an optimizing tier that sits between Ignition and TurboFan",
+      "It manages the garbage collection cycles",
+      "It handles DOM updates exclusively"
+    ],
+    "answer": "It is an optimizing tier that sits between Ignition and TurboFan",
+    "explanation": "Maglev acts as an intermediate optimizing compiler. It provides optimization faster than TurboFan but less aggressive, serving as a proving ground before high-level optimization.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 21,
+    "question": "Why does V8 avoid compiling the entire script into machine code immediately (AOT compilation)?",
+    "options": [
+      "Machine code is slower to execute than bytecode",
+      "It would cause excessive startup time and memory usage",
+      "JavaScript syntax changes too frequently",
+      "The Stack cannot hold machine code"
+    ],
+    "answer": "It would cause excessive startup time and memory usage",
+    "explanation": "Compiling everything to machine code upfront takes significant time and memory. V8 starts with Ignition (bytecode) for fast startup and only compiles 'hot' code to machine code.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 22,
+    "question": "Which of the following actions will trigger a 'Deoptimization' in V8?",
+    "options": [
+      "Calling a function recursively",
+      "Passing a string to a function that previously only received integers",
+      "Defining a function using the `function` keyword",
+      "Creating a new object instance"
+    ],
+    "answer": "Passing a string to a function that previously only received integers",
+    "explanation": "V8 optimizes based on speculation (type feedback). If a function that has only processed numbers suddenly receives a string, the assumption is broken, triggering deoptimization.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 23,
+    "question": "In the V8 engine, what is the 'Abstract Syntax Tree' (AST)?",
+    "options": [
+      "A visual representation of the DOM",
+      "A tree structure generated by the parser representing the code's syntax",
+      "The memory heap structure",
+      "The stack trace of an error"
+    ],
+    "answer": "A tree structure generated by the parser representing the code's syntax",
+    "explanation": "The parser converts JavaScript source code into an AST, a tree representation of the syntactic structure of the code, which is then passed to the interpreter.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 24,
+    "question": "What does the term 'Synchronous' mean in the context of the JavaScript Call Stack?",
+    "options": [
+      "Code runs concurrently with other tasks",
+      "Code executes line-by-line, blocking further execution until completion",
+      "Code runs in a separate thread",
+      "Code is deferred to the next event loop cycle"
+    ],
+    "answer": "Code executes line-by-line, blocking further execution until completion",
+    "explanation": "Synchronous code blocks the Call Stack. Each statement must finish executing (and return) before the next one can begin, unlike asynchronous operations.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 25,
+    "question": "When an asynchronous callback is ready to be executed, where does V8 place it initially?",
+    "options": [
+      "Directly onto the Call Stack",
+      "Into the Microtask or Callback (Task) Queue",
+      "Into the Ignition bytecode buffer",
+      "Into the Heap memory"
+    ],
+    "answer": "Into the Microtask or Callback (Task) Queue",
+    "explanation": "Callbacks are not pushed to the stack immediately. They wait in a queue (Task Queue or Microtask Queue) until the Call Stack is empty and the Event Loop picks them up.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 26,
+    "question": "What is the 'Scope Chain' used for during execution?",
+    "options": [
+      "To link multiple JavaScript files together",
+      "To resolve variable access from inner to outer functions",
+      "To chain Event Loops together",
+      "To optimize machine code layout"
+    ],
+    "answer": "To resolve variable access from inner to outer functions",
+    "explanation": "If a variable is not found in the current function's local scope, the engine looks up the Scope Chain to find it in parent (outer) scopes until it reaches the global scope.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 27,
+    "question": "What is a 'Closure' in terms of V8 memory?",
+    "options": [
+      "A function that has closed over variables from its outer scope, keeping them in memory",
+      "A method to close a network connection",
+      "The termination of the execution context",
+      "A garbage collection cycle"
+    ],
+    "answer": "A function that has closed over variables from its outer scope, keeping them in memory",
+    "explanation": "A closure allows a function to access variables from an outer function that has already returned. V8 keeps these variables in the Heap to ensure the closure remains functional.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 28,
+    "question": "How does the 'Mark-Sweep-Compact' algorithm work in V8's Garbage Collector?",
+    "options": [
+      "It moves all objects to the stack",
+      "It marks live objects, sweeps away dead ones, and compacts memory to reduce fragmentation",
+      "It deletes all objects and recreates them",
+      "It stops the world only during the sweep phase"
+    ],
+    "answer": "It marks live objects, sweeps away dead ones, and compacts memory to reduce fragmentation",
+    "explanation": "This is a three-phase process: 'Mark' identifies reachable objects, 'Sweep' frees memory for unreachable ones, and 'Compact' defragments memory for efficiency.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 29,
+    "question": "What happens to the Execution Context when a function finishes executing?",
+    "options": [
+      "It remains on the Call Stack for debugging",
+      "It is popped off the Call Stack, and its local variables are garbage collected (if not referenced)",
+      "It is converted into a Hidden Class",
+      "It moves to the Task Queue"
+    ],
+    "answer": "It is popped off the Call Stack, and its local variables are garbage collected (if not referenced)",
+    "explanation": "The Call Stack is LIFO (Last In, First Out). Once execution completes, the context is removed. If no closures exist, the memory is eventually freed.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 30,
+    "question": "Why are `let` and `const` variables considered safer than `var` regarding the Execution Context?",
+    "options": [
+      "They are stored on the Heap instead of the Stack",
+      "They are block-scoped and prevent hoisting initialization to the top",
+      "They are compiled by TurboFan only",
+      "They do not allocate memory"
+    ],
+    "answer": "They are block-scoped and prevent hoisting initialization to the top",
+    "explanation": "While hoisted, `let` and `const` remain in the Temporal Dead Zone until the declaration is evaluated, preventing accidental usage before initialization (unlike `var` which is immediately undefined).",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 31,
+    "question": "What is the primary responsibility of the 'Parser' in the V8 pipeline?",
+    "options": [
+      "To execute the bytecode",
+      "To convert source code into an Abstract Syntax Tree (AST)",
+      "To clean up memory",
+      "To manage the Event Loop"
+    ],
+    "answer": "To convert source code into an Abstract Syntax Tree (AST)",
+    "explanation": "The Parser is the first step in execution. It reads the raw JavaScript source code and transforms it into a structured AST that the Ignition interpreter can understand.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 32,
+    "question": "What is the difference between 'Shallow' and 'Deep' copying in V8 memory?",
+    "options": [
+      "Shallow copy duplicates the Heap; Deep copy duplicates the Stack",
+      "Shallow copy copies the reference pointer; Deep copy recursively duplicates the object in the Heap",
+      "Deep copy only works with primitives; Shallow copy only works with objects",
+      "Shallow copy is handled by TurboFan; Deep copy by Ignition"
+    ],
+    "answer": "Shallow copy copies the reference pointer; Deep copy recursively duplicates the object in the Heap",
+    "explanation": "A shallow copy shares the same memory reference (changes affect the original). A deep copy creates a new, distinct object in memory with no shared references.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 33,
+    "question": "In V8, what is 'Type Feedback'?",
+    "options": [
+      "Error messages thrown when types are wrong",
+      "Runtime information collected by Ignition to help TurboFan optimize",
+      "A console log of variable types",
+      "The data type of the Event Loop"
+    ],
+    "answer": "Runtime information collected by Ignition to help TurboFan optimize",
+    "explanation": "As Ignition interprets code, it collects data on the types of variables and parameters being used. This 'feedback' allows TurboFan to make assumptions and generate optimized machine code.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 34,
+    "question": "What does the '--stack-size' flag control when launching a V8 instance (e.g., Node.js)?",
+    "options": [
+      "The amount of memory available for the Heap",
+      "The maximum size of the garbage collector's new space",
+      "The maximum memory limit for the Call Stack",
+      "The size of the bytecode cache"
+    ],
+    "answer": "The maximum memory limit for the Call Stack",
+    "explanation": "The Call Stack has a fixed memory limit. If the stack exceeds this size (due to deep recursion or no base case), a 'RangeError: Maximum call stack size exceeded' occurs.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 35,
+    "question": "Why is 'Function Inlining' an effective optimization technique used by TurboFan?",
+    "options": [
+      "It reduces the memory footprint of the function",
+      "It replaces a function call with the body of the function to avoid call overhead",
+      "It moves the function to the beginning of the file",
+      "It converts the function into a global variable"
+    ],
+    "answer": "It replaces a function call with the body of the function to avoid call overhead",
+    "explanation": "Function calls have overhead (stack frame creation). Inlining copies the function's code directly into the caller, eliminating the setup time and allowing further optimization of the combined code.",
+    "difficulty": "Beginner"
+  }
+]
