@@ -2,6 +2,7 @@ import { useParams, Link } from 'react-router-dom';
 import { useTopics, useOriginalQuestions, useGeneratedTestsForTopic } from '@hooks';
 import { useTestProgressStats } from '@store';
 import ThemeToggle from '@/components/ThemeToggle';
+import TopicIcon from '@/components/TopicIcon';
 
 interface TestCardProps {
   topicId: string;
@@ -119,7 +120,7 @@ export default function TestSelection() {
   }
   
   // Use default values while loading topics
-  const topicIcon = topic?.icon || '📚';
+  const topicIconName = topic?.icon || 'Book';
   const topicTitle = topic?.title || topicId || 'Topic';
   const topicColor = topic?.color || 'hsl(200, 70%, 50%)';
   
@@ -147,7 +148,9 @@ export default function TestSelection() {
       <main className="container mx-auto px-4 py-8 max-w-3xl">
         {/* Topic Header */}
         <div className="text-center mb-10">
-          <div className="text-6xl mb-4">{topicIcon}</div>
+          <div className="flex justify-center mb-4">
+            <TopicIcon name={topicIconName} className="w-16 h-16" />
+          </div>
           <h1
             className="text-3xl font-bold mb-2"
             style={{ color: topicColor }}

@@ -19,7 +19,10 @@ const topicNames: Record<string, string> = {
   systemdesign: 'System Design',
   designpatterns: 'Design Patterns',
   algorithms: 'Algorithms',
-  aiagents: 'AI Agents'
+  aiagents: 'AI Agents',
+  financial: 'Financial Literacy',
+  aiengineer: 'AI Engineer',
+  interview: 'Tech Interview'
 };
 
 export default function Quiz() {

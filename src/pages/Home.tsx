@@ -1,70 +1,12 @@
 import { Link } from 'react-router-dom';
-import { Topic } from '@/data/types';
-import { useState, useEffect } from 'react';
+import { Topic, TopicCategory } from '@/data/types';
+import { useState, useEffect, useMemo, memo } from 'react';
 import { getAllTopicsProgress } from '@/hooks/useQuizProgress';
 import ThemeToggle from '@/components/ThemeToggle';
+import TopicIcon from '@/components/TopicIcon';
+import { allTopics, categories } from '@constants/topics';
 
-interface TopicCategory {
-  name: string;
-  icon: string;
-  topics: Topic[];
-}
-
-const allTopics: Topic[] = [
-  { id: 'pronunciation', title: 'Pronunciation', icon: '🗣️', color: 'hsl(280, 70%, 60%)' },
-  { id: 'grammar', title: 'Grammar', icon: '📝', color: 'hsl(160, 70%, 45%)' },
-  { id: 'pandas', title: 'Pandas', icon: '🐼', color: 'hsl(200, 70%, 50%)' },
-  { id: 'sql', title: 'SQL', icon: '🗄️', color: 'hsl(30, 80%, 60%)' },
-  { id: 'postgres', title: 'PostgreSQL', icon: '🐘', color: 'hsl(220, 70%, 60%)' },
-  { id: 'aws', title: 'AWS', icon: '☁️', color: 'hsl(35, 100%, 50%)' },
-  { id: 'python', title: 'Python', icon: '🐍', color: 'hsl(55, 70%, 50%)' },
-  { id: 'javascript', title: 'JavaScript', icon: '⚡', color: 'hsl(50, 90%, 55%)' },
-  { id: 'typescript', title: 'TypeScript', icon: '🔷', color: 'hsl(210, 80%, 55%)' },
-  { id: 'react', title: 'React', icon: '⚛️', color: 'hsl(190, 90%, 55%)' },
-  { id: 'systemdesign', title: 'System Design', icon: '🏗️', color: 'hsl(340, 70%, 55%)' },
-  { id: 'designpatterns', title: 'Design Patterns', icon: '🧩', color: 'hsl(270, 60%, 55%)' },
-  { id: 'algorithms', title: 'Algorithms', icon: '🔢', color: 'hsl(140, 60%, 45%)' },
-  { id: 'aiagents', title: 'AI Agents', icon: '🤖', color: 'hsl(180, 70%, 45%)' },
-];
-
-const categories: TopicCategory[] = [
-  {
-    name: 'Programming Languages',
-    icon: '💻',
-    topics: allTopics.filter(t => ['python', 'javascript', 'typescript'].includes(t.id))
-  },
-  {
-    name: 'Frameworks & Libraries',
-    icon: '⚛️',
-    topics: allTopics.filter(t => ['react', 'pandas'].includes(t.id))
-  },
-  {
-    name: 'Databases',
-    icon: '🗄️',
-    topics: allTopics.filter(t => ['sql', 'postgres'].includes(t.id))
-  },
-  {
-    name: 'Architecture & Patterns',
-    icon: '🏗️',
-    topics: allTopics.filter(t => ['systemdesign', 'designpatterns', 'algorithms'].includes(t.id))
-  },
-  {
-    name: 'Cloud & AI',
-    icon: '☁️',
-    topics: allTopics.filter(t => ['aws', 'aiagents'].includes(t.id))
-  },
-  {
-    name: 'English Skills',
-    icon: '📚',
-    topics: allTopics.filter(t => ['pronunciation', 'grammar'].includes(t.id))
-  },
-];
-
-function TopicCard({ topic, progress }: { topic: Topic; progress?: { correct: number; wrong: number; skipped: number; total: number } }) {
-  const hasProgress = progress && progress.total > 0;
-  const answered = hasProgress ? progress.correct + progress.wrong + progress.skipped : 0;
-  const progressPercent = hasProgress ? (answered / 100) * 100 : 0;
-  
+const TopicCard = memo(function TopicCard({ topic, progress }: { topic: Topic; progress?: { correct: number; wrong: number; skipped: number; total: number } }) {
   return (
     <Link 
       to={`/topic/${topic.id}`} 
@@ -73,7 +15,7 @@ function TopicCard({ topic, progress }: { topic: Topic; progress?: { correct: nu
     >
       {/* Topic Icon */}
       <div className="text-4xl mb-3 transition-all duration-300 group-hover:scale-110 group-hover:animate-float">
-        {topic.icon}
+        <TopicIcon name={topic.icon} className="w-10 h-10" />
       </div>
       
       {/* Topic Title */}
@@ -85,13 +27,13 @@ function TopicCard({ topic, progress }: { topic: Topic; progress?: { correct: nu
       </h3>
     </Link>
   );
-}
+});
 
 interface ProgressData {
   [topicId: string]: { correct: number; wrong: number; skipped: number; total: number };
 }
 
-function CategorySection({ category, progressData }: { category: TopicCategory; progressData: ProgressData }) {
+const CategorySection = memo(function CategorySection({ category, progressData }: { category: TopicCategory; progressData: ProgressData }) {
   return (
     <section className="mb-10">
       {/* Category Header */}
@@ -119,7 +61,7 @@ function CategorySection({ category, progressData }: { category: TopicCategory; 
       </div>
     </section>
   );
-}
+});
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -149,14 +91,16 @@ export default function Home() {
     return () => window.removeEventListener('focus', loadProgress);
   }, []);
   
-  const filteredCategories = searchQuery.trim() 
-    ? categories.map(cat => ({
-        ...cat,
-        topics: cat.topics.filter(t => 
-          t.title.toLowerCase().includes(searchQuery.toLowerCase())
-        )
-      })).filter(cat => cat.topics.length > 0)
-    : categories;
+  const filteredCategories = useMemo(() => {
+    return searchQuery.trim() 
+      ? categories.map(cat => ({
+          ...cat,
+          topics: cat.topics.filter(t => 
+            t.title.toLowerCase().includes(searchQuery.toLowerCase())
+          )
+        })).filter(cat => cat.topics.length > 0)
+      : categories;
+  }, [searchQuery]);
 
   const totalQuestions = allTopics.length * 100;
 
