@@ -1,0 +1,834 @@
+[
+  {
+    "id": 1,
+    "question": "What is the output of `console.log(typeof null)` in JavaScript?",
+    "options": [
+      "\"null\"",
+      "\"undefined\"",
+      "\"object\"",
+      "\"number\""
+    ],
+    "answer": "\"object\"",
+    "explanation": "In JavaScript, `typeof null` returns \"object\" due to a legacy bug in the original implementation where type tags were used. It is not actually an object, despite what the operator returns. \"undefined\" refers to declared variables without values, and \"null\" is a primitive value representing intentional absence.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 2,
+    "question": "Which comparison operator performs type coercion before comparing values?",
+    "options": [
+      "===",
+      "==",
+      "!==",
+      "Object.is()"
+    ],
+    "answer": "==",
+    "explanation": "The loose equality operator `==` converts operands to the same type before comparison. `===` and `!==` are strict operators that return false if types differ. `Object.is()` is a strict equality check that handles `NaN` and signed zeros differently than `===`.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 3,
+    "question": "What behavior distinguishes `let` and `const` from `var` regarding scope?",
+    "options": [
+      "`var` is block-scoped, while `let` and `const` are function-scoped",
+      "`let` and `const` are block-scoped, while `var` is function-scoped",
+      "`const` cannot be updated, but `let` and `var` can be redeclared",
+      "`var` creates a property on the global object, whereas `let` and `const` do not"
+    ],
+    "answer": "`let` and `const` are block-scoped, while `var` is function-scoped",
+    "explanation": "Variables declared with `let` and `const` exist only within the nearest block (delimited by `{}`). `var` declarations are scoped to the nearest function body. While `var` does create global properties when declared at the top level, the primary technical distinction is function scope vs. block scope.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 4,
+    "question": "Which primitive value is NOT considered falsy in a Boolean context?",
+    "options": [
+      "0",
+      "NaN",
+      "\"\"",
+      "\"0\""
+    ],
+    "answer": "\"0\"",
+    "explanation": "The string \"0\" is a non-empty string, making it truthy. `0`, `NaN`, and `\"\"` (empty string) are all defined as falsy values in the JavaScript specification.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 5,
+    "question": "What is the result of `console.log(1 + \"2\" + \"2\")`?",
+    "options": [
+      "\"122\"",
+      "5",
+      "\"14\"",
+      "NaN"
+    ],
+    "answer": "\"122\"",
+    "explanation": "JavaScript evaluates left-to-right. `1 + \"2\"` coerces `1` to a string, resulting in \"12\". Adding \"2\" to \"12\" results in string concatenation \"122\". Addition with a string triggers concatenation for all subsequent operands.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 6,
+    "question": "What specific feature allows an inner function to access variables from its outer function after the outer function has returned?",
+    "options": [
+      "Hoisting",
+      "Scope Chain",
+      "Closure",
+      "Callback"
+    ],
+    "answer": "Closure",
+    "explanation": "A closure is the combination of a function bundled with references to its surrounding state (the lexical environment). It preserves the outer scope variables even after the outer function has finished execution. Hoisting moves declarations to the top; scope chain refers to the lookup hierarchy.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 7,
+    "question": "In the Event Loop, which queue is processed *before* the next rendering repaint?",
+    "options": [
+      "Macrotask Queue",
+      "Callback Queue",
+      "Microtask Queue",
+      "Task Queue"
+    ],
+    "answer": "Microtask Queue",
+    "explanation": "The Event Loop processes all tasks in the Microtask Queue (such as Promise callbacks) before moving to the Macrotask Queue (setTimeout, I/O) and rendering. Render updates typically occur after the microtask queue is drained. Macrotask and Callback Queue refer to the same delayed execution queue.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 8,
+    "question": "What is the primary purpose of the `new` keyword when used with a constructor function?",
+    "options": [
+      "To create a new scope for the function",
+      "To automatically bind the `this` keyword to a new object and link prototypes",
+      "To convert a function into an async function",
+      "To enable strict mode within the function body"
+    ],
+    "answer": "To automatically bind the `this` keyword to a new object and link prototypes",
+    "explanation": "`new` creates an instance object, sets the `[[Prototype]]` link, and binds `this` within the constructor to that new object. It does not create a new scope (functions do this by default) or enable strict mode. If the constructor is async, it returns a Promise, not an object.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 9,
+    "question": "Which method copies all enumerable own properties from one or more source objects to a target object?",
+    "options": [
+      "Object.assign()",
+      "Object.create()",
+      "Object.merge()",
+      "Object.copy()"
+    ],
+    "answer": "Object.assign()",
+    "explanation": "`Object.assign(target, ...sources)` copies properties from sources to the target, returning the target object. `Object.create()` creates a new object with a specific prototype. `merge` and `copy` are not standard static methods on the `Object` constructor.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 10,
+    "question": "What is the output of `console.log([] == 0)`?",
+    "options": [
+      "true",
+      "false",
+      "undefined",
+      "TypeError"
+    ],
+    "answer": "true",
+    "explanation": "In loose equality, an array is converted to a primitive using `toString()`. `[]` becomes `\"\"` (empty string). An empty string compared to a number (`0`) coerces to `0`. Therefore, `0 == 0` is true.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 11,
+    "question": "Why does `typeof NaN` return \"number\"?",
+    "options": [
+      "NaN is technically a string wrapper",
+      "NaN is a special numeric value representing an invalid calculation result",
+      "It is a bug in the V8 engine specifically",
+      "NaN is an object type"
+    ],
+    "answer": "NaN is a special numeric value representing an invalid calculation result",
+    "explanation": "NaN (Not-a-Number) is defined by the IEEE 754 floating-point standard as a numeric value used to represent undefined or unrepresentable results. Despite the name, it is a type of Number in JavaScript.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 12,
+    "question": "What is the key difference between `call()` and `apply()`?",
+    "options": [
+      "`call()` accepts an argument list, while `apply()` accepts a single array of arguments",
+      "`call()` is used for objects, `apply()` is used for functions",
+      "`apply()` binds `this`, while `call()` does not",
+      "`call()` is asynchronous, `apply()` is synchronous"
+    ],
+    "answer": "`call()` accepts an argument list, while `apply()` accepts a single array of arguments",
+    "explanation": "Both methods invoke a function with a specific `this` value. The difference is purely how arguments are passed: `call` takes comma-separated args, `apply` takes an array (or array-like object).",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 13,
+    "question": "What happens if a `Promise.resolve()` is returned inside an `async` function?",
+    "options": [
+      "It creates a nested Promise (Promise<Promise>)",
+      "The outer function returns the resolved value directly",
+      "The returned Promise is flattened (resolved) automatically",
+      "It throws a TypeError"
+    ],
+    "answer": "The returned Promise is flattened (resolved) automatically",
+    "explanation": "Async functions always return a Promise. If the returned value is a Promise, it is \"unwrapped\" or awaited implicitly, and the returned promise resolves with that value's state. Promises in JavaScript are assimilated, not nested.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 14,
+    "question": "Which statement accurately describes `const` object properties?",
+    "options": [
+      "Properties of a `const` object cannot be changed",
+      "The identifier cannot be reassigned, but object properties can be mutated",
+      "The object is frozen and cannot have properties added or removed",
+      "`const` prevents the object from being garbage collected"
+    ],
+    "answer": "The identifier cannot be reassigned, but object properties can be mutated",
+    "explanation": "`const` prevents reassignment of the variable identifier itself. However, it does not make the object immutable; contents of the object (properties) can still be modified. To freeze an object, use `Object.freeze()`.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 15,
+    "question": "What is the result of `console.log(1 + 1 + \"1\")`?",
+    "options": [
+      "\"21\"",
+      "\"111\"",
+      "3",
+      "\"3\""
+    ],
+    "answer": "\"21\"",
+    "explanation": "Operations proceed left-to-right. `1 + 1` results in the number `2`. The addition of `2 + \"1\"` triggers type coercion, converting `2` to a string, resulting in \"21\". String concatenation overrides arithmetic once a string operand is encountered.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 16,
+    "question": "Which array method iterates over elements and returns a *new* array with the results?",
+    "options": [
+      "Array.prototype.forEach()",
+      "Array.prototype.map()",
+      "Array.prototype.reduce()",
+      "Array.prototype.filter()"
+    ],
+    "answer": "Array.prototype.map()",
+    "explanation": "`map()` executes a callback on every element and returns a new array of the same length with the returned values. `forEach` returns `undefined`. `reduce` returns a single accumulated value. `filter` returns an array based on a condition, not a 1:1 transformation.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 17,
+    "question": "What is the default value of a parameter that is not provided in a function call?",
+    "options": [
+      "null",
+      "NaN",
+      "undefined",
+      "0"
+    ],
+    "answer": "undefined",
+    "explanation": "Arguments without a corresponding value are assigned the primitive value `undefined`. It is not `null`, which is an intentional assignment, nor `NaN` (which implies a math error).",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 18,
+    "question": "What is the difference between `undefined` and `null` in terms of type?",
+    "options": [
+      "Both are of type 'object'",
+      "`undefined` is a type, `null` is an object",
+      "`undefined` is a type, `null` is a primitive type (Null)",
+      "There is no difference in type"
+    ],
+    "answer": "`undefined` is a type, `null` is a primitive type (Null)",
+    "explanation": "Technically, `typeof undefined` is \"undefined\", while `typeof null` is \"object\" (a known language bug). However, logically, both are primitives. The `Null` type represents the intentional absence of any object value, whereas `Undefined` represents a variable that has not been initialized.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 19,
+    "question": "How does the spread operator (`...`) handle strings when used in an array literal `[...\"str\"]`?",
+    "options": [
+      "It creates an array with the string as a single element",
+      "It splits the string into an array of characters",
+      "It throws a SyntaxError",
+      "It converts the string to a number"
+    ],
+    "answer": "It splits the string into an array of characters",
+    "explanation": "The spread operator iterates over the iterable (a string is iterable) and places each element into the array. `[...\"str\"]` becomes `[\"s\", \"t\", \"r\"]`. It does not wrap the string.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 20,
+    "question": "Which keyword stops the execution of the current loop entirely?",
+    "options": [
+      "continue",
+      "break",
+      "return",
+      "exit"
+    ],
+    "answer": "break",
+    "explanation": "`break` immediately terminates the loop and transfers control to the statement following the loop. `continue` skips only the current iteration. `return` exits the function entirely, not just the loop.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 21,
+    "question": "What is the primary purpose of a WeakMap?",
+    "options": [
+      "To store key-value pairs where keys are objects and holds weak references",
+      "To store large amounts of data persistently",
+      "To iterate over key-value pairs efficiently",
+      "To store primitive values as keys"
+    ],
+    "answer": "To store key-value pairs where keys are objects and holds weak references",
+    "explanation": "WeakMaps allow keys to be garbage collected if no other references to the key exist. Unlike Maps, keys in WeakMaps must be objects, not primitives, and WeakMaps are not iterable.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 22,
+    "question": "What does the `??` (Nullish Coalescing Operator) check for?",
+    "options": [
+      "Strict equality (`===`)",
+      "Falsy values (`false`, `0`, `\"\"`, `null`, `undefined`)",
+      "Only `null` and `undefined`",
+      "Only `NaN`"
+    ],
+    "answer": "Only `null` and `undefined`",
+    "explanation": "The `??` operator returns the right-hand side operand only when the left-hand side is strictly `null` or `undefined`. It differs from `||` (Logical OR) which triggers on any falsy value (like `0` or `\"\"`).",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 23,
+    "question": "Which built-in method is used to remove the last element from an array and return it?",
+    "options": [
+      "shift()",
+      "pop()",
+      "push()",
+      "slice()"
+    ],
+    "answer": "pop()",
+    "explanation": "`pop()` removes the last element. `shift()` removes the first element. `push()` adds elements to the end. `slice()` creates a new array without modifying the original.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 24,
+    "question": "What is the result of `2 == \"2\"`?",
+    "options": [
+      "true",
+      "false",
+      "undefined",
+      "TypeError"
+    ],
+    "answer": "true",
+    "explanation": "The `==` operator performs type coercion. The string \"2\" is converted to the number 2, making the comparison `2 == 2`, which is true.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 25,
+    "question": "What defines the Temporal Dead Zone (TDZ)?",
+    "options": [
+      "The time between object creation and garbage collection",
+      "The period between entering a scope and a variable being declared where accessing it throws a ReferenceError",
+      "The delay in execution caused by the Event Loop",
+      "The duration a `var` variable is hoisted"
+    ],
+    "answer": "The period between entering a scope and a variable being declared where accessing it throws a ReferenceError",
+    "explanation": "The TDZ starts at the beginning of the block scope and ends when the variable is declared (initialized). Accessing `let` or `const` variables within this zone causes a ReferenceError. `var` is hoisted but initialized as `undefined`, so it has no TDZ.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 26,
+    "question": "What is the behavior of `this` inside an arrow function?",
+    "options": [
+      "It refers to the global object",
+      "It is dynamically scoped based on the call site",
+      "It is lexically bound from the enclosing parent scope",
+      "It refers to the DOM element the function is attached to"
+    ],
+    "answer": "It is lexically bound from the enclosing parent scope",
+    "explanation": "Arrow functions do not have their own `this` context; they inherit `this` from the surrounding scope where they are defined. Standard functions bind `this` dynamically based on how they are called.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 27,
+    "question": "What is the output of `console.log(true + false)`?",
+    "options": [
+      "\"truefalse\"",
+      "1",
+      "0",
+      "NaN"
+    ],
+    "answer": "1",
+    "explanation": "In arithmetic operations, booleans are coerced to numbers: `true` becomes `1` and `false` becomes `0`. Thus, `1 + 0` equals `1`. No string is involved, so concatenation does not occur.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 28,
+    "question": "Which property refers to the function object currently being executed (useful for recursion in anonymous functions)?",
+    "options": [
+      "this",
+      "callee",
+      "arguments.caller",
+      "target"
+    ],
+    "answer": "callee",
+    "explanation": "`arguments.callee` refers to the currently executing function. Note: its use is discouraged in strict mode and often removed by optimization engines, but it is the specific property for this access pattern. `this` refers to the context, not the function itself.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 29,
+    "question": "What is the primary role of the V8 engine's \"Ignition\" interpreter?",
+    "options": [
+      "To compile high-performance machine code for hot functions",
+      "To generate bytecode from JavaScript source code for initial execution",
+      "To manage the DOM and CSS rendering",
+      "To perform garbage collection"
+    ],
+    "answer": "To generate bytecode from JavaScript source code for initial execution",
+    "explanation": "Ignition is V8's interpreter which generates and executes bytecode. TurboFan is the optimizing compiler. Ignition allows for fast startup before \"hot\" functions are compiled to machine code.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 30,
+    "question": "What is the return value of a function that does not explicitly return a value?",
+    "options": [
+      "null",
+      "undefined",
+      "NaN",
+      "false"
+    ],
+    "answer": "undefined",
+    "explanation": "JavaScript functions implicitly return `undefined` if no return statement is reached or if a return statement is present without a value.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 31,
+    "question": "Which global object property represents the JavaScript engine's interface to the host environment (e.g., browser or Node.js)?",
+    "options": [
+      "this",
+      "global",
+      "window / globalThis",
+      "process"
+    ],
+    "answer": "window / globalThis",
+    "explanation": "`globalThis` is the standard global property that unifies the global object across environments (window in browsers, global in Node.js). `process` is specific to Node.js, and `this` at the top level varies by strict mode and environment.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 32,
+    "question": "What occurs when a `finally` block contains a `return` statement?",
+    "options": [
+      "The `try` block's return value is prioritized",
+      "The `finally` block's return value supersedes the `try` or `catch` return value",
+      "A syntax error is thrown",
+      "The `catch` block is re-executed"
+    ],
+    "answer": "The `finally` block's return value supersedes the `try` or `catch` return value",
+    "explanation": "If `finally` has a return statement, it overwrites any return value from the `try` or `catch` blocks. This is a known behavior that can mask exceptions or previous return values.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 33,
+    "question": "Which operator returns the first \"truthy\" value or the last value if all are falsy?",
+    "options": [
+      "&& (Logical AND)",
+      "|| (Logical OR)",
+      "? (Ternary)",
+      "?? (Nullish Coalescing)"
+    ],
+    "answer": "|| (Logical OR)",
+    "explanation": "The `||` operator checks from left to right and returns the first value that can be converted to `true`. If all are falsy, it returns the last value. `&&` returns the first falsy value.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 34,
+    "question": "What is the result of `JSON.parse('{\"x\": 5}')`?",
+    "options": [
+      "A string",
+      "A JavaScript Object",
+      "undefined",
+      "A SyntaxError"
+    ],
+    "answer": "A JavaScript Object",
+    "explanation": "`JSON.parse` parses a JSON string and constructs the JavaScript value (object) described by the string. It returns the corresponding object, not a string.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 35,
+    "question": "In the context of V8's internal optimization, what is \"On-Stack Replacement\" (OSR)?",
+    "options": [
+      "Replacing the call stack entirely when an error occurs",
+      "Switching from optimized code to bytecode while the function is running",
+      "Optimizing a long-running loop while it is still executing",
+      "Replacing the memory heap with the stack"
+    ],
+    "answer": "Optimizing a long-running loop while it is still executing",
+    "explanation": "OSR allows V8 to switch a function from unoptimized bytecode to optimized machine code in the middle of execution (specifically within a loop) without restarting the function.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 36,
+    "question": "In the V8 engine, what is the primary mechanism used to optimize property access performance for dynamically typed objects?",
+    "options": [
+      "On-Stack Replacement (OSR)",
+      "Inline Caches (IC)",
+      "Conservative Garbage Collection",
+      "Just-In-Time (JIT) pre-parsing"
+    ],
+    "answer": "Inline Caches (IC)",
+    "explanation": "Inline Caches (IC) cache the lookup result of object property accesses at specific call sites, assuming that objects maintain the same 'Hidden Class' (shape). If the object shape changes, the IC is invalidated, causing a performance penalty known as a 'cache miss'.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 37,
+    "question": "What specific condition triggers V8's On-Stack Replacement (OSR) mechanism during the execution of a function?",
+    "options": [
+      "The function throws an unhandled exception",
+      "The function is identified as 'hot' while currently executing a loop",
+      "The garbage collector requires immediate memory compaction",
+      "The function's recursion depth exceeds the call stack limit"
+    ],
+    "answer": "The function is identified as 'hot' while currently executing a loop",
+    "explanation": "OSR allows V8 to switch a running function from the unoptimized Ignition bytecode to the optimized TurboFan machine code *in the middle* of execution, specifically when a loop inside the function becomes hot. This avoids waiting for the function to exit and restart to benefit from optimization.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 38,
+    "question": "Regarding the JavaScript event loop in a browser environment, what distinguishes the 'Microtask Queue' from the 'Macrotask Queue'?",
+    "options": [
+      "Macrotasks are handled by the WebGPU API, while Microtasks are handled by the DOM",
+      "The event loop drains the Microtask Queue completely after every task in the Macrotask Queue",
+      "Macrotasks have higher priority and are executed before Microtasks",
+      "Microtasks are used for network I/O, while Macrotasks are used for DOM manipulation"
+    ],
+    "answer": "The event loop drains the Microtask Queue completely after every task in the Macrotask Queue",
+    "explanation": "The event loop runs a single macrotask (e.g., setTimeout callback), then checks the microtask queue (e.g., Promises, MutationObserver), executing *all* queued microtasks before moving to the next macrotask or rendering. This creates a risk of 'microtask starvation' if a microtask recursively enqueues itself.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 39,
+    "question": "In the context of V8's Memory Management (Orinoco), what is the primary strategy used in the 'New Space' (Young Generation) to handle short-lived objects?",
+    "options": [
+      "Mark-Sweep-Compact",
+      "Scavenge (Cheney's Algorithm)",
+      "Reference Counting",
+      "Stop-The-World Full Collection"
+    ],
+    "answer": "Scavenge (Cheney's Algorithm)",
+    "explanation": "New Space uses the Scavenge algorithm, which copies live objects from one semi-space ('From') to another ('To'). This is efficient for short-lived objects because it simply abandons the dead objects in the 'From' space rather than iterating through them to free memory.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 40,
+    "question": "How does the `requestAnimationFrame` API integrate with the browser's Event Loop compared to a standard `setTimeout` callback?",
+    "options": [
+      "It executes in the Microtask Queue before Promise resolutions",
+      "It is throttled to align with the display's refresh rate (typically 60Hz) and updates occur before the browser repaints",
+      "It bypasses the Event Loop entirely and runs on a separate compositor thread",
+      "It has a fixed delay of 0ms, guaranteeing execution before all I/O callbacks"
+    ],
+    "answer": "It is throttled to align with the display's refresh rate (typically 60Hz) and updates occur before the browser repaints",
+    "explanation": "rAF callbacks are part of the 'Update the Rendering' step in the HTML spec. They run specifically before the 'Paint' step, ensuring animations are synchronized with the screen refresh, whereas setTimeout is scheduled as a generic Timer Task independent of the display cycle.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 41,
+    "question": "What is the effect of 'deoptimizing' code in V8, often triggered by changing the structure of an object (Hidden Class) after initialization?",
+    "options": [
+      "The code is discarded and execution reverts to the slower Ignition bytecode interpreter",
+      "The engine forcibly converts the JavaScript code to WebAssembly",
+      "The garbage collector immediately performs a full heap collection",
+      "The function is inlined into its caller to reduce overhead"
+    ],
+    "answer": "The code is discarded and execution reverts to the slower Ignition bytecode interpreter",
+    "explanation": "V8 makes assumptions about object shapes when compiling optimized machine code via TurboFan. If those assumptions (Hidden Class stability) are broken, the optimized code is 'deoptimized'—discarded—and execution falls back to the safer, slower bytecode interpreter.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 42,
+    "question": "In Node.js, what is the fundamental difference between `process.nextTick` and `setImmediate` regarding their placement in the Event Loop phases?",
+    "options": [
+      "`process.nextTick` runs in the Check Handlers phase, while `setImmediate` runs in the Timers phase",
+      "`process.nextTick` fires immediately after the current operation completes, before continuing the Event Loop, while `setImmediate` runs in the Check Handlers phase",
+      "`setImmediate` is a microtask, while `process.nextTick` is a macrotask",
+      "There is no functional difference; they are aliases for the same underlying libuv mechanism"
+    ],
+    "answer": "`process.nextTick` fires immediately after the current operation completes, before continuing the Event Loop, while `setImmediate` runs in the Check Handlers phase",
+    "explanation": "`process.nextTick` is technically not part of the Event Loop phases; it runs immediately after the current C++ callback finishes but before the next Event Loop phase. `setImmediate` is scheduled to run in the 'Check' phase of the next Event Loop iteration.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 43,
+    "question": "When using `V8::SetFlagsFromString` in a C++ embedding context, what is the primary purpose of the flag `--allow-natives-syntax`?",
+    "options": [
+      "To enable the use of ES2022 module syntax",
+      "To expose internal V8 testing functions like `%OptimizeFunctionOnNextCall` to the JavaScript runtime",
+      "To permit the use of `eval` and `Function` constructors",
+      "To allow access to Node.js internal C++ bindings from userland JS"
+    ],
+    "answer": "To expose internal V8 testing functions like `%OptimizeFunctionOnNextCall` to the JavaScript runtime",
+    "explanation": "This flag is primarily used for debugging and testing V8 internals (often via the d8 shell or specialized build configurations). It grants access to runtime functions prefixed with `%` that allow manual control over GC, optimization, and hidden class inspection.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 44,
+    "question": "Which of the following operations will create a 'ConsString' (a flattened or string representation) in V8, potentially optimizing memory usage for concatenation?",
+    "options": [
+      "Using `template literals` (e.g., `Hello ${name}`)",
+      "Using the `+` operator to concatenate a string and a non-string primitive",
+      "Slicing a string using `String.prototype.slice()`",
+      "Converting an object to a string using `String(obj)`"
+    ],
+    "answer": "Slicing a string using `String.prototype.slice()`",
+    "explanation": "V8 often creates Slices (a type of ConsString) for operations like `slice` or `substr` to avoid copying the underlying string data. Concatenation with `+` creates a ConsString in older versions, but modern V8 often flattens immediately; however, slicing is the canonical example of a logical string that doesn't own its memory.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 45,
+    "question": "What is the behavior of the 'shrinking' phase of V8's Generational Garbage Collection regarding memory fragmentation?",
+    "options": [
+      "It performs Stop-The-World compaction to eliminate fragmentation in the Old Space",
+      "It relies solely on the operating system's memory pager to defragment RAM",
+      "It only frees memory but leaves holes where objects were removed",
+      "It moves all live objects from New Space directly to the Old Space without compacting"
+    ],
+    "answer": "It performs Stop-The-World compaction to eliminate fragmentation in the Old Space",
+    "explanation": "When the Old Space grows too large or fragmented, V8 performs a full Mark-Sweep-Compact. The 'Compact' step moves live objects to one end of the memory page, eliminating gaps (fragmentation) between them, allowing the OS to reclaim unused pages.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 46,
+    "question": "How does the JavaScript engine handle 'Temporal Dead Zone' (TDZ) violations for `let` and `const` at the bytecode level?",
+    "options": [
+      "It stores the value as `undefined` and updates it when the declaration line is reached",
+      "It hoists the variable to the top of the function scope with a value of `null`",
+      "It throws a Reference Check at runtime because the binding exists but is uninitialized",
+      "It ignores the access and returns `undefined`"
+    ],
+    "answer": "It throws a Reference Check at runtime because the binding exists but is uninitialized",
+    "explanation": "While the binding is recorded in the scope upon entry, it is put in an 'uninitialized' state. Accessing it triggers a specific runtime check (ThrowReferenceErrorIfHole) which distinguishes TDZ from standard `undefined` variable access.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 47,
+    "question": "In the context of the V8 TurboFan optimizer, what is 'Escape Analysis'?",
+    "options": [
+      "A security feature preventing code from breaking out of the sandbox",
+      "An optimization that allocates objects on the stack instead of the heap if they do not escape the function scope",
+      "The process of deoptimizing code when a `try-catch` block is detected",
+      "A method of parsing HTML templates to escape unsafe characters"
+    ],
+    "answer": "An optimization that allocates objects on the stack instead of the heap if they do not escape the function scope",
+    "explanation": "If TurboFan can prove an object created inside a function is never returned or passed to external functions, it can 'scalar replace' it. This means the object's properties are broken down into primitive variables, avoiding the overhead of heap allocation and garbage collection.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 48,
+    "question": "What is the specific impact of using `delete` on an object property in V8 regarding Hidden Classes?",
+    "options": [
+      "It converts the object into a HashTable mode (dictionary mode) to handle sparse keys",
+      "It transitions the object to a previous Hidden Class that lacked the property",
+      "It permanently removes the property but keeps the Hidden Class optimized",
+      "It has no impact, as Hidden Classes are immutable once created"
+    ],
+    "answer": "It converts the object into a HashTable mode (dictionary mode) to handle sparse keys",
+    "explanation": "Deleting properties destroys the predictable linear structure of the Hidden Class map. To handle this, V8 switches the object to 'dictionary mode' (slow property access), which uses a hash table for lookups but significantly degrades performance compared to inline access.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 49,
+    "question": "When transferring data between the main thread and a Web Worker using `postMessage`, what is the technical mechanism that enables high-performance transfer of large objects (like ArrayBuffers) without copying?",
+    "options": [
+      "Structured Clone Algorithm",
+      "Shared Memory Locking",
+      "Transferable Objects",
+      "Object Reference Pooling"
+    ],
+    "answer": "Transferable Objects",
+    "explanation": "The Structured Clone algorithm copies data, which is slow for large buffers. 'Transferable Objects' (marked in the second argument of `postMessage`) transfer the underlying memory ownership to the receiver, clearing the buffer in the sender context and avoiding the copy cost.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 50,
+    "question": "In Chrome DevTools Performance Profiling, what does a long 'Layout' (or 'Reflow') bar indicate specifically?",
+    "options": [
+      "The browser is calculating the geometry (size and position) of elements",
+      "The browser is rasterizing pixels for the compositor thread",
+      "The browser is executing JavaScript in the main thread",
+      "The browser is painting pixels to the screen"
+    ],
+    "answer": "The browser is calculating the geometry (size and position) of elements",
+    "explanation": "Layout (Reflow) is the process of calculating the layout of the render tree (geometry). It is distinct from Paint (filling pixels) and Composite (layering). Excessive Layout is often caused by reading DOM properties (like `offsetWidth`) that force a sync layout flush.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 51,
+    "question": "Which V8 internal component is responsible for 'Safety' in the context of JavaScript execution, specifically regarding the sandbox?",
+    "options": [
+      "The SFI (Shared Function Info)",
+      "The Builtins table",
+      "Cetiq (Control-flow Enforcement Technology Integration)",
+      "The ASLR (Address Space Layout Randomization) module"
+    ],
+    "answer": "Cetiq (Control-flow Enforcement Technology Integration)",
+    "explanation": "While V8 uses many security features, Cetiq specifically refers to the integration of hardware-level control flow integrity (CFI) and shadow stack support (Intel CET) to prevent ROP (Return Oriented Programming) attacks within the JIT compiled code.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 52,
+    "question": "What distinguishes a 'Minor GC' from a 'Major GC' in V8's generational garbage collector?",
+    "options": [
+      "Minor GC runs in the background thread, while Major GC runs on the main thread",
+      "Minor GC only collects the New Space (Young Generation), while Major GC collects the entire heap including Old Space",
+      "Minor GC is triggered by memory pressure, while Major GC runs on a timer",
+      "Minor GC uses Mark-Sweep, while Major GC uses Scavenge"
+    ],
+    "answer": "Minor GC only collects the New Space (Young Generation), while Major GC collects the entire heap including Old Space",
+    "explanation": "Minor GCs are frequent and fast, utilizing the Scavenge algorithm on the small New Space where most objects die young. Major GCs are less frequent, expensive, and utilize Mark-Sweep-Compact on the entire heap (including long-lived objects in Old Space).",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 53,
+    "question": "In the `async/await` transformation, what is the technical behavior of `await` regarding the Promise state and the Event Loop?",
+    "options": [
+      "It blocks the main thread until the Promise resolves",
+      "It wraps the expression in `Promise.resolve()` and creates a microtask to resume execution upon fulfillment",
+      "It creates a Macrotask in the Event Loop to defer execution",
+      "It immediately executes the next line of code and ignores the Promise result"
+    ],
+    "answer": "It wraps the expression in `Promise.resolve()` and creates a microtask to resume execution upon fulfillment",
+    "explanation": "The operand of `await` is converted to a Promise. The function immediately yields (returns a pending Promise to the caller). The rest of the `async` function is queued as a microtask callback to run once the awaited Promise settles.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 54,
+    "question": "What is the 'Safe Stack' in the context of V8 Memory Sanitizer (MSAN) or general process isolation?",
+    "options": [
+      "The region of memory used by WebAssembly",
+      "A separate memory region for return addresses and local pointers, distinct from the main C++ stack",
+      "The call stack used by the JavaScript interpreter (Ignition)",
+      "The heap space reserved for string deduplication"
+    ],
+    "answer": "A separate memory region for return addresses and local pointers, distinct from the main C++ stack",
+    "explanation": "Software-based Fault Isolation (SFI) or features like SafeStack split the stack. 'Unsafe' data (like arrays) is kept separate from 'safe' control flow data (like return addresses), making buffer overflows harder to exploit.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 55,
+    "question": "How does V8's 'Ignition' interpreter differ from the old 'Full-Codegen' baseline compiler?",
+    "options": [
+      "Ignition generates machine code, while Full-Codegen generated bytecode",
+      "Ignition generates bytecode, while Full-Codegen generated unoptimized machine code",
+      "Ignition is used only for WebAssembly, while Full-Codegen was for JavaScript",
+      "There is no difference; they are internal codenames for the same component"
+    ],
+    "answer": "Ignition generates bytecode, while Full-Codegen generated unoptimized machine code",
+    "explanation": "V8 shifted from a compiling baseline (Full-Codegen) to an interpreter (Ignition) to reduce memory footprint (bytecode is smaller than machine code) and enable easier On-Stack Replacement (OSR) and profiling data collection for TurboFan.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 56,
+    "question": "What is the primary risk associated with 'Shallow Size' vs 'Retained Size' in memory profiling (Chrome DevTools Heap Snapshot)?",
+    "options": [
+      "Shallow Size includes memory shared with other objects, leading to double counting",
+      "Retained Size is inaccurate for primitive values",
+      "Shallow Size only measures the object itself, missing the memory held by its descendants (memory leak source)",
+      "Retained Size is always smaller than Shallow Size"
+    ],
+    "answer": "Shallow Size only measures the object itself, missing the memory held by its descendants (memory leak source)",
+    "explanation": "Shallow size is the size of the object in memory. Retained size is the size of the object plus the size of other objects kept alive only by it. Analyzing only Shallow Size can miss the root cause of a memory leak caused by a container holding large objects.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 57,
+    "question": "What is 'Liftoff' in the context of V8 and WebAssembly?",
+    "options": [
+      "The phase where V8 compiles JavaScript to WebAssembly",
+      "A specialized, tier-1 compiler for WebAssembly that generates code quickly for startup time",
+      "The deoptimization phase for WebAssembly modules",
+      "The name of the WebAssembly garbage collector"
+    ],
+    "answer": "A specialized, tier-1 compiler for WebAssembly that generates code quickly for startup time",
+    "explanation": "Liftoff is V8's baseline compiler for WebAssembly. It prioritizes compilation speed over peak performance to ensure fast startup, allowing execution to begin immediately, while TurboFan optimizes the hot code later.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 58,
+    "question": "In the context of V8 'Hidden Classes' (Maps), what is the 'transition tree'?",
+    "options": [
+      "A linked list of objects in the Old Space",
+      "The hierarchy of Maps created as properties are added to an object",
+      "The call stack structure used by the OSR mechanism",
+      "The inheritance chain of JavaScript prototypes"
+    ],
+    "answer": "The hierarchy of Maps created as properties are added to an object",
+    "explanation": "When properties are added to an object sequentially, V8 creates a new Map (Hidden Class) for each state, linking them together. If objects follow the same initialization path, they share the transition tree, allowing the engine to predict property access efficiently via Inline Caches.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 59,
+    "question": "Why are `arguments.callee` and `arguments.caller` discouraged or forbidden in Strict Mode within V8?",
+    "options": [
+      "They cause variable name shadowing that cannot be optimized",
+      "They prevent inlining and other optimizations because they allow access to the call stack, which breaks the 'stack frame' assumptions",
+      "They consume too much memory in the New Space",
+      "They are incompatible with the Event Loop"
+    ],
+    "answer": "They prevent inlining and other optimizations because they allow access to the call stack, which breaks the 'stack frame' assumptions",
+    "explanation": "Accessing the function via `callee` or the caller via `caller` breaks the ability of the optimizer (TurboFan) to inline functions or analyze scope statically, as the execution context must remain observable and distinct from the caller.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 60,
+    "question": "What is the function of the 'Embedded Builtins' snapshot in V8 initialization?",
+    "options": [
+      "To store pre-optimized bytecode for the `Math` and `JSON` objects to speed up startup",
+      "To save the state of the DOM for session restoration",
+      "To cache the user's browsing history",
+      "To initialize the WebAssembly heap"
+    ],
+    "answer": "To store pre-optimized bytecode for the `Math` and `JSON` objects to speed up startup",
+    "explanation": "V8 serializes the heap state of built-in objects (like `Array.prototype` or `Object`) after compiling them internally. This 'snapshot' is deserialized on startup, skipping the costly parsing and compilation of standard library code.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 61,
+    "question": "What is the 'idle-tasks' framework in V8 used for?",
+    "options": [
+      "Executing low-priority callbacks from the Message Queue when the main thread is idle",
+      "Handling background garbage collection tasks during idle time",
+      "Pausing the Event Loop when the browser tab is hidden",
+      "Managing the Worker Thread pool"
+    ],
+    "answer": "Handling background garbage collection tasks during idle time",
+    "explanation": "V8 uses the idle-tasks framework (often integrated with `requestIdleCallback` in browsers) to schedule expensive background operations, such as Scavenging or Compaction, to run when the main thread is not busy, reducing jank.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 62,
+    "question": "When profiling a Node.js application, what is the significance of 'System V' versus 'Windows' x64 calling conventions in the C++ bindings?",
+    "options": [
+      "It determines how JavaScript primitives are passed to C++ functions in Addons",
+      "It dictates the file extension of the generated binary",
+      "It chooses the garbage collection algorithm (Orinoco vs Oilpan)",
+      "It determines if `process.nextTick` is available"
+    ],
+    "answer": "It determines how JavaScript primitives are passed to C++ functions in Addons",
+    "explanation": "Native Addons (N-API) must adhere to the platform's ABI (Application Binary Interface). The calling convention dictates register usage for arguments (e.g., RCX, RDX, R8, R9 on Windows vs RDI, RSI, RDX, RCX, R8, R9 on System V) when C++ receives data from JS.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 63,
+    "question": "In the context of Chrome's rendering pipeline (Blink) and V8 interaction, what triggers 'Forced Reflow' (Synchronous Layout)?",
+    "options": [
+      "Calling `requestAnimationFrame`",
+      "Reading a layout property (e.g., `offsetTop`) immediately after writing a layout property (e.g., `style.height`)",
+      "Running a Web Worker",
+      "Invoking the garbage collector"
+    ],
+    "answer": "Reading a layout property (e.g., `offsetTop`) immediately after writing a layout property (e.g., `style.height`)",
+    "explanation": "The browser batches layout calculations. If JavaScript forces a read of a layout metric after a write, it invalidates the batch and forces the browser to synchronously calculate the layout (reflow) to return the correct value, causing significant performance stalls.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 64,
+    "question": "What distinguishes `WeakMap` from `Map` in V8's memory management regarding GC?",
+    "options": [
+      "`WeakMap` keys are not iterable and must be objects",
+      "`WeakMap` keys do not prevent the garbage collector from reclaiming the object if there are no other strong references",
+      "`WeakMap` uses the New Space, while `Map` uses the Old Space",
+      "`WeakMap` stores references as 32-bit integers to save memory"
+    ],
+    "answer": "`WeakMap` keys do not prevent the garbage collector from reclaiming the object if there are no other strong references",
+    "explanation": "In a `WeakMap`, the reference to the key object is 'weak'. If the key object is no longer referenced anywhere else in the application, the GC can collect it and remove the entry from the `WeakMap`, which is critical for caching and memoization without memory leaks.",
+    "difficulty": "Advanced"
+  }
+]
