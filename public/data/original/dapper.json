@@ -1,0 +1,1302 @@
+[
+  {
+    "id": 1,
+    "question": "What is Dapper?",
+    "options": [
+      "A full ORM like Entity Framework",
+      "A lightweight micro-ORM that maps SQL queries to C# objects",
+      "A database engine",
+      "A SQL query builder"
+    ],
+    "answer": "A lightweight micro-ORM that maps SQL queries to C# objects",
+    "explanation": "Dapper is a simple, high-performance micro-ORM that extends IDbConnection with methods for executing SQL and mapping results.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 2,
+    "question": "Which interface does Dapper extend?",
+    "options": [
+      "IDataReader",
+      "IDbConnection",
+      "IDbCommand",
+      "IDbTransaction"
+    ],
+    "answer": "IDbConnection",
+    "explanation": "Dapper adds extension methods (Query, Execute, etc.) to IDbConnection, making it work with any ADO.NET provider.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 3,
+    "question": "How do you install Dapper in a .NET project?",
+    "options": [
+      "dotnet add package EntityFramework",
+      "dotnet add package Dapper",
+      "Install-Package SqlClient",
+      "nuget install dapper-core"
+    ],
+    "answer": "dotnet add package Dapper",
+    "explanation": "Dapper is installed via NuGet: dotnet add package Dapper or Install-Package Dapper.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 4,
+    "question": "What is the basic syntax for querying with Dapper?",
+    "options": [
+      "connection.Select<User>(\"SELECT * FROM Users\")",
+      "connection.Query<User>(\"SELECT * FROM Users\")",
+      "connection.Get<User>(\"SELECT * FROM Users\")",
+      "connection.Read<User>(\"SELECT * FROM Users\")"
+    ],
+    "answer": "connection.Query<User>(\"SELECT * FROM Users\")",
+    "explanation": "Query<T> executes SQL and maps result rows to objects of type T. Returns IEnumerable<T>.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 5,
+    "question": "What does Query<T> return in Dapper?",
+    "options": [
+      "List<T>",
+      "IEnumerable<T>",
+      "T[]",
+      "IQueryable<T>"
+    ],
+    "answer": "IEnumerable<T>",
+    "explanation": "Query<T> returns IEnumerable<T>. Use .ToList() if you need a List<T> or .AsList() for Dapper's optimized version.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 6,
+    "question": "How do you pass parameters to prevent SQL injection in Dapper?",
+    "options": [
+      "String concatenation",
+      "Anonymous objects: new { Id = 1 }",
+      "String.Format()",
+      "Escaping special characters"
+    ],
+    "answer": "Anonymous objects: new { Id = 1 }",
+    "explanation": "connection.Query<User>(\"SELECT * FROM Users WHERE Id = @Id\", new { Id = 1 }); Parameters are auto-parameterized.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 7,
+    "question": "What is the Execute method used for in Dapper?",
+    "options": [
+      "Querying data",
+      "Running INSERT, UPDATE, DELETE, or stored procedures that don't return result sets",
+      "Starting a transaction",
+      "Opening a connection"
+    ],
+    "answer": "Running INSERT, UPDATE, DELETE, or stored procedures that don't return result sets",
+    "explanation": "Execute returns the number of affected rows. Used for data modification statements and DDL.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 8,
+    "question": "How does Dapper map SQL columns to C# properties?",
+    "options": [
+      "Using attributes only",
+      "By matching column names to property names (case-insensitive)",
+      "Using a configuration file",
+      "Using reflection only at startup"
+    ],
+    "answer": "By matching column names to property names (case-insensitive)",
+    "explanation": "Dapper automatically maps columns to properties by name. It's case-insensitive and supports underscored names.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 9,
+    "question": "What is QuerySingle<T> used for?",
+    "options": [
+      "Returns the first row only",
+      "Returns exactly one row; throws if zero or more than one",
+      "Returns a single column value",
+      "Returns a scalar"
+    ],
+    "answer": "Returns exactly one row; throws if zero or more than one",
+    "explanation": "QuerySingle<T> expects exactly one result. Throws InvalidOperationException if 0 or 2+ rows.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 10,
+    "question": "What is the difference between QueryFirst and QuerySingle?",
+    "options": [
+      "They are the same",
+      "QueryFirst returns the first row (ignores extras); QuerySingle requires exactly one row",
+      "QuerySingle is faster",
+      "QueryFirst throws on multiple rows"
+    ],
+    "answer": "QueryFirst returns the first row (ignores extras); QuerySingle requires exactly one row",
+    "explanation": "QueryFirst takes the first row. QuerySingle validates there's exactly one row, throwing otherwise.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 11,
+    "question": "How do you execute an INSERT and get the new ID in Dapper (SQL Server)?",
+    "options": [
+      "Execute then SELECT",
+      "ExecuteScalar with OUTPUT INSERTED.Id or SCOPE_IDENTITY()",
+      "Use auto-increment only",
+      "Connection.LastInsertId"
+    ],
+    "answer": "ExecuteScalar with OUTPUT INSERTED.Id or SCOPE_IDENTITY()",
+    "explanation": "var id = connection.ExecuteScalar<int>(\"INSERT INTO Users(Name) OUTPUT INSERTED.Id VALUES(@Name)\", new { Name = \"John\" });",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 12,
+    "question": "What is the difference between Query<dynamic> and Query<T>?",
+    "options": [
+      "No difference",
+      "Query<dynamic> returns dynamic objects; Query<T> maps to strongly-typed objects",
+      "Query<T> is slower",
+      "Query<dynamic> is deprecated"
+    ],
+    "answer": "Query<dynamic> returns dynamic objects; Query<T> maps to strongly-typed objects",
+    "explanation": "dynamic is useful for ad-hoc queries. T provides compile-time safety and IntelliSense.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 13,
+    "question": "Does Dapper manage database connections?",
+    "options": [
+      "Yes, it opens/closes automatically",
+      "No, you must manage connections yourself (but it auto-opens if closed)",
+      "Yes, it pools connections",
+      "No, you must use a connection pool"
+    ],
+    "answer": "No, you must manage connections yourself (but it auto-opens if closed)",
+    "explanation": "Dapper will open a closed connection before executing, but closing/disposing is your responsibility. Use 'using'.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 14,
+    "question": "How do you use Dapper with PostgreSQL?",
+    "options": [
+      "Only works with SQL Server",
+      "Use NpgsqlConnection with Dapper (dotnet add package Npgsql)",
+      "Use a special Dapper.Postgres package",
+      "Use direct sockets"
+    ],
+    "answer": "Use NpgsqlConnection with Dapper (dotnet add package Npgsql)",
+    "explanation": "Dapper works with any IDbConnection implementation. For PostgreSQL, use NpgsqlConnection from the Npgsql package.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 15,
+    "question": "What is the ExecuteReader method in Dapper?",
+    "options": [
+      "Returns an IDataReader for manual row reading",
+      "Reads all rows into a list",
+      "Executes a stored procedure",
+      "Reads a single value"
+    ],
+    "answer": "Returns an IDataReader for manual row reading",
+    "explanation": "ExecuteReader returns a wrapped DbDataReader for scenarios needing manual row-by-row processing.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 16,
+    "question": "How do you pass a list of IDs for an IN clause in Dapper?",
+    "options": [
+      "String concatenation of IDs",
+      "Pass an IEnumerable - Dapper auto-expands it",
+      "Use a temp table",
+      "Create a comma-separated string"
+    ],
+    "answer": "Pass an IEnumerable - Dapper auto-expands it",
+    "explanation": "connection.Query<User>(\"SELECT * FROM Users WHERE Id IN @Ids\", new { Ids = new[] { 1, 2, 3 } }); Dapper expands it.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 17,
+    "question": "What is QueryFirstOrDefault<T>?",
+    "options": [
+      "Returns the first item or throws",
+      "Returns the first item or default(T) if no results",
+      "Returns a default query",
+      "Returns all results with defaults"
+    ],
+    "answer": "Returns the first item or default(T) if no results",
+    "explanation": "QueryFirstOrDefault<T> returns the first row or default(T) (null for reference types) if no rows found.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 18,
+    "question": "Can Dapper map to record types?",
+    "options": [
+      "No, only classes",
+      "Yes, Dapper can map to C# records with constructor parameters",
+      "Only with special configuration",
+      "Only if they have a default constructor"
+    ],
+    "answer": "Yes, Dapper can map to C# records with constructor parameters",
+    "explanation": "Dapper supports mapping to records if constructor parameter names match column names.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 19,
+    "question": "What is the advantage of Dapper over Entity Framework?",
+    "options": [
+      "Better LINQ support",
+      "Higher performance and more control over SQL queries",
+      "Built-in migrations",
+      "Automatic change tracking"
+    ],
+    "answer": "Higher performance and more control over SQL queries",
+    "explanation": "Dapper is faster because it has minimal overhead - just raw SQL mapping. No change tracking or query translation.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 20,
+    "question": "How do you handle NULL values from the database in Dapper?",
+    "options": [
+      "They cause exceptions",
+      "Dapper maps NULL to null for reference types and nullable value types",
+      "You must check manually",
+      "Use a special NullHandler"
+    ],
+    "answer": "Dapper maps NULL to null for reference types and nullable value types",
+    "explanation": "Database NULL maps to null automatically. Use nullable types (int?) for columns that can be NULL.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 21,
+    "question": "What is QueryMultiple used for in Dapper?",
+    "options": [
+      "Querying multiple databases",
+      "Executing multiple queries in a single roundtrip and reading multiple result sets",
+      "Parallel queries",
+      "Batch inserts"
+    ],
+    "answer": "Executing multiple queries in a single roundtrip and reading multiple result sets",
+    "explanation": "var multi = connection.QueryMultiple(sql); var users = multi.Read<User>(); var orders = multi.Read<Order>();",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 22,
+    "question": "How do you execute a stored procedure with Dapper?",
+    "options": [
+      "connection.StoredProcedure(\"sp_name\")",
+      "connection.Query<T>(\"sp_name\", params, commandType: CommandType.StoredProcedure)",
+      "connection.CallProc(\"sp_name\")",
+      "connection.Execute(\"CALL sp_name\")"
+    ],
+    "answer": "connection.Query<T>(\"sp_name\", params, commandType: CommandType.StoredProcedure)",
+    "explanation": "Set commandType: CommandType.StoredProcedure. Pass parameters as anonymous objects.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 23,
+    "question": "How do you use transactions with Dapper?",
+    "options": [
+      "Dapper handles transactions automatically",
+      "Use connection.BeginTransaction() and pass the transaction to Dapper methods",
+      "Use TransactionScope only",
+      "Wrap in a using block"
+    ],
+    "answer": "Use connection.BeginTransaction() and pass the transaction to Dapper methods",
+    "explanation": "var tran = connection.BeginTransaction(); connection.Execute(sql, param, transaction: tran); tran.Commit();",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 24,
+    "question": "What is multi-mapping in Dapper?",
+    "options": [
+      "Mapping to multiple databases",
+      "Mapping a single query with JOINs to multiple related objects",
+      "Mapping multiple queries",
+      "Auto-mapping schemas"
+    ],
+    "answer": "Mapping a single query with JOINs to multiple related objects",
+    "explanation": "Query<User, Address, User>(sql, (user, addr) => { user.Address = addr; return user; }, splitOn: \"AddressId\");",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 25,
+    "question": "What is the 'splitOn' parameter in multi-mapping?",
+    "options": [
+      "The column to split strings on",
+      "The column name where Dapper splits result columns between mapped objects",
+      "A WHERE clause separator",
+      "A table separator"
+    ],
+    "answer": "The column name where Dapper splits result columns between mapped objects",
+    "explanation": "splitOn tells Dapper where one object's columns end and the next begins. Defaults to 'Id'.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 26,
+    "question": "What is the async equivalent of Query<T>?",
+    "options": [
+      "QueryTask<T>",
+      "QueryAsync<T>",
+      "AwaitQuery<T>",
+      "AsyncQuery<T>"
+    ],
+    "answer": "QueryAsync<T>",
+    "explanation": "All Dapper methods have async counterparts: QueryAsync, ExecuteAsync, QueryFirstAsync, etc.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 27,
+    "question": "How do you bulk insert with Dapper?",
+    "options": [
+      "Use a special BulkInsert method",
+      "Pass a collection to Execute - Dapper executes the command once per item",
+      "Use SqlBulkCopy separately",
+      "Both B and C depending on performance needs"
+    ],
+    "answer": "Both B and C depending on performance needs",
+    "explanation": "Execute with a list runs the SQL for each item (slow for large sets). SqlBulkCopy or Dapper.Contrib is better for bulk.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 28,
+    "question": "What is Dapper.Contrib?",
+    "options": [
+      "A separate ORM",
+      "A companion library adding CRUD helpers like Get, Insert, Update, Delete",
+      "A migration tool",
+      "A logging extension"
+    ],
+    "answer": "A companion library adding CRUD helpers like Get, Insert, Update, Delete",
+    "explanation": "Dapper.Contrib adds connection.Get<User>(id), connection.Insert(user), etc. Reduces boilerplate for simple CRUD.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 29,
+    "question": "What is the [Table] attribute in Dapper.Contrib?",
+    "options": [
+      "Creates a table",
+      "Specifies the database table name for a class",
+      "Validates table schema",
+      "Drops a table"
+    ],
+    "answer": "Specifies the database table name for a class",
+    "explanation": "[Table(\"tbl_users\")] class User { } maps the User class to the tbl_users table.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 30,
+    "question": "What is the [Key] attribute in Dapper.Contrib?",
+    "options": [
+      "Encryption key",
+      "Marks a property as the auto-incrementing primary key",
+      "API key",
+      "Foreign key"
+    ],
+    "answer": "Marks a property as the auto-incrementing primary key",
+    "explanation": "[Key] marks the identity/auto-increment primary key. [ExplicitKey] is used for manually assigned keys.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 31,
+    "question": "How do you handle custom column-to-property name mappings in Dapper?",
+    "options": [
+      "Cannot be done",
+      "Use SQL aliases, custom TypeMap, or DefaultTypeMap.MatchNamesWithUnderscores",
+      "Use attributes only",
+      "Use a mapping file"
+    ],
+    "answer": "Use SQL aliases, custom TypeMap, or DefaultTypeMap.MatchNamesWithUnderscores",
+    "explanation": "SELECT user_name AS UserName, or set DefaultTypeMap.MatchNamesWithUnderscores = true for underscore-to-PascalCase.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 32,
+    "question": "What is the DynamicParameters class?",
+    "options": [
+      "A dynamic SQL builder",
+      "A class for building parameters dynamically, including output parameters",
+      "A type for dynamic queries",
+      "A collection parameter"
+    ],
+    "answer": "A class for building parameters dynamically, including output parameters",
+    "explanation": "DynamicParameters allows adding parameters at runtime and supports Output/ReturnValue directions for stored procedures.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 33,
+    "question": "How do you get output parameters from a stored procedure?",
+    "options": [
+      "They auto-map to properties",
+      "Use DynamicParameters with direction: ParameterDirection.Output",
+      "Use ExecuteScalar",
+      "Check the return value"
+    ],
+    "answer": "Use DynamicParameters with direction: ParameterDirection.Output",
+    "explanation": "var p = new DynamicParameters(); p.Add(\"@Result\", dbType: DbType.Int32, direction: ParameterDirection.Output);",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 34,
+    "question": "What buffered option does in Dapper's Query?",
+    "options": [
+      "Enables write buffering",
+      "Controls whether results are loaded into memory (true) or streamed (false)",
+      "Enables query caching",
+      "Buffers the connection"
+    ],
+    "answer": "Controls whether results are loaded into memory (true) or streamed (false)",
+    "explanation": "buffered: true (default) loads all rows into memory. buffered: false streams rows for large result sets.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 35,
+    "question": "How does Dapper handle enum mapping?",
+    "options": [
+      "It doesn't support enums",
+      "Automatically maps between database integers/strings and C# enums",
+      "Requires manual conversion",
+      "Uses a special enum handler"
+    ],
+    "answer": "Automatically maps between database integers/strings and C# enums",
+    "explanation": "Dapper maps int columns to enum values directly. String columns can also be mapped with proper naming.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 36,
+    "question": "What is the CommandTimeout parameter?",
+    "options": [
+      "Connection timeout",
+      "Maximum time in seconds to wait for a command to execute",
+      "Query cache duration",
+      "Retry interval"
+    ],
+    "answer": "Maximum time in seconds to wait for a command to execute",
+    "explanation": "connection.Query<T>(sql, param, commandTimeout: 60); Set per query. Default comes from the connection.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 37,
+    "question": "Can Dapper map to private setters?",
+    "options": [
+      "No, only public setters",
+      "Yes, Dapper can map to properties with private setters",
+      "Only with attributes",
+      "Only with custom mapping"
+    ],
+    "answer": "Yes, Dapper can map to properties with private setters",
+    "explanation": "Dapper uses reflection and can set properties with private or protected setters.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 38,
+    "question": "What is the SqlMapper.AddTypeHandler used for?",
+    "options": [
+      "Adding data types to database",
+      "Registering custom type handlers for complex type serialization/deserialization",
+      "Adding SQL aliases",
+      "Type checking queries"
+    ],
+    "answer": "Registering custom type handlers for complex type serialization/deserialization",
+    "explanation": "TypeHandlers let you customize how Dapper reads/writes specific types, e.g., JSON columns to C# objects.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 39,
+    "question": "How do you handle one-to-many relationships in Dapper?",
+    "options": [
+      "Dapper handles them automatically like EF",
+      "Use QueryMultiple or multi-map with manual grouping",
+      "Use navigation properties",
+      "Use Include method"
+    ],
+    "answer": "Use QueryMultiple or multi-map with manual grouping",
+    "explanation": "Dapper doesn't auto-resolve relationships. Use multiple queries or JOIN with manual grouping/dictionary lookup.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 40,
+    "question": "What is the difference between Execute and ExecuteScalar?",
+    "options": [
+      "They are the same",
+      "Execute returns affected rows count; ExecuteScalar returns the first column of the first row",
+      "ExecuteScalar is async only",
+      "Execute returns data"
+    ],
+    "answer": "Execute returns affected rows count; ExecuteScalar returns the first column of the first row",
+    "explanation": "Execute for INSERT/UPDATE/DELETE (returns row count). ExecuteScalar for getting a single value (e.g., COUNT, new ID).",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 41,
+    "question": "How do you implement pagination with Dapper?",
+    "options": [
+      "Use LINQ Skip/Take",
+      "Use SQL OFFSET/FETCH or LIMIT/OFFSET with parameterized queries",
+      "Load all then paginate in memory",
+      "Use a special Dapper.Pagination package"
+    ],
+    "answer": "Use SQL OFFSET/FETCH or LIMIT/OFFSET with parameterized queries",
+    "explanation": "connection.Query<User>(\"SELECT * FROM Users ORDER BY Id OFFSET @Skip ROWS FETCH NEXT @Take ROWS ONLY\", new { Skip, Take });",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 42,
+    "question": "What is the string_split pattern with Dapper?",
+    "options": [
+      "Splitting query strings",
+      "Using SQL Server's STRING_SPLIT with Dapper for comma-separated parameters",
+      "Parsing column values",
+      "Splitting connection strings"
+    ],
+    "answer": "Using SQL Server's STRING_SPLIT with Dapper for comma-separated parameters",
+    "explanation": "An alternative to IN clause expansion for very large lists. Uses table-valued function or temp tables.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 43,
+    "question": "What is Dapper.SqlBuilder?",
+    "options": [
+      "A SQL formatter",
+      "A dynamic SQL query builder that supports WHERE, JOIN, and ORDER BY composition",
+      "A schema builder",
+      "A migration tool"
+    ],
+    "answer": "A dynamic SQL query builder that supports WHERE, JOIN, and ORDER BY composition",
+    "explanation": "SqlBuilder allows dynamically adding WHERE clauses, ORDER BY, etc. Template-based approach with /**where**/ placeholders.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 44,
+    "question": "How does Dapper handle DateTime and DateTimeOffset?",
+    "options": [
+      "Always converts to UTC",
+      "Maps directly - DateTime for datetime columns, DateTimeOffset for datetimeoffset",
+      "Only supports strings",
+      "Requires custom handlers"
+    ],
+    "answer": "Maps directly - DateTime for datetime columns, DateTimeOffset for datetimeoffset",
+    "explanation": "Use the appropriate C# type matching the SQL type. Be careful with timezone handling between DateTime and DateTimeOffset.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 45,
+    "question": "What happens when Dapper encounters an unmapped column?",
+    "options": [
+      "Throws an exception",
+      "Ignores it silently",
+      "Creates a dynamic property",
+      "Logs a warning"
+    ],
+    "answer": "Ignores it silently",
+    "explanation": "Extra columns in the result set that don't match any property are silently ignored. No error thrown.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 46,
+    "question": "How does Dapper cache query plans?",
+    "options": [
+      "It doesn't cache anything",
+      "Caches the mapping function per query/type combination for performance",
+      "Uses SQL Server plan cache only",
+      "Caches result sets"
+    ],
+    "answer": "Caches the mapping function per query/type combination for performance",
+    "explanation": "Dapper caches the materialization function (IL generated) keyed by SQL string and type. This makes repeated queries fast.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 47,
+    "question": "How does Dapper generate mapping code internally?",
+    "options": [
+      "Reflection at runtime",
+      "IL Emit to generate optimized mapping delegates",
+      "Source generators",
+      "Expression trees"
+    ],
+    "answer": "IL Emit to generate optimized mapping delegates",
+    "explanation": "Dapper uses IL Emit (System.Reflection.Emit) to generate efficient mapping code. Nearly as fast as hand-coded ADO.NET.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 48,
+    "question": "What is Dapper.AOT?",
+    "options": [
+      "An Always-On-Top feature",
+      "A source generator that generates mapping code at compile time for AOT compatibility",
+      "Ahead-of-time query compilation",
+      "An older Dapper version"
+    ],
+    "answer": "A source generator that generates mapping code at compile time for AOT compatibility",
+    "explanation": "Dapper.AOT uses C# source generators instead of runtime IL Emit, enabling Native AOT and trimming support.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 49,
+    "question": "How do you implement the repository pattern with Dapper?",
+    "options": [
+      "Use DbContext like EF",
+      "Create a repository class injecting IDbConnection and wrapping Dapper calls",
+      "Use built-in repositories",
+      "Use Dapper.Repository package"
+    ],
+    "answer": "Create a repository class injecting IDbConnection and wrapping Dapper calls",
+    "explanation": "Inject IDbConnection (or a factory) into repositories. Wrap Query/Execute calls behind domain-specific methods.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 50,
+    "question": "How do you implement Unit of Work pattern with Dapper?",
+    "options": [
+      "Not possible",
+      "Wrap a shared IDbConnection and IDbTransaction across multiple repositories",
+      "Use Entity Framework's DbContext",
+      "Use TransactionScope always"
+    ],
+    "answer": "Wrap a shared IDbConnection and IDbTransaction across multiple repositories",
+    "explanation": "UoW holds the connection/transaction. Pass it to repositories. Commit/rollback controls the entire unit.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 51,
+    "question": "What are Table-Valued Parameters (TVPs) and how to use them with Dapper?",
+    "options": [
+      "Regular parameter tables",
+      "SQL Server feature for passing structured data; use DataTable or custom SqlMapper.ICustomQueryParameter",
+      "CSV parameters",
+      "JSON parameters"
+    ],
+    "answer": "SQL Server feature for passing structured data; use DataTable or custom SqlMapper.ICustomQueryParameter",
+    "explanation": "Pass DataTable.AsTableValuedParameter(\"TypeName\") for efficient bulk operations with SQL Server user-defined table types.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 52,
+    "question": "How do you write a custom TypeHandler in Dapper?",
+    "options": [
+      "Implement ITypeHandler",
+      "Inherit from SqlMapper.TypeHandler<T> and override SetValue/Parse",
+      "Use annotations",
+      "Create a mapping class"
+    ],
+    "answer": "Inherit from SqlMapper.TypeHandler<T> and override SetValue/Parse",
+    "explanation": "class JsonTypeHandler<T> : SqlMapper.TypeHandler<T> { override void SetValue(IDbDataParameter, T), override T Parse(object) }",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 53,
+    "question": "How do you map JSON columns to C# objects with Dapper?",
+    "options": [
+      "Dapper handles it automatically",
+      "Create a custom TypeHandler that serializes/deserializes JSON",
+      "Use dynamic only",
+      "Store as string, parse manually"
+    ],
+    "answer": "Create a custom TypeHandler that serializes/deserializes JSON",
+    "explanation": "Write a TypeHandler<T> that uses System.Text.Json or Newtonsoft to serialize in SetValue and deserialize in Parse.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 54,
+    "question": "What is the performance difference between Dapper and raw ADO.NET?",
+    "options": [
+      "Dapper is much slower",
+      "Dapper adds minimal overhead (< 5%) compared to hand-written ADO.NET",
+      "Dapper is faster than ADO.NET",
+      "They are equally slow"
+    ],
+    "answer": "Dapper adds minimal overhead (< 5%) compared to hand-written ADO.NET",
+    "explanation": "Dapper's IL-emitted mappers perform nearly as fast as hand-coded DataReader loops. The main cost is the initial cache miss.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 55,
+    "question": "How do you handle optimistic concurrency with Dapper?",
+    "options": [
+      "Dapper handles it automatically",
+      "Include a rowversion/timestamp in UPDATE WHERE clause and check affected rows",
+      "Use lock statements",
+      "Use SERIALIZABLE isolation"
+    ],
+    "answer": "Include a rowversion/timestamp in UPDATE WHERE clause and check affected rows",
+    "explanation": "UPDATE ... WHERE Id = @Id AND RowVersion = @Version; If Execute returns 0, someone else modified the row.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 56,
+    "question": "How do you implement soft deletes with Dapper?",
+    "options": [
+      "Use DELETE command",
+      "UPDATE with IsDeleted flag and always include WHERE IsDeleted = 0 in queries",
+      "Use database triggers only",
+      "Dapper supports it natively"
+    ],
+    "answer": "UPDATE with IsDeleted flag and always include WHERE IsDeleted = 0 in queries",
+    "explanation": "Set IsDeleted = true instead of DELETE. Filter in all SELECT queries. Consider using SQL views as an abstraction.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 57,
+    "question": "What is the best practice for connection management in a web API with Dapper?",
+    "options": [
+      "Singleton connection",
+      "Register IDbConnection as Transient, create per-request using connection factory",
+      "Keep one global connection",
+      "Use static connections"
+    ],
+    "answer": "Register IDbConnection as Transient, create per-request using connection factory",
+    "explanation": "Register a factory: services.AddTransient<IDbConnection>(sp => new SqlConnection(connString)); Connection pooling handles reuse.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 58,
+    "question": "How do you handle multi-tenant databases with Dapper?",
+    "options": [
+      "One connection string for all",
+      "Resolve connection string per tenant at runtime using a connection factory",
+      "Use Dapper.MultiTenant",
+      "Query all tenants"
+    ],
+    "answer": "Resolve connection string per tenant at runtime using a connection factory",
+    "explanation": "Inject a factory that resolves the connection string based on tenant context (from HTTP header, token claims, etc.).",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 59,
+    "question": "How do you handle complex mapping with nested objects in Dapper?",
+    "options": [
+      "Dapper auto-maps nested objects",
+      "Use multi-mapping with splitOn, QueryMultiple, or custom mapping logic",
+      "Use Include like EF",
+      "Use navigation properties"
+    ],
+    "answer": "Use multi-mapping with splitOn, QueryMultiple, or custom mapping logic",
+    "explanation": "For flat JOINs, use multi-map. For complex graphs, use QueryMultiple or combine queries with manual assembly.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 60,
+    "question": "What is the [Write(false)] attribute in Dapper.Contrib?",
+    "options": [
+      "Makes a read-only table",
+      "Excludes a property from INSERT/UPDATE operations",
+      "Prevents connection writes",
+      "Makes column non-nullable"
+    ],
+    "answer": "Excludes a property from INSERT/UPDATE operations",
+    "explanation": "[Write(false)] marks computed or read-only properties that shouldn't be included in INSERT/UPDATE statements.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 61,
+    "question": "How do you test code that uses Dapper?",
+    "options": [
+      "Must test against real database",
+      "Abstract behind repository interface and mock, or use in-memory databases for integration tests",
+      "Cannot be unit tested",
+      "Use Dapper.Testing package"
+    ],
+    "answer": "Abstract behind repository interface and mock, or use in-memory databases for integration tests",
+    "explanation": "Wrap Dapper calls in repository interfaces for unit testing with mocks. Use Testcontainers or SQLite for integration tests.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 62,
+    "question": "What is query caching strategy for Dapper?",
+    "options": [
+      "Dapper caches all query results",
+      "Use IMemoryCache/IDistributedCache at the repository/service level",
+      "Use SQL Server cache only",
+      "Results are automatically cached"
+    ],
+    "answer": "Use IMemoryCache/IDistributedCache at the repository/service level",
+    "explanation": "Dapper doesn't cache results. Implement caching at the application layer using IMemoryCache or Redis.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 63,
+    "question": "How do you handle database migrations when using Dapper?",
+    "options": [
+      "Dapper.Migrations package",
+      "Use FluentMigrator, DbUp, or EF Core migrations alongside Dapper",
+      "Write manual scripts",
+      "Migrations aren't needed"
+    ],
+    "answer": "Use FluentMigrator, DbUp, or EF Core migrations alongside Dapper",
+    "explanation": "Dapper has no migration support. Use dedicated tools like FluentMigrator or DbUp for schema management.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 64,
+    "question": "What is the difference between Dapper's Read and ReadSingle in QueryMultiple?",
+    "options": [
+      "They are the same",
+      "Read returns all rows from a result set; ReadSingle expects exactly one row",
+      "ReadSingle reads one column",
+      "Read is deprecated"
+    ],
+    "answer": "Read returns all rows from a result set; ReadSingle expects exactly one row",
+    "explanation": "In QueryMultiple, Read<T>() reads all rows. ReadSingle<T>() expects exactly one row (throws otherwise).",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 65,
+    "question": "How do you handle connection resiliency with Dapper?",
+    "options": [
+      "Dapper handles retries automatically",
+      "Implement retry logic using Polly or Microsoft.Data.SqlClient's built-in retry",
+      "Catch exceptions manually",
+      "Use connection pooling only"
+    ],
+    "answer": "Implement retry logic using Polly or Microsoft.Data.SqlClient's built-in retry",
+    "explanation": "Wrap repository methods with Polly retry policies for transient failures. SqlConnection supports ConnectRetryCount.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 66,
+    "question": "What is the CommandFlags parameter in Dapper?",
+    "options": [
+      "SQL command flags",
+      "Flags controlling pipeline behavior (Buffered, Pipelined, NoCache)",
+      "Database flags",
+      "Connection flags"
+    ],
+    "answer": "Flags controlling pipeline behavior (Buffered, Pipelined, NoCache)",
+    "explanation": "CommandFlags enum controls buffering (Buffered), pipelining (Pipelined), and cache (NoCache) behavior.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 67,
+    "question": "How do you handle Geographic/Spatial types with Dapper?",
+    "options": [
+      "Built-in support",
+      "Register a custom TypeHandler for SqlGeography/SqlGeometry or NetTopologySuite types",
+      "Use string representation",
+      "Not supported"
+    ],
+    "answer": "Register a custom TypeHandler for SqlGeography/SqlGeometry or NetTopologySuite types",
+    "explanation": "Create TypeHandler<Geometry> using NetTopologySuite. Register with SqlMapper.AddTypeHandler().",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 68,
+    "question": "What is the best way to build dynamic WHERE clauses in Dapper?",
+    "options": [
+      "String concatenation",
+      "Use SqlBuilder, DynamicParameters, or compile WHERE parts with 1=1 pattern",
+      "Always use stored procedures",
+      "Use LINQ expressions"
+    ],
+    "answer": "Use SqlBuilder, DynamicParameters, or compile WHERE parts with 1=1 pattern",
+    "explanation": "Build SQL dynamically: var sql = \"WHERE 1=1\"; if (name != null) sql += \" AND Name = @Name\"; with DynamicParameters.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 69,
+    "question": "How does Dapper handle multiple result sets from a query?",
+    "options": [
+      "Only reads the first result set",
+      "Use QueryMultiple and call Read<T> for each result set in order",
+      "Returns a tuple",
+      "Auto-maps to nested objects"
+    ],
+    "answer": "Use QueryMultiple and call Read<T> for each result set in order",
+    "explanation": "var multi = connection.QueryMultiple(\"SELECT * FROM Users; SELECT * FROM Orders\"); Read each set sequentially.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 70,
+    "question": "What is the impact of Dapper's identity map cache and how to manage it?",
+    "options": [
+      "Dapper has a full identity map like EF",
+      "Dapper caches SQL-to-mapping functions (not data); manage with SqlMapper.PurgeQueryCache()",
+      "It caches connection strings",
+      "No caching at all"
+    ],
+    "answer": "Dapper caches SQL-to-mapping functions (not data); manage with SqlMapper.PurgeQueryCache()",
+    "explanation": "The cache key is the SQL string. In extreme cases with dynamic SQL, this can consume memory. PurgeQueryCache() clears it.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 71,
+    "question": "How do you implement audit trails with Dapper?",
+    "options": [
+      "Dapper tracks changes automatically",
+      "Manually log changes in application code or use database triggers",
+      "Use Dapper.Audit package",
+      "Enable SQL Server auditing only"
+    ],
+    "answer": "Manually log changes in application code or use database triggers",
+    "explanation": "Since Dapper has no change tracker, implement audit logging manually or use database-level triggers.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 72,
+    "question": "What is the best practice for handling large text/blob columns with Dapper?",
+    "options": [
+      "Always include in SELECT *",
+      "Exclude from default queries; query separately when needed using explicit SELECT",
+      "Use streaming always",
+      "Use a separate table"
+    ],
+    "answer": "Exclude from default queries; query separately when needed using explicit SELECT",
+    "explanation": "Avoid SELECT *. Explicitly list needed columns. Load large blobs only when required to reduce memory and network io.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 73,
+    "question": "How do you handle connection string encryption for Dapper?",
+    "options": [
+      "Store in plain text",
+      "Use .NET's Data Protection API, Azure Key Vault, or environment variables",
+      "Use Dapper.Encryption",
+      "Encrypt the .csproj file"
+    ],
+    "answer": "Use .NET's Data Protection API, Azure Key Vault, or environment variables",
+    "explanation": "Never store connection strings in source code. Use secure configuration providers or secret managers.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 74,
+    "question": "What is Dapper.FluentMap?",
+    "options": [
+      "A LINQ provider",
+      "A library for fluent configuration of column-to-property mappings",
+      "A SQL builder",
+      "An ORM on top of Dapper"
+    ],
+    "answer": "A library for fluent configuration of column-to-property mappings",
+    "explanation": "Dapper.FluentMap allows configuring mappings in a fluent way: Map(p => p.UserName).ToColumn(\"user_name\");",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 75,
+    "question": "How do you handle database-specific SQL while keeping Dapper code portable?",
+    "options": [
+      "Write separate repositories per database",
+      "Use repository pattern with database-specific SQL implementations behind a shared interface",
+      "Use ANSI SQL only",
+      "Use an abstraction layer like SqlKata"
+    ],
+    "answer": "Use repository pattern with database-specific SQL implementations behind a shared interface",
+    "explanation": "Define interface. Create SqlServerUserRepo, PostgresUserRepo. Register the correct one based on configuration. Or use SqlKata.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 76,
+    "question": "How do you implement CQRS with Dapper?",
+    "options": [
+      "Use a single repository",
+      "Separate read and write repositories/connections; optimize read queries independently",
+      "Use Dapper.CQRS package",
+      "CQRS is not possible with Dapper"
+    ],
+    "answer": "Separate read and write repositories/connections; optimize read queries independently",
+    "explanation": "Write repo uses normalized tables. Read repo uses denormalized views or materialized data for fast queries.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 77,
+    "question": "How do you implement read/write splitting with Dapper?",
+    "options": [
+      "Use one connection for everything",
+      "Inject read-replica and primary connection strings; route queries accordingly",
+      "Use Dapper.ReadWrite package",
+      "Configure at database level only"
+    ],
+    "answer": "Inject read-replica and primary connection strings; route queries accordingly",
+    "explanation": "Use IReadDbConnection and IWriteDbConnection abstractions. Reads go to replicas, writes to primary.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 78,
+    "question": "What is the Dapper.Rainbow library?",
+    "options": [
+      "A theming library",
+      "A simplified CRUD helper providing Get, Insert, Update, Delete, and All methods",
+      "A color formatting utility",
+      "A logging extension"
+    ],
+    "answer": "A simplified CRUD helper providing Get, Insert, Update, Delete, and All methods",
+    "explanation": "Dapper.Rainbow provides convention-based CRUD operations similar to Dapper.Contrib with a different API style.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 79,
+    "question": "How do you handle stored procedure return values in Dapper?",
+    "options": [
+      "Use ExecuteScalar",
+      "Use DynamicParameters with ParameterDirection.ReturnValue",
+      "Check the result set",
+      "Return values are not accessible"
+    ],
+    "answer": "Use DynamicParameters with ParameterDirection.ReturnValue",
+    "explanation": "p.Add(\"@RetVal\", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue); After Execute, p.Get<int>(\"@RetVal\");",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 80,
+    "question": "What is the recommended approach for Dapper with dependency injection?",
+    "options": [
+      "Static methods only",
+      "Register IDbConnection factory and inject into repository classes",
+      "Use service locator",
+      "Global connection object"
+    ],
+    "answer": "Register IDbConnection factory and inject into repository classes",
+    "explanation": "Register a factory creating SqlConnection instances. Inject into repositories. Follows clean architecture principles.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 81,
+    "question": "How do you use Dapper with the Decorator pattern for cross-cutting concerns?",
+    "options": [
+      "Not possible with Dapper",
+      "Wrap repository with decorators for logging, caching, retry logic",
+      "Use middleware only",
+      "Use Dapper interceptors"
+    ],
+    "answer": "Wrap repository with decorators for logging, caching, retry logic",
+    "explanation": "Create CachingUserRepository wrapping IUserRepository. Add logging, metrics, retry as separate decorators.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 82,
+    "question": "What is the AsList() method in Dapper?",
+    "options": [
+      "Same as .ToList()",
+      "An optimized conversion that avoids copying when the result is already a list",
+      "Converts to ArrayList",
+      "Sorts the results"
+    ],
+    "answer": "An optimized conversion that avoids copying when the result is already a list",
+    "explanation": "AsList() returns the internal list if it is one, avoiding an unnecessary copy. More efficient than .ToList().",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 83,
+    "question": "How do you execute multiple statements atomically with Dapper?",
+    "options": [
+      "Use QueryMultiple",
+      "Wrap in a transaction with BeginTransaction, Execute each statement, then Commit",
+      "They are automatically atomic",
+      "Use batch mode"
+    ],
+    "answer": "Wrap in a transaction with BeginTransaction, Execute each statement, then Commit",
+    "explanation": "using var tran = conn.BeginTransaction(); conn.Execute(sql1, p1, tran); conn.Execute(sql2, p2, tran); tran.Commit();",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 84,
+    "question": "What is the difference between Dapper and Dapper.StrongName?",
+    "options": [
+      "Different APIs",
+      "Dapper.StrongName is the same library with a strong-name signed assembly",
+      "StrongName is faster",
+      "StrongName supports more databases"
+    ],
+    "answer": "Dapper.StrongName is the same library with a strong-name signed assembly",
+    "explanation": "Some enterprise environments require strong-named assemblies. Dapper.StrongName provides the same functionality signed.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 85,
+    "question": "How do you handle multiple database providers in a single Dapper project?",
+    "options": [
+      "Use only one provider",
+      "Use strategy pattern with provider-specific connection factories and SQL",
+      "Mix connection strings randomly",
+      "Dapper only supports SQL Server"
+    ],
+    "answer": "Use strategy pattern with provider-specific connection factories and SQL",
+    "explanation": "Create an IConnectionFactory that returns the correct IDbConnection type (SqlConnection, NpgsqlConnection) based on config.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 86,
+    "question": "What are the limitations of Dapper compared to full ORMs?",
+    "options": [
+      "No limitations",
+      "No change tracking, no migrations, no lazy loading, no automatic relationship management",
+      "Only slower performance",
+      "Cannot use LINQ"
+    ],
+    "answer": "No change tracking, no migrations, no lazy loading, no automatic relationship management",
+    "explanation": "Dapper trades convenience for performance. You write SQL manually and manage relationships and schemas yourself.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 87,
+    "question": "How do you execute a CTE (Common Table Expression) with Dapper?",
+    "options": [
+      "CTEs are not supported",
+      "Write the CTE as plain SQL and pass to Query<T> like any other query",
+      "Use a special CTE builder",
+      "Use recursive methods"
+    ],
+    "answer": "Write the CTE as plain SQL and pass to Query<T> like any other query",
+    "explanation": "Dapper executes any valid SQL. Just write your WITH cte AS (...) SELECT ... and pass it to Query<T>.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 88,
+    "question": "How do you handle connection pool exhaustion with Dapper?",
+    "options": [
+      "Increase server memory",
+      "Ensure connections are properly disposed using 'using' statements and monitor pool stats",
+      "Use unlimited connections",
+      "Restart the application"
+    ],
+    "answer": "Ensure connections are properly disposed using 'using' statements and monitor pool stats",
+    "explanation": "Always wrap connections in 'using'. Monitor with connection pool counters. Increase Max Pool Size if needed.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 89,
+    "question": "What is the recommended way to map hierarchical data with Dapper?",
+    "options": [
+      "Use recursive queries automatically",
+      "Use recursive CTEs in SQL and map flat results, then build the tree in C#",
+      "Use Dapper.Hierarchy",
+      "Load one level at a time with lazy loading"
+    ],
+    "answer": "Use recursive CTEs in SQL and map flat results, then build the tree in C#",
+    "explanation": "Write a recursive CTE to flatten the hierarchy. Map to flat objects with ParentId. Build the tree structure in application code.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 90,
+    "question": "How do you use Dapper with minimal APIs in .NET?",
+    "options": [
+      "It's not compatible",
+      "Inject IDbConnection and use Dapper extension methods directly in endpoint handlers",
+      "Use middleware only",
+      "Requires MVC controllers"
+    ],
+    "answer": "Inject IDbConnection and use Dapper extension methods directly in endpoint handlers",
+    "explanation": "app.MapGet(\"/users\", async (IDbConnection db) => await db.QueryAsync<User>(sql)); Works seamlessly with minimal APIs.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 91,
+    "question": "What is the purpose of the [Computed] attribute in Dapper.Contrib?",
+    "options": [
+      "Marks computed columns",
+      "Excludes properties from both INSERT and UPDATE, treating them as computed/generated",
+      "Enables SQL computed functions",
+      "Marks calculated properties"
+    ],
+    "answer": "Excludes properties from both INSERT and UPDATE, treating them as computed/generated",
+    "explanation": "[Computed] is similar to [Write(false)]. The property is excluded from INSERT/UPDATE but still populated on SELECT.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 92,
+    "question": "How do you handle SqlException in Dapper?",
+    "options": [
+      "Dapper handles all exceptions",
+      "Catch SqlException, check Number/State for specific error codes, and handle accordingly",
+      "Exceptions never occur",
+      "Use global exception handler only"
+    ],
+    "answer": "Catch SqlException, check Number/State for specific error codes, and handle accordingly",
+    "explanation": "catch (SqlException ex) when (ex.Number == 2627) { /* unique constraint violation */ }. Handle specific error codes.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 93,
+    "question": "What is the CommandType parameter in Dapper?",
+    "options": [
+      "Type of command line",
+      "Specifies whether the command is text SQL, stored procedure, or table direct",
+      "Command priority",
+      "Command encoding"
+    ],
+    "answer": "Specifies whether the command is text SQL, stored procedure, or table direct",
+    "explanation": "CommandType.Text (default), CommandType.StoredProcedure, or CommandType.TableDirect.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 94,
+    "question": "How do you use Dapper with async streams (IAsyncEnumerable)?",
+    "options": [
+      "Not supported",
+      "Use Dapper's unbuffered async API or wrap with yield return in async methods",
+      "Use Task.WhenAll",
+      "Use Parallel.ForEach"
+    ],
+    "answer": "Use Dapper's unbuffered async API or wrap with yield return in async methods",
+    "explanation": "Dapper doesn't natively support IAsyncEnumerable, but you can use unbuffered reads or third-party extensions.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 95,
+    "question": "What is the GridReader class in Dapper?",
+    "options": [
+      "A grid layout class",
+      "The return type of QueryMultiple that provides methods to read multiple result sets",
+      "A data grid renderer",
+      "A CSV reader"
+    ],
+    "answer": "The return type of QueryMultiple that provides methods to read multiple result sets",
+    "explanation": "GridReader (returned by QueryMultiple) has Read<T>, ReadFirst<T>, ReadSingle<T> for reading each result set in order.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 96,
+    "question": "How do you handle GUID types with Dapper?",
+    "options": [
+      "Must use strings",
+      "Dapper natively maps Guid properties to uniqueidentifier/uuid columns",
+      "Use byte arrays only",
+      "Requires custom handler"
+    ],
+    "answer": "Dapper natively maps Guid properties to uniqueidentifier/uuid columns",
+    "explanation": "Guid maps automatically to SQL Server's uniqueidentifier and PostgreSQL's uuid. No custom handling needed.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 97,
+    "question": "What is SqlMapper.SetTypeMap used for?",
+    "options": [
+      "Setting database types",
+      "Overriding the default column-to-property mapping strategy for a specific type",
+      "Mapping SQL to .NET types",
+      "Setting connection types"
+    ],
+    "answer": "Overriding the default column-to-property mapping strategy for a specific type",
+    "explanation": "SqlMapper.SetTypeMap(typeof(User), new CustomPropertyTypeMap(...)); Customize how columns map to properties.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 98,
+    "question": "How do you log SQL queries executed by Dapper?",
+    "options": [
+      "Built-in logging",
+      "Use MiniProfiler, database profiler tools, or wrap IDbConnection with a logging proxy",
+      "Console.WriteLine in each query",
+      "Enable Dapper.Logging package"
+    ],
+    "answer": "Use MiniProfiler, database profiler tools, or wrap IDbConnection with a logging proxy",
+    "explanation": "MiniProfiler integrates with Dapper via ProfiledDbConnection. Or use a decorating IDbConnection for custom logging.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 99,
+    "question": "What is the best practice for disposing QueryMultiple (GridReader)?",
+    "options": [
+      "Let GC collect it",
+      "Always wrap in a using statement or call Dispose when finished reading",
+      "No disposal needed",
+      "Close the connection instead"
+    ],
+    "answer": "Always wrap in a using statement or call Dispose when finished reading",
+    "explanation": "GridReader holds the underlying DataReader open. Always dispose it to release database resources.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 100,
+    "question": "How do you use Dapper with the specification pattern?",
+    "options": [
+      "Not possible",
+      "Create specification objects that generate SQL WHERE clauses and parameters",
+      "Use LINQ specifications",
+      "Use Dapper.Specification package"
+    ],
+    "answer": "Create specification objects that generate SQL WHERE clauses and parameters",
+    "explanation": "Build specifications that produce SQL fragments and DynamicParameters. The repository combines them into the final query.",
+    "difficulty": "Advanced"
+  }
+]

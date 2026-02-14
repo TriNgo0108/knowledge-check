@@ -7,7 +7,7 @@ export interface Question {
   difficulty?: 'Beginner' | 'Intermediate' | 'Advanced';
 }
 
-export type TopicId = 'pronunciation' | 'grammar' | 'pandas' | 'sql' | 'postgres' | 'aws' | 'python' | 'javascript' | 'typescript' | 'react' | 'systemdesign' | 'designpatterns' | 'algorithms' | 'aiagents' | 'financial' | 'aiengineer' | 'interview';
+export type TopicId = 'pronunciation' | 'grammar' | 'pandas' | 'sql' | 'postgres' | 'aws' | 'python' | 'javascript' | 'typescript' | 'react' | 'systemdesign' | 'designpatterns' | 'algorithms' | 'aiagents' | 'financial' | 'aiengineer' | 'interview' | 'csharp' | 'dotnet' | 'dapper' | 'entityframework';
 
 export interface Topic {
   id: TopicId;

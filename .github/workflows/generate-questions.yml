@@ -26,6 +26,13 @@ on:
           - designpatterns
           - algorithms
           - aiagents
+          - financial
+          - aiengineer
+          - interview
+          - csharp
+          - dotnet
+          - dapper
+          - entityframework
 
 jobs:
   generate:
@@ -40,8 +47,8 @@ jobs:
       - name: Determine today's topic
         id: topic
         run: |
-          # Topics array (14 topics = 2-week rotation)
-          TOPICS=("grammar" "pronunciation" "pandas" "sql" "postgres" "aws" "python" "javascript" "typescript" "react" "systemdesign" "designpatterns" "algorithms" "aiagents")
+          # Topics array (21 topics = ~5.25-day rotation)
+          TOPICS=("grammar" "pronunciation" "pandas" "sql" "postgres" "aws" "python" "javascript" "typescript" "react" "systemdesign" "designpatterns" "algorithms" "aiagents" "financial" "aiengineer" "interview" "csharp" "dotnet" "dapper" "entityframework")
 
           if [ -n "${{ inputs.topic }}" ]; then
             # Manual trigger with specific topic
@@ -54,7 +61,7 @@ jobs:
             SLOT=$((HOUR / 6))
             
             # Calculate index: ((Day-1)*4 + Slot) % 14
-            INDEX=$(( ((DAY_OF_MONTH - 1) * 4 + SLOT) % 14 ))
+            INDEX=$(( ((DAY_OF_MONTH - 1) * 4 + SLOT) % 21 ))
             SELECTED_TOPIC="${TOPICS[$INDEX]}"
           fi
 

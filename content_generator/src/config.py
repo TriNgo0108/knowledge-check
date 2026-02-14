@@ -35,6 +35,13 @@ TOPICS = [
     "designpatterns",
     "algorithms",
     "aiagents",
+    "financial",
+    "aiengineer",
+    "interview",
+    "csharp",
+    "dotnet",
+    "dapper",
+    "entityframework",
 ]
 
 # Topic display names for search queries
@@ -53,6 +60,13 @@ TOPIC_SEARCH_QUERIES = {
     "designpatterns": "software design patterns enterprise architecture examples",
     "algorithms": "advanced algorithms data structures competitive programming optimization",
     "aiagents": "autonomous agents architecture cognitive architectures llm patterns",
+    "financial": "financial literacy investing portfolio management risk assessment market analysis",
+    "aiengineer": "ai engineering mlops model deployment inference optimization production ml systems",
+    "interview": "technical interview coding challenges system design behavioral questions strategies",
+    "csharp": "c# advanced features async await linq pattern matching generics",
+    "dotnet": "dotnet core aspnet minimal apis middleware dependency injection performance",
+    "dapper": "dapper micro orm query mapping multi-mapping stored procedures performance",
+    "entityframework": "entity framework core ef migrations dbcontext fluent api change tracking",
 }
 
 # Question generation settings

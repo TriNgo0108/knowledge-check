@@ -18,18 +18,22 @@ export const allTopics: Topic[] = [
   { id: 'financial', title: 'Financial Literacy', icon: 'CircleDollarSign', color: 'hsl(120, 70%, 40%)' },
   { id: 'aiengineer', title: 'AI Engineer', icon: 'Bot', color: 'hsl(250, 70%, 60%)' },
   { id: 'interview', title: 'Tech Interview', icon: 'Users', color: 'hsl(0, 70%, 60%)' },
+  { id: 'csharp', title: 'C#', icon: 'Hash', color: 'hsl(265, 70%, 55%)' },
+  { id: 'dotnet', title: '.NET', icon: 'Server', color: 'hsl(260, 60%, 50%)' },
+  { id: 'dapper', title: 'Dapper', icon: 'Layers', color: 'hsl(25, 70%, 55%)' },
+  { id: 'entityframework', title: 'Entity Framework', icon: 'Blocks', color: 'hsl(310, 60%, 50%)' },
 ];
 
 export const categories: TopicCategory[] = [
   {
     name: 'Programming Languages',
     icon: '💻',
-    topics: allTopics.filter(t => ['python', 'javascript', 'typescript'].includes(t.id))
+    topics: allTopics.filter(t => ['python', 'javascript', 'typescript', 'csharp'].includes(t.id))
   },
   {
     name: 'Frameworks & Libraries',
     icon: '⚛️',
-    topics: allTopics.filter(t => ['react', 'pandas'].includes(t.id))
+    topics: allTopics.filter(t => ['react', 'pandas', 'dotnet', 'dapper', 'entityframework'].includes(t.id))
   },
   {
     name: 'Databases',
