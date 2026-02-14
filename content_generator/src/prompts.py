@@ -5,9 +5,11 @@ This module implements advanced prompt engineering patterns:
 - Few-shot examples organized by difficulty level with concise explanations
 - Chain-of-Thought reasoning guidance
 - Strict output validation constraints
+- Self-verification step for answer correctness
 """
 
 from dataclasses import dataclass
+import json
 
 
 @dataclass
@@ -32,10 +34,10 @@ BEGINNER_EXAMPLES: list[QuestionExample] = [
             "To manage memory allocation within the heap",
             "To prevent multiple threads from executing Python bytecodes at once",
             "To optimize garbage collection cycles",
-            "To compilie Python code to machine code",
+            "To compile Python code to machine code",
         ],
         answer="To prevent multiple threads from executing Python bytecodes at once",
-        explanation="The Global Interpreter Lock (GIL) is a mutex that protects access to Python objects, preventing multiple native threads from executing Python bytecodes simultaneously. This simplifies the CPython implementation and makes object access thread-safe by default, but limits CPU-bound parallelism.",
+        explanation="The GIL is a mutex that protects access to Python objects, preventing multiple native threads from executing bytecodes simultaneously. This simplifies CPython but limits CPU-bound parallelism.",
         difficulty="Beginner",
     ),
     QuestionExample(
@@ -47,7 +49,7 @@ BEGINNER_EXAMPLES: list[QuestionExample] = [
             "useReducer",
         ],
         answer="useEffect",
-        explanation="useEffect is specifically designed for side effects (data fetching, subscriptions, manual DOM manipulations). It runs after rendering. useState handles state, useContext handles context, and useReducer handles complex state logic, but none are the primary hook for side effects.",
+        explanation="useEffect is specifically designed for side effects (data fetching, subscriptions, manual DOM manipulations). useState handles state, useContext handles context, useReducer handles complex state logic.",
         difficulty="Beginner",
     ),
 ]
@@ -62,7 +64,7 @@ INTERMEDIATE_EXAMPLES: list[QuestionExample] = [
             "INNER JOIN returns only rows with matches in both tables; LEFT JOIN returns all rows from the left table",
         ],
         answer="INNER JOIN returns only rows with matches in both tables; LEFT JOIN returns all rows from the left table",
-        explanation="An INNER JOIN selects records that have matching values in both tables. A LEFT JOIN returns all records from the left table (table1), and the matched records from the right table (table2). The result is NULL from the right side if there is no match.",
+        explanation="INNER JOIN selects records with matching values in both tables. LEFT JOIN returns all records from the left table and matched records from the right, with NULL for non-matches.",
         difficulty="Intermediate",
     ),
     QuestionExample(
@@ -74,7 +76,7 @@ INTERMEDIATE_EXAMPLES: list[QuestionExample] = [
             "Generators cannot take arguments",
         ],
         answer="Generators yield a sequence of values over time, preserving state between yields",
-        explanation="A generator function uses the `yield` keyword instead of `return`. When called, it returns an iterator (generator object) but does not start execution immediately. Each call to `next()` resumes execution where it left off, retaining local variable state, whereas standard functions start fresh each call.",
+        explanation="Generator functions use `yield` to produce values lazily. Each `next()` call resumes execution where it left off, retaining local variable state. Standard functions start fresh each call.",
         difficulty="Intermediate",
     ),
 ]
@@ -89,7 +91,7 @@ ADVANCED_EXAMPLES: list[QuestionExample] = [
             "When a load balancer fails to distribute traffic evenly",
         ],
         answer="When distributed locks are released and all waiting processes wake up simultaneously to contend for the lock",
-        explanation="The thundering herd problem occurs when a large number of processes or threads waiting for an event (like a lock release or cache expiry) are all woken up at the same time. This causes a massive spike in CPU/network usage as they all contend for the resource, often causing performance degradation or further failures.",
+        explanation="The thundering herd occurs when many processes waiting for an event (lock release, cache expiry) all wake simultaneously, causing a massive resource contention spike.",
         difficulty="Advanced",
     ),
     QuestionExample(
@@ -101,7 +103,7 @@ ADVANCED_EXAMPLES: list[QuestionExample] = [
             "It uses a global lock to prevent other transactions from reading the row",
         ],
         answer="It creates a new version of the row with a new transaction ID and marks the old version as dead",
-        explanation="PostgreSQL implements MVCC by keeping multiple versions of a row. When a record is updated, a new version (tuple) is created with the current transaction ID (`xmin`). The old version is marked with the deleting transaction ID (`xmax`). This allows readers to continue seeing the old version (snapshot isolation) while the writer works on the new one, avoiding read locks.",
+        explanation="PostgreSQL MVCC creates a new tuple with the current transaction ID (xmin) and marks the old version with xmax, allowing concurrent reads via snapshot isolation.",
         difficulty="Advanced",
     ),
 ]
@@ -111,39 +113,65 @@ ADVANCED_EXAMPLES: list[QuestionExample] = [
 # SYSTEM PROMPT
 # ============================================================================
 
-SYSTEM_PROMPT = """You are a Senior Technical Examiner creating high-stakes certification questions.
-Your goal is to test *precise technical knowledge* and *conceptual understanding*, avoiding fluff, vagueness, or trivia.
+SYSTEM_PROMPT = """\
+You are a Senior Technical Examiner creating high-stakes certification questions.
+Your goal is to test *precise technical knowledge* and *conceptual understanding*.
 
 ## Persona
 - **Role**: Senior Technical Content Developer for Professional Certifications.
 - **Tone**: Professional, precise, concise, and technically rigorous.
-- **Style**: No "yapping". No "educational filler". Direct facts only.
+- **Style**: No filler. Direct facts only.
 
 ## Question Guidelines
-1. **Focus**: Each question must test a specific, non-trivial technical concept relevant to the topic.
+1. **Focus**: Each question must test a specific, non-trivial technical concept.
 2. **Options**:
-   - Provide EXACTLY 4 options.
-   - 1 Correct Answer: Must be objectively verifiable and technically precise.
+   - EXACTLY 4 options per question.
+   - 1 Correct Answer: Objectively verifiable and technically precise.
    - 3 Distractors: Plausible misconceptions or related but incorrect terms.
    - NO "All of the above", "None of the above", or "A and B".
-   - NO ambiguity.
-   - Answer MUST be one of the options.
-3. **Explanation**:
-   - Be extremely concise (max 3 sentences).
-   - Explain strictly WHY the answer is correct and WHY the key distractors are wrong.
-   - Do not repeat the question or answer in the explanation.
+3. **Explanation**: Max 2-3 sentences. Explain WHY the answer is correct.
+
+## CRITICAL: Answer Format Rules
+- The "answer" field MUST be the EXACT FULL TEXT of the correct option.
+- The "answer" value MUST be character-for-character identical to one of the "options" strings.
+- NEVER use a letter label like "A", "B", "C", or "D" as the answer.
+
+### ❌ WRONG — Do NOT output this:
+```
+"options": ["Memory allocation", "Thread synchronization", "Garbage collection", "JIT compilation"],
+"answer": "B"
+```
+
+### ✅ CORRECT — Always output this:
+```
+"options": ["Memory allocation", "Thread synchronization", "Garbage collection", "JIT compilation"],
+"answer": "Thread synchronization"
+```
 
 ## Output Format
-You must output ONLY a raw JSON array. Do not include markdown formatting (```json ... ```).
+Output ONLY a raw JSON array. No markdown fences, no commentary, no extra text.
+
 [
   {
     "id": 1,
-    "question": "Technically precise question stem?",
-    "options": ["A", "B", "C", "D"],
-    "answer": "B",
-    "explanation": "B is correct because [reason]. A implies [wrong concept]. C is irrelevant because [reason]."
+    "question": "What mechanism does CPython use to ensure thread safety for object access?",
+    "options": [
+      "Read-write locks on each object",
+      "The Global Interpreter Lock (GIL)",
+      "Software transactional memory",
+      "Lock-free concurrent data structures"
+    ],
+    "answer": "The Global Interpreter Lock (GIL)",
+    "explanation": "The GIL is a mutex preventing multiple threads from executing Python bytecodes simultaneously. Read-write locks and STM are alternative concurrency models not used by CPython."
   }
 ]
+
+## Self-Verification
+Before outputting, verify each question:
+1. Does the "answer" field contain the FULL TEXT of the correct option? (Not a letter)
+2. Is the "answer" string an exact copy-paste from the "options" array?
+3. Are there exactly 4 unique options?
+If any check fails, fix it before outputting.
 """
 
 
@@ -175,31 +203,42 @@ def build_user_prompt(
     """
     # Select appropriate examples based on difficulty
     examples = _get_examples_for_difficulty(difficulty)
-    examples_text = _format_examples(examples)
+    examples_json = _format_examples_as_json(examples)
 
-    return f"""Target Topic: {topic}
+    return f"""\
+Target Topic: {topic}
 Difficulty: {difficulty}
 Quantity: {count} questions
 Starting ID: {start_id}
 
-# INSTRUCTIONS
-Generate {count} high-quality technical multiple-choice questions based on the provided context (if relevant) and your general expert knowledge of the topic.
-The context provided is for inspiration on *what* to test, but rely on your internal knowledge base for technical accuracy if the context is thin.
+# TASK
+Generate {count} high-quality {difficulty}-level multiple-choice questions \
+about **{topic}**.
+Use the context below for topic inspiration, but rely on your expert knowledge \
+for technical accuracy.
 
-# CONTEXT (Use for topic inspiration)
+# REFERENCE CONTEXT
 ---
 {content[:max_content_chars]}
 ---
 
-# FEW-SHOT EXAMPLES (Follow this style of rigour and conciseness)
-{examples_text}
+# FEW-SHOT EXAMPLES
+Follow this exact JSON structure and style of rigour:
+{examples_json}
 
-# CRITICAL CONSTRAINTS
-- Output ONLY valid JSON array.
-- No markdown.
-- No conversational text.
-- Questions must be technically dense and accurate.
-- Explanations must be short and high-value.
+# CONSTRAINTS (Strictly follow ALL)
+1. Output ONLY a valid JSON array — no markdown, no commentary.
+2. Each "answer" must be the FULL TEXT of the correct option, NEVER a letter.
+3. Each question must be technically dense and accurate for {difficulty} level.
+4. Explanations must be concise (2-3 sentences max) and high-value.
+5. All 4 options must be unique and plausible.
+6. IDs must start at {start_id} and increment sequentially.
+
+# FINAL CHECK
+Before outputting, re-read each question and confirm:
+- "answer" is the exact full text (not "A", "B", "C", or "D")
+- "answer" appears verbatim in "options"
+- There are exactly 4 unique options
 """
 
 
@@ -213,17 +252,21 @@ def _get_examples_for_difficulty(difficulty: str) -> list[QuestionExample]:
     return examples_map.get(difficulty, BEGINNER_EXAMPLES)
 
 
-def _format_examples(examples: list[QuestionExample]) -> str:
-    """Format examples as a readable string for the prompt."""
-    formatted_parts = []
-    for ex in examples:
-        options_str = "\n".join(f"- {opt}" for opt in ex.options)
-        formatted_parts.append(
-            f"""Q: {ex.question}
-Options:
-{options_str}
-A: {ex.answer}
-E: {ex.explanation}
-"""
-        )
-    return "\n".join(formatted_parts)
+def _format_examples_as_json(examples: list[QuestionExample]) -> str:
+    """Format examples as JSON to match the exact output format expected.
+
+    Showing examples in the same JSON structure as the expected output
+    is more effective than prose descriptions (Show Don't Tell pattern).
+    """
+
+    example_dicts = [
+        {
+            "id": i + 1,
+            "question": ex.question,
+            "options": ex.options,
+            "answer": ex.answer,
+            "explanation": ex.explanation,
+        }
+        for i, ex in enumerate(examples)
+    ]
+    return json.dumps(example_dicts, indent=2, ensure_ascii=False)

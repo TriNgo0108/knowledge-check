@@ -2,8 +2,8 @@ name: Daily Question Generation
 
 on:
   schedule:
-    # Run 4 times daily (0, 6, 12, 18 UTC) - generates 4 topics per day
-    - cron: "0 0,6,12,18 * * *"
+    # Run 8 times daily (every 3 hours) - generates 8 topics per day
+    - cron: "0 0,3,6,9,12,15,18,21 * * *"
   workflow_dispatch: # Manual trigger
     inputs:
       topic:
@@ -47,21 +47,21 @@ jobs:
       - name: Determine today's topic
         id: topic
         run: |
-          # Topics array (21 topics = ~5.25-day rotation)
+          # Topics array (21 topics = ~2.6-day rotation at 8/day)
           TOPICS=("grammar" "pronunciation" "pandas" "sql" "postgres" "aws" "python" "javascript" "typescript" "react" "systemdesign" "designpatterns" "algorithms" "aiagents" "financial" "aiengineer" "interview" "csharp" "dotnet" "dapper" "entityframework")
 
           if [ -n "${{ inputs.topic }}" ]; then
             # Manual trigger with specific topic
             SELECTED_TOPIC="${{ inputs.topic }}"
           else
-            # Auto-select based on day and time (4 topics per day)
-            # 4 slots per day: 00-05, 06-11, 12-17, 18-23
+            # Auto-select based on day and time (8 topics per day)
+            # 8 slots per day: every 3 hours
             DAY_OF_MONTH=$(date +%-d)
             HOUR=$(date +%-H)
-            SLOT=$((HOUR / 6))
+            SLOT=$((HOUR / 3))
             
-            # Calculate index: ((Day-1)*4 + Slot) % 14
-            INDEX=$(( ((DAY_OF_MONTH - 1) * 4 + SLOT) % 21 ))
+            # Calculate index: ((Day-1)*8 + Slot) % 21
+            INDEX=$(( ((DAY_OF_MONTH - 1) * 8 + SLOT) % 21 ))
             SELECTED_TOPIC="${TOPICS[$INDEX]}"
           fi
 

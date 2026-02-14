@@ -1,5 +1,5 @@
+import re
 import time
-import json
 import json_repair
 from zai import ZaiClient
 
@@ -63,7 +63,8 @@ class LLMClient:
                 for q in questions:
                     try:
                         q["difficulty"] = difficulty
-                        # Ensure ID is unique and sequential if possible, or just trust the LLM/validation
+                        # Fix letter answers (A/B/C/D) by mapping to actual option text
+                        q = self._fix_letter_answer(q)
                         Question(**q)
                         validated.append(q)
                     except Exception as e:
@@ -100,6 +101,36 @@ class LLMClient:
             difficulty=difficulty,
             start_id=start_id,
         )
+
+    @staticmethod
+    def _fix_letter_answer(q: dict) -> dict:
+        """Map letter-style answers to the actual option text.
+
+        Handles formats: 'B', 'B.', 'B)', '(B)', 'b', etc.
+        Only applies the fix if the answer is NOT already one of the options
+        (avoids false positives when an option is legitimately a short string).
+        """
+        answer = q.get("answer", "").strip()
+        options = q.get("options", [])
+
+        if not options:
+            return q
+
+        # Skip if the answer already matches an option exactly
+        if answer in options:
+            return q
+
+        cleaned = re.sub(r"^[\(\[]?\s*([A-Da-d])\s*[\.\)\]:]?\s*$", r"\1", answer)
+
+        letter_map = {"A": 0, "B": 1, "C": 2, "D": 3}
+        upper = cleaned.upper()
+
+        if upper in letter_map:
+            idx = letter_map[upper]
+            if idx < len(options):
+                q["answer"] = options[idx]
+
+        return q
 
     def _parse_response(self, content: str) -> list[dict]:
         """Parse LLM response to extract JSON questions."""
