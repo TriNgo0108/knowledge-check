@@ -22,6 +22,8 @@ export const allTopics: Topic[] = [
   { id: 'dotnet', title: '.NET', icon: 'Server', color: 'hsl(260, 60%, 50%)' },
   { id: 'dapper', title: 'Dapper', icon: 'Layers', color: 'hsl(25, 70%, 55%)' },
   { id: 'entityframework', title: 'Entity Framework', icon: 'Blocks', color: 'hsl(310, 60%, 50%)' },
+  { id: 'terraform', title: 'Terraform', icon: 'ServerCog', color: 'hsl(260, 80%, 60%)' },
+  { id: 'pulumi', title: 'Pulumi', icon: 'CloudLightning', color: 'hsl(280, 80%, 60%)' },
 ];
 
 export const categories: TopicCategory[] = [
@@ -48,7 +50,7 @@ export const categories: TopicCategory[] = [
   {
     name: 'Cloud & Infrastructure',
     icon: '☁️',
-    topics: allTopics.filter(t => ['aws'].includes(t.id))
+    topics: allTopics.filter(t => ['aws', 'terraform', 'pulumi'].includes(t.id))
   },
   {
     name: 'Career & Growth',

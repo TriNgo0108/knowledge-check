@@ -42,6 +42,8 @@ TOPICS = [
     "dotnet",
     "dapper",
     "entityframework",
+    "terraform",
+    "pulumi",
 ]
 
 # Topic display names for search queries
@@ -67,6 +69,8 @@ TOPIC_SEARCH_QUERIES = {
     "dotnet": "dotnet core aspnet minimal apis middleware dependency injection performance",
     "dapper": "dapper micro orm query mapping multi-mapping stored procedures performance",
     "entityframework": "entity framework core ef migrations dbcontext fluent api change tracking",
+    "terraform": "terraform advanced patterns modules state management providers",
+    "pulumi": "pulumi infrastructure as code typescript python patterns state",
 }
 
 # Question generation settings
