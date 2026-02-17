@@ -1,0 +1,1302 @@
+[
+  {
+    "id": 1,
+    "question": "In ASP.NET Core, which file is the default entry point for configuring services and the application request pipeline?",
+    "options": [
+      "Startup.cs",
+      "Program.cs",
+      "appsettings.json",
+      "Main.cs"
+    ],
+    "answer": "Program.cs",
+    "explanation": "In modern .NET (6.0+), the top-level statements in `Program.cs` handle both host building and startup configuration. `Startup.cs` was used in older versions but is no longer the default.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 2,
+    "question": "Which method is used to register a service so that a new instance is created every time it is requested from the container?",
+    "options": [
+      "AddSingleton",
+      "AddScoped",
+      "AddTransient",
+      "AddPrototype"
+    ],
+    "answer": "AddTransient",
+    "explanation": "`AddTransient` creates a new instance of the service for every object that requests it. `AddScoped` creates one instance per HTTP request, and `AddSingleton` creates one instance for the application lifetime.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 3,
+    "question": "What is the primary purpose of Dependency Injection (DI) in .NET applications?",
+    "options": [
+      "To automatically compile code faster",
+      "To achieve loose coupling and improve testability",
+      "To manage database migrations automatically",
+      "To compress HTTP responses"
+    ],
+    "answer": "To achieve loose coupling and improve testability",
+    "explanation": "DI decouples the implementation of a service from the interface used by the consumer. This allows you to swap implementations (e.g., using mocks) easily for unit testing.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 4,
+    "question": "In the context of Minimal APIs, how are services typically injected into an endpoint handler?",
+    "options": [
+      "Through a private property setter",
+      "Through the class constructor",
+      "As parameters in the endpoint delegate",
+      "Using the [FromServices] attribute only"
+    ],
+    "answer": "As parameters in the endpoint delegate",
+    "explanation": "Minimal APIs resolve services directly from the `IServiceProvider` by matching parameters in the lambda expression or method delegate. Constructor injection is specific to class-based Controllers.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 5,
+    "question": "Which service lifetime creates a single instance throughout the application's lifetime?",
+    "options": [
+      "Transient",
+      "Scoped",
+      "Singleton",
+      "Per-Request"
+    ],
+    "answer": "Singleton",
+    "explanation": "A `Singleton` service is created the first time it is requested and lives until the application shuts down. All subsequent requests receive the same instance.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 6,
+    "question": "What is the correct method to map an HTTP GET request to a Minimal API endpoint?",
+    "options": [
+      "app.MapGet(\"/\", () => \"Hello World\");",
+      "app.UseGet(\"/\", () => \"Hello World\");",
+      "app.RunGet(\"/\", () => \"Hello World\");",
+      "app.Get(\"/\", () => \"Hello World\");"
+    ],
+    "answer": "app.MapGet(\"/\", () => \"Hello World\");",
+    "explanation": "`MapGet` is the extension method used to define a route that responds to HTTP GET verbs. `Use` typically refers to middleware, and `Run` terminates the pipeline.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 7,
+    "question": "Which of the following best describes the 'Scoped' service lifetime in ASP.NET Core?",
+    "options": [
+      "A new instance is created for every single injection",
+      "A single instance is created for the entire application lifetime",
+      "A new instance is created once per client connection",
+      "A new instance is created once per HTTP request"
+    ],
+    "answer": "A new instance is created once per HTTP request",
+    "explanation": "Scoped services are created once per client request (scope). This makes them ideal for Entity Framework `DbContext` instances to track changes within a single transaction.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 8,
+    "question": "What happens if you try to inject a Scoped service into a Singleton service in ASP.NET Core?",
+    "options": [
+      "The Scoped service automatically becomes a Singleton",
+      "The application throws an `InvalidOperationException` at runtime",
+      "The service is injected as a proxy pattern",
+      "The service is resolved as Transient"
+    ],
+    "answer": "The application throws an `InvalidOperationException` at runtime",
+    "explanation": "This is known as a 'Captive Dependency' problem. A Singleton service holds a reference to a Scoped service indefinitely, preventing it from being disposed of correctly, so the default container validates and blocks this.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 9,
+    "question": "Which interface must be implemented to create a background service (hosted service) in .NET?",
+    "options": [
+      "IBackgroundTask",
+      "IHostedService",
+      "IAsyncService",
+      "IWorker"
+    ],
+    "answer": "IHostedService",
+    "explanation": "`IHostedService` defines two methods: `StartAsync` and `StopAsync`. The `BackgroundService` base class provides a simplified implementation of this interface.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 10,
+    "question": "In Minimal APIs, what does the `builder` object represent in `var builder = WebApplication.CreateBuilder(args);`?",
+    "options": [
+      "The HTTP Request context",
+      "A configuration for Dependency Injection and Settings",
+      "The middleware pipeline",
+      "The logging provider"
+    ],
+    "answer": "A configuration for Dependency Injection and Settings",
+    "explanation": "The `WebApplicationBuilder` is used to configure services (DI), configuration providers, logging, and hosting settings before the app is built.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 11,
+    "question": "Which middleware is responsible for automatically redirecting HTTP requests to HTTPS?",
+    "options": [
+      "UseHttpsRedirection",
+      "UseHttps",
+      "UseRewriter",
+      "UseSecurityHeaders"
+    ],
+    "answer": "UseHttpsRedirection",
+    "explanation": "`UseHttpsRedirection` middleware adds status code 307 (Temporary Redirect) to redirect insecure HTTP requests to secure HTTPS URLs.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 12,
+    "question": "What is the default format for returning data from a Minimal API endpoint if you return a C# object or list?",
+    "options": [
+      "XML",
+      "Plain Text",
+      "JSON",
+      "Binary"
+    ],
+    "answer": "JSON",
+    "explanation": "ASP.NET Core Minimal APIs default to `System.Text.Json` to serialize objects to JSON. You can configure XML support, but JSON is the standard.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 13,
+    "question": "How do you access configuration settings (like connection strings) from `appsettings.json` in a Minimal API?",
+    "options": [
+      "Using ConfigurationManager.AppSettings",
+      "By injecting IConfiguration",
+      "By calling Configuration.GetSection()",
+      "Using the WebHost class"
+    ],
+    "answer": "By injecting IConfiguration",
+    "explanation": "The `IConfiguration` interface is automatically registered in the DI container. You can inject it into endpoints or constructors to access appsettings values.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 14,
+    "question": "Which method is used to start the application and listen for incoming requests in `Program.cs`?",
+    "options": [
+      "app.Start()",
+      "app.Begin()",
+      "app.Run()",
+      "app.Execute()"
+    ],
+    "answer": "app.Run()",
+    "explanation": "The `Run()` method starts the web application, blocks the calling thread (unless in an async context), and begins listening for HTTP requests.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 15,
+    "question": "What is the correct way to register a generic service interface in .NET DI?",
+    "options": [
+      "builder.Services.Add(typeof(IRepository<>), typeof(Repository<>));",
+      "builder.Services.AddScoped(typeof(IRepository<>));",
+      "builder.Services.Add(new Repository());",
+      "builder.Services.RegisterGeneric(typeof(IRepository<>));"
+    ],
+    "answer": "builder.Services.Add(typeof(IRepository<>), typeof(Repository<>));",
+    "explanation": "When registering open generics, you must pass the `Type` objects for both the service interface and the implementation to methods like `AddScoped`.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 16,
+    "question": "Which attribute is used in Minimal APIs to bind a query string value from the HTTP request to a parameter?",
+    "options": [
+      "[FromBody]",
+      "[FromHeader]",
+      "[FromQuery]",
+      "[FromRoute]"
+    ],
+    "answer": "[FromQuery]",
+    "explanation": "`[FromQuery]` binds parameters to values found in the URL query string (e.g., `?id=5`). `[FromRoute]` binds to URL path segments, and `[FromBody]` binds to the request body (JSON).",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 17,
+    "question": "What does `IWebHostEnvironment` provide access to in an ASP.NET Core application?",
+    "options": [
+      "Database connection strings",
+      "Information about the web hosting environment (e.g., Development, Production)",
+      "The current user's claims",
+      "The list of installed NuGet packages"
+    ],
+    "answer": "Information about the web hosting environment (e.g., Development, Production)",
+    "explanation": "This service exposes properties like `IsDevelopment()`, `IsProduction()`, and `ContentRootPath` to allow conditional logic based on where the app is running.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 18,
+    "question": "Which method maps a request delegate to the root of the application?",
+    "options": [
+      "app.Map",
+      "app.MapWhen",
+      "app.MapControllers",
+      "app.Run"
+    ],
+    "answer": "app.Run",
+    "explanation": "`app.Run` adds a terminal middleware to the pipeline that matches all requests. `Map` is used for branching the pipeline based on path matches.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 19,
+    "question": "In the context of Middleware, what does 'terminal' mean?",
+    "options": [
+      "The middleware logs an error and stops",
+      "The middleware short-circuits the pipeline and does not call `_next`",
+      "The middleware runs asynchronously",
+      "The middleware handles only GET requests"
+    ],
+    "answer": "The middleware short-circuits the pipeline and does not call `_next`",
+    "explanation": "When a middleware component does not call the `_next()` delegate, it is considered terminal, as it prevents subsequent middleware from processing the request.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 20,
+    "question": "Which method registers Entity Framework Core's DbContext with the DI container?",
+    "options": [
+      "AddEntityFramework",
+      "AddDbContext",
+      "AddDatabase",
+      "AddData"
+    ],
+    "answer": "AddDbContext",
+    "explanation": "`AddDbContext` registers the `DbContext` with the service collection. By default, it is registered as 'Scoped' because a database context is designed to be short-lived per request.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 21,
+    "question": "What is a Keyed Service in .NET Dependency Injection (introduced in .NET 8)?",
+    "options": [
+      "A service that is encrypted with a key",
+      "A service registered with a specific key to distinguish implementations of the same interface",
+      "A service that acts as a primary key for the database",
+      "A service that requires a configuration key to load"
+    ],
+    "answer": "A service registered with a specific key to distinguish implementations of the same interface",
+    "explanation": "Keyed services allow multiple implementations of the same interface to be registered and retrieved using a specific object key, resolving ambiguity without custom wrapper classes.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 22,
+    "question": "What is the correct way to return a 404 Not Found status code using the `Results` static class in Minimal APIs?",
+    "options": [
+      "Results.NotFound()",
+      "Results.Error(404)",
+      "Results.HttpCode(404)",
+      "Results.Null()"
+    ],
+    "answer": "Results.NotFound()",
+    "explanation": "The `Results` class provides static helper methods for common HTTP status codes. `Results.NotFound()` produces a standard 404 response.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 23,
+    "question": "Which middleware enables automatic generation of an OpenAPI (Swagger) documentation page?",
+    "options": [
+      "UseSwagger",
+      "UseOpenApi",
+      "UseDocumentation",
+      "UseReDoc"
+    ],
+    "answer": "UseSwagger",
+    "explanation": "`UseSwagger` registers the Swagger middleware in the pipeline. It is typically paired with `UseSwaggerUI` to render the interactive documentation UI.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 24,
+    "question": "Why is Constructor Injection preferred over Property Injection in .NET?",
+    "options": [
+      "It is the only way to resolve Singleton services",
+      "It makes dependencies explicit and ensures the class is always in a valid state",
+      "It is faster at runtime than Property Injection",
+      "It allows properties to be set to private"
+    ],
+    "answer": "It makes dependencies explicit and ensures the class is always in a valid state",
+    "explanation": "Constructor injection guarantees that all required dependencies are available when the object is instantiated. Property injection can lead to objects being in an invalid state if dependencies aren't set.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 25,
+    "question": "What is `System.Text.Json` used for in ASP.NET Core?",
+    "options": [
+      "Writing text to the console",
+      "Serializing and deserializing JSON data",
+      "Validating user input strings",
+      "Generating random text for testing"
+    ],
+    "answer": "Serializing and deserializing JSON data",
+    "explanation": "It is the default high-performance JSON library in .NET Core, used for converting C# objects to JSON (serialization) and JSON to C# objects (deserialization).",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 26,
+    "question": "Which extension method on `WebApplication` is used to define a group of endpoints with a common prefix?",
+    "options": [
+      "MapGroup",
+      "MapPrefix",
+      "GroupRoutes",
+      "UseRouting"
+    ],
+    "answer": "MapGroup",
+    "explanation": "`MapGroup` allows you to organize Minimal API endpoints by applying common configuration, middleware, or route prefixes to a collection of routes.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 27,
+    "question": "What is the purpose of the `[FromForm]` attribute in an endpoint parameter?",
+    "options": [
+      "To bind data from the URL route",
+      "To bind data from the HTTP request body as form-urlencoded data",
+      "To bind data from the HTTP headers",
+      "To bind data from a query string"
+    ],
+    "answer": "To bind data from the HTTP request body as form-urlencoded data",
+    "explanation": "While `[FromBody]` handles JSON payloads, `[FromForm]` is specifically used for data submitted via standard HTML forms (`application/x-www-form-urlencoded`).",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 28,
+    "question": "Which service provides detailed exception information and development-specific error pages?",
+    "options": [
+      "UseExceptionHandler",
+      "UseDeveloperExceptionPage",
+      "UseErrorPages",
+      "UseDebugging"
+    ],
+    "answer": "UseDeveloperExceptionPage",
+    "explanation": "This middleware displays a detailed stack trace and request information for errors, useful in Development but strictly disabled in Production for security.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 29,
+    "question": "What does the `await` keyword do in an ASP.NET Core endpoint?",
+    "options": [
+      "It starts a new thread",
+      "It suspends the method execution until the awaited task completes",
+      "It converts the method to a synchronous one",
+      "It caches the result"
+    ],
+    "answer": "It suspends the method execution until the awaited task completes",
+    "explanation": "The `await` keyword yields control to the caller while the async operation runs, allowing the server thread to handle other requests, improving scalability.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 30,
+    "question": "How do you enable CORS (Cross-Origin Resource Sharing) in ASP.NET Core?",
+    "options": [
+      "By calling app.UseCors() in the pipeline",
+      "By adding [EnableCors] attributes only",
+      "By modifying the web.config file",
+      "By setting headers manually in every endpoint"
+    ],
+    "answer": "By calling app.UseCors() in the pipeline",
+    "explanation": "CORS is configured by calling `AddCors` in services and then `UseCors` in the middleware pipeline. You can define policies to allow specific origins, methods, and headers.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 31,
+    "question": "Which class represents the incoming HTTP request and outgoing response in an ASP.NET Core application?",
+    "options": [
+      "HttpRequestMessage",
+      "HttpContext",
+      "HttpPipeline",
+      "HttpState"
+    ],
+    "answer": "HttpContext",
+    "explanation": "`HttpContext` encapsulates all HTTP-specific information about the request, including the `Request` and `Response` objects, user, session, and server variables.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 32,
+    "question": "What is a 'Factory' in the context of .NET Dependency Injection?",
+    "options": [
+      "A design pattern for creating objects without specifying the exact class",
+      "A method that registers Singleton services",
+      "A tool for compiling C# code",
+      "A replacement for the Main method"
+    ],
+    "answer": "A design pattern for creating objects without specifying the exact class",
+    "explanation": "In DI, factories (often implemented as `Func<T>` or `IServiceFactory`) are used to create complex instances or resolve services with runtime parameters not known at compile time.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 33,
+    "question": "Which method on `IResult` allows you to return a file download response in Minimal APIs?",
+    "options": [
+      "Results.File()",
+      "Results.Download()",
+      "Results.Attachment()",
+      "Results.Bytes()"
+    ],
+    "answer": "Results.File()",
+    "explanation": "`Results.File(bytes, contentType)` writes the byte array to the response with the appropriate Content-Type and Content-Disposition headers to trigger a download.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 34,
+    "question": "What is the significance of the `_` symbol in `app.MapGet(\"/\", () => \"Hello\");`?",
+    "options": [
+      "It represents a discard variable",
+      "It is a syntax error",
+      "It represents the HTTP context",
+      "It forces the method to run asynchronously"
+    ],
+    "answer": "It represents a discard variable",
+    "explanation": "If you do not need to use a specific parameter (like the HttpContext), you can use the discard `_` to avoid compiler warnings about unused variables.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 35,
+    "question": "Which framework feature allows you to validate incoming data automatically using C# attributes?",
+    "options": [
+      "Data Annotations",
+      "Action Filters",
+      "Model Binding",
+      "Middleware"
+    ],
+    "answer": "Data Annotations",
+    "explanation": "Attributes like `[Required]`, `[MaxLength]`, and `[EmailAddress]` provide declarative validation rules that the framework checks automatically during model binding.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 36,
+    "question": "Which Dependency Injection lifetime ensures that a new instance of a service is created once per client request (scope) within an ASP.NET Core application?",
+    "options": [
+      "Transient",
+      "Scoped",
+      "Singleton",
+      "Transient unless otherwise specified"
+    ],
+    "answer": "Scoped",
+    "explanation": "Scoped services are created once per request scope. This is the default for Entity Framework DbContexts to ensure consistency across a single transaction.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 37,
+    "question": "In the context of Minimal APIs, what is the default resolution order for binding parameters to handler delegates?",
+    "options": [
+      "Body, Route, Query String, Services",
+      "Services, Route, Query String, Header, Body",
+      "Route, Query String, Header, Body, Services",
+      "Explicit Attributes, Body, Services, Route"
+    ],
+    "answer": "Route, Query String, Header, Body, Services",
+    "explanation": "The framework attempts to bind from Route values first, followed by Query Strings, Headers, and the Body. If no match is found in these, it resolves the type from the Dependency Injection container.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 38,
+    "question": "What is the primary consequence of injecting a Scoped service into a Singleton service in ASP.NET Core?",
+    "options": [
+      "The application throws a `InvalidOperationException` at runtime if validation is enabled",
+      "The Scoped service is promoted to a Singleton lifetime",
+      "The Scoped service behaves as a Transient service within the Singleton",
+      "The service cannot be resolved and must be passed as a method argument"
+    ],
+    "answer": "The application throws a `InvalidOperationException` at runtime if validation is enabled",
+    "explanation": "This is known as a 'Captive Dependency.' Since the Singleton service holds a reference to the Scoped service indefinitely, the Scoped service effectively becomes a Singleton, which can cause concurrency issues. ValidateScopes catches this.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 39,
+    "question": "Which interface defines a contract for a delegate that handles an HTTP request asynchronously in the ASP.NET Core pipeline?",
+    "options": [
+      "IHttpContextAccessor",
+      "RequestDelegate",
+      "IMiddleware",
+      "IActionResult"
+    ],
+    "answer": "RequestDelegate",
+    "explanation": "RequestDelegate is a function signature that takes an HttpContext and returns a Task. It represents the fundamental building block of the ASP.NET Core middleware pipeline.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 40,
+    "question": "What is the specific behavior of the `AddDbContext` extension method when registering an Entity Framework Core context in ASP.NET Core?",
+    "options": [
+      "It registers the context as a Singleton by default",
+      "It registers the context as Scoped and registers the DbContextOptions as Singleton",
+      "It registers the context as Transient to avoid concurrency issues",
+      "It requires a factory delegate to resolve the connection string"
+    ],
+    "answer": "It registers the context as Scoped and registers the DbContextOptions as Singleton",
+    "explanation": "DbContexts are registered as Scoped because they are not thread-safe. The configuration options (DbContextOptions) are registered as Singleton so they can be reused across scope creations.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 41,
+    "question": "Which options interface should you use to retrieve configuration data that updates dynamically at runtime without restarting the application?",
+    "options": [
+      "IOptions",
+      "IOptionsSnapshot",
+      "IOptionsMonitor",
+      "IConfigurationRoot"
+    ],
+    "answer": "IOptionsMonitor",
+    "explanation": "IOptionsMonitor uses singleton sources and listens for configuration changes, allowing you to retrieve current values via `CurrentValue`. IOptionsSnapshot is scoped and only updates per request.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 42,
+    "question": "In a LINQ query, what is the primary difference between the `First()` and `FirstOrDefault()` methods when the source collection is empty?",
+    "options": [
+      "`First()` returns null; `FirstOrDefault()` throws an InvalidOperationException",
+      "`First()` throws an InvalidOperationException; `FirstOrDefault()` returns the default value for the type",
+      "`First()` returns the first element; `FirstOrDefault()` returns 0",
+      "`First()` performs better than `FirstOrDefault()` on empty collections"
+    ],
+    "answer": "`First()` throws an InvalidOperationException; `FirstOrDefault()` returns the default value for the type",
+    "explanation": "Both methods attempt to retrieve the first element. However, `First()` throws an exception if the sequence is empty, whereas `FirstOrDefault()` safely returns `null` (for reference types) or `0` (for value types).",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 43,
+    "question": "Why is the `await` keyword generally preferred inside `try` blocks rather than assigning the Task to a variable and awaiting it in the `finally` block?",
+    "options": [
+      "The Task might not be started by the time the finally block executes",
+      "Exceptions thrown during the asynchronous operation are captured and re-thrown at the point of `await`",
+      "The `finally` block does not support asynchronous operations",
+      "It prevents the compiler from optimizing the state machine"
+    ],
+    "answer": "Exceptions thrown during the asynchronous operation are captured and re-thrown at the point of `await`",
+    "explanation": "If you store the Task and await it later, the stack trace and exception context are preserved relative to the await point. Awaiting inside `try` ensures that `catch` blocks handle the exception immediately when it propagates.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 44,
+    "question": "What is the specific use case for the `IHttpClientFactory` in ASP.NET Core?",
+    "options": [
+      "To enable asynchronous HTTP requests within a synchronous method",
+      "To prevent socket exhaustion and DNS staleness issues associated with manually creating `HttpClient` instances",
+      "To automatically retry failed HTTP requests without custom code",
+      "To replace the need for the `HttpWebRequest` class entirely"
+    ],
+    "answer": "To prevent socket exhaustion and DNS staleness issues associated with manually creating `HttpClient` instances",
+    "explanation": "Creating `HttpClient` as `using` or `static` can lead to socket exhaustion or stale DNS. `IHttpClientFactory` manages `HttpMessageHandler` pools and lifetimes to solve these networking issues.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 45,
+    "question": "Which C# feature allows you to define a method body within a struct or class without using a named method, often used for deferred execution?",
+    "options": [
+      "Anonymous Method",
+      "Lambda Expression",
+      "Local Function",
+      "Iterator Block"
+    ],
+    "answer": "Iterator Block",
+    "explanation": "An iterator block (using `yield return`) allows deferred execution of a sequence. The state machine generated by the compiler executes the logic only when the caller iterates over the result.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 46,
+    "question": "In the context of Garbage Collection, what triggers the promotion of an object from Generation 0 to Generation 1?",
+    "options": [
+      "The object is accessed by a static field",
+      "The object survives a garbage collection cycle of Generation 0",
+      "The object is larger than 85,000 bytes",
+      "The application requests a forced collection via GC.Collect()"
+    ],
+    "answer": "The object survives a garbage collection cycle of Generation 0",
+    "explanation": "The GC is generational. If an object is not reclaimed during a Gen 0 collection, it is promoted (or 'tenured') to Generation 1, indicating it is longer-lived.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 47,
+    "question": "What is the function of the `UseRouting` middleware in the ASP.NET Core request pipeline?",
+    "options": [
+      "It executes the endpoint delegate selected by the routing system",
+      "It matches HTTP requests to registered endpoints and sets the `Endpoint` metadata on the HttpContext",
+      "It handles URL generation for outgoing links",
+      "It enables attribute routing on Controllers"
+    ],
+    "answer": "It matches HTTP requests to registered endpoints and sets the `Endpoint` metadata on the HttpContext",
+    "explanation": "`UseRouting` performs route matching; it determines which endpoint should handle the request. The actual execution of that endpoint is performed later by `UseEndpoints`.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 48,
+    "question": "Which keyword is required to modify a struct definition so that the compiler enforces that instances can only be allocated on the stack (or inline within other objects)?",
+    "options": [
+      "stackalloc",
+      "ref",
+      "unsafe",
+      "fixed"
+    ],
+    "answer": "ref",
+    "explanation": "Defining a `ref struct` forces the compiler to ensure the type is always stack-allocated or inline. It cannot be boxed, assigned to variables of type `object`, or used as a generic type argument.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 49,
+    "question": "When implementing a Minimal API filter using `IEndpointFilter`, what determines if the next filter or endpoint handler in the chain executes?",
+    "options": [
+      "The filter returning `ValueTask.CompletedTask`",
+      "The filter returning a non-null `EndpointFilterInvocationContext`",
+      "The filter returning `Task.CompletedTask`",
+      "The filter calling `await next(context)`"
+    ],
+    "answer": "The filter calling `await next(context)`",
+    "explanation": "The `next` delegate represents the remainder of the pipeline. The chain proceeds only when the filter explicitly awaits `next`. If the filter returns a result without calling `next`, the pipeline is short-circuited.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 50,
+    "question": "What is the primary technical distinction between `Task` and `ValueTask` in .NET?",
+    "options": [
+      "`Task` is a reference type, while `ValueTask` is a value type to reduce heap allocations in asynchronous hot paths",
+      "`Task` is synchronous, while `ValueTask` is asynchronous",
+      "`ValueTask` cannot be awaited, whereas `Task` must be awaited",
+      "`ValueTask` is thread-safe for parallel execution, while `Task` is not"
+    ],
+    "answer": "`Task` is a reference type, while `ValueTask` is a value type to reduce heap allocations in asynchronous hot paths",
+    "explanation": "`ValueTask` is a struct, preventing a heap allocation if the operation completes synchronously. This improves performance in high-throughput scenarios compared to the class-based `Task`.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 51,
+    "question": "Which middleware component is responsible for populating the `HttpContext.User` property based on an incoming authorization header?",
+    "options": [
+      "UseAuthorization",
+      "UseAuthentication",
+      "UseMiddleware",
+      "UseRouting"
+    ],
+    "answer": "UseAuthentication",
+    "explanation": "`UseAuthentication` runs the configured authentication schemes (like Bearer or JWT) to validate credentials and construct the `ClaimsPrincipal` assigned to `HttpContext.User`.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 52,
+    "question": "In C#, what happens when a struct is boxed?",
+    "options": [
+      "The struct is copied to the managed heap and a reference to this object is returned",
+      "The struct is converted to a class definition at runtime",
+      "The struct is garbage collected immediately",
+      "A pointer to the stack memory location is returned"
+    ],
+    "answer": "The struct is copied to the managed heap and a reference to this object is returned",
+    "explanation": "Boxing copies a value type from the stack into an object on the heap. Unboxing copies the value back from the heap to the stack.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 53,
+    "question": "What is the default behavior of the JSON serializer in ASP.NET Core Minimal APIs regarding property casing?",
+    "options": [
+      "It preserves the exact casing of the C# class properties",
+      "It converts all property names to lowercase (camelCase)",
+      "It converts all property names to uppercase (PascalCase)",
+      "It serializes properties without names"
+    ],
+    "answer": "It converts all property names to lowercase (camelCase)",
+    "explanation": "The default `System.Text.Json` settings in ASP.NET Core web apps use `JsonNamingPolicy.CamelCase` to conform to common JavaScript/JSON conventions.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 54,
+    "question": "What is the primary purpose of the `yield` keyword in C#?",
+    "options": [
+      "To return the result of a coroutine immediately",
+      "To create a generator method that returns an enumerable sequence lazily",
+      "To force a thread to yield its time slice to the CPU",
+      "To manually manage memory allocation within a loop"
+    ],
+    "answer": "To create a generator method that returns an enumerable sequence lazily",
+    "explanation": "`yield return` enables lazy evaluation. The compiler generates a state machine that iterates the sequence one item at a time, rather than materializing the entire collection in memory.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 55,
+    "question": "How does the `volatile` keyword affect variable access in multithreaded C# applications?",
+    "options": [
+      "It makes the variable thread-safe for all operations",
+      "It ensures that reads and writes to the variable are not reordered by the compiler or CPU, and always access main memory",
+      "It locks the variable, allowing only one thread to access it at a time",
+      "It prevents the Garbage Collector from moving the variable in memory"
+    ],
+    "answer": "It ensures that reads and writes to the variable are not reordered by the compiler or CPU, and always access main memory",
+    "explanation": "`volatile` disables compiler optimizations that might cache the value in a CPU register. It ensures visibility of changes across threads immediately but does not provide atomicity for compound operations.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 56,
+    "question": "Which extension method is required to map a path like `/verify` to a delegate that executes after the `Map` call in ASP.NET Core?",
+    "options": [
+      "UseEndpoints",
+      "Map",
+      "Run",
+      "Use"
+    ],
+    "answer": "Run",
+    "explanation": "When using `Map`, you branch the pipeline. The terminal middleware delegate for that branch is added using `Run` (or `Use`). Without `Run`, the pipeline for that path does nothing.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 57,
+    "question": "What is the correct way to register a generic service interface with an open generic type in the .NET DI container?",
+    "options": [
+      "services.AddScoped(typeof(IRepository<>), typeof(Repository<>));",
+      "services.AddScoped<IRepository<T>, Repository<T>>();",
+      "services.Add(new ServiceDescriptor(typeof(IRepository), typeof(Repository)));",
+      "services.AddTransient(typeof(IRepository), typeof(Repository));"
+    ],
+    "answer": "services.AddScoped(typeof(IRepository<>), typeof(Repository<>));",
+    "explanation": "The container supports open generics registration. You pass the `Type` objects (using `typeof`) with the backticks (e.g., `typeof(IRepository<>)`) rather than a closed constructed type.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 58,
+    "question": "In C#, what is a constraint on a generic type parameter?",
+    "options": [
+      "A limit on the number of times a generic type can be instantiated",
+      "A restriction that requires the type argument to meet specific conditions, such as implementing an interface or having a parameterless constructor",
+      "A memory limit imposed by the CLR on generic type metadata",
+      "A rule that forces the JIT compiler to inline the generic method"
+    ],
+    "answer": "A restriction that requires the type argument to meet specific conditions, such as implementing an interface or having a parameterless constructor",
+    "explanation": "Constraints (e.g., `where T : class`) restrict the types that can be used as arguments, allowing the compiler to assume certain capabilities (like methods or operators) exist on `T`.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 59,
+    "question": "Which `Result` type extension method in Minimal APIs should be used to explicitly return an HTTP 404 Not Found status?",
+    "options": [
+      "Results.NotFound()",
+      "Results.Error()",
+      "Results.NoContent()",
+      "Results.StatusCode(404)"
+    ],
+    "answer": "Results.NotFound()",
+    "explanation": "`Results.NotFound()` is a strongly typed helper in the `Microsoft.AspNetCore.Http.HttpResults` namespace to generate a 404 response, aligning with RESTful standards.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 60,
+    "question": "What is the purpose of the `ConfigureAwait(false)` method on a Task in a .NET library?",
+    "options": [
+      "To increase the priority of the task to ensure it runs faster",
+      "To capture the current synchronization context and force the continuation to run on it",
+      "To avoid capturing the synchronization context, allowing the continuation to run on the ThreadPool and potentially reducing deadlocks",
+      "To configure the task to timeout after a specific duration"
+    ],
+    "answer": "To avoid capturing the synchronization context, allowing the continuation to run on the ThreadPool and potentially reducing deadlocks",
+    "explanation": "In non-UI code (like libraries), capturing the Sync Context is unnecessary and can cause deadlocks. `ConfigureAwait(false)` signals that the continuation doesn't need the original context.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 61,
+    "question": "How does the Kestrel web server function within the ASP.NET Core architecture?",
+    "options": [
+      "It acts as a reverse proxy forwarding requests to IIS",
+      "It is a cross-platform HTTP server that listens for requests and processes them directly, sitting at the edge of the application",
+      "It replaces the need for the .NET Runtime",
+      "It runs only on Windows operating systems"
+    ],
+    "answer": "It is a cross-platform HTTP server that listens for requests and processes them directly, sitting at the edge of the application",
+    "explanation": "Kestrel is the default web server. It processes raw HTTP requests. In production, it is often placed behind a reverse proxy (like Nginx or IIS) for security and port sharing, but it runs the app.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 62,
+    "question": "When using `IQueryable` with Entity Framework, at what point is the SQL query actually executed against the database?",
+    "options": [
+      "When the `IQueryable` variable is declared",
+      "When the `DbContext` is instantiated",
+      "When the query is 'materialized', such as by iterating with `foreach` or calling `ToList()`",
+      "When the connection string is first read"
+    ],
+    "answer": "When the query is 'materialized', such as by iterating with `foreach` or calling `ToList()`",
+    "explanation": "LINQ queries use deferred execution. The expression tree is built and translated to SQL, but the database round-trip only occurs when the results are actually consumed (iterated) by the application.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 63,
+    "question": "Which C# feature allows methods to have multiple signatures with the same name but different parameters?",
+    "options": [
+      "Overriding",
+      "Shadowing",
+      "Overloading",
+      "Generics"
+    ],
+    "answer": "Overloading",
+    "explanation": "Overloading allows multiple methods with the same name to exist if they differ in parameter number, type, or order. It is a compile-time polymorphism technique.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 64,
+    "question": "What is the result of bitwise AND operation (`&`) between binary `1010` and `1100`?",
+    "options": [
+      "1110",
+      "1000",
+      "0110",
+      "1011"
+    ],
+    "answer": "1000",
+    "explanation": "Bitwise AND returns `1` only where both bits are `1`. Comparing `1010` (10) and `1100` (12): `1 & 1 = 1`, `0 & 1 = 0`, `1 & 0 = 0`, `0 & 0 = 0`. Result is `1000` (8).",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 65,
+    "question": "What is the default serialization format used by the `BinaryFormatter` class?",
+    "options": [
+      "JSON",
+      "XML",
+      "A proprietary binary format",
+      "Protocol Buffers"
+    ],
+    "answer": "A proprietary binary format",
+    "explanation": "`BinaryFormatter` produces a non-human-readable binary stream. Note that `BinaryFormatter` is considered obsolete/insecure for untrusted input and is generally discouraged in modern .NET.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 66,
+    "question": "In the context of HTTP, which method is idempotent and safe?",
+    "options": [
+      "POST",
+      "PUT",
+      "GET",
+      "DELETE"
+    ],
+    "answer": "GET",
+    "explanation": "A method is 'safe' if it does not alter the state of the server. `GET` is defined as safe and idempotent. `PUT` and `DELETE` are idempotent but not safe (they change state). `POST` is neither.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 67,
+    "question": "Which interface defines a contract for a class that allows it to be cleaned up by the Garbage Collector non-deterministically?",
+    "options": [
+      "IDisposable",
+      "IAsyncDisposable",
+      "IFinalizable",
+      "Object.Finalize"
+    ],
+    "answer": "Object.Finalize",
+    "explanation": "Finalizers (also called destructors or `~ClassName`) are called by the GC during the finalization pass. There is no `IFinalizable` interface; the C# language syntax `~ClassName` compiles to a `Finalize` method override.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 68,
+    "question": "What is the primary role of the `System.Text.Json` `JsonSerializer` compared to `Newtonsoft.Json`?",
+    "options": [
+      "To provide legacy support for .NET Framework 2.0",
+      "To offer a high-performance, low-allocation JSON parser with strict compliance standards",
+      "To replace XML serialization entirely",
+      "To allow serialization of private fields without attributes"
+    ],
+    "answer": "To offer a high-performance, low-allocation JSON parser with strict compliance standards",
+    "explanation": "`System.Text.Json` was introduced to provide better performance (Span-based) and memory efficiency than `Newtonsoft.Json`, though initially with fewer features for flexibility.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 69,
+    "question": "How does `Span` improve performance in C# applications?",
+    "options": [
+      "By automatically parallelizing loops across CPU cores",
+      "By providing a type-safe and memory-safe representation of a contiguous region of arbitrary memory without allocation",
+      "By converting all value types to reference types",
+      "By compressing data structures to save disk space"
+    ],
+    "answer": "By providing a type-safe and memory-safe representation of a contiguous region of arbitrary memory without allocation",
+    "explanation": "Span is a ref struct that allows safe manipulation of memory buffers (arrays, strings, stack memory) without copying data or allocating new objects, significantly speeding up parsing and processing.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 70,
+    "question": "Which interface allows you to implement a custom asynchronous iterator that returns `IAsyncEnumerable`?",
+    "options": [
+      "IAsyncIterator",
+      "IAsyncEnumerable",
+      "IAwaitable",
+      "IEnumerator"
+    ],
+    "answer": "IAsyncEnumerable",
+    "explanation": "While you don't implement `IAsyncEnumerable` directly on the method, the method returns `IAsyncEnumerable`. The compiler generates the state machine that implements this interface when you use `yield return` in an `async` method marked to return it.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 71,
+    "question": "In .NET memory management, what is the primary consequence of marking a Large Object Heap (LOH) segment as 'pinned' during a garbage collection cycle?",
+    "options": [
+      "It forces the garbage collector to immediately compact the LOH to reduce memory fragmentation",
+      "It prevents the garbage collector from relocating the object, thereby increasing memory fragmentation in the heap",
+      "It converts the object's memory from managed to unmanaged, requiring manual deallocation",
+      "It triggers an immediate Gen 2 garbage collection regardless of the memory pressure thresholds"
+    ],
+    "answer": "It prevents the garbage collector from relocating the object, thereby increasing memory fragmentation in the heap",
+    "explanation": "Pinning an object fixes its memory address, preventing the GC from moving it during compaction. This creates 'holes' in the heap, leading to external fragmentation and preventing efficient memory space reclamation.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 72,
+    "question": "When implementing `IAsyncDisposable` in a C# class that also implements `IDisposable`, what is the correct pattern to ensure resources are cleaned up correctly in both synchronous and asynchronous contexts?",
+    "options": [
+      "The `Dispose` method should call `DisposeAsync` and await its result using `.GetAwaiter().GetResult()`",
+      "Both `Dispose` and `DisposeAsync` should contain identical cleanup logic to handle all scenarios independently",
+      "The `DisposeAsync` method should call the synchronous `Dispose` method to avoid code duplication",
+      "The class should only implement `IAsyncDisposable` and rely on the compiler to generate a synchronous `Dispose` wrapper"
+    ],
+    "answer": "Both `Dispose` and `DisposeAsync` should contain identical cleanup logic to handle all scenarios independently",
+    "explanation": "While logic can be shared via a private helper method, the public methods must handle their specific disposal semantics. Calling `DisposeAsync` from `Dispose` (blocking) is an anti-pattern, and assuming the compiler handles cross-disposal is incorrect.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 73,
+    "question": "In the context of the .NET Thread Pool, what specific condition triggers the 'hill climbing' heuristic to adjust the number of active threads?",
+    "options": [
+      "When the CPU utilization exceeds 90% for a sustained period of 5 seconds",
+      "When the throughput of the application decreases despite an increase in the number of active threads",
+      "When the number of queued work items exceeds the value of `ThreadPool.MinThreads`",
+      "When a garbage collection cycle exceeds the specified latency threshold"
+    ],
+    "answer": "When the throughput of the application decreases despite an increase in the number of active threads",
+    "explanation": "The hill-climbing algorithm adjusts thread injection/retirement based on throughput metrics. If adding more threads results in lower throughput (due to context switching overhead), the algorithm retreats.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 74,
+    "question": "What is the fundamental behavior difference between `ValueTask` and `Task` regarding memory allocation in asynchronous methods?",
+    "options": [
+      "`ValueTask` is a reference type that is always allocated on the Large Object Heap (LOH) to optimize caching",
+      "`Task` always allocates a heap object, while `ValueTask` is a struct that may wrap a `Task` or an `IValueTaskSource` to avoid allocation for awaited async operations",
+      "`ValueTask` eliminates all allocations by forcing the method to run synchronously on the calling thread",
+      "`Task` uses stack allocation for short-lived operations, whereas `ValueTask` always requires heap allocation"
+    ],
+    "answer": "`Task` always allocates a heap object, while `ValueTask` is a struct that may wrap a `Task` or an `IValueTaskSource` to avoid allocation for awaited async operations",
+    "explanation": "`Task` is a class (reference type), causing heap allocation. `ValueTask` is a struct; if the result is cached or synchronous, it avoids allocation entirely by wrapping a reusable interface source.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 75,
+    "question": "How does the `ConcurrentDictionary` handle the `valueFactory` parameter in the `GetOrAdd` method when multiple threads attempt to initialize a value for the same key simultaneously?",
+    "options": [
+      "It uses a global lock to ensure that `valueFactory` is executed exactly once per key across all threads",
+      "It allows the `valueFactory` to run multiple times concurrently for the same key, but only one result is stored and returned",
+      "It serializes access per bucket, ensuring that `valueFactory` is never called concurrently for keys in the same hash bucket",
+      "It throws an `InvalidOperationException` if multiple threads attempt to initialize the same key at the same time"
+    ],
+    "answer": "It allows the `valueFactory` to run multiple times concurrently for the same key, but only one result is stored and returned",
+    "explanation": "To prevent lock contention, `GetOrAdd` does not block the `valueFactory`. If two threads race for a missing key, both may run the factory, but the first one to write wins; subsequent writes are discarded.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 76,
+    "question": "In C#, what is the compiler-generated mechanism that allows iterator blocks (`yield return`) to maintain state between method calls?",
+    "options": [
+      "A state machine class implementing `IEnumerator` or `IEnumerable` with generated switch-label logic",
+      "A closure class capturing local variables similar to lambda expressions",
+      "A continuation-passing style transformation using `TaskCompletionSource`",
+      "A stack frame that is suspended and resumed by the CLR runtime"
+    ],
+    "answer": "A state machine class implementing `IEnumerator` or `IEnumerable` with generated switch-label logic",
+    "explanation": "The C# compiler transforms iterator methods into a private struct or class that implements `IEnumerator`. It uses a generated integer field (`<>1__state`) to track execution flow via switch cases.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 77,
+    "question": "When configuring Kestrel in ASP.NET Core, what is the primary distinction between `MinDataRate` and `MinRequestBodyDataRate`?",
+    "options": [
+      "`MinDataRate` applies only to WebSocket connections, while `MinRequestBodyDataRate` applies to standard HTTP requests",
+      "`MinRequestBodyDataRate` applies specifically to the request body upload, whereas `MinDataRate` is a deprecated legacy alias",
+      "`MinDataRate` sets the threshold for both request and response directions, while `MinRequestBodyDataRate` allows granular control only over the incoming request stream",
+      "There is no functional difference; `MinRequestBodyDataRate` simply overrides the base `MinDataRate` setting for POST requests"
+    ],
+    "answer": "`MinDataRate` sets the threshold for both request and response directions, while `MinRequestBodyDataRate` allows granular control only over the incoming request stream",
+    "explanation": "`MinDataRate` acts as a general setting for the connection. `MinRequestBodyDataRate` allows you to specifically enforce a rate limit on data uploading from the client, independent of the response rate.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 78,
+    "question": "What is the behavior of the `IOptionsSnapshot` in ASP.NET Core regarding the retrieval of configuration values?",
+    "options": [
+      "It computes the configuration values once at application startup and remains constant for the application lifetime",
+      "It recomputes the configuration values once per request scope, capturing changes made since the previous request",
+      "It acts as a singleton that automatically updates when the underlying JSON configuration file is modified on disk",
+      "It validates the configuration options only when the `Validate` method is explicitly called within the controller"
+    ],
+    "answer": "It recomputes the configuration values once per request scope, capturing changes made since the previous request",
+    "explanation": "`IOptionsSnapshot` is registered as Scoped. When injected, it creates a snapshot of the options at the start of the HTTP request, allowing the app to react to configuration changes without a restart.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 79,
+    "question": "Why is using `Task.Run` to execute CPU-bound synchronous work within an ASP.NET Core Web API controller generally considered an anti-pattern?",
+    "options": [
+      "Because it creates an unbounded loop that eventually causes the server to run out of stack memory",
+      "Because it offloads work to the ThreadPool, doubling the context switching overhead without freeing up the request thread",
+      "Because `Task.Run` cannot handle exceptions thrown by CPU-bound operations, leading to unobserved task failures",
+      "Because the ASP.NET Core request pipeline runs synchronously, preventing `Task.Run` from executing on a background thread"
+    ],
+    "answer": "Because it offloads work to the ThreadPool, doubling the context switching overhead without freeing up the request thread",
+    "explanation": "ASP.NET Core does not use the 'request thread' model (like legacy ASP.NET). The request thread is already a ThreadPool thread; offloading it to another ThreadPool thread just wastes CPU cycles on context switching.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 80,
+    "question": "In System.Text.Json, what is the purpose of the `JsonTypeInfo` resolver when using Source Generators?",
+    "options": [
+      "It compiles JSON schemas directly into IL to bypass the `System.Text.Json` serialization runtime completely",
+      "It generates C# source code at compile time that contains optimized logic for serialization/deserialization, avoiding reflection and runtime metadata generation",
+      "It creates a proxy class that intercepts JSON calls to validate them against a JSON schema at compile time",
+      "It converts the JSON object into a binary format (MessagePack) before transmission to reduce payload size"
+    ],
+    "answer": "It generates C# source code at compile time that contains optimized logic for serialization/deserialization, avoiding reflection and runtime metadata generation",
+    "explanation": "Source generators create code ahead-of-time (AOT) compatible logic. This eliminates the performance cost and trimming issues associated with using reflection to inspect types at runtime.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 81,
+    "question": "What is the specific technical requirement for a .NET object to be successfully used as a key in a `Hashtable` or `Dictionary`?",
+    "options": [
+      "The object must be immutable and implement `IEquatable` explicitly to prevent hash code changes",
+      "The object must override `GetHashCode` and `Equals` methods to ensure consistent equality comparison and hash value generation",
+      "The object must be a `struct` (value type) to ensure that copies are made rather than references",
+      "The object must implement the `IComparable` interface to allow the dictionary to sort entries for faster lookup"
+    ],
+    "answer": "The object must override `GetHashCode` and `Equals` methods to ensure consistent equality comparison and hash value generation",
+    "explanation": "Dictionaries rely on hash codes to bucket items and equality checks to resolve collisions. The default implementation (reference equality) is often insufficient for logical object equality.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 82,
+    "question": "What does the 'finalizer queue' in .NET refer to in the context of garbage collection and object lifecycle?",
+    "options": [
+      "A list of objects that have been promoted to Generation 2 and are waiting for a compacting operation",
+      "A list of objects that are registered for a finalizer but have not yet had their `Finalize` method called by the GC",
+      "A FIFO queue of threads waiting to acquire a lock on the critical section used by the garbage collector",
+      "A collection of weak references that are checked by the CLR before unloading an Application Domain"
+    ],
+    "answer": "A list of objects that are registered for a finalizer but have not yet had their `Finalize` method called by the GC",
+    "explanation": "When an object with a finalizer is collected, it is not immediately reclaimed. The GC moves it to the finalizer queue (F-reachable queue), and a dedicated thread runs the finalizer before the memory can actually be freed.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 83,
+    "question": "In the context of ASP.NET Core Minimal APIs, how are route parameters bound to complex types that do not have a `[FromRoute]` or `[FromQuery]` attribute?",
+    "options": [
+      "They are bound by attempting to match the property names of the type to the current route values, query string, and request body in that specific order",
+      "They are strictly bound from the request body assuming the content-type is `application/json`",
+      "They are not bound automatically; Minimal APIs strictly require primitive types as parameters or explicit attributes",
+      "They are bound using the `IServiceProvider` to resolve the type from Dependency Injection"
+    ],
+    "answer": "They are bound by attempting to match the property names of the type to the current route values, query string, and request body in that specific order",
+    "explanation": "Minimal APIs use an 'attempted binding' order. It checks Route, then Query, then Body. If a property name matches a source in those collections, it attempts to map and convert the value.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 84,
+    "question": "What is the primary risk of using `ThreadStatic` or `ThreadLocal` variables in an ASP.NET Core application?",
+    "options": [
+      "They cause memory leaks because the CLR cannot garbage collect objects referenced by static fields",
+      "They lead to race conditions because the locking mechanism for static variables is not supported by Kestrel",
+      "They can cause unexpected behavior because ASP.NET Core threads may be reused for different requests, carrying over state from previous operations",
+      "They violate the principle of Immutability required for RESTful services"
+    ],
+    "answer": "They can cause unexpected behavior because ASP.NET Core threads may be reused for different requests, carrying over state from previous operations",
+    "explanation": "ASP.NET Core relies on the ThreadPool. A thread finishing Request A might immediately start Request B. `ThreadLocal` data initialized in Request A will persist and be visible in Request B, causing data contamination.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 85,
+    "question": "When using `Span`, why is it restricted to stack-only allocation?",
+    "options": [
+      "Because the CLR GC cannot track pointers to managed objects stored on the Large Object Heap",
+      "Because `Span` contains a managed pointer (ref) to memory, and allowing it on the heap would require GC to update pointers inside the object during compaction, which is not supported for arbitrary objects",
+      "Because `Span` is designed primarily for interop with unmanaged C APIs which only support stack memory pointers",
+      "Because `Span` implements `IDisposable` implicitly to prevent memory leaks"
+    ],
+    "answer": "Because `Span` contains a managed pointer (ref) to memory, and allowing it on the heap would require GC to update pointers inside the object during compaction, which is not supported for arbitrary objects",
+    "explanation": "A `Span` effectively is `ref T`. Objects on the heap can be moved by the GC. If an object on the heap contained a `ref` to another object, the GC would struggle to track and update these interior pointers reliably without complex hooks.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 86,
+    "question": "How does the .NET `MemoryCache` (specifically `IMemoryCache`) handle object eviction when the `SizeLimit` is configured?",
+    "options": [
+      "It strictly prevents new items from being added once the total size of the cache reaches the limit, throwing a `FullCacheException`",
+      "It uses a Least Recently Used (LRU) algorithm to automatically evict entries when the memory limit is exceeded",
+      "It relies on the developer to implement `CacheItemPriority` logic, as the standard implementation does not perform size-based eviction automatically",
+      "It triggers a background thread that proactively removes items based on a sliding expiration window"
+    ],
+    "answer": "It relies on the developer to implement `CacheItemPriority` logic, as the standard implementation does not perform size-based eviction automatically",
+    "explanation": "Unlike `AppDomain` cache in older .NET Framework, the stock `MemoryCache` in .NET Core/5+ does not automatically evict based on size unless you register a `PostEvictionCallback` or use a specific implementation like `SizeLimitedCache` policies manually.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 87,
+    "question": "What is the 'Captive Dependency' problem in the context of Dependency Injection (DI) in .NET?",
+    "options": [
+      "When a Singleton service injects a Scoped service, causing the Scoped service to live longer than its intended lifespan",
+      "When a Scoped service injects a Singleton service, preventing the Singleton from being garbage collected",
+      "When a Transient service injects another Transient service that holds a reference to a static variable",
+      "When the `IServiceProvider` is disposed of while there are still active Scoped dependencies running in background threads"
+    ],
+    "answer": "When a Singleton service injects a Scoped service, causing the Scoped service to live longer than its intended lifespan",
+    "explanation": "A Singleton is created once. If it holds a reference to a Scoped service (which should vary per request), that Scoped instance is effectively captured by the Singleton and persists indefinitely, violating its lifecycle contract.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 88,
+    "question": "In Entity Framework Core, what is the specific effect of calling `AsNoTracking()` on a `DbSet` or `IQueryable`?",
+    "options": [
+      "It disables lazy loading entirely for the duration of the context connection",
+      "It instructs EF Core to bypass the change tracker, resulting in faster queries but preventing updates to those entities without re-attaching them",
+      "It converts the query execution from LINQ to Entities to LINQ to Objects immediately, filtering data in-memory",
+      "It sets the `CommandTimeout` to 0, allowing the query to run indefinitely until the database server responds"
+    ],
+    "answer": "It instructs EF Core to bypass the change tracker, resulting in faster queries but preventing updates to those entities without re-attaching them",
+    "explanation": "The Change Tracker maintains snapshots of entities for `DetectChanges`. `AsNoTracking` skips this overhead. The tradeoff is that the context doesn't know about these entities, so `SaveChanges` will ignore them.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 89,
+    "question": "What is the function of the `IHostedService` interface in ASP.NET Core (.NET 6+)?",
+    "options": [
+      "It replaces `IController` to allow background processing of HTTP requests",
+      "It provides a mechanism to register middleware components that execute before the routing pipeline",
+      "It allows the execution of background tasks (long-running services) within the application's lifetime, started when the host starts and stopped when the host stops",
+      "It serves as a wrapper for `Startup.cs` to enable dependency injection configuration"
+    ],
+    "answer": "It allows the execution of background tasks (long-running services) within the application's lifetime, started when the host starts and stopped when the host stops",
+    "explanation": "`IHostedService` implementations (like the `BackgroundService` base class) are managed by the generic host. Their `StartAsync` is called during host startup and `StopAsync` during shutdown, managing lifecycle for tasks like queue processing.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 90,
+    "question": "In C#, what happens when you box a `Nullable` instance (e.g., `int?`) where `HasValue` is false?",
+    "options": [
+      "It throws a `NullReferenceException` because the struct does not contain a value to box",
+      "It boxes the underlying `int` as 0 (the default value of the struct)",
+      "It results in a null reference, simply assigning `null` to the object variable",
+      "It boxes a special `NullObject` singleton to represent the absence of a value"
+    ],
+    "answer": "It results in a null reference, simply assigning `null` to the object variable",
+    "explanation": "The C# compiler applies a special rule for boxing nullable types. If the nullable instance has no value, boxing produces a null reference instead of raising an exception or boxing a zero.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 91,
+    "question": "What is the 'SynchronizationContext' in .NET and how does it affect `await` in UI applications (WPF/WinForms)?",
+    "options": [
+      "It represents the main thread's message queue, and `await` defaults to capturing it to resume execution on the UI thread, unless `ConfigureAwait(false)` is used",
+      "It is a locking mechanism used by the `lock` statement to ensure thread safety for UI elements",
+      "It acts as a scheduler for the ThreadPool, prioritizing UI events over background tasks",
+      "It is a buffer used to store exceptions thrown in asynchronous methods so they can be re-thrown on the UI thread"
+    ],
+    "answer": "It represents the main thread's message queue, and `await` defaults to capturing it to resume execution on the UI thread, unless `ConfigureAwait(false)` is used",
+    "explanation": "UI frameworks have a `SynchronizationContext` that posts work to the UI thread. When `await` captures this context, the continuation runs on the UI thread, allowing safe access to UI controls.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 92,
+    "question": "When dealing with `HttpClient` in .NET, why is the 'static instance' pattern recommended over `using` (disposal) for short-lived operations?",
+    "options": [
+      "Because disposing the `HttpClient` closes the underlying TCP socket, leading to `TIME_WAIT` state exhaustion and socket exhaustion under load",
+      "Because `HttpClient` is a Singleton pattern by design and cannot be instantiated more than once per process",
+      "Because the `HttpClient` uses a large amount of unmanaged memory that should be kept alive for the lifetime of the app",
+      "Because DNS changes cannot be detected if the client is disposed and recreated frequently"
+    ],
+    "answer": "Because disposing the `HttpClient` closes the underlying TCP socket, leading to `TIME_WAIT` state exhaustion and socket exhaustion under load",
+    "explanation": "`HttpClient` manages `HttpConnection` pooling. Disposing it closes the connection. Rapid creation/disposal exhausts available sockets because they remain in `TIME_WAIT` for a period after closing.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 93,
+    "question": "What is the primary performance implication of using `Expression` trees (e.g., in EF Core or LINQ) compared to `Func` delegates?",
+    "options": [
+      "`Expression` trees are compiled to IL at runtime, whereas `Func` delegates are interpreted, making `Func` faster",
+      "`Expression` trees can be serialized and traversed to construct SQL (or other languages), whereas `Func` delegates are executable code blocks that cannot be analyzed for translation",
+      "`Func` delegates cause boxing/unboxing overhead on value types, while `Expression` trees avoid this by manipulating pointers directly",
+      "`Expression` trees run on a background thread by default, improving UI responsiveness"
+    ],
+    "answer": "`Expression` trees can be serialized and traversed to construct SQL (or other languages), whereas `Func` delegates are executable code blocks that cannot be analyzed for translation",
+    "explanation": "Providers (like EF Core) need to parse the query structure to generate T-SQL. `Func` is a compiled pointer to code; the provider cannot 'see' inside it. `Expression` is a data structure representing the code logic.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 94,
+    "question": "In the context of .NET Assemblies, what is 'IL weaving' (or IL rewriting)?",
+    "options": [
+      "The process the JIT compiler uses to convert Intermediate Language into native machine code at runtime",
+      "A build-time technique where 3rd party tools (like PostSharp or Fody) inject code into the IL assembly before it is executed, usually for cross-cutting concerns",
+      "The process of merging multiple DLLs into a single executable to simplify deployment",
+      "The act of the CLR rearranging IL instructions to optimize branch prediction during the NGEN process"
+    ],
+    "answer": "A build-time technique where 3rd party tools (like PostSharp or Fody) inject code into the IL assembly before it is executed, usually for cross-cutting concerns",
+    "explanation": "IL weaving involves modifying the binary IL after compilation but before execution. This is commonly used for AOP (Aspect-Oriented Programming) to implement logging, transactions, or property change notification.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 95,
+    "question": "What is the `ExecutionContext` in .NET and why is it crucial for async/await flows?",
+    "options": [
+      "It is the stack frame that holds the local variables of the method currently being executed",
+      "It manages the flow of ambient information (like `CallContext`, `CultureInfo`, and `AsyncLocal`) across threads during asynchronous operations",
+      "It represents the security token used to verify that the assembly has permission to execute the code",
+      "It acts as a container for `Exception` objects, ensuring they are propagated correctly to the calling thread"
+    ],
+    "answer": "It manages the flow of ambient information (like `CallContext`, `CultureInfo`, and `AsyncLocal`) across threads during asynchronous operations",
+    "explanation": "When `await` suspends a method, the thread returns to the pool. When it resumes, it may be on a different thread. The `ExecutionContext` captures and restores logical context data so the environment remains consistent.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 96,
+    "question": "What specific problem does the 'double-checked locking' pattern attempt to solve in singleton implementation?",
+    "options": [
+      "It prevents the garbage collector from collecting the singleton instance before it is fully initialized",
+      "It minimizes synchronization overhead by checking the lock condition before entering the critical section, only locking if the instance is null",
+      "It ensures that the singleton constructor is thread-safe when accessing static readonly fields",
+      "It resolves the dead-lock issue that occurs when two threads attempt to initialize the singleton simultaneously"
+    ],
+    "answer": "It minimizes synchronization overhead by checking the lock condition before entering the critical section, only locking if the instance is null",
+    "explanation": "Locks are expensive. Double-checked locking first checks if the instance exists without a lock (fast path). If null, it acquires the lock and checks again (to prevent race conditions) before creating.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 97,
+    "question": "How does `System.String.Intern` method behave regarding string memory management?",
+    "options": [
+      "It copies the string from the stack to the heap to ensure it survives the end of the current method",
+      "It checks if a string with the same value exists in the intern pool; if so, it returns a reference to the existing string, otherwise it adds the string to the pool",
+      "It compresses the string using a GZIP algorithm to save memory in the Large Object Heap",
+      "It forcefully removes the string from the internal hash table used by the garbage collector for string comparison"
+    ],
+    "answer": "It checks if a string with the same value exists in the intern pool; if so, it returns a reference to the existing string, otherwise it adds the string to the pool",
+    "explanation": "String interning maintains a table of unique string literals. `Intern` returns a reference to the canonical representation, allowing reference equality comparisons (`object.ReferenceEquals`) for value equality.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 98,
+    "question": "What is the behavior of `MarshalByRefObject` in .NET Remoting contexts?",
+    "options": [
+      "It creates a deep copy of the object and serializes it across the application domain boundary",
+      "It allows access to an object across application domain boundaries by using a proxy (reference) rather than copying the object itself",
+      "It restricts the object to only run within the main application domain for security purposes",
+      "It automatically marshals the object to unmanaged memory for interop with C++ DLLs"
+    ],
+    "answer": "It allows access to an object across application domain boundaries by using a proxy (reference) rather than copying the object itself",
+    "explanation": "Objects inheriting from `MarshalByRefObject` are accessed by reference across domains. Calls are intercepted by a proxy and remoted to the actual object in the owning domain, keeping the state in the source domain.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 99,
+    "question": "When implementing a `CustomExceptionHandler` middleware in ASP.NET Core, what is the critical requirement regarding the `next` parameter?",
+    "options": [
+      "The `next` parameter must be invoked inside a `try` block; if not called, the pipeline terminates and subsequent middleware never execute",
+      "The `next` parameter must be null to ensure the handler captures all exceptions before they reach the Kestrel server",
+      "The `next` parameter must be `await`-ed twice to ensure the response buffer is flushed correctly",
+      "The `next` parameter must be cast to `IMiddleware` to access the `HttpContext` features"
+    ],
+    "answer": "The `next` parameter must be invoked inside a `try` block; if not called, the pipeline terminates and subsequent middleware never execute",
+    "explanation": "The middleware chain is a linked list. The request passes down via `_next()`. If you forget to call `_next`, the short-circuits, preventing subsequent middleware or the actual endpoint handler from running.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 100,
+    "question": "In C#, what is the purpose of the `volatile` keyword when applied to a field?",
+    "options": [
+      "It ensures that the field is stored in the CPU L1 cache for faster access",
+      "It instructs the compiler and the JIT to disable optimizations (like caching in registers) and ensures reads/writes occur directly from main memory in program order",
+      "It makes the field thread-safe by automatically wrapping all access to it in a `lock` statement",
+      "It prevents the Garbage Collector from moving the object in memory, effectively pinning it"
+    ],
+    "answer": "It instructs the compiler and the JIT to disable optimizations (like caching in registers) and ensures reads/writes occur directly from main memory in program order",
+    "explanation": "Without `volatile`, compilers/CPU may reorder reads/writes or cache values in registers for optimization. `volatile` enforces immediate memory visibility to all threads, though it does not provide atomicity for complex operations.",
+    "difficulty": "Advanced"
+  }
+]
