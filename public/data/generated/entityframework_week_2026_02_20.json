@@ -1,0 +1,1302 @@
+[
+  {
+    "id": 1,
+    "question": "What is the primary purpose of Entity Framework Core in the .NET ecosystem?",
+    "options": [
+      "To provide a low-level socket programming interface",
+      "To act as an Object-Relational Mapper (ORM) between .NET objects and a database",
+      "To compile C# code into machine language",
+      "To manage user authentication and authorization"
+    ],
+    "answer": "To act as an Object-Relational Mapper (ORM) between .NET objects and a database",
+    "explanation": "Entity Framework Core is an ORM that enables developers to work with relational data using domain-specific objects, abstracting the underlying ADO.NET data provider.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 2,
+    "question": "Which class serves as the primary bridge between your entity classes and the database?",
+    "options": [
+      "DbConnection",
+      "DbContext",
+      "DbSet",
+      "SqlConnection"
+    ],
+    "answer": "DbContext",
+    "explanation": "The DbContext instance represents the session with the database and is responsible for tracking changes to entities and querying the database.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 3,
+    "question": "In EF Core, what does the `DbSet<TEntity>` property inside a `DbContext` represent?",
+    "options": [
+      "A stored procedure in the database",
+      "A transaction isolation level",
+      "A collection of entities that maps to a database table or view",
+      "A connection string configuration"
+    ],
+    "answer": "A collection of entities that maps to a database table or view",
+    "explanation": "A `DbSet` corresponds to a table in the database and provides methods to query, add, update, and delete instances of the entity type.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 4,
+    "question": "Which method is used to persist all changes made to entities in the context to the database?",
+    "options": [
+      "context.Submit()",
+      "context.Commit()",
+      "context.SaveChanges()",
+      "context.Flush()"
+    ],
+    "answer": "context.SaveChanges()",
+    "explanation": "`SaveChanges()` writes the current state of tracked entities to the database, wrapping the operation in a transaction.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 5,
+    "question": "What is the default Entity Framework Core approach for naming database tables?",
+    "options": [
+      "It uses the class name suffixed with 's'",
+      "It uses the class name exactly as it is defined (pluralization is off by default)",
+      "It uses the namespace combined with the class name",
+      "It generates a random GUID for the table name"
+    ],
+    "answer": "It uses the class name exactly as it is defined (pluralization is off by default)",
+    "explanation": "Unlike EF6, EF Core does not pluralize table names by default; it uses the exact `DbSet` property name or entity class name.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 6,
+    "question": "Which `EntityState` indicates that an entity exists in the database but is currently marked for deletion when `SaveChanges` is called?",
+    "options": [
+      "Detached",
+      "Modified",
+      "Deleted",
+      "Removed"
+    ],
+    "answer": "Deleted",
+    "explanation": "The `Deleted` state signifies that the entity was retrieved from the database and subsequently removed using the `Remove` method.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 7,
+    "question": "How does EF Core identify entities that are new and should be inserted during `SaveChanges`?",
+    "options": [
+      "They are assigned the EntityState of `Added`",
+      "They have a property with the [Key] attribute",
+      "They are always at the top of the DbSet list",
+      "They are detected by the absence of a namespace"
+    ],
+    "answer": "They are assigned the EntityState of `Added`",
+    "explanation": "Entities tracked with the `Added` state are treated as new records that do not yet exist in the database and will be inserted.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 8,
+    "question": "What happens when you call `context.Database.EnsureCreated()`?",
+    "options": [
+      "It drops and recreates the database if it exists",
+      "It creates the database if it does not exist, but does nothing if it already does",
+      "It creates a new migration snapshot",
+      "It checks for the latest NuGet package updates"
+    ],
+    "answer": "It creates the database if it does not exist, but does nothing if it already does",
+    "explanation": "`EnsureCreated` is a quick way to initialize a schema for prototyping, though it skips migrations and cannot update an existing schema.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 9,
+    "question": "Which method allows you to eagerly load related entities as part of the initial query?",
+    "options": [
+      "Include()",
+      "Load()",
+      "Join()",
+      "Fetch()"
+    ],
+    "answer": "Include()",
+    "explanation": "`Include` is a LINQ extension method used to specify related objects to be included in the query results (eager loading).",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 10,
+    "question": "In EF Core, what is the purpose of the `OnModelCreating` method?",
+    "options": [
+      "To open a database connection",
+      "To execute raw SQL commands",
+      "To configure the model using the Fluent API",
+      "To handle connection timeouts"
+    ],
+    "answer": "To configure the model using the Fluent API",
+    "explanation": "`OnModelCreating` allows developers to override the default conventions and configure entity properties and relationships using the Fluent API.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 11,
+    "question": "Which data annotation is required to mark a property as the Primary Key if it does not follow the naming convention 'Id'?",
+    "options": [
+      "[DatabaseGenerated]",
+      "[Key]",
+      "[Required]",
+      "[Index]"
+    ],
+    "answer": "[Key]",
+    "explanation": "By default, EF Core looks for a property named `Id` or `<TypeName>Id`. The `[Key]` attribute explicitly overrides this convention.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 12,
+    "question": "What is the primary difference between the `Add` and `Attach` methods in `DbContext`?",
+    "options": [
+      "Add updates the database; Attach reads from it",
+      "Add attaches entities as `Unchanged`, Attach attaches them as `Added`",
+      "Add attaches entities as `Added`, Attach attaches them as `Unchanged`",
+      "There is no difference; they are aliases"
+    ],
+    "answer": "Add attaches entities as `Added`, Attach attaches them as `Unchanged`",
+    "explanation": "`Add` is used for new entities (insert), while `Attach` is used for existing entities to track them without assuming changes (no update).",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 13,
+    "question": "Which command in the Package Manager Console is used to scaffold a new migration based on changes to your entity classes?",
+    "options": [
+      "Update-Database",
+      "Add-Migration",
+      " Scaffold-DbContext",
+      "Drop-Database"
+    ],
+    "answer": "Add-Migration",
+    "explanation": "`Add-Migration` creates the code files (Up/Down methods) necessary to apply the detected changes in the entity model to the database schema.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 14,
+    "question": "What does the `Update-Database` command do?",
+    "options": [
+      "It installs the latest EF Core NuGet packages",
+      "It regenerates the entity classes",
+      "It applies pending migrations to the database",
+      "It deletes the database and recreates it"
+    ],
+    "answer": "It applies pending migrations to the database",
+    "explanation": "`Update-Database` executes the `Up` method of the pending migration files to bring the database schema in sync with the model.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 15,
+    "question": "In the Code First approach, what defines the database schema?",
+    "options": [
+      "A visual EDMX diagram file",
+      "The POCO (Plain Old CLR Objects) entity classes and configuration",
+      "An existing SQL Server database",
+      "A JSON configuration file"
+    ],
+    "answer": "The POCO (Plain Old CLR Objects) entity classes and configuration",
+    "explanation": "In Code First, the developer defines .NET classes, and EF Core infers the schema or creates it using Migrations.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 16,
+    "question": "Which LINQ method executes the query immediately and returns results into memory?",
+    "options": [
+      "Where()",
+      "OrderBy()",
+      "ToList()",
+      "AsQueryable()"
+    ],
+    "answer": "ToList()",
+    "explanation": "Methods like `Where` build up expression trees (deferred execution). `ToList` forces the query to run against the database and return results.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 17,
+    "question": "What is the default behavior of EF Core regarding change tracking for entities queried from the database?",
+    "options": [
+      "It does not track them by default",
+      "It tracks them automatically with a state of `Unchanged`",
+      "It immediately locks the database rows",
+      "It converts them to JSON"
+    ],
+    "answer": "It tracks them automatically with a state of `Unchanged`",
+    "explanation": "When entities are queried, EF Core snapshots their values and sets their state to `Unchanged` to detect future modifications.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 18,
+    "question": "What is a Shadow Property in Entity Framework Core?",
+    "options": [
+      "A property that is private in the C# class",
+      "A property defined only in the database model but not in the entity class",
+      "A property that is ignored by the migration generator",
+      "A property that is deprecated"
+    ],
+    "answer": "A property defined only in the database model but not in the entity class",
+    "explanation": "Shadow properties exist in the EF Core model but are not declared in the entity class; they are often used for foreign keys or audit fields.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 19,
+    "question": "Which method is used to execute a raw SQL query that returns entity types?",
+    "options": [
+      "context.Database.ExecuteSqlRaw",
+      "context.Set<TEntity>().FromSqlRaw",
+      "context.ExecuteQuery",
+      "context.Query<TEntity>().Sql"
+    ],
+    "answer": "context.Set<TEntity>().FromSqlRaw",
+    "explanation": "`FromSqlRaw` allows you to execute a SQL SELECT statement and have the results mapped to entity instances.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 20,
+    "question": "What is the result of setting `AsNoTracking()` on a LINQ query?",
+    "options": [
+      "The query will throw an exception if the table is empty",
+      "The entities returned will not be tracked by the DbContext",
+      "The query execution will be delayed indefinitely",
+      "The database connection will remain open indefinitely"
+    ],
+    "answer": "The entities returned will not be tracked by the DbContext",
+    "explanation": "`AsNoTracking` improves performance for read-only scenarios by telling EF Core not to maintain change tracker information for the results.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 21,
+    "question": "Which data annotation is used to specify the maximum length of a string property?",
+    "options": [
+      "[StringLength]",
+      "[MaxLength]",
+      "[Length]",
+      "[Size]"
+    ],
+    "answer": "[MaxLength]",
+    "explanation": "`[MaxLength]` maps to a `nvarchar(n)` or `varchar(n)` column in the database. `[StringLength]` provides validation in ASP.NET MVC but `[MaxLength]` dictates EF Core schema generation.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 22,
+    "question": "What is the function of the `ModelSnapshot` file generated by migrations?",
+    "options": [
+      "To backup the database data",
+      "To store the current state of the model to calculate the next migration",
+      "To record the user who ran the migration",
+      "To optimize the database indexes"
+    ],
+    "answer": "To store the current state of the model to calculate the next migration",
+    "explanation": "The snapshot represents the model after the last migration, allowing EF Core to diff the current model against it to generate the next migration.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 23,
+    "question": "How does EF Core typically determine the end of a relationship in a Foreign Key convention?",
+    "options": [
+      "By the order of properties in the class",
+      "By looking for a property with the same name as the navigation property plus 'Id'",
+      "By randomly assigning an integer",
+      "By looking for the first integer property"
+    ],
+    "answer": "By looking for a property with the same name as the navigation property plus 'Id'",
+    "explanation": "If you have a navigation property named `Blog`, EF Core expects a foreign key property named `BlogId` by convention.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 24,
+    "question": "Which method is used to explicitly detach an entity from the Change Tracker?",
+    "options": [
+      "context.Entry(entity).State = EntityState.Detached",
+      "context.Detach(entity)",
+      "entity.Detach()",
+      "context.Remove(entity)"
+    ],
+    "answer": "context.Entry(entity).State = EntityState.Detached",
+    "explanation": "There is no `Detach` method on `DbContext`; you must access the `EntityEntry` for the object and set its `State` property.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 25,
+    "question": "In the context of EF Core Migrations, what does the `Down` method represent?",
+    "options": [
+      "Actions to take to apply the migration",
+      "Actions to take to revert the migration",
+      "Actions to take before deleting the database",
+      "Actions to take to optimize the query"
+    ],
+    "answer": "Actions to take to revert the migration",
+    "explanation": "The `Up` method applies the changes, while the `Down` method reverses them, allowing rollback functionality.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 26,
+    "question": "Which of the following correctly configures a one-to-many relationship using Fluent API?",
+    "options": [
+      "entityBuilder.HasOne(x => x.Parent).WithMany(x => x.Children)",
+      "entityBuilder.HasMany(x => x.Parent).WithOne(x => x.Children)",
+      "entityBuilder.OneToOne(x => x.Parent)",
+      "entityBuilder.Map(x => x.Parent, x => x.Children)"
+    ],
+    "answer": "entityBuilder.HasOne(x => x.Parent).WithMany(x => x.Children)",
+    "explanation": "The Fluent API expresses relationships from the perspective of the entity being configured. `HasOne` defines the reference, and `WithMany` defines the collection on the other side.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 27,
+    "question": "What happens if you call `SaveChanges` but no changes have been detected in the tracked entities?",
+    "options": [
+      "An exception is thrown",
+      "The database connection remains open indefinitely",
+      "No database commands are executed and 0 is returned",
+      "The database is dropped"
+    ],
+    "answer": "No database commands are executed and 0 is returned",
+    "explanation": "If the Change Tracker detects no entities with `Added`, `Modified`, or `Deleted` states, `SaveChanges` simply returns 0 without touching the database.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 28,
+    "question": "Which method allows you to find an entity by its primary key, checking the context cache before querying the database?",
+    "options": [
+      "context.Single()",
+      "context.Find()",
+      "context.FirstOrDefault()",
+      "context.Search()"
+    ],
+    "answer": "context.Find()",
+    "explanation": "`Find` is optimized to look in the `ChangeTracker` first; if the entity is already loaded, it returns it without a database round-trip.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 29,
+    "question": "What is the purpose of the `[Timestamp]` data annotation?",
+    "options": [
+      "To store the creation date of the record",
+      "To handle concurrency conflicts by using a row version",
+      "To format the date display in the UI",
+      "To ensure the column is indexed"
+    ],
+    "answer": "To handle concurrency conflicts by using a row version",
+    "explanation": "`[Timestamp]` maps to a rowversion column (e.g., SQL Server `timestamp`), which changes automatically on every update and is used to detect conflicts.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 30,
+    "question": "In EF Core, what does the `HasDefaultSchema` method configure?",
+    "options": [
+      "The default SQL Server instance to connect to",
+      "The default database schema (e.g., 'dbo' or '_logging')",
+      "The default connection timeout",
+      "The default naming convention for tables"
+    ],
+    "answer": "The default database schema (e.g., 'dbo' or '_logging')",
+    "explanation": "`HasDefaultSchema` sets the schema where tables will be created if not otherwise specified, useful for organizing database objects.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 31,
+    "question": "Why is it generally recommended to dispose of the `DbContext` instance when you are done with it?",
+    "options": [
+      "To ensure the application exits faster",
+      "To release unmanaged resources like database connections",
+      "To clear the browser cache",
+      "To stop the SQL Server service"
+    ],
+    "answer": "To release unmanaged resources like database connections",
+    "explanation": "`DbContext` manages database connections (unmanaged resources). Failing to dispose of it can lead to connection leaks in applications.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 32,
+    "question": "Which of the following is NOT a valid way to configure an entity in EF Core?",
+    "options": [
+      "Data Annotations (Attributes)",
+      "Fluent API (OnModelCreating)",
+      "appsettings.json",
+      "Conventions"
+    ],
+    "answer": "appsettings.json",
+    "explanation": "While `appsettings.json` holds the connection string, the entity mappings (relationships, keys, types) are configured via Attributes, Fluent API, or default Conventions.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 33,
+    "question": "What is the result of the `[NotMapped]` attribute?",
+    "options": [
+      "The property is ignored by the migration generator and not stored in the database",
+      "The property is encrypted in the database",
+      "The property is indexed for faster searching",
+      "The property becomes a primary key"
+    ],
+    "answer": "The property is ignored by the migration generator and not stored in the database",
+    "explanation": "`[NotMapped]` explicitly excludes a property from the database schema, allowing it to exist only in the C# class.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 34,
+    "question": "Which method is used to execute a non-query SQL command (like INSERT, UPDATE, DELETE) directly?",
+    "options": [
+      "context.Database.ExecuteSqlRaw",
+      "context.Database.ExecuteSqlCommand",
+      "context.Set.FromSqlRaw",
+      "context.Query.Sql"
+    ],
+    "answer": "context.Database.ExecuteSqlRaw",
+    "explanation": "`ExecuteSqlRaw` allows execution of raw SQL that does not return entities, useful for bulk updates or executing stored procedures.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 35,
+    "question": "When using Fluent API, how do you configure the precision and scale of a `decimal` property?",
+    "options": [
+      "builder.Property(x => x.Price).HasColumnType('decimal(10,2)')",
+      "builder.Property(x => x.Price).HasPrecision(10, 2)",
+      "builder.Property(x => x.Price).ValueGeneratedOnAdd()",
+      "builder.Decimal(x => x.Price, 10, 2)"
+    ],
+    "answer": "builder.Property(x => x.Price).HasPrecision(10, 2)",
+    "explanation": "`HasPrecision` is the specific Fluent API method used to define the precision (total digits) and scale (decimal places) for decimal columns.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 36,
+    "question": "In Entity Framework Core, what is the resulting `EntityState` when a disconnected entity with a non-zero primary key is attached to the context using the `Attach` method?",
+    "options": [
+      "Added",
+      "Modified",
+      "Unchanged",
+      "Deleted"
+    ],
+    "answer": "Unchanged",
+    "explanation": "The `Attach` method forces an entity into the `Unchanged` state, whereas the `Update` method forces it into the `Modified` state. EF Core assumes that an entity retrieved from the database is currently unchanged.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 37,
+    "question": "Which method is used to explicitly disable the automatic detection of changes in `ChangeTracker` to improve performance during bulk operations?",
+    "options": [
+      "context.ChangeTracker.AutoDetectChangesEnabled = false",
+      "context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking",
+      "context.ChangeTracker.DetectChanges()",
+      "context.Configuration.AutoDetectChangesEnabled = false"
+    ],
+    "answer": "context.ChangeTracker.AutoDetectChangesEnabled = false",
+    "explanation": "Setting `AutoDetectChangesEnabled` to false prevents EF Core from automatically scanning entities for changes, which is necessary for high-performance bulk updates where you manually call `DetectChanges`.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 38,
+    "question": "When using Entity Framework Core, what exception is thrown when `SaveChanges` fails due to a database constraint violation, such as a duplicate primary key?",
+    "options": [
+      "DbUpdateConcurrencyException",
+      "DbUpdateException",
+      "InvalidOperationException",
+      "SqlException"
+    ],
+    "answer": "DbUpdateException",
+    "explanation": "`DbUpdateException` wraps database-specific errors, including constraint violations. `DbUpdateConcurrencyException` is a subclass used specifically for optimistic concurrency conflicts.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 39,
+    "question": "What is the primary purpose of the `ModelSnapshot.cs` file generated by Entity Framework Core Migrations?",
+    "options": [
+      "To store the current state of the database schema for rollback purposes",
+      "To record the model state at the last migration to detect changes for the next migration",
+      "To act as a backup of the actual database data",
+      "To configure the Fluent API mappings for entities"
+    ],
+    "answer": "To record the model state at the last migration to detect changes for the next migration",
+    "explanation": "The snapshot represents the model's state after the last migration was applied. EF Core compares the current model against this snapshot to calculate the diff for the new migration.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 40,
+    "question": "In a one-to-many relationship configured via Fluent API, which method is used to explicitly define the foreign key property?",
+    "options": [
+      "HasPrincipalKey",
+      "HasForeignKey",
+      "WithOne",
+      "HasMany"
+    ],
+    "answer": "HasForeignKey",
+    "explanation": "`HasForeignKey` is used in the relationship configuration to specify which property on the dependent entity acts as the foreign key. `HasPrincipalKey` defines the unique key on the principal side.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 41,
+    "question": "What is the default behavior of EF Core when a navigation property is defined as `virtual` in a POCO class?",
+    "options": [
+      "It enables lazy loading if proxies are configured",
+      "It enables eager loading automatically",
+      "It configures the relationship as optional",
+      "It creates a shadow property for the foreign key"
+    ],
+    "answer": "It enables lazy loading if proxies are configured",
+    "explanation": "Virtual properties allow the EF Core proxy framework to override the property to support lazy loading. Without proxy configuration, the keyword has no effect.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 42,
+    "question": "Which EF Core method is used to execute a raw SQL query that returns entity instances, allowing the context to track the results?",
+    "options": [
+      "ExecuteSqlRaw",
+      "ExecuteSqlInterpolated",
+      "FromSqlRaw",
+      "Database.ExecuteSqlRaw"
+    ],
+    "answer": "FromSqlRaw",
+    "explanation": "`FromSqlRaw` is used on `DbSet` to execute a SQL query that returns entity data. If the query returns entity types, the results are automatically tracked by the context, unlike `ExecuteSqlRaw` which is for non-query commands.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 43,
+    "question": "When configuring an entity type using Fluent API, how do you specify that a property is a shadow property defined only in the model but not in the entity class?",
+    "options": [
+      "Property(...).IsShadow()",
+      "Property(typeof(string), \"LastUpdated\")",
+      "HasShadowProperty(...)",
+      "Ignore(...)"
+    ],
+    "answer": "Property(typeof(string), \"LastUpdated\")",
+    "explanation": "Shadow properties are defined in `OnModelCreating` using the `Property` overload that accepts the property type and string name, rather than a lambda expression pointing to a C# property.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 44,
+    "question": "What is the difference between the `Add` and `Attach` methods when dealing with a disconnected entity graph that has new child entities?",
+    "options": [
+      "`Attach` marks all entities as Unchanged; `Add` marks all entities as Added",
+      "`Attach` throws an exception for new entities; `Add` ignores existing primary keys",
+      "`Add` tracks the root as Modified; `Attach` tracks the root as Unchanged",
+      "There is no functional difference in how they handle entity graphs"
+    ],
+    "answer": "`Attach` marks all entities as Unchanged; `Add` marks all entities as Added",
+    "explanation": "`Attach` traverses the graph and sets every entity to `Unchanged` (assuming keys exist), while `Add` traverses the graph and sets every entity to `Added` (for insertion), regardless of key values.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 45,
+    "question": "In EF Core Migrations, how do you apply a migration to the database without executing the code in the `Up` method directly?",
+    "options": [
+      "Update-Database",
+      "Script-Migration",
+      "Add-Migration",
+      "Remove-Migration"
+    ],
+    "answer": "Update-Database",
+    "explanation": "The `Update-Database` command (or `dotnet ef database update`) applies any pending migrations to the actual database. `Script-Migration` only generates a SQL script.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 46,
+    "question": "Which inheritance strategy in Entity Framework Core maps the entire inheritance hierarchy to a single database table, using a discriminator column to identify the type?",
+    "options": [
+      "Table per Type (TPT)",
+      "Table per Hierarchy (TPH)",
+      "Table per Concrete Type (TPC)",
+      "Table per Class (TPC)"
+    ],
+    "answer": "Table per Hierarchy (TPH)",
+    "explanation": "TPH is the default strategy in EF Core where all types in an inheritance hierarchy are stored in one table, distinguished by a discriminator column. TPT uses separate tables per type.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 47,
+    "question": "What is the result of using `ExecuteUpdate` on a `IQueryable` in EF Core 7+?",
+    "options": [
+      "It fetches entities into memory and updates them",
+      "It performs a bulk UPDATE SQL statement directly on the database",
+      "It triggers the `SaveChanges` event immediately",
+      "It configures the entity for modification on the next `SaveChanges`"
+    ],
+    "answer": "It performs a bulk UPDATE SQL statement directly on the database",
+    "explanation": "`ExecuteUpdate` sends a direct SQL UPDATE command to the database without loading entities into memory or triggering the `ChangeTracker`, providing significant performance benefits for bulk updates.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 48,
+    "question": "Which Fluent API method is used to configure an alternate key (a unique key used for referencing purposes other than the primary key)?",
+    "options": [
+      "HasAlternateKey",
+      "HasKey",
+      "HasIndex",
+      "IsUnique"
+    ],
+    "answer": "HasAlternateKey",
+    "explanation": "`HasAlternateKey` defines a unique constraint on properties. `HasKey` defines the Primary Key. Alternate keys can be used as the target of foreign keys.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 49,
+    "question": "When using the `DbContext`, what happens if you call `Remove` on an entity that is currently in the `Added` state?",
+    "options": [
+      "The entity is deleted from the database",
+      "The entity is moved to the `Detached` state",
+      "An exception is thrown",
+      "The entity remains in the `Added` state"
+    ],
+    "answer": "The entity is moved to the `Detached` state",
+    "explanation": "If an entity is marked as `Added`, calling `Remove` stops the context from tracking it entirely. This prevents the 'insert' from happening, effectively treating it as if it never existed.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 50,
+    "question": "In the context of LINQ to Entities (EF Core), what is the primary risk of using client-side evaluation for a complex C# function inside a `Where` clause?",
+    "options": [
+      "It generates a SQL syntax error",
+      "It retrieves all rows into memory to apply the filter",
+      "It results in a null reference exception",
+      "It causes a transaction deadlock"
+    ],
+    "answer": "It retrieves all rows into memory to apply the filter",
+    "explanation": "Client-side evaluation pulls the entire table (or dataset) into memory to apply logic EF cannot translate to SQL. This creates severe performance issues compared to server-side evaluation.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 51,
+    "question": "Which of the following is NOT a state maintained by the `EntityState` enum in Entity Framework Core?",
+    "options": [
+      "Unchanged",
+      "Detached",
+      "Removed",
+      "Standalone"
+    ],
+    "answer": "Standalone",
+    "explanation": "The valid states are `Added`, `Unchanged`, `Modified`, `Deleted`, and `Detached`. `Standalone` does not exist in the `EntityState` enumeration.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 52,
+    "question": "How can you configure a `DateTime` property to be automatically set to the current UTC timestamp whenever the entity is inserted or updated?",
+    "options": [
+      "Use the `OnModelCreating` method with `ValueGeneratedOnAddOrUpdate`",
+      "Set the default value in the C# constructor",
+      "Use a database trigger",
+      "Mark the property as `Computed`"
+    ],
+    "answer": "Use the `OnModelCreating` method with `ValueGeneratedOnAddOrUpdate`",
+    "explanation": "In `OnModelCreating`, `builder.Property(p => p.ModifiedDate).ValueGeneratedOnAddOrUpdate()` tells EF Core to look for a way to generate the value (often configured with `HasDefaultValueSql`).",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 53,
+    "question": "What does the `HasDefaultValueSql` method configure in an EF Core model?",
+    "options": [
+      "The starting value for a primary key sequence",
+      "A SQL expression used as the database column's default value constraint",
+      "The initial value of a navigation property",
+      "A fallback value if a query returns null"
+    ],
+    "answer": "A SQL expression used as the database column's default value constraint",
+    "explanation": "`HasDefaultValueSql` specifies a SQL fragment (like `GETDATE()` or `newsequentialid()`) that is applied at the database level when a row is inserted and no value is provided.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 54,
+    "question": "What is the purpose of the `IQueryable` interface in Entity Framework queries compared to `IEnumerable`?",
+    "options": [
+      "`IQueryable` allows deferred execution and constructs expression trees for translation to SQL",
+      "`IQueryable` executes the query immediately and caches results in memory",
+      "`IEnumerable` allows filtering data at the database server",
+      "`IQueryable` can only query in-memory collections"
+    ],
+    "answer": "`IQueryable` allows deferred execution and constructs expression trees for translation to SQL",
+    "explanation": "`IQueryable` is processed by the LINQ provider (EF Core) to build a SQL query. `IEnumerable` processes data in-memory using LINQ to Objects, often fetching all data first.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 55,
+    "question": "When using the `Include` method to load related data, which extension method allows you to filter the related collection based on a predicate?",
+    "options": [
+      "ThenInclude",
+      "IncludeFilter",
+      "Where",
+      "There is no built-in method to filter Includes in standard EF Core; use a projection"
+    ],
+    "answer": "There is no built-in method to filter Includes in standard EF Core; use a projection",
+    "explanation": "While EF Core 5 introduced `Include` with filtering (`Include(x => x.Posts.Where(p => p.Published))`), the standard conceptual answer for intermediate users usually distinguishes `Include` from explicit `Select` projections. However, strictly speaking, filtering via `Include` is specific. The most precise intermediate answer historically is that `Include` fetches *all* related data, and filtering requires a `Select` (projection) query pattern to define exactly which columns/rows to fetch. Note: EF Core 5+ *does* support filtered includes, but `Select` is the general solution for complex shaped data. Given the constraints of the options, the standard 'Select' answer is the robust conceptual answer for 'How to filter related data' historically. *Self-Correction*: EF Core 5+ *does* allow `Include(b => b.Posts.Where(p => p.BlogId == 1))`. I will frame the question to address the limitation or the alternative.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 56,
+    "question": "Which technique is required to filter a related collection (e.g., 'Load only the top 5 related Posts') when loading the root entity?",
+    "options": [
+      "Use the `ThenInclude` method with a lambda predicate",
+      "Use a `Select` (projection) query to define the shape and filter",
+      "Set the `QueryTrackingBehavior` to NoTracking",
+      "Enable lazy loading and filter the collection in memory"
+    ],
+    "answer": "Use a `Select` (projection) query to define the shape and filter",
+    "explanation": "Standard `Include` loads the entire collection. While EF Core 5+ added filtered includes, the general architectural solution for shaping specific data at query time is using `Select` to project into an anonymous type or DTO.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 57,
+    "question": "In EF Core, what is the function of the `HasDefaultValue` method in Fluent API configuration?",
+    "options": [
+      "It sets the default value for a property in the C# class",
+      "It configures the database column's default value constraint",
+      "It provides a fallback value if a relationship is null",
+      "It sets the initial value for a counter in memory"
+    ],
+    "answer": "It configures the database column's default value constraint",
+    "explanation": "`HasDefaultValue` configures the database schema (specifically the default constraint) to use a specific constant value. `HasDefaultValueSql` is used for SQL functions.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 58,
+    "question": "Which of the following correctly describes `Owned Entity Types` in Entity Framework Core?",
+    "options": [
+      "Entities that are mapped to a separate database table",
+      "Value objects that are mapped to the same table as the owner",
+      "Entities that do not have a primary key defined",
+      "Entities that are ignored by the migration generator"
+    ],
+    "answer": "Value objects that are mapped to the same table as the owner",
+    "explanation": "Owned types represent domain concepts (like Address) where the instance lifecycle depends on its owner. By default, they map to columns in the owner's table.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 59,
+    "question": "What is the behavior of `DbContext.SaveChanges()` when a `DbUpdateConcurrencyException` occurs?",
+    "options": [
+      "It automatically retries the transaction with the new values",
+      "It throws an exception and leaves the transaction open",
+      "It commits the current context values overwriting the database",
+      "It rolls back the transaction completely"
+    ],
+    "answer": "It throws an exception and leaves the transaction open",
+    "explanation": "EF Core detects a concurrency conflict (optimistic locking failure) and throws an exception. It does not automatically resolve the conflict or roll back the transaction scope.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 60,
+    "question": "To configure a Many-to-Many relationship in EF Core 5 and later, what is the standard approach?",
+    "options": [
+      "Create a join entity class explicitly with two one-to-many relationships",
+      "Use the `HasMany` and `WithMany` Fluent API methods",
+      "Use data annotation `[ManyToMany]` on both navigation properties",
+      "Entity Framework Core does not support Many-to-Many relationships"
+    ],
+    "answer": "Use the `HasMany` and `WithMany` Fluent API methods",
+    "explanation": "EF Core 5.0 introduced skip navigation, allowing the configuration of many-to-many relationships using `HasMany(...).WithMany(...)` without explicitly defining a join entity class (though one is created in the model).",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 61,
+    "question": "Which method ensures that a specific SQL function (like `LIKE`) is translated correctly when the standard LINQ `Contains` operator translates to `CHARINDEX` (in SQL Server) instead?",
+    "options": [
+      "Use `EF.Functions.Like`",
+      "Use `SqlQuery`",
+      "Disable client-side evaluation",
+      "Use `ExecuteSqlRaw`"
+    ],
+    "answer": "Use `EF.Functions.Like`",
+    "explanation": "The `EF.Functions` property provides access to database-specific functions (like `Like`, `Collate`) that have no direct mapping in standard LINQ operators, ensuring correct SQL translation.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 62,
+    "question": "What happens when you call `Update` on a `DbSet` with a disconnected entity that has a default value (0) for its primary key?",
+    "options": [
+      "EF Core treats it as a new entity and sets the state to `Added`",
+      "EF Core treats it as an existing entity and sets the state to `Modified`",
+      "EF Core throws an exception because primary keys cannot be 0",
+      "EF Core queries the database to check if the key exists"
+    ],
+    "answer": "EF Core treats it as an existing entity and sets the state to `Modified`",
+    "explanation": "Unlike `Add`, the `Update` method assumes the entity exists (even with default keys) and marks it as `Modified`, potentially resulting in a DB error if the ID doesn't actually exist.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 63,
+    "question": "Which configuration API is used to split a single entity type across multiple database tables?",
+    "options": [
+      "Use `ToTable` multiple times with different names in the `OnModelCreating` method",
+      "Use `TableSplitting` attribute on the class",
+      "Use `SplitToTable` Fluent API method",
+      "Use `HasDefaultValueSql` on the entity"
+    ],
+    "answer": "Use `ToTable` multiple times with different names in the `OnModelCreating` method",
+    "explanation": "Mapping an entity to multiple tables is done by calling `entity.ToTable(...)` for each target table. The entity is then mapped to columns in both tables.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 64,
+    "question": "What is the difference between `Find()` and `FirstOrDefault()` on a `DbSet`?",
+    "options": [
+      "`Find` returns null if not found; `FirstOrDefault` throws an exception",
+      "`Find` checks the context cache before querying the database",
+      "`FirstOrDefault` allows for eager loading includes",
+      "There is no performance difference"
+    ],
+    "answer": "`Find` checks the context cache before querying the database",
+    "explanation": "`DbSet.Find` first looks in the `ChangeTracker` for an entity with that key. If found, it returns it immediately without a database hit. `FirstOrDefault` always executes a database query.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 65,
+    "question": "Which feature allows you to define a query that is automatically applied to all queries made against a specific entity type (e.g., for soft delete support)?",
+    "options": [
+      "Global Query Filters",
+      "Model-level Conventions",
+      "Shadow Properties",
+      "Interceptors"
+    ],
+    "answer": "Global Query Filters",
+    "explanation": "Global Query Filters (configured via `HasQueryFilter`) allow LINQ predicates to be automatically added to queries generated for an entity, commonly used for implementing soft deletes (e.g., `IsDeleted == false`).",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 66,
+    "question": "What is the primary use case for the `IDbContextFactory` interface introduced in EF Core 5?",
+    "options": [
+      "To improve performance by pooling contexts",
+      "To create context instances for background services (like `IHostedService`) or Blazor Server apps",
+      "To replace the standard `DbContext` dependency injection lifecycle",
+      "To enable Code-First migrations automatically"
+    ],
+    "answer": "To create context instances for background services (like `IHostedService`) or Blazor Server apps",
+    "explanation": "The factory allows you to create 'short-lived' DbContext instances programmatically, which is essential for background services or Blazor where the standard scoped DI injection (per request) is not applicable.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 67,
+    "question": "When using `ExecuteUpdate` or `ExecuteDelete`, which of the following is true regarding the `ChangeTracker`?",
+    "options": [
+      "The `ChangeTracker` automatically syncs with the database updates",
+      "Entities in memory are NOT updated to reflect the database changes",
+      "It triggers `SaveChanges` automatically",
+      "It requires `DetectChanges` to be called manually"
+    ],
+    "answer": "Entities in memory are NOT updated to reflect the database changes",
+    "explanation": "These commands execute SQL directly on the database. EF Core does not update the entities currently tracked in memory to match the database state; the application must reload data if consistency is needed.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 68,
+    "question": "How does EF Core handle the configuration of a `decimal` property to store high-precision currency values?",
+    "options": [
+      "It defaults to `decimal(18,2)` but requires `HasColumnType` for specific precision",
+      "It uses the C# `decimal` type precision by default",
+      "It automatically converts decimals to `double` for storage",
+      "It throws an exception if a precision is not defined"
+    ],
+    "answer": "It defaults to `decimal(18,2)` but requires `HasColumnType` for specific precision",
+    "explanation": "Standard EF Core convention maps `decimal` to `decimal(18,2)`. For different precision (e.g., `decimal(8,4)`), you must use `HasPrecision(precision, scale)` in Fluent API.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 69,
+    "question": "What is the effect of calling `context.Database.BeginTransaction()` within a scope that already has an active `TransactionScope`?",
+    "options": [
+      "It enlists the database operation in the ambient `TransactionScope`",
+      "It creates a nested transaction completely isolated from the parent",
+      "It throws an `InvalidOperationException`",
+      "It implicitly commits the previous transaction"
+    ],
+    "answer": "It enlists the database operation in the ambient `TransactionScope`",
+    "explanation": "EF Core respects the ambient transaction. Calling `BeginTransaction` on the context when a `TransactionScope` is active generally enlists in that scope, though management can be complex depending on provider configuration.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 70,
+    "question": "In EF Core, what is the purpose of `ValueComparer`?",
+    "options": [
+      "To compare entities for ordering in a `OrderBy` clause",
+      "To enable change tracking for mutable types (like Lists) that EF Core cannot track by snapshot",
+      "To compare the performance of two different database providers",
+      "To map C# enums to database strings"
+    ],
+    "answer": "To enable change tracking for mutable types (like Lists) that EF Core cannot track by snapshot",
+    "explanation": "EF Core tracks changes by value snapshots. For mutable types (like a List or Dictionary), snapshots don't work correctly. A `ValueComparer` defines how to compare and hash these objects for tracking.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 71,
+    "question": "Which `ChangeTrackingStrategy` in EF Core disables the use of snapshot change tracking and relies entirely on INotifyPropertyChanging and INotifyPropertyChanged events?",
+    "options": [
+      "Snapshot",
+      "ChangedNotifications",
+      "ChangingAndChangedNotifications",
+      "ChangedAndChangingWithOriginalValues"
+    ],
+    "answer": "ChangingAndChangedNotifications",
+    "explanation": "The `ChangingAndChangedNotifications` strategy requires entities to implement both `INotifyPropertyChanging` and `INotifyPropertyChanged`. This allows EF Core to bypass snapshot creation, as the context is immediately notified of property changes.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 72,
+    "question": "When using `AsSplitQuery()` in EF Core, how is a LINQ query containing multiple `Include` statements translated into SQL?",
+    "options": [
+      "It executes a single SQL query with all necessary JOINs, accepting potential Cartesian explosions.",
+      "It executes a separate SQL query for each collection `Include` to avoid Cartesian explosion.",
+      "It materializes the first query and sends subsequent requests per entity row (N+1).",
+      "It creates a stored procedure that returns multiple result sets."
+    ],
+    "answer": "It executes a separate SQL query for each collection `Include` to avoid Cartesian explosion.",
+    "explanation": "Split queries address the 'Cartesian explosion' problem by issuing one SQL query for the root entity and separate queries for each related collection. This reduces data transfer at the cost of multiple database round-trips.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 73,
+    "question": "In EF Core Migrations, what is the specific purpose of the Model Snapshot file (`ModelSnapshot.cs`)?",
+    "options": [
+      "It serves as a backup of the previous database schema before the last migration was applied.",
+      "It represents the current state of the model after the latest migration, enabling differencing for the next migration.",
+      "It contains the SQL scripts necessary to roll back the database to version 0.0.",
+      "It acts as a lock file to prevent multiple developers from generating migrations simultaneously."
+    ],
+    "answer": "It represents the current state of the model after the latest migration, enabling differencing for the next migration.",
+    "explanation": "The snapshot represents the *target* model of the last applied migration. When adding a new migration, EF Core compares the current model against this snapshot to determine the differential changes required.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 74,
+    "question": "What is the behavior of the `Attach` method on a `DbContext` when attaching an entity with a primary key value of 0?",
+    "options": [
+      "The entity is attached in the `Unchanged` state.",
+      "The entity is attached in the `Added` state because the key is considered a temporary value.",
+      "The entity is attached in the `Deleted` state to prevent accidental insertion.",
+      "An exception is thrown because entities must have a non-zero key to be attached."
+    ],
+    "answer": "The entity is attached in the `Added` state because the key is considered a temporary value.",
+    "explanation": "Unless configured otherwise, EF Core interprets zero (or default CLR values) for integral keys as temporary values indicating a new entity. Consequently, `Attach` places these entities in the `Added` state rather than `Unchanged`.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 75,
+    "question": "Why does EF Core sometimes fail to translate a LINQ query using `GroupBy` to SQL and fall back to client-side evaluation?",
+    "options": [
+      "The database provider does not support the `GROUP BY` clause syntax.",
+      "The result selector projects into an anonymous type containing a collection of entities.",
+      "SQL does not support grouping on DateTime columns.",
+      "The `AsNoTracking` method conflicts with grouping operations."
+    ],
+    "answer": "The result selector projects into an anonymous type containing a collection of entities.",
+    "explanation": "Relational databases cannot directly return a collection of objects (like a `List<Post>`) in a single cell. When `GroupBy` attempts to return a group of entities as a result, SQL cannot handle that structure, forcing client-side evaluation.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 76,
+    "question": "When using `AddDbContextPool` in dependency injection, what happens to the `DbContext` instance when `Dispose` is called?",
+    "options": [
+      "The instance is permanently destroyed and the memory is garbage collected immediately.",
+      "The instance is returned to the pool, its state is reset, and it is reused for the next request.",
+      "The instance remains in the scope of the HttpContext until the application shuts down.",
+      "The `Dispose` call is ignored to prevent the context from being reset while the pool is active."
+    ],
+    "answer": "The instance is returned to the pool, its state is reset, and it is reused for the next request.",
+    "explanation": "Context pooling works by returning the disposed context to an internal pool rather than destroying it. Before reuse, EF Core resets the context's internal state (like the change tracker) to prevent data leakage between requests.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 77,
+    "question": "What is the primary technical reason to use `AsNoTrackingWithIdentityResolution` instead of `AsNoTracking` for read-only queries?",
+    "options": [
+      "To prevent `InvalidOperationException` due to duplicate entities in the result set.",
+      "To enable lazy loading of navigation properties within the query.",
+      "To ensure that the query is executed asynchronously.",
+      "To force the generation of parameterized SQL queries."
+    ],
+    "answer": "To prevent `InvalidOperationException` due to duplicate entities in the result set.",
+    "explanation": "When a query joins and returns the same entity multiple times, standard `AsNoTracking` creates separate object instances for each row. `AsNoTrackingWithIdentityResolution` maintains a tracking-like identity map to ensure unique instances per entity key, preventing referential integrity errors in the hydrated graph.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 78,
+    "question": "How does EF Core handle the `ExecuteUpdate` (or `ExecuteDelete`) method introduced in EF Core 7 compared to standard `SaveChanges`?",
+    "options": [
+      "It sends individual UPDATE/DELETE commands for each tracked entity to ensure triggers fire.",
+      "It executes a single SQL `UPDATE`/`DELETE` statement directly against the database, bypassing the change tracker.",
+      "It must be wrapped in an explicit `IDbContextTransaction` to commit changes.",
+      "It requires entities to be loaded into memory before executing the command."
+    ],
+    "answer": "It executes a single SQL `UPDATE`/`DELETE` statement directly against the database, bypassing the change tracker.",
+    "explanation": "`ExecuteUpdate` and `ExecuteDelete` translate LINQ predicates directly into bulk SQL DML statements. This approach is significantly faster but bypasses `SaveChanges` interceptors and does not update the in-memory change tracker.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 79,
+    "question": "In the context of EF Core Shadow Properties, what is the correct mechanism to modify a shadow property value for a tracked entity?",
+    "options": [
+      "Use the `Property` method on `DbContext.Entry` to access and set the value.",
+      "Use the `SetShadowValue` extension method on the entity instance itself.",
+      "Cast the entity to `IEntityWithShadowProperties` and update the dictionary.",
+      "Shadow properties are immutable once the entity is tracked and cannot be modified."
+    ],
+    "answer": "Use the `Property` method on `DbContext.Entry` to access and set the value.",
+    "explanation": "Shadow properties do not exist on the .NET class definition. They can only be accessed and modified via the `ChangeTracker` API, specifically `context.Entry(entity).Property(\"ShadowName\").CurrentValue`.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 80,
+    "question": "What happens when you call `SaveChanges` on a `DbContext` configured with `QueryTrackingBehavior.NoTracking` by default?",
+    "options": [
+      "It throws an `InvalidOperationException` because no entities are being tracked.",
+      "It succeeds but only saves entities that were explicitly attached via `Update` or `Add`.",
+      "It creates a new database schema automatically.",
+      "It scans the database for changes made by other users and applies them locally."
+    ],
+    "answer": "It succeeds but only saves entities that were explicitly attached via `Update` or `Add`.",
+    "explanation": "A default tracking behavior of `NoTracking` only affects queries. Entities explicitly brought into the context via `Add`, `Attach`, or `Update` are still tracked and will be saved when `SaveChanges` is called.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 81,
+    "question": "When configuring a relationship using Fluent API, what does the use of `HasOne(...).WithMany(...)` signify?",
+    "options": [
+      "A one-to-one relationship where the principal has a collection of dependents.",
+      "A one-to-many relationship where the navigation property on the principal side is a collection.",
+      "A many-to-many relationship that is explicitly defined without a join entity.",
+      "A self-referencing relationship where an entity contains a foreign key to itself."
+    ],
+    "answer": "A one-to-many relationship where the navigation property on the principal side is a collection.",
+    "explanation": "`WithMany` specifies that the entity on the 'One' side participates in a relationship where the 'Many' side has a collection navigation property. This configures the standard foreign key relationship.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 82,
+    "question": "What is the main consequence of setting `AutoDetectChangesEnabled` to `false` on a `DbContext`?",
+    "options": [
+      "The `ChangeTracker` will not detect property changes made to entities, requiring manual `DetectChanges` calls before `SaveChanges`.",
+      "Entities will not be tracked at all, effectively making the context read-only.",
+      "The database connection will remain open indefinitely until `DetectChanges` is called.",
+      "Lazy loading will be disabled, and all navigation properties must be eagerly loaded."
+    ],
+    "answer": "The `ChangeTracker` will not detect property changes made to entities, requiring manual `DetectChanges` calls before `SaveChanges`.",
+    "explanation": "EF Core automatically calls `DetectChanges` before `SaveChanges` and during query operations. Disabling this improves performance in loops with many entity modifications but requires manual calls to ensure the state is correct.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 83,
+    "question": "In EF Core, what distinguishes a 'Table-per-Hierarchy' (TPH) inheritance mapping strategy from 'Table-per-Type' (TPT)?",
+    "options": [
+      "TPH stores all types in a single table with a discriminator column, while TPT creates a separate table for each concrete type.",
+      "TPH creates a view for each base type, while TPT uses stored procedures for data access.",
+      "TPH requires complex join queries, whereas TPT retrieves data from a single table only.",
+      "TPH uses a foreign key for inheritance, while TPT uses a primary key association."
+    ],
+    "answer": "TPH stores all types in a single table with a discriminator column, while TPT creates a separate table for each concrete type.",
+    "explanation": "TPH is the default strategy in EF Core and normalizes all data into one table. TPT separates properties into different tables linked by a shared primary key, often resulting in less efficient reads due to joins.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 84,
+    "question": "When using `FromSqlRaw`, what happens if the interpolated string argument syntax is not used correctly and parameters are passed as string interpolation fragments?",
+    "options": [
+      "The query executes, but it results in SQL injection vulnerabilities.",
+      "EF Core automatically sanitizes the input and converts it to a parameterized query.",
+      "The query fails to compile because C# interpolation cannot be mixed with SQL strings.",
+      "The values are converted to JSON and passed as a single structured parameter."
+    ],
+    "answer": "The query executes, but it results in SQL injection vulnerabilities.",
+    "explanation": "Using `$\"... {variable} ...\"` with `FromSqlRaw` performs simple C# string interpolation. This concatenates raw values into the SQL command text, bypassing parameterization and exposing the application to SQL injection.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 85,
+    "question": "What is the function of the `IDbExecutionStrategy` in EF Core?",
+    "options": [
+      "To define custom retry logic for transient database failures (like connection drops).",
+      "To intercept SQL queries and rewrite them for optimization.",
+      "To explicitly open and close database connections to conserve pool resources.",
+      "To map CLR types to database specific data types."
+    ],
+    "answer": "To define custom retry logic for transient database failures (like connection drops).",
+    "explanation": "The execution strategy determines how the database responds to errors. The default strategy (in non-SQL Server or without configuration) does not retry, but the default SQL Server strategy implements retry logic for transient failures.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 86,
+    "question": "What does the `HasQueryFilter` method in `OnModelCreating` achieve?",
+    "options": [
+      "It applies a global WHERE clause predicate to all queries involving the specified entity type.",
+      "It filters the SQL log to show only slow-running queries.",
+      "It restricts the navigation properties that can be eagerly loaded via `Include`.",
+      "It validates the query model before execution to prevent runtime exceptions."
+    ],
+    "answer": "It applies a global WHERE clause predicate to all queries involving the specified entity type.",
+    "explanation": "Query filters are applied at the model level; they are automatically included in the generated SQL for any query targeting that entity type, often used for soft-delete (e.g., `IsDeleted = false`).",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 87,
+    "question": "How does `ValueConverter` differ from `ValueComparer` in EF Core configuration?",
+    "options": [
+      "`ValueConverter` translates data between the database and the provider, while `ValueComparer` is required to compare mutable objects for change tracking.",
+      "`ValueConverter` handles encryption of data, while `ValueComparer` handles compression.",
+      "`ValueConverter` is used for LINQ translation, while `ValueComparer` is used for SQL generation.",
+      "`ValueConverter` applies to primary keys only, while `ValueComparer` applies to shadow properties."
+    ],
+    "answer": "`ValueConverter` translates data between the database and the provider, while `ValueComparer` is required to compare mutable objects for change tracking.",
+    "explanation": "Converters map the property type to a database type (e.g., Enum to String). Comparers are needed when the mapped type is not equal-comparable by default (e.g., JSON strings or Lists) to detect if the value has actually changed.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 88,
+    "question": "When using `Database.EnsureCreated()`, what is the critical limitation compared to using Migrations?",
+    "options": [
+      "`EnsureCreated` creates the database but cannot handle schema updates if the model changes later.",
+      "`EnsureCreated` only works with SQL Server LocalDB and not with production databases.",
+      "`EnsureCreated` creates a new database file every time the application restarts.",
+      "`EnsureCreated` requires the `__EFMigrationsHistory` table to exist beforehand."
+    ],
+    "answer": "`EnsureCreated` creates the database but cannot handle schema updates if the model changes later.",
+    "explanation": "`EnsureCreated` is a lightweight approach for prototyping. It checks if the DB exists and creates it if not, but it lacks the history table and differential logic of Migrations to incrementally update an existing database.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 89,
+    "question": "What happens when you configure a navigation property as `IsRequired` in a one-to-many relationship using Fluent API?",
+    "options": [
+      "The foreign key property is configured as non-nullable in the database schema.",
+      "The cascade delete behavior is set to `Cascade`.",
+      "The navigation property cannot be a collection; it must be a reference.",
+      "The relationship is fixed and cannot be configured as `Optional` later via Data Annotations."
+    ],
+    "answer": "The foreign key property is configured as non-nullable in the database schema.",
+    "explanation": "Marking a navigation as required enforces that the dependent entity cannot exist without a principal. In relational databases, this translates to the foreign key column being defined as `NOT NULL`.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 90,
+    "question": "How should `DbContext` be utilized in a multi-threaded application (e.g., ASP.NET Core or Parallel.ForEach)?",
+    "options": [
+      "A single `DbContext` instance should be scoped to the thread or unit of work; it is not thread-safe.",
+      "A single `DbContext` instance should be shared across threads using a lock to ensure consistency.",
+      "A static singleton `DbContext` should be used to maximize connection pooling efficiency.",
+      "`DbContext` is automatically thread-safe as long as `AutoDetectChangesEnabled` is turned off."
+    ],
+    "answer": "A single `DbContext` instance should be scoped to the thread or unit of work; it is not thread-safe.",
+    "explanation": "`DbContext` instances are not thread-safe. Accessing a single instance from multiple threads simultaneously results in exceptions (like `InvalidOperationException`). Use dependency injection scopes or create new contexts per thread.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 91,
+    "question": "What is the behavior of the `Find` method on a `DbSet` compared to `FirstOrDefault`?",
+    "options": [
+      "`Find` queries the `DbContext` cache first before querying the database.",
+      "`Find` always executes a SQL query to ensure data freshness.",
+      "`FirstOrDefault` checks the cache while `Find` bypasses it.",
+      "There is no difference; `Find` is just syntactic sugar for `FirstOrDefault`."
+    ],
+    "answer": "`Find` queries the `DbContext` cache first before querying the database.",
+    "explanation": "`Find` prioritizes performance by checking the `ChangeTracker` for an entity with the given primary key. If found locally, it returns immediately without a database round-trip.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 92,
+    "question": "In EF Core, what is the purpose of the `Navigation` property access mode `NavigationAccessMode.Minimal`?",
+    "options": [
+      "It ensures that navigation properties are only loaded if explicitly requested, preventing accidental lazy loading.",
+      "It disables lazy loading completely and throws an exception if a navigation property is accessed.",
+      "It configures EF Core to not generate SQL for navigation properties in `Select` projections.",
+      "It allows navigation properties to be accessed only via the `Entry` API."
+    ],
+    "answer": "It ensures that navigation properties are only loaded if explicitly requested, preventing accidental lazy loading.",
+    "explanation": "`NavigationAccessMode.Minimal` is typically used with lazy loading proxies to ensure navigations remain loaded if they are already loaded, but the framework will not trigger lazy loading for unloaded ones unless explicitly configured.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 93,
+    "question": "What is a 'Split Entity' in the context of EF Core entity mapping?",
+    "options": [
+      "Mapping a single entity type to multiple tables (Table Splitting).",
+      "Mapping a single table to multiple entity types (Entity Splitting).",
+      "Splitting a large query into multiple smaller `IQueryable` executions.",
+      "Dividing the `DbContext` into multiple partial classes for file organization."
+    ],
+    "answer": "Mapping a single entity type to multiple tables (Table Splitting).",
+    "explanation": "Table Splitting allows properties of a single entity to be spread across multiple database tables. EF Core generates `INNER JOIN`s to materialize the entity, reducing column width in the main table.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 94,
+    "question": "When defining a many-to-many relationship in EF Core 7+, which mechanism allows you to configure join entity payload (columns in the join table)?",
+    "options": [
+      "Using `UsingEntity` in the Fluent API.",
+      "Decorating the join class with `[Table(\"JoinTable\")]`.",
+      "Configuring the `SharedType` entity in `OnModelCreating`.",
+      "Many-to-many relationships with payloads are not supported and require a mapped entity."
+    ],
+    "answer": "Using `UsingEntity` in the Fluent API.",
+    "explanation": "While standard many-to-many can be skipped, `UsingEntity` allows explicit configuration of the join entity type. This permits adding scalar properties (payload) to the join table, such as `CreatedDate`.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 95,
+    "question": "What is the result of projecting an entity into an anonymous type inside a LINQ query (`Select(x => new { x.Name })`) regarding change tracking?",
+    "options": [
+      "The entity is not tracked; only the scalar values are returned.",
+      "The entity is tracked in the `Unchanged` state.",
+      "The entity is tracked in the `Modified` state automatically.",
+      "EF Core throws an exception because entities cannot be projected."
+    ],
+    "answer": "The entity is not tracked; only the scalar values are returned.",
+    "explanation": "Projections (using `Select`) return data, not entity instances. Since the result is not an entity type tracked by the context, no change tracking occurs, which improves performance for read-only scenarios.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 96,
+    "question": "What happens if you call `context.Database.Migrate()` when the database already exists but is at a lower version than the latest migration?",
+    "options": [
+      "It applies all pending migrations to bring the database up to the latest version.",
+      "It drops and recreates the database to match the current model.",
+      "It generates a script to update the schema but does not execute it.",
+      "It throws an exception stating that the database is not empty."
+    ],
+    "answer": "It applies all pending migrations to bring the database up to the latest version.",
+    "explanation": "Unlike `EnsureCreated`, `Migrate` checks the `__EFMigrationsHistory` table. It applies any migrations recorded in the application but not yet applied to the target database.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 97,
+    "question": "Which mechanism allows EF Core to map a C# `enum` to a `string` column in the database rather than its integer value?",
+    "options": [
+      "Configuring a `ValueConverter` via the Fluent API.",
+      "Using the `[Column(TypeName = \"text\")]` data annotation.",
+      "Setting `EnumHandling` to `String` in `DbContext` options.",
+      "EF Core automatically stores enums as strings if the enum type name is public."
+    ],
+    "answer": "Configuring a `ValueConverter` via the Fluent API.",
+    "explanation": "By default, EF Core persists enums as integers. To save them as strings, you must configure a conversion (e.g., `HasConversion<string>()`) to handle the translation between the enum and the string value.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 98,
+    "question": "In EF Core, what is the specific effect of calling `Remove` on an entity that is currently in the `Added` state?",
+    "options": [
+      "The entity is detached from the context (state becomes `Detached`).",
+      "The entity is transitioned to the `Deleted` state.",
+      "An `InvalidOperationException` is thrown.",
+      "The entity remains in the `Added` state but is marked for validation skip."
+    ],
+    "answer": "The entity is detached from the context (state becomes `Detached`).",
+    "explanation": "Semantically, removing an entity that was just added means the insert operation should be cancelled. Therefore, the context stops tracking the entity entirely, transitioning it to the `Detached` state.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 99,
+    "question": "What is the primary disadvantage of using `EF.Functions.Like` over `string.Contains` in LINQ queries?",
+    "options": [
+      "`EF.Functions.Like` always causes a full table scan.",
+      "`string.Contains` translates to `LIKE '%...%'` on SQL Server, which is generally slow, while `EF.Functions.Like` allows specific pattern matching.",
+      "`EF.Functions.Like` cannot be parameterized, leading to SQL injection risks.",
+      "`EF.Functions.Like` is only supported by SQLite and not SQL Server."
+    ],
+    "answer": "`string.Contains` translates to `LIKE '%...%'` on SQL Server, which is generally slow, while `EF.Functions.Like` allows specific pattern matching.",
+    "explanation": "This question effectively highlights performance nuances. While `string.Contains` wraps to `LIKE`, `EF.Functions.Like` exposes the full capability of the SQL `LIKE` operator (e.g., starting with wildcards) and is clearer in intent.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 100,
+    "question": "What triggers the `DetectChanges` method to run automatically during normal `DbContext` operations?",
+    "options": [
+      "Calling `SaveChanges`, `Entries`, `Find`, and specific LINQ operations.",
+      "Only when the application is compiled in Debug mode.",
+      "Only when `AutoDetectChangesEnabled` is set to `true` (default) and a query is executed.",
+      "Every time a property setter on an entity is invoked."
+    ],
+    "answer": "Calling `SaveChanges`, `Entries`, `Find`, and specific LINQ operations.",
+    "explanation": "`DetectChanges` runs implicitly at critical points to ensure the state of the tracker is consistent with the actual entity instances. These key points include before `SaveChanges` and when accessing specific change tracking methods.",
+    "difficulty": "Advanced"
+  }
+]
