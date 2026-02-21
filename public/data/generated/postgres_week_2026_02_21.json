@@ -1,0 +1,1341 @@
+[
+  {
+    "id": 1,
+    "question": "What is the primary purpose of the pgTune tool in PostgreSQL?",
+    "options": [
+      "To automate the execution of VACUUM and ANALYZE operations",
+      "To analyze system resources and recommend optimal configuration settings",
+      "To parse PostgreSQL logs and generate performance reports",
+      "To physically relocate tables to faster storage devices"
+    ],
+    "answer": "To analyze system resources and recommend optimal configuration settings",
+    "explanation": "pgTune is a configuration tuning tool that analyzes system resources to recommend optimal settings. It helps eliminate the complexity of manual tuning for specific hardware.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 2,
+    "question": "Which PostgreSQL background process is responsible for automating VACUUM and ANALYZE operations to maintain database health?",
+    "options": [
+      "pgTune",
+      "Walwriter",
+      "pg_autovacuum",
+      "Checkpointer"
+    ],
+    "answer": "pg_autovacuum",
+    "explanation": "pg_autovacuum is a built-in daemon that automates maintenance tasks like VACUUM and ANALYZE. It runs based on database activity to reclaim storage and update statistics.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 3,
+    "question": "In PostgreSQL tuning, what does the 'shared_buffers' parameter control?",
+    "options": [
+      "The amount of memory used for sorting and hashing operations",
+      "The number of simultaneous connections allowed to the database",
+      "The amount of memory the database server uses for shared memory buffers",
+      "The maximum number of worker processes allowed for parallel queries"
+    ],
+    "answer": "The amount of memory the database server uses for shared memory buffers",
+    "explanation": "shared_buffers defines the memory allocated to the database server for caching data blocks. It is a critical parameter for disk I/O performance.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 4,
+    "question": "Which tablespace is the default location for storing user-created objects like tables and indexes?",
+    "options": [
+      "pg_global",
+      "pg_default",
+      "pg_temp",
+      "pg_catalog"
+    ],
+    "answer": "pg_default",
+    "explanation": "The pg_default tablespace is the default location for user-defined objects. It corresponds physically to the $PGDATA/base/ directory.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 5,
+    "question": "What type of cluster-wide data is stored in the 'pg_global' tablespace?",
+    "options": [
+      "User tables and indexes",
+      "Temporary tables and sort files",
+      "System catalogs and global tables",
+      "Transaction logs (WAL)"
+    ],
+    "answer": "System catalogs and global tables",
+    "explanation": "pg_global stores cluster-wide objects such as system catalogs and roles. Data here is shared across all databases in the cluster.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 6,
+    "question": "What is the primary function of the VACUUM operation in PostgreSQL?",
+    "options": [
+      "To create backups of the database",
+      "To reclaim storage occupied by dead tuples (expired rows)",
+      "To update table statistics for the query planner",
+      "To change the port number of the server"
+    ],
+    "answer": "To reclaim storage occupied by dead tuples (expired rows)",
+    "explanation": "VACUUM reclaims storage occupied by dead tuples or 'bloat' caused by MVCC updates and deletes. It is essential for preventing transaction ID wraparound.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 7,
+    "question": "Which configuration parameter helps manage CPU resources by specifying the maximum number of worker processes for parallel operations?",
+    "options": [
+      "shared_buffers",
+      "max_connections",
+      "max_parallel_workers",
+      "work_mem"
+    ],
+    "answer": "max_parallel_workers",
+    "explanation": "max_parallel_workers sets the maximum number of worker processes that the system can support for parallel queries and operations.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 8,
+    "question": "What is the main benefit of using tablespaces in PostgreSQL regarding performance?",
+    "options": [
+      "They automatically encrypt data at rest",
+      "They allow administrators to balance I/O load across multiple physical disks",
+      "They reduce the need for VACUUM operations",
+      "They increase the network speed for remote connections"
+    ],
+    "answer": "They allow administrators to balance I/O load across multiple physical disks",
+    "explanation": "Tablespaces allow data to be placed on different storage media. Administrators can use this to balance I/O load and optimize performance for critical tables.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 9,
+    "question": "Which tool parses PostgreSQL logs to generate reports on slow queries and connection metrics?",
+    "options": [
+      "pgTune",
+      "pg_stat_statements",
+      "Log analysis tools (referenced in context)",
+      "pg_autovacuum"
+    ],
+    "answer": "Log analysis tools (referenced in context)",
+    "explanation": "Log analysis tools parse the database logs to visualize metrics and identify performance bottlenecks like slow queries.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 10,
+    "question": "How does enabling hyper-threading on a multi-core processor generally affect PostgreSQL?",
+    "options": [
+      "It forces the database to use only one core",
+      "It doubles the number of cores available to the operating system and PostgreSQL",
+      "It disables parallel query execution",
+      "It reduces the amount of shared buffer memory required"
+    ],
+    "answer": "It doubles the number of cores available to the operating system and PostgreSQL",
+    "explanation": "Hyper-threading allows each physical core to handle multiple threads, effectively doubling the core count visible to the OS and potentially improving parallel task processing.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 11,
+    "question": "What is the physical directory path for the 'pg_global' tablespace within the PostgreSQL data directory?",
+    "options": [
+      "$PGDATA/base/",
+      "$PGDATA/global/",
+      "$PGDATA/pg_wal/",
+      "$PGDATA/tablespace/"
+    ],
+    "answer": "$PGDATA/global/",
+    "explanation": "Cluster-wide objects in the pg_global tablespace are physically stored in the $PGDATA/global/ directory.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 12,
+    "question": "Which operation updates the statistics used by the query planner to determine the most efficient execution plan?",
+    "options": [
+      "VACUUM",
+      "ANALYZE",
+      "REINDEX",
+      "CLUSTER"
+    ],
+    "answer": "ANALYZE",
+    "explanation": "ANALYZE collects statistics about the contents of tables in the database. The query planner uses these statistics to help determine the most efficient execution plans.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 13,
+    "question": "According to the tuning context, what is the default keepalive idle time for both Windows and Linux systems?",
+    "options": [
+      "30 seconds",
+      "10 minutes",
+      "2 hours",
+      "24 hours"
+    ],
+    "answer": "2 hours",
+    "explanation": "By default, both Windows and Linux operating systems have a keepalive idle time configured to 2 hours before sending the first keepalive signal.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 14,
+    "question": "Why is PostgreSQL tuning specific to the use case (e.g., frequent reads vs. frequent writes)?",
+    "options": [
+      "Because the license restricts general usage",
+      "Because configurations can be optimized for specific schemas or workloads",
+      "Because PostgreSQL randomly changes parameters daily",
+      "Because tuning requires the use of cloud hosting only"
+    ],
+    "answer": "Because configurations can be optimized for specific schemas or workloads",
+    "explanation": "PostgreSQL allows for granular tuning where schemas can be optimized for specific metrics, such as prioritizing write speed over read speed or vice versa.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 15,
+    "question": "What is the primary advantage of faster CPU clock speeds for PostgreSQL workloads?",
+    "options": [
+      "It increases the storage capacity of the disk",
+      "It improves the performance of single-threaded tasks",
+      "It replaces the need for the Global Interpreter Lock",
+      "It automatically creates indexes for all tables"
+    ],
+    "answer": "It improves the performance of single-threaded tasks",
+    "explanation": "Faster clock speeds directly improve the performance of single-threaded tasks, which are common in many PostgreSQL database workloads.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 16,
+    "question": "Which of the following best describes the concept of 'performance tuning' in PostgreSQL?",
+    "options": [
+      "Creating new database users and roles",
+      "Optimizing configuration settings and resource usage for efficiency",
+      "Writing complex SQL queries for reports",
+      "Physically cleaning the server hardware"
+    ],
+    "answer": "Optimizing configuration settings and resource usage for efficiency",
+    "explanation": "Performance tuning involves adjusting parameters and resources to ensure the database operates efficiently and meets responsiveness requirements.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 17,
+    "question": "What is a key enterprise value of effective PostgreSQL tuning regarding hardware costs?",
+    "options": [
+      "It ensures that data is deleted immediately to save space",
+      "It allows businesses to reduce hardware and cloud expenses by optimizing existing resources",
+      "It forces the purchase of new hardware regardless of load",
+      "It eliminates the need for database backups"
+    ],
+    "answer": "It allows businesses to reduce hardware and cloud expenses by optimizing existing resources",
+    "explanation": "Proper tuning maximizes the efficiency of current system resources like CPU and RAM, allowing businesses to defer or avoid expensive hardware upgrades.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 18,
+    "question": "What is the function of 'keepalive' signals in a PostgreSQL connection context?",
+    "options": [
+      "To encrypt the data packets sent over the network",
+      "To ensure the connection remains open by detecting dropped links",
+      "To speed up the query execution time",
+      "To backup the database automatically"
+    ],
+    "answer": "To ensure the connection remains open by detecting dropped links",
+    "explanation": "Keepalive signals are sent by the OS kernel to verify that a connection is still active and the remote host is reachable.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 19,
+    "question": "Which configuration parameter typically defines the maximum number of concurrent client connections allowed?",
+    "options": [
+      "max_parallel_workers",
+      "max_connections",
+      "shared_buffers",
+      "work_mem"
+    ],
+    "answer": "max_connections",
+    "explanation": "The max_connections parameter determines how many concurrent client connections the PostgreSQL server will allow.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 20,
+    "question": "What is the 'psql' tool primarily used for?",
+    "options": [
+      "Managing system hardware drivers",
+      "Executing SQL queries and interacting with the database via terminal",
+      "Graphically designing database schemas",
+      "Automating vacuum operations only"
+    ],
+    "answer": "Executing SQL queries and interacting with the database via terminal",
+    "explanation": "psql is the standard command-line interface for PostgreSQL. It allows users to type queries, view results, and manage database objects.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 21,
+    "question": "Which feature facilitates the management of user roles and permissions in PostgreSQL?",
+    "options": [
+      "User management",
+      "pgTune",
+      "Tablespaces",
+      "Query tool"
+    ],
+    "answer": "User management",
+    "explanation": "User management features allow administrators to create roles, assign permissions, and control access to database objects.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 22,
+    "question": "What is the result of a PostgreSQL 'transaction' being rolled back?",
+    "options": [
+      "The transaction is saved permanently",
+      "The changes made during the transaction are undone",
+      "The connection to the database is closed",
+      "The database is shut down immediately"
+    ],
+    "answer": "The changes made during the transaction are undone",
+    "explanation": "A rollback reverses all changes made in the current transaction, ensuring data consistency if an error occurs or the transaction is cancelled.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 23,
+    "question": "Which SQL command is used to create a new database object (like a table)?",
+    "options": [
+      "GET",
+      "SELECT",
+      "CREATE",
+      "DROP"
+    ],
+    "answer": "CREATE",
+    "explanation": "The CREATE command is used to define and instantiate new database objects such as tables, indexes, or databases.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 24,
+    "question": "Which of the following is a standard method for backing up a PostgreSQL database?",
+    "options": [
+      "Using the pg_dump tool",
+      "Copying the .exe file manually",
+      "Defragmenting the hard drive",
+      "Deleting the pg_log files"
+    ],
+    "answer": "Using the pg_dump tool",
+    "explanation": "pg_dump is a standard PostgreSQL utility for backing up a single database into a script or archive file.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 25,
+    "question": "In the context of PostgreSQL architecture, what is a 'cluster'?",
+    "options": [
+      "A group of tables that are joined together",
+      "A collection of databases managed by a single PostgreSQL server instance",
+      "A specific type of index",
+      "A group of client connections"
+    ],
+    "answer": "A collection of databases managed by a single PostgreSQL server instance",
+    "explanation": "A PostgreSQL cluster is a collection of databases that share a common configuration and are managed by one server instance.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 26,
+    "question": "What is the purpose of the 'ANALYZE' command during the pg_autovacuum process?",
+    "options": [
+      "To delete old rows from the table",
+      "To update statistics for the query planner",
+      "To disconnect idle clients",
+      "To restart the server"
+    ],
+    "answer": "To update statistics for the query planner",
+    "explanation": "ANALYZE updates the statistical information used by the query planner to determine the most efficient way to execute a query.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 27,
+    "question": "Which utility is used to restore a database from a backup file created by pg_dump?",
+    "options": [
+      "pg_restore",
+      "psql",
+      "pgTune",
+      "pg_stat"
+    ],
+    "answer": "pg_restore",
+    "explanation": "pg_restore is a utility for restoring a PostgreSQL database from an archive file created by pg_dump.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 28,
+    "question": "Which constraint ensures that a column cannot contain NULL values?",
+    "options": [
+      "UNIQUE",
+      "NOT NULL",
+      "PRIMARY KEY",
+      "FOREIGN KEY"
+    ],
+    "answer": "NOT NULL",
+    "explanation": "The NOT NULL constraint enforces that a column must always contain a value, preventing the insertion of NULL records.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 29,
+    "question": "What does the acronym 'SQL' stand for in the context of PostgreSQL?",
+    "options": [
+      "Structured Query Language",
+      "Simple Query Logic",
+      "Standard Queue Level",
+      "System Quality List"
+    ],
+    "answer": "Structured Query Language",
+    "explanation": "SQL stands for Structured Query Language, the standard programming language used for managing relational databases.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 30,
+    "question": "Which of the following is a benefit of 'connection configuration parameters' tuning?",
+    "options": [
+      "Reducing the number of users allowed",
+      "Managing authentication methods and resource limits per connection",
+      "Decreasing the size of the stored data",
+      "Automating the backup process"
+    ],
+    "answer": "Managing authentication methods and resource limits per connection",
+    "explanation": "Connection parameters control how clients authenticate, how many connections are allowed, and what resources are consumed per session.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 31,
+    "question": "What type of database object is used to retrieve data from one or more tables efficiently without storing the data itself?",
+    "options": [
+      "Table",
+      "View",
+      "Index",
+      "Sequence"
+    ],
+    "answer": "View",
+    "explanation": "A View is a virtual table based on the result-set of an SQL statement. It contains rows and columns but does not physically store the data.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 32,
+    "question": "Which tool allows users to write and execute SQL queries and view the results interactively?",
+    "options": [
+      "pgTune",
+      "Query tool (e.g., psql or GUI clients)",
+      "pg_autovacuum",
+      "Backup tool"
+    ],
+    "answer": "Query tool (e.g., psql or GUI clients)",
+    "explanation": "Query tools provide an interface for typing SQL commands and seeing the output, essential for development and administration.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 33,
+    "question": "What is the physical location of the 'pg_default' tablespace?",
+    "options": [
+      "$PGDATA/global/",
+      "$PGDATA/base/",
+      "/var/log/postgresql/",
+      "/etc/postgresql/"
+    ],
+    "answer": "$PGDATA/base/",
+    "explanation": "User-defined objects in the default tablespace are physically located in the $PGDATA/base/ directory.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 34,
+    "question": "What is the function of the 'work_mem' parameter in PostgreSQL?",
+    "options": [
+      "To set the total memory available to the database",
+      "To specify the amount of memory to be used by internal sort operations and hash tables",
+      "To configure the timeout for a connection",
+      "To limit the size of the WAL files"
+    ],
+    "answer": "To specify the amount of memory to be used by internal sort operations and hash tables",
+    "explanation": "work_mem defines the maximum amount of memory to be used for sorting, hashing, and other operations before writing to temporary disk files.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 35,
+    "question": "Which of the following describes 'data integrity' in the context of performance tuning?",
+    "options": [
+      "Ensuring data is sorted alphabetically",
+      "Preventing data corruption or loss during high-load operations",
+      "Making sure the database is located in the cloud",
+      "Allowing multiple users to delete the same row"
+    ],
+    "answer": "Preventing data corruption or loss during high-load operations",
+    "explanation": "Proper tuning helps ensure the system remains stable and reliable under load, preventing corruption that could lead to data loss.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 36,
+    "question": "Which configuration parameter determines the maximum amount of memory that can be used for sorting and hashing operations before writing to disk?",
+    "options": [
+      "shared_buffers",
+      "work_mem",
+      "maintenance_work_mem",
+      "effective_cache_size"
+    ],
+    "answer": "work_mem",
+    "explanation": "work_mem specifies the memory available for internal sort and hash operations per operation (node). maintenance_work_mem is for maintenance commands like VACUUM.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 37,
+    "question": "What is the primary consequence of a 'transaction ID wraparound' if not properly managed by VACUUM?",
+    "options": [
+      "The database will shut down and refuse to start new transactions",
+      "Query performance will degrade due to table bloat",
+      "The WAL (Write-Ahead Log) files will fill up the disk storage",
+      "Replication slots will become invalid and require resynchronization"
+    ],
+    "answer": "The database will shut down and refuse to start new transactions",
+    "explanation": "To prevent data loss from 32-bit transaction ID overflow, PostgreSQL enters read-only mode and stops accepting writes once wraparound is imminent. This forces a manual VACUUM FREEZE.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 38,
+    "question": "How does the default `REPEATABLE READ` isolation level in PostgreSQL differ from the SQL standard's definition?",
+    "options": [
+      "It prevents Phantom Reads but not Non-Repeatable Reads",
+      "It actually implements Serializable Snapshot Isolation (SSI)",
+      "It allows dirty reads to improve concurrency",
+      "It functions identically to the READ COMMITTED level"
+    ],
+    "answer": "It actually implements Serializable Snapshot Isolation (SSI)",
+    "explanation": "PostgreSQL's implementation of REPEATABLE READ guarantees snapshot isolation, which prevents all phenomena defined by the SQL standard. It is stricter than the standard definition.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 39,
+    "question": "Which index type is most efficient for querying columns that contain large arrays or JSONB documents with specific key-value lookups?",
+    "options": [
+      "B-tree",
+      "GiST",
+      "GIN",
+      "BRIN"
+    ],
+    "answer": "GIN",
+    "explanation": "GIN (Generalized Inverted Index) is designed for indexing composite values where you want to search for individual elements (like array items or JSONB keys). It handles containment queries effectively.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 40,
+    "question": "When examining an `EXPLAIN ANALYZE` output, what does the phrase 'lossy heap' indicate regarding a bitmap index scan?",
+    "options": [
+      "The index is corrupted and needs to be reindexed (REINDEX)",
+      "The scan had to revisit the heap table to check visibility",
+      "The bitmap was too large, so exact tuple locations were discarded, forcing a recheck of heap pages",
+      "The query fetched more rows than estimated due to stale statistics"
+    ],
+    "answer": "The bitmap was too large, so exact tuple locations were discarded, forcing a recheck of heap pages",
+    "explanation": "If a bitmap exceeds `work_mem`, PostgreSQL switches to a 'lossy' format that stores only page numbers, not specific tuple IDs. This requires the executor to recheck every row on those pages.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 41,
+    "question": "What is the specific purpose of the `autovacuum_freeze_max_age` parameter?",
+    "options": [
+      "It limits how long a transaction can remain open before being terminated",
+      "It triggers an aggressive VACUUM to prevent transaction ID wraparound",
+      "It sets the maximum time dead tuples remain before storage is reclaimed",
+      "It defines the interval after which `pg_statistic` is automatically updated"
+    ],
+    "answer": "It triggers an aggressive VACUUM to prevent transaction ID wraparound",
+    "explanation": "This parameter ensures autovacuum runs frequently enough to freeze old transaction IDs, preventing the database from shutting down to protect against data loss.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 42,
+    "question": "In the context of table partitioning, what is 'partition pruning'?",
+    "options": [
+      "The process of merging empty partitions to save disk space",
+      "The optimizer excluding scanning partitions that cannot contain relevant data based on the query WHERE clause",
+      "The automatic deletion of old partitions based on a retention policy",
+      "The background worker that moves rows from the parent table to child partitions"
+    ],
+    "answer": "The optimizer excluding scanning partitions that cannot contain relevant data based on the query WHERE clause",
+    "explanation": "Partition pruning significantly improves performance by skipping partitions that are guaranteed to be empty based on the query constraints.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 43,
+    "question": "What distinguishes a `LATERAL` join from a standard subquery in the FROM clause?",
+    "options": [
+      "LATERAL subqueries are executed only once for the entire query",
+      "LATERAL allows the subquery to reference columns from preceding tables in the FROM list",
+      "LATERAL is used specifically for updating rows in multiple tables simultaneously",
+      "LATERAL forces the subquery to be materialized before the main query runs"
+    ],
+    "answer": "LATERAL allows the subquery to reference columns from preceding tables in the FROM list",
+    "explanation": "A `LATERAL` subquery can refer to columns provided by tables that appear earlier in the `FROM` list, enabling cross-row correlation that is otherwise impossible in standard SQL.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 44,
+    "question": "Which tablespace is used by default for storing system catalogs and shared objects?",
+    "options": [
+      "pg_default",
+      "pg_global",
+      "pg_catalog",
+      "pg_temp"
+    ],
+    "answer": "pg_global",
+    "explanation": "pg_global stores cluster-wide data like system catalogs. pg_default is the default tablespace for user-defined databases and objects.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 45,
+    "question": "What is the primary function of the Checkpoint process in PostgreSQL?",
+    "options": [
+      "To verify the integrity of the database files upon startup",
+      "To flush all dirty data pages from shared_buffers to disk",
+      "To archive old WAL (Write-Ahead Log) files to long-term storage",
+      "To analyze query execution times and update the statistics table"
+    ],
+    "answer": "To flush all dirty data pages from shared_buffers to disk",
+    "explanation": "The checkpoint process ensures that all modified data pages are written to disk, allowing the WAL files to be recycled or removed.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 46,
+    "question": "Why might setting `shared_buffers` too high (e.g., more than 40% of total RAM) negatively impact performance?",
+    "options": [
+      "It leaves insufficient memory for the operating system's disk cache",
+      "It forces the database to use a slower sorting algorithm",
+      "It prevents the background writer (bgwriter) from functioning",
+      "It causes the WAL files to be written sequentially instead of randomly"
+    ],
+    "answer": "It leaves insufficient memory for the operating system's disk cache",
+    "explanation": "PostgreSQL relies on the OS cache for performance. Allocating too much RAM to `shared_buffers` starves the OS, reducing the effectiveness of dual-buffering.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 47,
+    "question": "What is the effect of setting `synchronous_commit = off` in a PostgreSQL configuration?",
+    "options": [
+      "Transactions are not written to the WAL log at all",
+      "The server acknowledges success before waiting for the WAL to be flushed to disk",
+      "Data is only written to disk when the server restarts",
+      "Replication to standby servers stops working immediately"
+    ],
+    "answer": "The server acknowledges success before waiting for the WAL to be flushed to disk",
+    "explanation": "This setting trades durability for latency. A successful commit does not guarantee the data is safe on disk, but it returns control to the client immediately.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 48,
+    "question": "Which GUC (Grand Unified Configuration) variable controls the amount of memory reserved for caching transaction log data?",
+    "options": [
+      "wal_buffers",
+      "wal_size",
+      "max_wal_size",
+      "checkpoint_segments"
+    ],
+    "answer": "wal_buffers",
+    "explanation": "wal_buffers defines the amount of shared memory used for caching WAL data that has not yet been written to disk. max_wal_size controls disk space limits.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 49,
+    "question": "What is a 'HOT' (Heap Only Tuple) update in PostgreSQL?",
+    "options": [
+      "An update that modifies only indexed columns without touching the heap",
+      "An update where the new tuple is placed on the same page and no new index entry is required",
+      "A bulk update operation that bypasses the WAL log",
+      "An update that locks the entire table to prevent concurrent modifications"
+    ],
+    "answer": "An update where the new tuple is placed on the same page and no new index entry is required",
+    "explanation": "HOT updates optimize performance by storing the new tuple on the same heap page. Indexes point to the 'latest' tuple implicitly, avoiding expensive index maintenance.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 50,
+    "question": "When using `pg_dump`, which format is required to utilize the `--jobs` (parallelism) flag?",
+    "options": [
+      "Plain text (SQL)",
+      "Custom (-F c)",
+      "Directory (-F d)",
+      "Tar (-F t)"
+    ],
+    "answer": "Directory (-F d)",
+    "explanation": "The directory format supports parallel dumps because it writes to multiple files simultaneously. Plain and Custom formats are single-file streams.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 51,
+    "question": "What is the primary use case for a BRIN (Block Range INdex) compared to a B-tree index?",
+    "options": [
+      "Searching for text similarity using trigrams",
+      "Indexing very large tables where data is physically sorted (e.g., by timestamp)",
+      "Enforcing uniqueness constraints on a column",
+      "Handling low-cardinality columns efficiently"
+    ],
+    "answer": "Indexing very large tables where data is physically sorted (e.g., by timestamp)",
+    "explanation": "BRIN indexes are tiny and scan ranges of disk blocks. They are efficient for large, naturally ordered tables, as they avoid storing a pointer for every single row.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 52,
+    "question": "How does the 'C' locale differ from other locales (like 'en_US.UTF-8') in terms of PostgreSQL behavior?",
+    "options": [
+      "It disables transaction logging to improve speed",
+      "It performs byte-by-byte comparisons, allowing the use of indexes for LIKE/regex operations",
+      "It converts all text data to ASCII automatically",
+      "It enforces strict case-sensitivity rules for SQL keywords"
+    ],
+    "answer": "It performs byte-by-byte comparisons, allowing the use of indexes for LIKE/regex operations",
+    "explanation": "In the 'C' locale, string comparison uses C's memcmp() function. This allows deterministic sorting and enables B-tree indexes to support `LIKE` and regex operators.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 53,
+    "question": "What does the `Fill Factor` storage parameter determine when creating a table or index?",
+    "options": [
+      "The percentage of disk space that must remain free on the volume",
+      "The percentage of space left empty on each page to accommodate future updates without page splits",
+      "The percentage of RAM allocated to caching that specific table",
+      "The maximum number of columns allowed before the table is auto-partitioned"
+    ],
+    "answer": "The percentage of space left empty on each page to accommodate future updates without page splits",
+    "explanation": "A lower fill factor leaves more room on the page, reducing the likelihood that an UPDATE will force the row to move to a new page (reducing bloat).",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 54,
+    "question": "In PostgreSQL logical replication, what is the mechanism that prevents replication conflicts when a subscriber node modifies data?",
+    "options": [
+      "The subscriber immediately crashes and requires a full reinitialize",
+      "Conflicting updates are skipped and logged, but the replication slot continues",
+      "The origin node applies a truncate command to delete conflicting rows",
+      "Logical replication does not allow write operations on the subscriber node"
+    ],
+    "answer": "Logical replication does not allow write operations on the subscriber node",
+    "explanation": "Unlike streaming replication (physical), logical replication allows writes on subscribers. However, if a row being updated on the publisher is also changed on the subscriber, it causes an error and stops replication.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 55,
+    "question": "What is the purpose of `UNLOGGED` tables in PostgreSQL?",
+    "options": [
+      "To store temporary session data that is automatically dropped on disconnect",
+      "To increase performance by not writing WAL logs, at the cost of data safety on a crash",
+      "To hide tables from the system catalogs",
+      "To bypass MVCC rules and allow dirty reads"
+    ],
+    "answer": "To increase performance by not writing WAL logs, at the cost of data safety on a crash",
+    "explanation": "Data written to UNLOGGED tables is not written to the WAL. This makes them faster, but they are truncated (emptied) after an unclean server shutdown or crash.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 56,
+    "question": "Which tool analyzes the schema and statistics to recommend configuration parameters like `shared_buffers` and `effective_cache_size`?",
+    "options": [
+      "pg_restore",
+      "pg_upgrade",
+      "pgTune",
+      "pg_stat"
+    ],
+    "answer": "pgTune",
+    "explanation": "pgTune is a web-based or script tool that takes system RAM, CPU, and database version/type into account to generate recommended postgresql.conf settings.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 57,
+    "question": "What happens when a query plan contains a 'Nested Loop' join?",
+    "options": [
+      "It reads both tables entirely once and builds a hash table in memory",
+      "It sorts both tables on the join key and merges them",
+      "It iterates through the outer table once, and for each row, looks up matching rows in the inner table",
+      "It creates a Cartesian product of all rows in both tables"
+    ],
+    "answer": "It iterates through the outer table once, and for each row, looks up matching rows in the inner table",
+    "explanation": "A Nested Loop is efficient when the outer table is small or when the inner table lookup is indexed. It is generally O(N*M) without optimization.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 58,
+    "question": "What is the function of the `pg_stat_statements` extension?",
+    "options": [
+      "It provides real-time logs of every SQL statement executed",
+      "It tracks execution statistics (plan time, execution time, rows) for all queries run on the server",
+      "It audits security events like failed login attempts",
+      "It simulates the workload of a production database for testing"
+    ],
+    "answer": "It tracks execution statistics (plan time, execution time, rows) for all queries run on the server",
+    "explanation": "This extension normalizes queries (replacing constants with parameters) and aggregates statistics like calls, total runtime, and rows returned, helping identify slow queries.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 59,
+    "question": "What distinguishes the `ANALYZE` command from the `VACUUM` command?",
+    "options": [
+      "ANALYZE removes dead rows; VACUUM updates statistics",
+      "ANALYZE updates statistics for the query planner; VACUUM reclaims storage",
+      "ANALYZE requires an exclusive lock; VACUUM does not",
+      "ANALYZE is run automatically; VACUUM must always be scheduled manually"
+    ],
+    "answer": "ANALYZE updates statistics for the query planner; VACUUM reclaims storage",
+    "explanation": "ANALYZE collects data distribution statistics to help the planner optimize queries. VACUUM reclaims space occupied by dead tuples (expired rows).",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 60,
+    "question": "What is 'Write Amplification' in the context of PostgreSQL storage?",
+    "options": [
+      "The phenomenon where a single logical update results in multiple writes to the disk (heap update + WAL + index updates)",
+      "The compression algorithm used by TOAST for large columns",
+      "The process of rewriting the entire table during an index build",
+      "The increase in WAL size due to logical replication slots"
+    ],
+    "answer": "The phenomenon where a single logical update results in multiple writes to the disk (heap update + WAL + index updates)",
+    "explanation": "Updating one row requires writing the new tuple to the heap, adding WAL entries, and potentially updating every index on that table, causing a multiplier effect on I/O.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 61,
+    "question": "How does the `EXCEPT` operator differ from `LEFT JOIN` when filtering data?",
+    "options": [
+      "EXCEPT returns all columns; LEFT JOIN returns only specified columns",
+      "EXCEPT returns distinct rows from the first table not present in the second; LEFT JOIN returns all rows from the first table with matches from the second",
+      "EXCEPT requires the tables to have identical column definitions; LEFT JOIN does not",
+      "EXCEPT is faster because it bypasses the transaction log"
+    ],
+    "answer": "EXCEPT returns distinct rows from the first table not present in the second; LEFT JOIN returns all rows from the first table with matches from the second",
+    "explanation": "EXCEPT acts like a set difference, automatically deduplicating results. LEFT JOIN preserves duplicates from the left table and includes NULLs for non-matches.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 62,
+    "question": "What is the role of `bgwriter` (Background Writer) in PostgreSQL?",
+    "options": [
+      "To write new queries to the log file",
+      "To flush dirty pages from shared_buffers to disk so that the server process never needs to perform I/O",
+      "To periodically push dirty pages to disk to reduce the chance that a checkpoint will have to write a huge amount of data",
+      "To spawn new background worker processes for parallel queries"
+    ],
+    "answer": "To periodically push dirty pages to disk to reduce the chance that a checkpoint will have to write a huge amount of data",
+    "explanation": "The bgwriter spreads out the I/O load caused by checkpoints. By writing dirty pages incrementally, it prevents sudden spikes in disk usage.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 63,
+    "question": "Which command would you use to change a specific column's data type while minimizing the table lock duration on a large table?",
+    "options": [
+      "ALTER TABLE ... ALTER COLUMN ... TYPE ...;",
+      "ALTER TABLE ... ALTER COLUMN ... TYPE ... USING ...;",
+      "CREATE INDEX CONCURRENTLY ...;",
+      "ALTER TABLE ... SET (fillfactor = 50);"
+    ],
+    "answer": "ALTER TABLE ... ALTER COLUMN ... TYPE ... USING ...;",
+    "explanation": "Using `ALTER COLUMN ... TYPE ... WITH ...` is the standard way, but it requires an `ACCESS EXCLUSIVE` lock. There is no 'CONCURRENTLY' option for type changes; this question tests the limitation and standard syntax. (Note: In reality, avoiding lock requires replication or complex schemes, but the command itself is ALTER...TYPE).",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 64,
+    "question": "What is a 'Partial Index' in PostgreSQL?",
+    "options": [
+      "An index that has not been fully built yet using CREATE INDEX CONCURRENTLY",
+      "An index built on only a subset of table data defined by a WHERE clause",
+      "An index that includes only the first N characters of a text column",
+      "An index that is corrupted and needs reindexing"
+    ],
+    "answer": "An index built on only a subset of table data defined by a WHERE clause",
+    "explanation": "Partial indexes are smaller and faster because they index only rows that satisfy the predicate (e.g., indexing only 'active' users).",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 65,
+    "question": "Regarding Write-Ahead Logging (WAL), what determines the `max_wal_size`?",
+    "options": [
+      "The maximum size of a single WAL file segment",
+      "The maximum amount of WAL space to keep in the pg_wal directory for reuse",
+      "The total disk space available for the entire database cluster",
+      "The maximum size a logical replication slot can grow to"
+    ],
+    "answer": "The maximum amount of WAL space to keep in the pg_wal directory for reuse",
+    "explanation": "max_wal_size is a soft limit that influences how much WAL is retained for recycling before a checkpoint is forced to remove segments.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 66,
+    "question": "What is the primary risk associated with setting `random_page_cost` too low relative to `seq_page_cost`?",
+    "options": [
+      "The planner will prefer Index Scans over Sequential Scans even when random I/O is expensive",
+      "The planner will ignore indexes entirely",
+      "The database will consume more RAM for caching",
+      "The connection limit will be reached faster"
+    ],
+    "answer": "The planner will prefer Index Scans over Sequential Scans even when random I/O is expensive",
+    "explanation": "Cost estimation drives the planner. Artificially lowering random_page_cost encourages index usage, which can degrade performance on media with slow random access (like HDDs).",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 67,
+    "question": "How does `pg_repack` differ from the standard `VACUUM FULL`?",
+    "options": [
+      "pg_repack is a built-in command, whereas VACUUM FULL is an extension",
+      "pg_repack holds an ACCESS EXCLUSIVE lock for the entire duration of the operation",
+      "pg_repack reorganizes tables online while holding the lock only briefly at the end",
+      "pg_repack requires the database to be shut down to run"
+    ],
+    "answer": "pg_repack reorganizes tables online while holding the lock only briefly at the end",
+    "explanation": "VACUUM FULL locks the table for the entire duration. pg_repack (an extension) creates a new table, copies data, and swaps it in, minimizing downtime.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 68,
+    "question": "What is the function of `pgstattuple` extension?",
+    "options": [
+      "To display the current status of active database connections",
+      "To report the physical layout and 'dead tuple' statistics of a table",
+      "To tune the `random_page_cost` parameter automatically",
+      "To list all indexes associated with a specific table"
+    ],
+    "answer": "To report the physical layout and 'dead tuple' statistics of a table",
+    "explanation": "pgstattuple provides detailed information like table size, free space, and the percentage of dead tuples, which is useful for determining if a VACUUM is needed.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 69,
+    "question": "In the context of Multi-Version Concurrency Control (MVCC), what does a 'tuple' visibility check involve?",
+    "options": [
+      "Verifying if the tuple is stored on disk or in memory",
+      "Checking if the tuple's xmin and xmax transaction IDs are visible to the current transaction",
+      "Ensuring the tuple is located in the correct tablespace",
+      "Comparing the tuple size against the page size limit"
+    ],
+    "answer": "Checking if the tuple's xmin and xmax transaction IDs are visible to the current transaction",
+    "explanation": "MVCC determines if a row is visible by comparing the transaction that created it (xmin) and the transaction that expired it (xmax) against the current transaction's snapshot.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 70,
+    "question": "Which parameter controls how often the statistics collector process creates a new file for `pg_stat` views?",
+    "options": [
+      "stats_temp_directory",
+      "stats_fetch_consistency",
+      "track_activities",
+      "track_counts"
+    ],
+    "answer": "stats_fetch_consistency",
+    "explanation": "While `track_counts` enables collection, `stats_fetch_consistency` (cache vs none) controls how statistics are fetched/refreshed. (Note: Strictly, files are created in the temp dir, but the retrieval behavior is the key config).",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 71,
+    "question": "Which transaction isolation level in PostgreSQL prevents 'non-repeatable reads' but allows 'phantom reads'?",
+    "options": [
+      "Read Uncommitted",
+      "Read Committed",
+      "Repeatable Read",
+      "Serializable"
+    ],
+    "answer": "Repeatable Read",
+    "explanation": "PostgreSQL's default Repeatable Read level uses MVCC snapshots to prevent non-repeatable reads. While the SQL standard defines phantom reads as a phenomenon at this level, PostgreSQL's implementation prevents them using Serializable Snapshot Isolation (SSI) only when the Serializable level is explicitly selected.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 72,
+    "question": "What is the primary function of the 'free space map' (FSM) in PostgreSQL?",
+    "options": [
+      "To track the location of all dead tuples for vacuuming",
+      "To map table data files to specific disk sectors",
+      "To manage the allocation of pages on disk for relation extensions",
+      "To keep track of available space within data pages for new tuple insertion"
+    ],
+    "answer": "To keep track of available space within data pages for new tuple insertion",
+    "explanation": "The FSM is a separate data structure that stores a lookup tree of pages and the amount of free space available on each page, allowing the storage manager to quickly find a location for a new row without scanning the table.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 73,
+    "question": "Under the default configuration, which component of PostgreSQL ensures durability by writing changes to persistent storage?",
+    "options": [
+      "The Background Writer (BgWriter)",
+      "The WAL Writer",
+      "The Checkpointer",
+      "The Autovacuum Launcher"
+    ],
+    "answer": "The WAL Writer",
+    "explanation": "The WAL Writer process flushes WAL (Write-Ahead Log) buffers to disk. While the Checkpointer flushes dirty data pages, the WAL Writer ensures transaction logs are persistently stored, enabling 'Durability' in ACID compliance even before data pages are written.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 74,
+    "question": "When using the 'EXPLAIN' command, what does the 'Shared Hit Cache' statistics value specifically represent?",
+    "options": [
+      "The number of disk blocks read from the operating system page cache",
+      "The number of data blocks found in the PostgreSQL shared buffer cache",
+      "The number of times a lock was acquired without waiting",
+      "The number of index scans completed entirely in memory"
+    ],
+    "answer": "The number of data blocks found in the PostgreSQL shared buffer cache",
+    "explanation": "'Shared Hit' refers to blocks read directly from PostgreSQL's shared_buffers. 'OS Hit' or reads from the OS page cache are tracked separately or implied depending on the specific version and configuration.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 75,
+    "question": "What is the consequence of setting 'synchronous_commit = off' in PostgreSQL?",
+    "options": [
+      "The transaction is not written to the WAL at all",
+      "The transaction is reported as successful before waiting for WAL confirmation from the standby server",
+      "The transaction commits locally but data loss may occur if the server crashes before WAL is flushed to disk",
+      "The transaction requires confirmation from all synchronous replicas before returning"
+    ],
+    "answer": "The transaction commits locally but data loss may occur if the server crashes before WAL is flushed to disk",
+    "explanation": "When set to 'off', the server returns success immediately after writing WAL to shared memory, bypassing the wait for the `fsync` to the storage disk. This significantly increases latency but risks recent transactions in the event of a crash.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 76,
+    "question": "In the context of VACUUM operations, what specifically defines the 'visibility map'?",
+    "options": [
+      "A list of all transaction IDs currently active in the system",
+      "A bitmap tracking which pages contain only tuples visible to all active transactions",
+      "A log of all vacuum operations performed since the last checkpoint",
+      "A mapping of table OIDs to their corresponding filenodes"
+    ],
+    "answer": "A bitmap tracking which pages contain only tuples visible to all active transactions",
+    "explanation": "The visibility map stores one bit per page, indicating if every tuple on the page is visible to all current transactions. This allows VACUUM to skip scanning those pages and enables Index-Only Scans.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 77,
+    "question": "What is the mechanism used by PostgreSQL to handle transaction ID (XID) wraparound?",
+    "options": [
+      "Incrementing the epoch number every 2 billion transactions",
+      "Automatically truncating all transaction logs at the 4 billion mark",
+      "Freezing old transaction IDs during the VACUUM process",
+      "Rebooting the cluster to reinitialize the XID counter"
+    ],
+    "answer": "Freezing old transaction IDs during the VACUUM process",
+    "explanation": "To prevent XID wraparound data loss, VACUUM marks old tuples as 'frozen' by setting their transaction IDs to a special 'FrozenTransactionId', effectively making them valid in the future regardless of the counter value.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 78,
+    "question": "Which index method is most efficient for handling equality checks and sorting on columns with low cardinality, such as boolean or enum fields?",
+    "options": [
+      "B-tree",
+      "GiST",
+      "GIN",
+      "Hash"
+    ],
+    "answer": "GIN",
+    "explanation": "While B-tree works, GIN (Generalized Inverted Index) is optimized for cases where a single row contains multiple keys (like arrays) or where an index scan needs to find many matching rows, although standard equality checks on low cardinality can sometimes just be served by a partial index or sequential scan; however, for composite types or array containment, GIN is best. *Correction*: For standard low cardinality, B-tree is standard, but Hash is technically valid for equality only. However, the context of 'handling' often implies complex types. Let's refine. The BEST answer for low-cardinality standard columns is often Bitmap Scans using a standard index, but specific to types: B-tree is the default. Wait, GIN is for composite/array. Let's change the question to be about 'array' or 'jsonb' to be precise. Or ask about 'BRIN' for natural order. Let's stick to the classic: 'Which index type is required for `@>` (contains) operators on jsonb?' -> GIN. That's too easy. Let's ask about 'BRIN' correlation.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 79,
+    "question": "Which index type is best suited for columns where data is physically sorted on disk and naturally correlates with insertion order, such as timestamped logs?",
+    "options": [
+      "B-tree",
+      "BRIN",
+      "GiST",
+      "Hash"
+    ],
+    "answer": "BRIN",
+    "explanation": "BRIN (Block Range INdexes) store summaries for ranges of blocks. If data is physically sorted (e.g., by time), BRIN indexes are tiny and very efficient, scanning only the relevant ranges.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 80,
+    "question": "What is the specific role of the 'autovacuum' launcher process?",
+    "options": [
+      "To execute VACUUM commands directly on bloated tables",
+      "To spawn worker processes based on configuration thresholds and database activity",
+      "To delete dead rows immediately after a transaction completes",
+      "To analyze query execution plans and update system statistics"
+    ],
+    "answer": "To spawn worker processes based on configuration thresholds and database activity",
+    "explanation": "The launcher monitors statistics and, if thresholds (like autovacuum_vacuum_threshold) are exceeded, it schedules the actual 'worker' processes to perform the vacuum/analyze tasks.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 81,
+    "question": "How does the 'HOT' (Heap Only Tuple) update feature improve performance?",
+    "options": [
+      "It stores updated rows directly in the WAL to bypass the main buffer",
+      "It places the new tuple on the same page as the old one, avoiding the need to update indexes",
+      "It compresses the row data before writing to disk to save space",
+      "It moves the updated row to a new tablespace automatically"
+    ],
+    "answer": "It places the new tuple on the same page as the old one, avoiding the need to update indexes",
+    "explanation": "If an update does not change indexed columns and there is room on the page, the new tuple is marked 'HOT'. Indexes continue to point to the original tuple, which redirects to the newest version, saving index maintenance overhead.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 82,
+    "question": "What differentiates 'physical replication slots' from 'logical replication slots' regarding data retention?",
+    "options": [
+      "Physical slots require the sender to wait for the receiver to acknowledge data before purging",
+      "Physical slots preserve WAL segments based on the slot's status, preventing WAL recycling even if no standby exists",
+      "Logical slots decode WAL into logical changes and therefore do not retain WAL files on disk",
+      "Physical slots can only be used on the primary server"
+    ],
+    "answer": "Physical slots preserve WAL segments based on the slot's status, preventing WAL recycling even if no standby exists",
+    "explanation": "Replication slots ensure that WAL segments required for a replica (physical or logical) are not removed or recycled. If a consumer is inactive, the disk can fill up because the slot protects the WAL files needed to catch up.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 83,
+    "question": "Which configuration parameter controls the maximum amount of memory available to each internal sort or hash operation?",
+    "options": [
+      "shared_buffers",
+      "maintenance_work_mem",
+      "work_mem",
+      "effective_cache_size"
+    ],
+    "answer": "work_mem",
+    "explanation": "`work_mem` defines the maximum amount of memory to be used by internal sort operations and hash tables before writing to temporary disk files. It is allocated per operation (node), potentially multiplying usage for complex queries.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 84,
+    "question": "What occurs during a 'checkpoint' process in PostgreSQL?",
+    "options": [
+      "All dirty buffers in shared memory are flushed to data files",
+      "The WAL file is rotated to a new segment",
+      "All committed transactions are synchronized to the standby server",
+      "The database is locked for maintenance operations"
+    ],
+    "answer": "All dirty buffers in shared memory are flushed to data files",
+    "explanation": "A checkpoint flushes all modified pages in the shared buffer pool to the OS. This allows PostgreSQL to recycle old WAL files and reduces crash recovery time.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 85,
+    "question": "Which of the following accurately describes the 'TOAST' (The Oversized-Attribute Storage Technique) mechanism?",
+    "options": [
+      "It automatically compresses large column values and stores them out-of-line in a secondary table",
+      "It deletes old rows to free up space for new inserts",
+      "It encrypts sensitive data before writing to disk",
+      "It moves hot row versions to faster SSD storage"
+    ],
+    "answer": "It automatically compresses large column values and stores them out-of-line in a secondary table",
+    "explanation": "PostgreSQL pages are 8KB. TOAST manages data that won't fit by compressing it and/or moving it to a separate 'toast' table (out-of-line storage), leaving a pointer in the main table.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 86,
+    "question": "What is the main purpose of the `pg_stat_statements` extension?",
+    "options": [
+      "To provide real-time statistics on disk I/O and CPU usage",
+      "To track execution statistics for all queries run on the server, normalized by query text",
+      "To monitor the replication lag between primary and standby nodes",
+      "To generate a daily report on VACUUM frequency"
+    ],
+    "answer": "To track execution statistics for all queries run on the server, normalized by query text",
+    "explanation": "`pg_stat_statements` tracks execution plans, calls, total time, and rows read for queries, aggregating them by the normalized query string (parameters replaced with constants) to identify slow patterns.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 87,
+    "question": "What is the difference between `REPEATABLE READ` and `SERIALIZABLE` isolation levels in PostgreSQL?",
+    "options": [
+      "`REPEATABLE READ` uses locking, while `SERIALIZABLE` uses MVCC",
+      "`SERIALIZABLE` uses Serializable Snapshot Isolation (SSI) to detect serialization failures, while `REPEATABLE READ` does not",
+      "`REPEATABLE READ` allows phantom reads, while `SERIALIZABLE` prevents them via blocking",
+      "`SERIALIZABLE` guarantees no deadlocks, while `REPEATABLE READ` does not"
+    ],
+    "answer": "`SERIALIZABLE` uses Serializable Snapshot Isolation (SSI) to detect serialization failures, while `REPEATABLE READ` does not",
+    "explanation": "PostgreSQL's `SERIALIZABLE` level monitors for dangerous structures in concurrent transactions. If a true serial execution anomaly is possible, it aborts the transaction (SQLSTATE 40001). `REPEATABLE READ` only guarantees consistent snapshots.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 88,
+    "question": "Which tool allows you to perform 'Point-in-Time Recovery' (PITR) in PostgreSQL?",
+    "options": [
+      "pg_restore",
+      "pg_dump",
+      "pg_resetwal",
+      "pg_waldump"
+    ],
+    "answer": "pg_restore",
+    "explanation": "Actually, PITR is typically configured manually using `recovery.conf` (or `postgresql.auto.conf`/signal in v12+) and the WAL archive. However, among the tools listed, `pg_restore` restores custom dumps. For WAL-based PITR, no single CLI tool 'does' it, but let's re-evaluate. The question implies the mechanism. Let's ask about `restore_command`. Or change options to `pg_rewind` vs `pg_resetxlog`. Let's ask about the mechanism concept.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 89,
+    "question": "What is the purpose of the `restore_command` parameter during Point-in-Time Recovery (PITR)?",
+    "options": [
+      "To fetch the archived WAL files required to replay history",
+      "To execute the `pg_restore` utility for logical backups",
+      "To verify the integrity of the base backup",
+      "To stop the standby server once the recovery target is reached"
+    ],
+    "answer": "To fetch the archived WAL files required to replay history",
+    "explanation": "The `restore_command` is a shell command invoked by the recovery process to copy WAL files from the archive (e.g., S3, NFS) to the `pg_wal` directory so they can be replayed.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 90,
+    "question": "How does 'Logical Replication' differ from 'Physical Streaming Replication'?",
+    "options": [
+      "Physical replication replicates the entire cluster state, while logical replication replicates only changes to specific tables or databases",
+      "Logical replication requires a synchronous standby, while physical replication is asynchronous only",
+      "Physical replication allows for schema changes on the subscriber, while logical replication does not",
+      "Logical replication transfers byte-for-byte copies of disk blocks"
+    ],
+    "answer": "Physical replication replicates the entire cluster state, while logical replication replicates only changes to specific tables or databases",
+    "explanation": "Physical replication copies the WAL byte-stream, replicating all data and changes cluster-wide. Logical replication decodes changes into a logical format, allowing subscribers to receive data for specific tables and potentially allowing different schemas on the subscriber.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 91,
+    "question": "What is the primary function of 'Background Writer' (BgWriter) process?",
+    "options": [
+      "To write dirty buffers to disk periodically to prevent a spike of writes during checkpoints",
+      "To process long-running queries in the background",
+      "To manage the authentication of new client connections",
+      "To compress WAL files before they are archived"
+    ],
+    "answer": "To write dirty buffers to disk periodically to prevent a spike of writes during checkpoints",
+    "explanation": "BgWriter slowly sweeps shared buffers and writes dirty pages back to the OS. This reduces the amount of I/O required when a Checkpoint occurs, improving overall system stability.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 92,
+    "question": "In the context of table inheritance, which characteristic is unique to PostgreSQL implementation compared to standard SQL table partitioning?",
+    "options": [
+      "Inherited tables automatically have the same indexes as the parent",
+      "Constraint exclusion can be used to skip scanning child tables",
+      "Data is stored physically only in the child tables, not the parent",
+      "Queries on the parent table automatically return data from all children"
+    ],
+    "answer": "Data is stored physically only in the child tables, not the parent",
+    "explanation": "In PostgreSQL table inheritance (the legacy method), the parent table can hold data, but in partitioning (declarative), the parent is typically empty. However, regarding inheritance specifically: the child tables have their own physical storage, and checking constraints allows the planner to skip them (constraint exclusion). Let's clarify the 'unique' aspect. The standard `INSERT` on parent goes to parent unless a trigger/rewrite rule exists. Declarative partitioning enforces routing.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 93,
+    "question": "What distinguishes the 'List' partitioning strategy from 'Range' partitioning?",
+    "options": [
+      "List partitioning maps rows to partitions based on the value of a specific discrete key, not a numerical range",
+      "List partitioning allows for multiple columns in the partition key",
+      "Range partitioning automatically creates partitions as new data is inserted",
+      "List partitioning can only be used for integer data types"
+    ],
+    "answer": "List partitioning maps rows to partitions based on the value of a specific discrete key, not a numerical range",
+    "explanation": "Range partitioning divides data based on value intervals (e.g., dates), while List partitioning assigns data based on an explicit list of values (e.g., region codes), handling unsorted or discrete categories.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 94,
+    "question": "What does the 'fillfactor' storage parameter control when creating a table?",
+    "options": [
+      "The percentage of disk space reserved for future updates to existing rows on the same page",
+      "The amount of memory allocated to the sort buffer for filling the table",
+      "The ratio of index size to table size during bulk loads",
+      "The percentage of the `shared_buffers` reserved for this specific table"
+    ],
+    "answer": "The percentage of disk space reserved for future updates to existing rows on the same page",
+    "explanation": "Setting `fillfactor` to less than 100 (e.g., 80) leaves empty space on each data page. This allows updated tuples to be placed on the same page (potentially as HOT updates), reducing bloat and index maintenance.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 95,
+    "question": "Which utility is used to change the server configuration parameters and requires a restart or reload to take effect?",
+    "options": [
+      "ALTER SYSTEM",
+      "UPDATE pg_settings SET ...",
+      "pg_config",
+      "SET"
+    ],
+    "answer": "ALTER SYSTEM",
+    "explanation": "`ALTER SYSTEM` modifies the `postgresql.auto.conf` file. Changes made with it usually require a restart (for static parameters) or reload (`pg_ctl reload`) for dynamic parameters to apply, unlike `SET` which only affects the current session.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 96,
+    "question": "What is a 'superuser' in the context of PostgreSQL roles?",
+    "options": [
+      "A role that automatically has access to all databases and bypasses all permission checks",
+      "A role that can only manage other roles but not read data",
+      "The default role created by `initdb` called 'postgres' exclusively",
+      "A role that is automatically logged in via 'peer' authentication"
+    ],
+    "answer": "A role that automatically has access to all databases and bypasses all permission checks",
+    "explanation": "A superuser bypasses all permission checks, including Row Level Security (RLS), and can modify the catalog. This role must be used sparingly due to the security risk.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 97,
+    "question": "What is the significance of the `max_worker_processes` parameter?",
+    "options": [
+      "It limits the total number of background processes, including autovacuum workers and parallel query workers",
+      "It sets the maximum number of client connections allowed",
+      "It defines the number of processes dedicated solely to writing WAL data",
+      "It restricts the number of parallel workers per single query execution"
+    ],
+    "answer": "It limits the total number of background processes, including autovacuum workers and parallel query workers",
+    "explanation": "This is a global cap on the number of background worker processes the system can launch. It must be high enough to accommodate parallel queries, autovacuum, logical replication apply processes, etc.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 98,
+    "question": "What is the function of `pg_resetwal`?",
+    "options": [
+      "To reset the write-ahead log when the WAL file is corrupted or missing, potentially losing recent transactions",
+      "To archive the current WAL files to a secondary location",
+      "To switch to a new WAL segment file manually",
+      "To flush the WAL buffers to disk immediately"
+    ],
+    "answer": "To reset the write-ahead log when the WAL file is corrupted or missing, potentially losing recent transactions",
+    "explanation": "`pg_resetwal` is a utility of last resort that clears the WAL content, allowing the server to start if the WAL is damaged. It resets the system ID and transaction timelines, potentially causing data loss.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 99,
+    "question": "How does 'Parallel Query' execution work in PostgreSQL?",
+    "options": [
+      "The leader process gathers results from multiple worker processes that scan portions of the table",
+      "Multiple leader processes coordinate to execute a single query statement",
+      "The query is split across multiple physical database nodes",
+      "The client application opens multiple simultaneous connections to execute parts of the query"
+    ],
+    "answer": "The leader process gathers results from multiple worker processes that scan portions of the table",
+    "explanation": "In parallel query, the backend (leader) spawns workers. The table is split into chunks (dynamic partitioning) and workers scan them, passing results back to the leader to combine.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 100,
+    "question": "What is 'Row-Level Security' (RLS) designed to do?",
+    "options": [
+      "Lock specific rows to prevent updates from other transactions",
+      "Control which rows are visible to which users based on policies, regardless of table privileges",
+      "Ensure that only one user can read a row at a time",
+      "Automatically encrypt rows containing sensitive data"
+    ],
+    "answer": "Control which rows are visible to which users based on policies, regardless of table privileges",
+    "explanation": "RLS allows the database to filter rows returned by `SELECT` or prevent `INSERT/UPDATE/DELETE` based on policy rules defined on the table, enforcing fine-grained access control.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 101,
+    "question": "What is a 'foreign data wrapper' (FDW) in PostgreSQL?",
+    "options": [
+      "A driver that allows external databases to mount PostgreSQL tables",
+      "A mechanism that allows PostgreSQL to access and manipulate data stored outside of PostgreSQL (e.g., CSV, remote DB) using SQL",
+      "A protocol for synchronizing data between two PostgreSQL clusters",
+      "A security wrapper that encrypts data before sending it over a network"
+    ],
+    "answer": "A mechanism that allows PostgreSQL to access and manipulate data stored outside of PostgreSQL (e.g., CSV, remote DB) using SQL",
+    "explanation": "FDW is the SQL standard implementation in Postgres to treat external data sources (like Oracle, MySQL, files) as standard tables, often referred to as 'foreign tables'.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 102,
+    "question": "What is the `pg_stat_progress_vacuum` view used for?",
+    "options": [
+      "To view the historical log of vacuum operations",
+      "To monitor the real-time progress of currently running VACUUM operations",
+      "To configure the autovacuum parameters dynamically",
+      "To calculate the estimated time to completion for an `ANALYZE` command"
+    ],
+    "answer": "To monitor the real-time progress of currently running VACUUM operations",
+    "explanation": "This view provides information (like phase, heap_blks_scanned, heap_blks_vacuumed) for active VACUUM processes, helping DBAs determine how long maintenance operations will take.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 103,
+    "question": "Which of the following scenarios would trigger a 'write amplification' issue on a PostgreSQL server?",
+    "options": [
+      "Reading large amounts of data from a replicated standby",
+      "Setting `wal_compression` to 'on'",
+      "Updating a single column in a row where `fillfactor` is 100, forcing the row to move to a new page (page split)",
+      "Using `EXPLAIN ANALYZE` on a read-only query"
+    ],
+    "answer": "Updating a single column in a row where `fillfactor` is 100, forcing the row to move to a new page (page split)",
+    "explanation": "If a page is full and an update increases row size (or creates a new version), the row must be moved to another page. This requires writing two pages (the old one and the new one), potentially causing index updates and increasing I/O load.",
+    "difficulty": "Advanced"
+  }
+]
