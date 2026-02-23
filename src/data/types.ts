@@ -4,10 +4,34 @@ export interface Question {
   options: string[];
   answer: string;
   explanation: string;
-  difficulty?: 'Beginner' | 'Intermediate' | 'Advanced';
+  difficulty?: "Beginner" | "Intermediate" | "Advanced";
 }
 
-export type TopicId = 'pronunciation' | 'grammar' | 'pandas' | 'sql' | 'postgres' | 'aws' | 'python' | 'javascript' | 'typescript' | 'react' | 'systemdesign' | 'designpatterns' | 'algorithms' | 'aiagents' | 'financial' | 'aiengineer' | 'interview' | 'csharp' | 'dotnet' | 'dapper' | 'entityframework' | 'terraform' | 'pulumi';
+export type TopicId =
+  | "pronunciation"
+  | "grammar"
+  | "pandas"
+  | "sql"
+  | "postgres"
+  | "aws"
+  | "python"
+  | "javascript"
+  | "typescript"
+  | "react"
+  | "systemdesign"
+  | "designpatterns"
+  | "algorithms"
+  | "aiagents"
+  | "financial"
+  | "aiengineer"
+  | "interview"
+  | "csharp"
+  | "dotnet"
+  | "dapper"
+  | "entityframework"
+  | "terraform"
+  | "pulumi"
+  | "langchain";
 
 export interface Topic {
   id: TopicId;
@@ -23,7 +47,7 @@ export interface TopicCategory {
 }
 
 // Progress tracking types
-export type QuestionStatus = 'correct' | 'wrong' | 'skipped' | 'unanswered';
+export type QuestionStatus = "correct" | "wrong" | "skipped" | "unanswered";
 
 export interface QuestionProgress {
   questionId: number;
