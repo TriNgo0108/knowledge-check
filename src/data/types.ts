@@ -61,3 +61,9 @@ export interface TopicProgress {
   lastQuestionIndex: number;
   completedAt?: number;
 }
+
+export interface ExportData {
+  version: 1;
+  exportedAt: string;
+  progressByKey: Record<string, TopicProgress>;
+}

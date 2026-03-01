@@ -1,25 +1,35 @@
-import { Link } from 'react-router-dom';
-import { Topic, TopicCategory } from '@/data/types';
-import { useState, useEffect, useMemo, memo } from 'react';
-import { getAllTopicsProgress } from '@/hooks/useQuizProgress';
-import ThemeToggle from '@/components/ThemeToggle';
-import TopicIcon from '@/components/TopicIcon';
-import { allTopics, categories } from '@constants/topics';
+import { Link } from "react-router-dom";
+import { Topic, TopicCategory } from "@/data/types";
+import { useState, useEffect, useMemo, useCallback, memo } from "react";
+import { getAllTopicsProgress } from "@/hooks/useQuizProgress";
+import ThemeToggle from "@/components/ThemeToggle";
+import TopicIcon from "@/components/TopicIcon";
+import {
+  ImportExportSidebar,
+  ImportExportButton,
+} from "@/components/import-export";
+import { allTopics, categories } from "@constants/topics";
 
-const TopicCard = memo(function TopicCard({ topic, progress }: { topic: Topic; progress?: { correct: number; wrong: number; skipped: number; total: number } }) {
+const TopicCard = memo(function TopicCard({
+  topic,
+  progress,
+}: {
+  topic: Topic;
+  progress?: { correct: number; wrong: number; skipped: number; total: number };
+}) {
   return (
-    <Link 
-      to={`/topic/${topic.id}`} 
+    <Link
+      to={`/topic/${topic.id}`}
       className="topic-card group"
-      style={{ '--glow-color': topic.color } as React.CSSProperties}
+      style={{ "--glow-color": topic.color } as React.CSSProperties}
     >
       {/* Topic Icon */}
       <div className="text-4xl mb-3 transition-all duration-300 group-hover:scale-110 group-hover:animate-float">
         <TopicIcon name={topic.icon} className="w-10 h-10" />
       </div>
-      
+
       {/* Topic Title */}
-      <h3 
+      <h3
         className="text-lg font-semibold mb-2 transition-colors duration-300"
         style={{ color: topic.color }}
       >
@@ -30,28 +40,40 @@ const TopicCard = memo(function TopicCard({ topic, progress }: { topic: Topic; p
 });
 
 interface ProgressData {
-  [topicId: string]: { correct: number; wrong: number; skipped: number; total: number };
+  [topicId: string]: {
+    correct: number;
+    wrong: number;
+    skipped: number;
+    total: number;
+  };
 }
 
-const CategorySection = memo(function CategorySection({ category, progressData }: { category: TopicCategory; progressData: ProgressData }) {
+const CategorySection = memo(function CategorySection({
+  category,
+  progressData,
+}: {
+  category: TopicCategory;
+  progressData: ProgressData;
+}) {
   return (
     <section className="mb-10">
       {/* Category Header */}
       <div className="category-header">
         <span className="text-2xl">{category.icon}</span>
-        <h2 className="text-xl font-semibold" style={{ color: 'var(--color-text)' }}>
+        <h2
+          className="text-xl font-semibold"
+          style={{ color: "var(--color-text)" }}
+        >
           {category.name}
         </h2>
-        <span className="category-badge">
-          {category.topics.length} topics
-        </span>
+        <span className="category-badge">{category.topics.length} topics</span>
       </div>
-      
+
       {/* Topic Grid */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
         {category.topics.map((topic, idx) => (
-          <div 
-            key={topic.id} 
+          <div
+            key={topic.id}
             className="animate-fadeIn"
             style={{ animationDelay: `${idx * 0.05}s` }}
           >
@@ -64,41 +86,46 @@ const CategorySection = memo(function CategorySection({ category, progressData }
 });
 
 export default function Home() {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [progressData, setProgressData] = useState<ProgressData>({});
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const openSidebar = useCallback(() => setIsSidebarOpen(true), []);
+  const closeSidebar = useCallback(() => setIsSidebarOpen(false), []);
 
   // Load progress on mount and when window gains focus (returning from quiz)
   useEffect(() => {
     const loadProgress = () => {
       const allProgress = getAllTopicsProgress();
       const data: ProgressData = {};
-      
+
       Object.entries(allProgress).forEach(([topicId, progress]) => {
         const questions = Object.values(progress.questions);
         data[topicId] = {
-          correct: questions.filter(q => q.status === 'correct').length,
-          wrong: questions.filter(q => q.status === 'wrong').length,
-          skipped: questions.filter(q => q.status === 'skipped').length,
-          total: questions.length
+          correct: questions.filter((q) => q.status === "correct").length,
+          wrong: questions.filter((q) => q.status === "wrong").length,
+          skipped: questions.filter((q) => q.status === "skipped").length,
+          total: questions.length,
         };
       });
-      
+
       setProgressData(data);
     };
 
     loadProgress();
-    window.addEventListener('focus', loadProgress);
-    return () => window.removeEventListener('focus', loadProgress);
+    window.addEventListener("focus", loadProgress);
+    return () => window.removeEventListener("focus", loadProgress);
   }, []);
-  
+
   const filteredCategories = useMemo(() => {
-    return searchQuery.trim() 
-      ? categories.map(cat => ({
-          ...cat,
-          topics: cat.topics.filter(t => 
-            t.title.toLowerCase().includes(searchQuery.toLowerCase())
-          )
-        })).filter(cat => cat.topics.length > 0)
+    return searchQuery.trim()
+      ? categories
+          .map((cat) => ({
+            ...cat,
+            topics: cat.topics.filter((t) =>
+              t.title.toLowerCase().includes(searchQuery.toLowerCase()),
+            ),
+          }))
+          .filter((cat) => cat.topics.length > 0)
       : categories;
   }, [searchQuery]);
 
@@ -107,23 +134,31 @@ export default function Home() {
   return (
     <div className="min-h-screen fade-in">
       {/* Floating Header */}
-      <header className="sticky top-0 z-50 backdrop-blur-xl border-b" style={{ 
-        background: 'var(--color-bg-card)',
-        borderColor: 'var(--color-border)'
-      }}>
+      <header
+        className="sticky top-0 z-50 backdrop-blur-xl border-b"
+        style={{
+          background: "var(--color-bg-card)",
+          borderColor: "var(--color-border)",
+        }}
+      >
         <div className="container mx-auto px-4 py-4 max-w-5xl">
           <div className="flex items-center justify-between">
             {/* Logo/Title */}
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center text-xl"
-                   style={{ background: 'var(--color-brand-glow)' }}>
+              <div
+                className="w-10 h-10 rounded-xl flex items-center justify-center text-xl"
+                style={{ background: "var(--color-brand-glow)" }}
+              >
                 📚
               </div>
-              <h1 className="text-xl font-bold hidden sm:block" style={{ color: 'var(--color-brand)' }}>
+              <h1
+                className="text-xl font-bold hidden sm:block"
+                style={{ color: "var(--color-brand)" }}
+              >
                 Knowledge Check
               </h1>
             </div>
-            
+
             {/* Search + Theme Toggle */}
             <div className="flex items-center gap-3">
               {/* Search */}
@@ -135,29 +170,46 @@ export default function Home() {
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="search-input w-48 sm:w-64"
                 />
-                <svg 
-                  className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" 
-                  style={{ color: 'var(--color-text-muted)' }}
-                  fill="none" 
-                  stroke="currentColor" 
+                <svg
+                  className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4"
+                  style={{ color: "var(--color-text-muted)" }}
+                  fill="none"
+                  stroke="currentColor"
                   viewBox="0 0 24 24"
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} 
-                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  />
                 </svg>
                 {searchQuery && (
-                  <button 
-                    onClick={() => setSearchQuery('')}
+                  <button
+                    onClick={() => setSearchQuery("")}
                     className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-white/10 transition-colors"
-                    style={{ color: 'var(--color-text-muted)' }}
+                    style={{ color: "var(--color-text-muted)" }}
                   >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    <svg
+                      className="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M6 18L18 6M6 6l12 12"
+                      />
                     </svg>
                   </button>
                 )}
               </div>
-              
+
+              {/* Import/Export */}
+              <ImportExportButton onClick={openSidebar} />
+
               {/* Theme Toggle */}
               <ThemeToggle />
             </div>
@@ -169,35 +221,49 @@ export default function Home() {
       <main className="container mx-auto px-4 py-8 max-w-5xl">
         {/* Hero Section */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl sm:text-5xl font-bold mb-4 bg-clip-text text-transparent"
-              style={{ 
-                backgroundImage: 'linear-gradient(135deg, var(--color-brand) 0%, var(--color-secondary) 50%, var(--color-accent) 100%)'
-              }}>
+          <h1
+            className="text-4xl sm:text-5xl font-bold mb-4 bg-clip-text text-transparent"
+            style={{
+              backgroundImage:
+                "linear-gradient(135deg, var(--color-brand) 0%, var(--color-secondary) 50%, var(--color-accent) 100%)",
+            }}
+          >
             Master Your Skills
           </h1>
-          <p className="text-lg mb-2" style={{ color: 'var(--color-text-secondary)' }}>
-            Challenge yourself with {allTopics.length} topics and {totalQuestions.toLocaleString()} questions
+          <p
+            className="text-lg mb-2"
+            style={{ color: "var(--color-text-secondary)" }}
+          >
+            Challenge yourself with {allTopics.length} topics and{" "}
+            {totalQuestions.toLocaleString()} questions
           </p>
-          <p className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
+          <p className="text-sm" style={{ color: "var(--color-text-muted)" }}>
             Track your progress • Learn at your pace • Achieve mastery
           </p>
         </div>
 
         {/* Categories */}
         {filteredCategories.length > 0 ? (
-          filteredCategories.map(category => (
-            <CategorySection key={category.name} category={category} progressData={progressData} />
+          filteredCategories.map((category) => (
+            <CategorySection
+              key={category.name}
+              category={category}
+              progressData={progressData}
+            />
           ))
         ) : (
           <div className="text-center py-16">
             <div className="text-5xl mb-4">🔍</div>
-            <p className="text-xl mb-2" style={{ color: 'var(--color-text-secondary)' }}>
+            <p
+              className="text-xl mb-2"
+              style={{ color: "var(--color-text-secondary)" }}
+            >
               No topics found for "{searchQuery}"
             </p>
-            <button 
-              onClick={() => setSearchQuery('')}
+            <button
+              onClick={() => setSearchQuery("")}
               className="mt-4 text-brand hover:underline font-medium"
-              style={{ color: 'var(--color-brand)' }}
+              style={{ color: "var(--color-brand)" }}
             >
               Clear search
             </button>
@@ -205,10 +271,16 @@ export default function Home() {
         )}
       </main>
 
+      {/* Import/Export Sidebar */}
+      <ImportExportSidebar isOpen={isSidebarOpen} onClose={closeSidebar} />
+
       {/* Footer */}
-      <footer className="border-t py-6 mt-8" style={{ borderColor: 'var(--color-border)' }}>
+      <footer
+        className="border-t py-6 mt-8"
+        style={{ borderColor: "var(--color-border)" }}
+      >
         <div className="container mx-auto px-4 max-w-5xl text-center">
-          <p className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
+          <p className="text-sm" style={{ color: "var(--color-text-muted)" }}>
             Built with ❤️ for continuous learning
           </p>
         </div>
