@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { Drawer } from "vaul";
 import { ArrowUpDown, X, BarChart3, Info } from "lucide-react";
-import { useQuizProgressStore } from "@/store/quizProgressStore";
+import { useQuizProgressStore } from "@store/quizProgressStore";
 import { ExportCard } from "./ExportCard";
 import { ImportCard } from "./ImportCard";
 
@@ -58,10 +58,14 @@ export default function ImportExportSidebar({
               boxShadow: "-8px 0 30px rgba(0,0,0,0.25)",
             }}
           >
-            {/* Header */}
+            {/* Header — slides down */}
             <div
-              className="flex items-center justify-between px-6 py-5"
-              style={{ borderBottom: "1px solid var(--color-border)" }}
+              className="flex items-center justify-between px-6 py-5 animate-slideDown"
+              style={{
+                borderBottom: "1px solid var(--color-border)",
+                animationDelay: "0.05s",
+                animationDuration: "0.35s",
+              }}
             >
               <div className="flex items-center gap-3">
                 <div
@@ -109,15 +113,17 @@ export default function ImportExportSidebar({
               </Drawer.Close>
             </div>
 
-            {/* Content */}
+            {/* Content — staggered entrance */}
             <div className="flex-1 px-6 py-6 space-y-5">
               {/* Stats */}
               {hasProgress && (
                 <div
-                  className="flex items-center justify-between px-4 py-3 rounded-xl"
+                  className="flex items-center justify-between px-4 py-3 rounded-xl animate-fadeIn"
                   style={{
                     background: "var(--color-bg-elevated)",
                     border: "1px solid var(--color-border)",
+                    animationDelay: "0.1s",
+                    animationDuration: "0.35s",
                   }}
                 >
                   <div className="flex items-center gap-2">
@@ -160,15 +166,27 @@ export default function ImportExportSidebar({
                 </div>
               )}
 
-              <ExportCard />
-              <ImportCard />
+              <div
+                className="animate-fadeIn"
+                style={{ animationDelay: "0.15s", animationDuration: "0.35s" }}
+              >
+                <ExportCard />
+              </div>
+              <div
+                className="animate-fadeIn"
+                style={{ animationDelay: "0.22s", animationDuration: "0.35s" }}
+              >
+                <ImportCard />
+              </div>
 
               {/* Format note */}
               <div
-                className="flex items-start gap-2.5 px-4 py-3 rounded-lg text-xs"
+                className="flex items-start gap-2.5 px-4 py-3 rounded-lg text-xs animate-fadeIn"
                 style={{
                   background: "var(--color-bg-hover)",
                   color: "var(--color-text-muted)",
+                  animationDelay: "0.3s",
+                  animationDuration: "0.35s",
                 }}
               >
                 <Info className="w-4 h-4 flex-shrink-0 mt-0.5" />

@@ -8,7 +8,7 @@ import {
   QuestionProgress,
   QuestionStatus,
   ExportData,
-} from "@/data/types";
+} from "@data/types";
 
 /* ── Global type for File System Access API ────────────────────────── */
 declare global {
@@ -73,7 +73,7 @@ const TopicProgressSchema = z.object({
 const ExportDataSchema = z.object({
   version: z.literal(1),
   exportedAt: z.string(),
-  progressByKey: z.record(TopicProgressSchema),
+  progressByKey: z.record(z.string(), TopicProgressSchema),
 });
 
 export const useQuizProgressStore = create<QuizProgressState>()(

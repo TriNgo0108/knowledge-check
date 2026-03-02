@@ -1,4 +1,4 @@
-import { Topic, TopicCategory } from "@/data/types";
+import { Topic, TopicCategory } from "@data/types";
 
 export const allTopics: Topic[] = [
   {

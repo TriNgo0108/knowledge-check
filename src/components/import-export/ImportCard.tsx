@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import { toast } from "sonner";
 import { Upload, ChevronRight } from "lucide-react";
-import { useQuizProgressStore } from "@/store/quizProgressStore";
+import { useQuizProgressStore } from "@store/quizProgressStore";
 
 export function ImportCard() {
   const importProgress = useQuizProgressStore((s) => s.importProgress);

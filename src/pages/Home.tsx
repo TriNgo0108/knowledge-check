@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
-import { Topic, TopicCategory } from "@/data/types";
+import { Topic, TopicCategory } from "@data/types";
 import { useState, useEffect, useMemo, useCallback, memo } from "react";
-import { getAllTopicsProgress } from "@/hooks/useQuizProgress";
-import ThemeToggle from "@/components/ThemeToggle";
-import TopicIcon from "@/components/TopicIcon";
+import { getAllTopicsProgress } from "@hooks/useQuizProgress";
+import ThemeToggle from "@components/ThemeToggle";
+import TopicIcon from "@components/TopicIcon";
 import {
   ImportExportSidebar,
   ImportExportButton,
-} from "@/components/import-export";
+} from "@components/import-export";
 import { allTopics, categories } from "@constants/topics";
 
 const TopicCard = memo(function TopicCard({
