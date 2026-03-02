@@ -24,7 +24,7 @@ const TopicCard = memo(function TopicCard({
       style={{ "--glow-color": topic.color } as React.CSSProperties}
     >
       {/* Topic Icon */}
-      <div className="text-4xl mb-3 transition-all duration-300 group-hover:scale-110 group-hover:animate-float">
+      <div className="text-4xl mb-3 transition-transform duration-300 group-hover:scale-110 group-hover:animate-float">
         <TopicIcon name={topic.icon} className="w-10 h-10" />
       </div>
 

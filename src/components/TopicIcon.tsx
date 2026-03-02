@@ -1,6 +1,6 @@
-import { memo } from 'react';
-import { Book } from 'lucide-react';
-import { iconMap } from '@constants/topicIcons';
+import { memo } from "react";
+import { Book } from "lucide-react";
+import { iconMap } from "@constants/topicIcons";
 
 interface TopicIconProps {
   name: string;
