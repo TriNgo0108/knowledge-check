@@ -1,0 +1,1289 @@
+[
+  {
+    "id": 1,
+    "question": "Which feature distinguishes Pulumi from traditional IaC tools like Terraform?",
+    "options": [
+      "Using a proprietary Domain Specific Language (DSL)",
+      "Using general-purpose programming languages to define infrastructure",
+      "Requiring a master agent server to manage deployments",
+      "Using a client-only architecture without a state file"
+    ],
+    "answer": "Using general-purpose programming languages to define infrastructure",
+    "explanation": "Pulumi allows using languages like TypeScript, Python, and Go, instead of a custom DSL like HCL. This enables standard language features like classes, loops, and functions.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 2,
+    "question": "What is the function of the `pulumi up` command?",
+    "options": [
+      "To authenticate with the Pulumi Cloud backend",
+      "To preview the proposed changes without applying them",
+      "To create or update resources to match the desired state",
+      "To destroy all resources in the active stack"
+    ],
+    "answer": "To create or update resources to match the desired state",
+    "explanation": "`pulumi up` performs the actual deployment by calculating the diff between the existing state and the desired state and executing the necessary CRUD operations.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 3,
+    "question": "Which file defines the metadata and configuration options for a Pulumi project?",
+    "options": [
+      "Pulumi.yaml",
+      "main.ts",
+      "package.json",
+      "requirements.txt"
+    ],
+    "answer": "Pulumi.yaml",
+    "explanation": "`Pulumi.yaml` is the project manifest containing configuration, runtime settings, and metadata. `main.ts` contains the actual infrastructure logic.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 4,
+    "question": "What does Pulumi call an isolated instance of a project with a separate configuration and state file?",
+    "options": [
+      "A Workspace",
+      "A Stack",
+      "A Provider",
+      "A Component"
+    ],
+    "answer": "A Stack",
+    "explanation": "A Stack represents a distinct instance of infrastructure (e.g., `dev`, `prod`), allowing the same code to manage different environments with different configurations.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 5,
+    "question": "Which command is used to see a preview of the changes Pulumi will make without actually applying them?",
+    "options": [
+      "pulumi up",
+      "pulumi plan",
+      "pulumi preview",
+      "pulumi diff"
+    ],
+    "answer": "pulumi preview",
+    "explanation": "`pulumi preview` calculates the pending changes against the current state and displays the plan, whereas `pulumi up` defaults to prompting for approval to apply.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 6,
+    "question": "How does Pulumi treat values returned by the `pulumi.secret` function?",
+    "options": [
+      "It stores them as plain text in the state file",
+      "It excludes them from the state file entirely",
+      "It encrypts them in the state file and hides them in CLI output",
+      "It hashes them but leaves them visible in the stack output"
+    ],
+    "answer": "It encrypts them in the state file and hides them in CLI output",
+    "explanation": "Pulumi identifies secrets as sensitive data, encrypting them in the backend state file and redacting the value in console output to prevent leakage.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 7,
+    "question": "What is the primary role of a Pulumi Provider (e.g., `pulumi-aws`, `pulumi-kubernetes`)?",
+    "options": [
+      "To compile the infrastructure code into a binary",
+      "To serve the Pulumi UI dashboard",
+      "To manage the lifecycle of resources for a specific cloud or API",
+      "To handle authentication for the Pulumi CLI only"
+    ],
+    "answer": "To manage the lifecycle of resources for a specific cloud or API",
+    "explanation": "Providers are plugins that understand the API of a specific cloud (AWS, Azure, etc.) and translate Pulumi resource definitions into actual API calls.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 8,
+    "question": "Which command initializes a new Pulumi project from a template?",
+    "options": [
+      "pulumi start",
+      "pulumi init",
+      "pulumi create",
+      "pulumi new"
+    ],
+    "answer": "pulumi new",
+    "explanation": "`pulumi new` scaffolds a project directory with necessary files (like `Pulumi.yaml`) based on a specified template (language and cloud provider).",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 9,
+    "question": "What is the default storage location for the Pulumi state file if you do not configure a backend?",
+    "options": [
+      "In the user's local directory under `.pulumi/stacks`",
+      "In the root of the project folder",
+      "In the Pulumi Cloud managed service",
+      "In an AWS S3 bucket managed by Pulumi"
+    ],
+    "answer": "In the user's local directory under `.pulumi/stacks`",
+    "explanation": "By default, Pulumi uses a local backend storing state files in a hidden directory `.pulumi` in the user's home directory, although the cloud service is a common alternative.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 10,
+    "question": "Which CLI command is used to set a configuration value for the current stack?",
+    "options": [
+      "pulumi config set",
+      "pulumi set config",
+      "pulumi var set",
+      "pulumi env set"
+    ],
+    "answer": "pulumi config set",
+    "explanation": "`pulumi config set` is the standard command to store key-value pairs in the stack's configuration, which can then be accessed via `Config.get` in code.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 11,
+    "question": "What happens when you run `pulumi destroy`?",
+    "options": [
+      "It deletes the Pulumi project files from your disk",
+      "It deletes the state file from the backend",
+      "It removes all resources defined in the Pulumi program from the cloud",
+      "It de-authenticates the user from the Pulumi Cloud"
+    ],
+    "answer": "It removes all resources defined in the Pulumi program from the cloud",
+    "explanation": "`pulumi destroy` performs a deletion of all managed resources in the active stack based on the current state and code definitions.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 12,
+    "question": "How are dependencies between resources typically managed in Pulumi?",
+    "options": [
+      "By defining explicit dependency graphs in a separate file",
+      "By passing the output of one resource as an input to another",
+      "By using the `depends_on` keyword exclusively",
+      "By listing them in alphabetical order in the code"
+    ],
+    "answer": "By passing the output of one resource as an input to another",
+    "explanation": "Pulumi automatically infers dependencies based on the input/output graph. If Resource B uses an output from Resource A, Resource A is created first.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 13,
+    "question": "Which flag is required with `pulumi login` to explicitly use the local filesystem backend?",
+    "options": [
+      "--file",
+      "--local",
+      "--self-managed",
+      "--offline"
+    ],
+    "answer": "--local",
+    "explanation": "The `--local` flag tells Pulumi to store state in the local filesystem rather than logging into the Pulumi Cloud service or another remote backend.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 14,
+    "question": "What is a Component Resource in Pulumi?",
+    "options": [
+      "A low-level wrapper around a single cloud API call",
+      "A logical grouping of multiple resources into a higher-level abstraction",
+      "The configuration file for a specific provider",
+      "A script that runs locally on the user's machine"
+    ],
+    "answer": "A logical grouping of multiple resources into a higher-level abstraction",
+    "explanation": "Component Resources allow users to create reusable classes or modules that bundle multiple physical resources (like a VPC and subnets) into a single entity.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 15,
+    "question": "In the context of `pulumi import`, what must be provided to bring an existing cloud resource under Pulumi management?",
+    "options": [
+      "The resource ID and the resource type from the Pulumi schema",
+      "The resource name only",
+      "The previous state file",
+      "The provider version number"
+    ],
+    "answer": "The resource ID and the resource type from the Pulumi schema",
+    "explanation": "Importing requires the type of resource (e.g., `aws.s3.Bucket`) and the provider's unique ID for that existing resource to map it into the Pulumi state.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 16,
+    "question": "What is the purpose of `pulumi refresh`?",
+    "options": [
+      "To restart the Pulumi CLI service",
+      "To update dependencies in package.json",
+      "To reconcile the state file with the actual resources existing in the cloud",
+      "To re-run the code compiler"
+    ],
+    "answer": "To reconcile the state file with the actual resources existing in the cloud",
+    "explanation": "`pulumi refresh` queries the live cloud provider to update the state file with the actual status of resources, useful if manual changes were made outside Pulumi.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 17,
+    "question": "Which programming language is NOT natively supported by Pulumi?",
+    "options": [
+      "TypeScript",
+      "Python",
+      "Rust",
+      "Go"
+    ],
+    "answer": "Rust",
+    "explanation": "Pulumi natively supports TypeScript, JavaScript, Python, Go, C#, Java, and YAML. Rust is not part of the core language support list.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 18,
+    "question": "What is the role of the `Pulumi.yaml` file regarding dependencies?",
+    "options": [
+      "It lists the system packages required on the host OS",
+      "It contains the runtime and template information",
+      "It defines the exact version of the Pulumi CLI to install",
+      "It acts as the build script for Docker images"
+    ],
+    "answer": "It contains the runtime and template information",
+    "explanation": "The `Pulumi.yaml` file specifies the runtime (e.g., `nodejs`, `python`), project name, and description, acting as the manifest rather than a package manager file.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 19,
+    "question": "How do you explicitly prevent a resource from being destroyed during a `pulumi destroy` operation?",
+    "options": [
+      "By setting the `protect` resource option to `true`",
+      "By marking it as a `Component` resource",
+      "By adding a `--keep` tag to the resource",
+      "By defining it in a separate stack"
+    ],
+    "answer": "By setting the `protect` resource option to `true`",
+    "explanation": "Setting `protect: true` on a resource enables deletion protection, causing Pulumi to error and refuse deletion unless the protection is explicitly removed.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 20,
+    "question": "What happens to a resource if you change its name in the code (e.g., `new Resource(\"old-name\")` to `new Resource(\"new-name\")`)?",
+    "options": [
+      "Pulumi updates the existing resource in-place",
+      "Pulumi treats the new name as a new resource and deletes the old one",
+      "Pulumi ignores the change and keeps the old name",
+      "Pulumi asks the user to merge the configurations manually"
+    ],
+    "answer": "Pulumi treats the new name as a new resource and deletes the old one",
+    "explanation": "The logical name is part of the resource's identity. Changing it results in the deletion of the old resource and creation of a new one.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 21,
+    "question": "What is the `pulumi stack` command used for?",
+    "options": [
+      "To manage stacks (list, select, output) and configuration",
+      "To vertically stack resource dependencies",
+      "To compile the project into a stack trace",
+      "To create a backup of the current state"
+    ],
+    "answer": "To manage stacks (list, select, output) and configuration",
+    "explanation": "This command is the primary interface for interacting with stacks, allowing you to switch contexts (`select`), list all stacks, and read stack outputs.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 22,
+    "question": "What is the result of the `pulumi about` command?",
+    "options": [
+      "It displays the version history of the project",
+      "It prints the current environment details (CLI version, Go version, backend info)",
+      "It lists all resources in the active stack",
+      "It shows the cost estimation for the deployment"
+    ],
+    "answer": "It prints the current environment details (CLI version, Go version, backend info)",
+    "explanation": "`pulumi about` provides diagnostic information about the environment, useful for debugging issues or reporting bugs in Pulumi.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 23,
+    "question": "In Pulumi, what is an `Output`?",
+    "options": [
+      "A raw JSON string returned by the cloud provider",
+      "A typed reference to a future value that will be known after the deployment",
+      "The file written to the `.pulumi` directory",
+      "The standard log stream of the CLI"
+    ],
+    "answer": "A typed reference to a future value that will be known after the deployment",
+    "explanation": "Outputs are special objects (like `Output<string>`) representing values that are only available after the cloud provider creates the resource.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 24,
+    "question": "Which policy enforcement feature allows you to validate resource configurations before deployment?",
+    "options": [
+      "Resource Guards",
+      "Policy as Code (Crossguard)",
+      "Pre-flight Hooks",
+      "Stack Validators"
+    ],
+    "answer": "Policy as Code (Crossguard)",
+    "explanation": "Policy as Code allows defining rules (often in TypeScript/Go) that analyze the resource plan to enforce standards (e.g., prohibiting public S3 buckets) before applying.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 25,
+    "question": "What does the URN represent in Pulumi?",
+    "options": [
+      "The User Resource Name, a unique identifier for every resource",
+      "The Uniform Resource Locator for the state file",
+      "The User Remote Network configuration",
+      "The Update Request Number"
+    ],
+    "answer": "The User Resource Name, a unique identifier for every resource",
+    "explanation": "The URN is a opaque string that uniquely identifies a specific resource within a specific stack, incorporating the project, stack, type, and name.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 26,
+    "question": "When creating a `StackReference`, what are you doing?",
+    "options": [
+      "Creating a hard link to a local directory",
+      "Reading outputs from one stack to use in another stack",
+      "Resetting the current stack history",
+      "Importing a resource from a different provider"
+    ],
+    "answer": "Reading outputs from one stack to use in another stack",
+    "explanation": "StackReferences allow stacks to share data, such as passing a VPC ID from a `networking` stack to a `compute` stack.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 27,
+    "question": "Which file extension is used for Pulumi projects that utilize pure YAML definitions?",
+    "options": [
+      ".pp.yaml",
+      ".pulumi.yml",
+      ".infra.yaml",
+      ".cloud.yaml"
+    ],
+    "answer": ".pp.yaml",
+    "explanation": "Pulumi supports a YAML mode where the extension `.pp.yaml` (Pulumi Program YAML) indicates the file is a Pulumi program definition.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 28,
+    "question": "What is the purpose of the `--target` flag in `pulumi up`?",
+    "options": [
+      "To specify the version of the provider to use",
+      "To update only a specific resource by its URN",
+      "To deploy to a specific cloud region",
+      "To skip dependency checks"
+    ],
+    "answer": "To update only a specific resource by its URN",
+    "explanation": "The `--target` flag limits the deployment to the specified resource(s), allowing for targeted updates and fixes without re-deploying the entire stack.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 29,
+    "question": "Which concept refers to managing the same set of infrastructure code across multiple environments (dev, staging, prod)?",
+    "options": [
+      "Multi-cloud deployment",
+      "Stack promotion",
+      "Environment drift",
+      "Resource masking"
+    ],
+    "answer": "Stack promotion",
+    "explanation": "Stack promotion involves promoting the same code through different stack instances (environments) by applying different configurations.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 30,
+    "question": "What is the Automation API?",
+    "options": [
+      "A GUI for managing Pulumi stacks",
+      "A programmatic interface to embed Pulumi workflows into custom applications",
+      "The REST API for the Pulumi Cloud service",
+      "The protocol used to communicate with cloud providers"
+    ],
+    "answer": "A programmatic interface to embed Pulumi workflows into custom applications",
+    "explanation": "The Automation API allows developers to invoke Pulumi features (like `up`, `refresh`, `destroy`) directly from Go, Python, Node.js, or .NET applications.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 31,
+    "question": "How does Pulumi differ from CloudFormation regarding state management?",
+    "options": [
+      "Pulumi state is always managed by the cloud provider",
+      "Pulumi does not use state files",
+      "Pulumi decouples state from the cloud provider, allowing local or self-managed storage",
+      "Pulumi stores state inside the resource tags"
+    ],
+    "answer": "Pulumi decouples state from the cloud provider, allowing local or self-managed storage",
+    "explanation": "Unlike CloudFormation (which stores state in the AWS service), Pulumi manages state separately, enabling flexibility in backends.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 32,
+    "question": "What is the function of the `pulumi plugin install` command?",
+    "options": [
+      "To install the Pulumi CLI",
+      "To download a specific provider binary (e.g., AWS) to your machine",
+      "To install dependencies for your language (like npm modules)",
+      "To set up the Pulumi VS Code extension"
+    ],
+    "answer": "To download a specific provider binary (e.g., AWS) to your machine",
+    "explanation": "Plugins are the binaries that talk to cloud providers. This command ensures you have the correct version of the provider plugin locally.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 33,
+    "question": "What is required to use an environment variable in a `pulumi config` context?",
+    "options": [
+      "Using `pulumi config set ENV_VAR`",
+      "The variable must be prefixed with `PULUMI_`",
+      "You must use `pulumi config get --env`",
+      "Environment variables cannot be used in config"
+    ],
+    "answer": "The variable must be prefixed with `PULUMI_`",
+    "explanation": "Pulumi automatically looks for environment variables prefixed with `PULUMI_` (e.g., `PULUMI_AWS_REGION`) to populate configuration values.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 34,
+    "question": "What is the primary benefit of using Input/Output types in Pulumi SDKs?",
+    "options": [
+      "To enforce strict type checking for constants",
+      "To handle asynchronous dependency resolution correctly",
+      "To enable faster compilation of the code",
+      "To reduce the size of the state file"
+    ],
+    "answer": "To handle asynchronous dependency resolution correctly",
+    "explanation": "Inputs and Outputs handle the temporal aspect of IaC, ensuring that dependent values are correctly awaited before resources are created.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 35,
+    "question": "In Pulumi, what is the primary distinction between a 'Project' and a 'Stack'?",
+    "options": [
+      "A Project is a collection of Stacks, whereas a Stack is a single instance of infrastructure defined by code",
+      "A Project defines cloud providers, whereas a Stack defines the programming language",
+      "A Project contains the state file, whereas a Stack contains the Pulumi.yaml file",
+      "A Project represents the production environment, whereas a Stack represents the development environment"
+    ],
+    "answer": "A Project is a collection of Stacks, whereas a Stack is a single instance of infrastructure defined by code",
+    "explanation": "A Project is the folder containing code and `Pulumi.yaml`. A Stack is an isolated, independently configurable instance of that infrastructure (e.g., dev, prod).",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 36,
+    "question": "Which Pulumi command is used to migrate an existing cloud resource into Pulumi state management?",
+    "options": [
+      "pulumi import",
+      "pulumi graft",
+      "pulumi adopt",
+      "pulumi refresh"
+    ],
+    "answer": "pulumi import",
+    "explanation": "`pulumi import` brings existing resources under Pulumi management by generating code definitions and importing the live resource's state into the stack.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 37,
+    "question": "When using the Python SDK, how must you handle `Output<T>` values to access the underlying data?",
+    "options": [
+      "Access the `.val` property directly",
+      "Await the value using the `await` keyword",
+      "Use the `.apply()` method with a callback function",
+      "Cast the value using `str()` immediately"
+    ],
+    "answer": "Use the `.apply()` method with a callback function",
+    "explanation": "Outputs are promises resolved at the end of the deployment. In Python, you must use `.apply()` to access or transform the value inside a callback.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 38,
+    "question": "What is the function of the `pulumi.StackReference` resource?",
+    "options": [
+      "To reference a parent class in a ComponentResource",
+      "To share configuration values between different projects",
+      "To read outputs from one Pulumi stack into another",
+      "To create a circular dependency between resources"
+    ],
+    "answer": "To read outputs from one Pulumi stack into another",
+    "explanation": "`StackReference` allows you to access outputs exported by a different stack, enabling inter-stack communication (e.g., sharing a VPC ID).",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 39,
+    "question": "Which mechanism prevents Pulumi from accidentally deleting a resource during a `pulumi destroy` or `pulumi up` operation?",
+    "options": [
+      "Setting the `protect` resource option to true",
+      "Using a `RetainOnDelete` provider configuration",
+      "Marking the resource as `external` in the code",
+      "Adding the resource to the `ignoreChanges` list"
+    ],
+    "answer": "Setting the `protect` resource option to true",
+    "explanation": "Setting `protect: true` on a resource marks it as protected. Pulumi will refuse to delete it unless the protection is explicitly removed.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 40,
+    "question": "How does Pulumi determine the dependency graph between resources?",
+    "options": [
+      "By analyzing the order of resource definitions in the source code",
+      "By examining property references where one resource's Output is used as another's Input",
+      "By relying on explicit `dependsOn` declarations exclusively",
+      "By generating a random topological sort at runtime"
+    ],
+    "answer": "By examining property references where one resource's Output is used as another's Input",
+    "explanation": "Dependencies are implicitly inferred from the code; if Resource B uses an Output from Resource A, Pulumi knows A must be created before B.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 41,
+    "question": "What is the purpose of the `pulumi preview` command?",
+    "options": [
+      "To apply changes to the real cloud infrastructure",
+      "To calculate the state difference without modifying resources",
+      "To download the latest provider plugins",
+      "To validate the syntax of the programming language used"
+    ],
+    "answer": "To calculate the state difference without modifying resources",
+    "explanation": "`pulumi preview` executes the program and compares the desired state against the current state to show a plan of proposed changes without making them.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 42,
+    "question": "When defining a ComponentResource, why might you call `registerOutputs`?",
+    "options": [
+      "To initialize the provider connection",
+      "To ensure the component's resource options are propagated to children",
+      "To explicitly list which values should be exported as stack outputs",
+      "To trigger the creation of the physical cloud resource"
+    ],
+    "answer": "To explicitly list which values should be exported as stack outputs",
+    "explanation": "While often optional, `registerOutputs` explicitly defines the outputs of a logical component or stack, useful for querying and serialization.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 43,
+    "question": "Which command is used to configure a specific Pulumi secret as an environment variable for the local runtime?",
+    "options": [
+      "pulumi config set --secret myVar",
+      "export PULUMI_CONFIG_SECRET='value'",
+      "pulumi secret add myVar",
+      "pulumi env set myVar"
+    ],
+    "answer": "pulumi config set --secret myVar",
+    "explanation": "This command securely saves the configuration value in the stack's configuration file as a secret, encrypting it in state.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 44,
+    "question": "What happens when you run `pulumi refresh`?",
+    "options": [
+      "It upgrades the Pulumi CLI to the latest version",
+      "It re-runs the code to apply logic changes",
+      "It updates the Pulumi state file to match the actual cloud resources",
+      "It deletes resources defined in code but missing from the cloud"
+    ],
+    "answer": "It updates the Pulumi state file to match the actual cloud resources",
+    "explanation": "This command reconciles drift by fetching the actual statuses of resources from the provider and updating the state file without modifying code or infrastructure.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 45,
+    "question": "In the context of Pulumi's automation, what is a 'Policy Pack'?",
+    "options": [
+      "A collection of configuration files for CI/CD",
+      "A set of rules governing resource configuration and behavior",
+      "A library of reusable ComponentResources",
+      "A predefined template for a new Pulumi project"
+    ],
+    "answer": "A set of rules governing resource configuration and behavior",
+    "explanation": "Policy Packs allow you to validate infrastructure configurations (Policy as Code) to ensure compliance with standards before resources are provisioned.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 46,
+    "question": "Which resource option allows you to force a replacement of a resource even if its properties have not changed?",
+    "options": [
+      "replaceOnChanges",
+      "ignoreChanges",
+      "deleteBeforeReplace",
+      "forceReplace"
+    ],
+    "answer": "replaceOnChanges",
+    "explanation": "The `replaceOnChanges` array specifies property paths; if any match, Pulumi will replace the resource instead of updating it, even if the diff is empty.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 47,
+    "question": "What is the default behavior of Pulumi if a resource creation fails during `pulumi up`?",
+    "options": [
+      "It automatically rolls back all previously created resources in the stack",
+      "It halts the deployment and keeps the current state",
+      "It retries the failed resource indefinitely",
+      "It deletes the entire stack"
+    ],
+    "answer": "It halts the deployment and keeps the current state",
+    "explanation": "Pulumi stops the update upon failure. It leaves the resources that were successfully created in the cloud and updates the state to reflect the partial success.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 48,
+    "question": "How does the `deleteBeforeReplace` option affect a resource update?",
+    "options": [
+      "It deletes the old resource only after the new one is fully created",
+      "It deletes the old resource before creating the new one",
+      "It prevents the resource from being deleted",
+      "It performs an in-place update instead of a replacement"
+    ],
+    "answer": "It deletes the old resource before creating the new one",
+    "explanation": "This is useful for resources that cannot exist simultaneously (e.g., a global unique name constraint), reversing the default create-then-delete behavior.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 49,
+    "question": "When using TypeScript, what does the `pulumi.all` function do?",
+    "options": [
+      "It combines multiple Output values into a single Output tuple",
+      "It creates a ComponentResource containing all sub-resources",
+      "It performs a parallel deployment of all stacks",
+      "It retrieves all secrets from the configuration"
+    ],
+    "answer": "It combines multiple Output values into a single Output tuple",
+    "explanation": "`pulumi.all` takes an array of Outputs and returns a new Output containing an array of their resolved values, enabling logic that depends on multiple asynchronous inputs.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 50,
+    "question": "What is stored in the `Pulumi.<stack-name>.json` file in the working directory?",
+    "options": [
+      "The source code for the infrastructure",
+      "The encrypted state of the deployed stack",
+      "The dependency graph and resource URN mappings",
+      "The configuration secrets for the stack"
+    ],
+    "answer": "The encrypted state of the deployed stack",
+    "explanation": "This file contains the checkpoint (state) of the stack. It tracks the relationships, configuration, and metadata of all managed resources.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 51,
+    "question": "Which command effectively switches the backend currently being used by the CLI?",
+    "options": [
+      "pulumi backend switch",
+      "pulumi state move",
+      "pulumi login",
+      "pulumi config set backend"
+    ],
+    "answer": "pulumi login",
+    "explanation": "The `pulumi login` command (with or without an argument) is used to authenticate and set the destination for the state backend (e.g., Pulumi Cloud, S3, or local).",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 52,
+    "question": "In Pulumi, what is a 'Custom Resource'?",
+    "options": [
+      "A resource defined purely in TypeScript without a provider",
+      "A resource managed by a provider plugin to communicate with an external API",
+      "A resource that is ignored by the state engine",
+      "A macro used to generate configuration files"
+    ],
+    "answer": "A resource managed by a provider plugin to communicate with an external API",
+    "explanation": "Custom Resources represent infrastructure objects (like S3 buckets or VPCs) managed by a Provider plugin that interacts with the cloud provider's API.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 53,
+    "question": "What is the correct method to pass a sensitive value (Output) directly into a `tags` property of an AWS resource?",
+    "options": [
+      "Cast the Output to a string using String(output)",
+      "Use the `.apply()` method to map the Output to a tags object",
+      "Assign the Output directly; the runtime handles it",
+      "Encrypt the value using pulumi.crypto before assignment"
+    ],
+    "answer": "Use the `.apply()` method to map the Output to a tags object",
+    "explanation": "Tags expect a standard object/dictionary, not an Output promise. You must use `.apply()` to compute the tags object once the secret or value resolves.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 54,
+    "question": "When using a local backend, where is the stack state stored by default?",
+    "options": [
+      "In the current working directory as `state.json`",
+      "In a hidden subdirectory `.pulumi/stacks`",
+      "In the user's home directory under `.pulumi/stacks`",
+      "Inside the Pulumi program's `bin` folder"
+    ],
+    "answer": "In the user's home directory under `.pulumi/stacks`",
+    "explanation": "By default, `pulumi login --local` stores state in the user's home directory (e.g., `~/.pulumi/stacks` on Linux/Mac) rather than the project folder.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 55,
+    "question": "What is the purpose of `providers` argument when instantiating a resource?",
+    "options": [
+      "To list all available cloud providers supported by Pulumi",
+      "To override the default provider configuration for that resource",
+      "To install the necessary plugins for the resource",
+      "To define the order of provider execution"
+    ],
+    "answer": "To override the default provider configuration for that resource",
+    "explanation": "Passing `providers` allows you to specify a specific provider instance (e.g., `aws.Provider`) to use for that resource or its children, enabling multi-region or multi-account setups.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 56,
+    "question": "How does Pulumi handle a 'drift' where a resource's actual cloud tags differ from the code configuration?",
+    "options": [
+      "It automatically updates the cloud tags to match code",
+      "It ignores the difference unless `pulumi refresh` is run",
+      "It reports the difference as a 'replace' operation",
+      "It prompts the user to manually fix the drift"
+    ],
+    "answer": "It ignores the difference unless `pulumi refresh` is run",
+    "explanation": "Pulumi calculates the desired state from code. It doesn't constantly poll the cloud. Drift is only detected and reported after running `pulumi refresh` to sync the state.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 57,
+    "question": "Which resource option allows you to prevent Pulumi from managing specific fields of a resource?",
+    "options": [
+      "ignoreChanges",
+      "protect",
+      "customTimeouts",
+      "version"
+    ],
+    "answer": "ignoreChanges",
+    "explanation": "The `ignoreChanges` array specifies property paths that Pulumi should ignore during updates, allowing external processes or manual changes to manage those fields.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 58,
+    "question": "What is required to share a ComponentResource across different Node.js packages in a monorepo?",
+    "options": [
+      "Defining the resource in a shared `Pulumi.yaml`",
+      "Exporting the class and ensuring `pulumi` is a peer dependency",
+      "Using the `pulumi publish` command",
+      "Merging all code into a single package"
+    ],
+    "answer": "Exporting the class and ensuring `pulumi` is a peer dependency",
+    "explanation": "ComponentResources are standard classes. To share them, you export them from a package, but `pulumi` must be a `peerDependency` so the consumer uses their installed version.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 59,
+    "question": "In Python, how do you define a resource that belongs to a parent resource explicitly?",
+    "options": [
+      "Pass the `parent` argument to the resource constructor",
+      "Set the `__parent__` attribute on the resource object",
+      "Use the `pulumi.parent()` context manager",
+      "Add the child resource to the parent's `.children` list"
+    ],
+    "answer": "Pass the `parent` argument to the resource constructor",
+    "explanation": "All resources accept a `ResourceOptions` object, where you can specify the `parent`. This establishes the parent-child relationship in the resource graph.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 60,
+    "question": "What characterizes a 'targeted replace' in a Pulumi update?",
+    "options": [
+      "Using the `--replace` flag to destroy and recreate specific resources",
+      "Using the `--target` flag to update only specific dependencies",
+      "Using the `--destroy` flag to remove resources from the state",
+      "Using the `--config` flag to override variables"
+    ],
+    "answer": "Using the `--replace` flag to destroy and recreate specific resources",
+    "explanation": "The `--replace <urn>` flag forces Pulumi to treat the specified resource(s) as if they had changed, triggering a replacement (delete and create) regardless of actual configuration changes.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 61,
+    "question": "When using `pulumi up`, what does the 'Summary' section indicate?",
+    "options": [
+      "The line-by-line code execution trace",
+      "The list of configuration values loaded",
+      "The count of resources to be created, updated, deleted, or replaced",
+      "The estimated cost in dollars of the deployment"
+    ],
+    "answer": "The count of resources to be created, updated, deleted, or replaced",
+    "explanation": "The summary provides a plan overview, detailing how many resources are affected by each operation type (Plus, Update, Replace, Delete).",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 62,
+    "question": "How do you explicitly mark an output value as 'secret' so it is hidden in logs and UI?",
+    "options": [
+      "Call the `pulumi.secret()` function on the value",
+      "Return a `Secret` class instead of a string",
+      "Prefix the variable name with '_secret'",
+      "Set the `secret` property to true on the output"
+    ],
+    "answer": "Call the `pulumi.secret()` function on the value",
+    "explanation": "Wrapping a value (often an Output) with `pulumi.secret()` tells the engine to encrypt it and redact it from console output and the Pulumi Cloud UI.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 63,
+    "question": "Which TypeScript construct is best used to share constant configuration values across a Pulumi project?",
+    "options": [
+      "Stack outputs",
+      "A standard configuration file loaded by code",
+      "Environment variables exclusively",
+      "The `pulumi config get` CLI command"
+    ],
+    "answer": "A standard configuration file loaded by code",
+    "explanation": "While you can use `pulumi config`, standard TypeScript modules (`const.ts`) are often used for complex, typed, non-sensitive configuration constants shared within the codebase.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 64,
+    "question": "What is the function of the `transformations` resource option?",
+    "options": [
+      "To modify the properties of child resources before they are created",
+      "To convert YAML definitions to TypeScript",
+      "To change the stack name dynamically",
+      "To migrate state from one backend to another"
+    ],
+    "answer": "To modify the properties of child resources before they are created",
+    "explanation": "Transformations are callbacks that allow you to modify the properties of all child resources (e.g., adding tags) within a ComponentResource without touching the child definitions.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 65,
+    "question": "If a Pulumi update is interrupted (e.g., crash), what is the state of the stack?",
+    "options": [
+      "The state file is rolled back to the previous version automatically",
+      "The state file is locked and must be manually unlocked",
+      "The state file reflects the changes that were successfully applied before the crash",
+      "The state file becomes corrupted and must be deleted"
+    ],
+    "answer": "The state file reflects the changes that were successfully applied before the crash",
+    "explanation": "Pulumi updates are transactional per resource. The state is saved incrementally; a crash leaves the state consistent with whatever resources were actually modified.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 66,
+    "question": "In Go Pulumi programs, how do you typically access a resource's output values?",
+    "options": [
+      "By casting the interface to a string pointer",
+      "By using the `.ApplyT()` method",
+      "By accessing the `.Get()` method synchronously",
+      "By waiting for the program to finish"
+    ],
+    "answer": "By using the `.ApplyT()` method",
+    "explanation": "Go's type system requires `ApplyT` (or `ApplyString`, etc.) to transform the `Output` interface into a concrete type, similar to `.apply()` in dynamic languages.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 67,
+    "question": "What is the `urn` property of a resource?",
+    "options": [
+      "The user-provided name of the resource",
+      "The Pulumi-managed unique identifier for the resource instance",
+      "The cloud provider's ID for the resource",
+      "The stack name combined with the project name"
+    ],
+    "answer": "The Pulumi-managed unique identifier for the resource instance",
+    "explanation": "The Uniform Resource Name (URN) is a Pulumi-specific identifier that combines the project, stack, parent, type, and name to uniquely identify a resource within the state.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 68,
+    "question": "When using `pulumi stack init`, what is the primary action performed?",
+    "options": [
+      "It creates a new empty Pulumi.yaml file",
+      "It creates a new stack and backend if necessary",
+      "It installs all required language dependencies",
+      "It runs the initial deployment"
+    ],
+    "answer": "It creates a new stack and backend if necessary",
+    "explanation": "`pulumi stack init <stack-name>` creates the folder structure and state file for a new stack, preparing it for configuration and deployment.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 69,
+    "question": "Which CLI flag is used to suppress standard progress output and output only the final result (JSON or text)?",
+    "options": [
+      "--quiet",
+      "--silent",
+      "--json",
+      "--no-color"
+    ],
+    "answer": "--json",
+    "explanation": "While `--quiet` exists, `--json` (or `-j`) is frequently used in CI/CD to machine-readable output. However, specifically for 'suppressing progress' to get clean output, `--json` forces structured output. Note: In some versions `--suppress-progress` exists, but `--json` is the standard integration flag. The option `--quiet` also exists in some contexts, but `--json` ensures no progress bars are printed as they interfere with the JSON structure.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 70,
+    "question": "In Pulumi, how are `Output<T>` types resolved when passed to a standard JavaScript or TypeScript function that expects a primitive value?",
+    "options": [
+      "The runtime automatically unwraps the Promise to await the result before execution.",
+      "You must explicitly call `.get()` on the Output to retrieve the value synchronously.",
+      "You must use the `.apply()` method to access the value inside a callback.",
+      "The value is coerced to a string representing the Promise object's pending state."
+    ],
+    "answer": "You must use the `.apply()` method to access the value inside a callback.",
+    "explanation": "Outputs are thennable promises representing eventual values. You cannot access the raw value directly due to the dependency graph requirements; you must use `.apply()` (or `await` in an `async` main function) to transform or extract the data.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 71,
+    "question": "Which Pulumi resource option allows you to explicitly define that one resource must be created before another, even if no direct property reference exists between them?",
+    "options": [
+      "`parent`",
+      "`dependsOn`",
+      "`replaceOnChanges`",
+      "`ignoreChanges`"
+    ],
+    "answer": "`dependsOn`",
+    "explanation": "While Pulumi automatically infers dependencies from property references, `dependsOn` allows you to explicitly add explicit dependencies to control the order of resource creation or deletion.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 72,
+    "question": "When using the Pulumi Automation API, what is the primary distinction between the `Workspace` and the `Stack` concepts?",
+    "options": [
+      "`Workspace` represents the active deployment instance, while `Stack` is the saved configuration file.",
+      "`Workspace` manages the local backend settings and project settings, while `Stack` represents a unique instance of the deployed infrastructure.",
+      "`Stack` contains the source code, while `Workspace` contains the state history.",
+      "`Workspace` handles authentication, while `Stack` handles only secret encryption."
+    ],
+    "answer": "`Workspace` manages the local backend settings and project settings, while `Stack` represents a unique instance of the deployed infrastructure.",
+    "explanation": "A `Workspace` is the context that handles the Pulumi program, project settings, and backend connection. A `Stack` is the instantiation of that program with specific configuration values, representing a running environment.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 73,
+    "question": "How does Pulumi handle the deletion of a resource marked with `retainOnDelete: true` when the stack is destroyed or the resource is removed from code?",
+    "options": [
+      "The resource is removed from the Pulumi state file but remains physically in the cloud provider.",
+      "The resource is physically deleted from the cloud provider but archived in the Pulumi Cloud audit log.",
+      "The resource is converted into a Component Resource to prevent data loss.",
+      "The `pulumi destroy` command fails and returns an error requesting manual removal of the flag."
+    ],
+    "answer": "The resource is removed from the Pulumi state file but remains physically in the cloud provider.",
+    "explanation": "Setting `retainOnDelete` to `true` ensures that the physical resource is not de-provisioned during a destroy operation, though it is removed from the state management tracking, effectively 'orphaning' it.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 74,
+    "question": "What is the function of the `pulumi.ResourceOptions.transformations` array when creating resources?",
+    "options": [
+      "To automatically convert AWS resources to Azure resources based on region.",
+      "To modify the properties of a resource and its children before they are registered with the engine.",
+      "To queue a database migration script after the resource is provisioned.",
+      "To compress the state file before uploading it to the backend."
+    ],
+    "answer": "To modify the properties of a resource and its children before they are registered with the engine.",
+    "explanation": "Transformations are powerful callbacks that allow cross-cutting concerns, such as injecting tags or specific IAM permissions, across resources and their child resources dynamically.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 75,
+    "question": "In the context of Pulumi state backends, what mechanism is used to prevent concurrent modifications to the state file by multiple users or CI systems?",
+    "options": [
+      "Optimistic locking using a checksum comparison",
+      "Pessimistic locking via a lease file in the backend storage",
+      "A centralized transaction database managed by Pulumi Cloud",
+      "User-level prompts for confirmation on every update"
+    ],
+    "answer": "Pessimistic locking via a lease file in the backend storage",
+    "explanation": "Pulumi uses a lease file (often stored alongside the state file in S3, Azure Blob, etc.) to implement a mutex. This ensures that only one process (user or CI pipeline) can perform a write operation on a specific stack at a time.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 76,
+    "question": "What is the primary use case for Pulumi's Dynamic Providers?",
+    "options": [
+      "To switch between AWS, Azure, and GCP based on runtime configuration.",
+      "To manage cloud resources that do not yet have a dedicated Pulumi or Terraform provider.",
+      "To dynamically change the version of the Pulumi CLI during deployment.",
+      "To aggregate multiple standard providers into a single unified interface."
+    ],
+    "answer": "To manage cloud resources that do not yet have a dedicated Pulumi or Terraform provider.",
+    "explanation": "Dynamic Providers allow you to bridge the gap to arbitrary APIs by defining `create`, `read`, `update`, and `delete` functions using standard RPC concepts, enabling management of custom or unsupported resources.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 77,
+    "question": "When defining a Component Resource in Pulumi, what is the significance of the `registerOutputs` method?",
+    "options": [
+      "It explicitly marks which resource properties should be exported as Stack Outputs.",
+      "It initializes the internal state of the component to prepare for garbage collection.",
+      "It signals to the engine that the resource construction is complete and final.",
+      "It registers the component with the Pulumi Cloud service for monitoring."
+    ],
+    "answer": "It signals to the engine that the resource construction is complete and final.",
+    "explanation": "While regular resources are complete once their constructor finishes, Component Resources may have children created asynchronously. `registerOutputs` ensures that all children are created before the resource is considered complete.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 78,
+    "question": "How does the `ignoreChanges` resource option affect the lifecycle of a resource during `pulumi up`?",
+    "options": [
+      "It prevents the resource from being deleted if it is removed from the code.",
+      "It suppresses specific diff updates for properties listed, effectively treating them as unchanged regardless of actual state.",
+      "It prevents Pulumi from reading the actual state of the resource from the cloud provider.",
+      "It instructs the engine to skip the creation of the resource if it already exists in the cloud."
+    ],
+    "answer": "It suppresses specific diff updates for properties listed, effectively treating them as unchanged regardless of actual state.",
+    "explanation": "This is useful for fields that are managed externally or auto-generated by the cloud provider, preventing Pulumi from attempting to revert them to the values defined in code.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 79,
+    "question": "Which mechanism allows you to share state outputs, such as a VPC ID, between two completely separate Pulumi projects?",
+    "options": [
+      "Stack References",
+      "Component Resource inheritance",
+      "The `pulumi stack export` command combined with `--force`",
+      "Shared Configuration files"
+    ],
+    "answer": "Stack References",
+    "explanation": "Stack References allow one stack to read the exported outputs of another stack (e.g., `StackReference({ name: 'org/proj/stack' })`), enabling multi-project infrastructure decomposition.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 80,
+    "question": "What is a `Provider` resource in Pulumi, and when might you explicitly define one?",
+    "options": [
+      "It is the wrapper around the Pulumi CLI to ensure the correct version is installed.",
+      "It is a resource that configures the authentication and endpoint for a specific service or region.",
+      "It is a plugin that compiles TypeScript into JavaScript for the engine.",
+      "It is the default database used for storing local state files."
+    ],
+    "answer": "It is a resource that configures the authentication and endpoint for a specific service or region.",
+    "explanation": "By default, Pulumi uses default providers. You define explicit `Provider` resources when you need to target different regions, accounts, or distinct authentication credentials within the same stack.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 81,
+    "question": "In Pulumi's unit testing framework (e.g., `@pulumi/pulumi`), what is the purpose of the `mocks` object passed to `pulumi.runtime.setMocks`?",
+    "options": [
+      "To intercept calls to cloud providers and return deterministic values without making real API calls.",
+      "To simulate network latency and failure modes for chaos engineering.",
+      "To replace the standard TypeScript compiler with a faster in-memory compiler.",
+      "To automatically generate random test data for unpopulated required fields."
+    ],
+    "answer": "To intercept calls to cloud providers and return deterministic values without making real API calls.",
+    "explanation": "Unit tests run in isolation. Mocking is required to intercept `new Resource()` calls, providing fake outputs and preventing the engine from trying to contact real cloud APIs during a test run.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 82,
+    "question": "What happens when you run `pulumi refresh` on a stack?",
+    "options": [
+      "It recompiles the TypeScript/Python code and restarts the development server.",
+      "It re-applies the code configuration to the cloud resources, overriding manual changes.",
+      "It compares the actual cloud infrastructure to the state file and updates the state file to match reality.",
+      "It downloads the latest versions of all installed npm and pip packages."
+    ],
+    "answer": "It compares the actual cloud infrastructure to the state file and updates the state file to match reality.",
+    "explanation": "Refresh reconciles drift. If someone manually modified a resource in the console, `refresh` updates Pulumi's state file to reflect that manual change, effectively resetting Pulumi's understanding to match the live cloud.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 83,
+    "question": "What is the purpose of the `pulumi.Input` type in TypeScript/Python definitions?",
+    "options": [
+      "It restricts a value to be a constant primitive string or number only.",
+      "It accepts primitive values, Promises of values, Outputs, or Arrays of these to handle dependency chaining.",
+      "It defines the variables entered by the user via `pulumi config set`.",
+      "It marks a variable as read-only after the initial deployment."
+    ],
+    "answer": "It accepts primitive values, Promises of values, Outputs, or Arrays of these to handle dependency chaining.",
+    "explanation": "Inputs are flexible types that allow you to pass raw values or outputs from other resources. This enables Pulumi to construct the correct dependency graph before the values are resolved.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 84,
+    "question": "How does Pulumi determine the order of resource creation operations?",
+    "options": [
+      "Alphabetically by resource URN",
+      "Based on the `pulumi up` timestamp",
+      "By constructing a Directed Acyclic Graph (DAG) based on resource property dependencies",
+      "In the order the `new Resource()` calls appear in the source code"
+    ],
+    "answer": "By constructing a Directed Acyclic Graph (DAG) based on resource property dependencies",
+    "explanation": "The engine builds a dependency graph. If Resource B uses an output from Resource A, Pulumi knows A must be created before B, regardless of their order in the code files.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 85,
+    "question": "What is the function of `pulumi.StackReference` in multi-stack configurations?",
+    "options": [
+      "To import a stack definition from a different Git repository.",
+      "To allow one stack to access the outputs of another stack as inputs.",
+      "To create a circular dependency between two stacks for failover scenarios.",
+      "To reference a previous version of the same stack for rollback purposes."
+    ],
+    "answer": "To allow one stack to access the outputs of another stack as inputs.",
+    "explanation": "Stack References decouple infrastructure tiers. For example, a networking stack outputs VPC IDs, and a compute stack uses `StackReference` to consume those IDs.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 86,
+    "question": "When defining a Custom Resource in Go, what is the purpose of the `MakeResource` function typically found in provider implementations?",
+    "options": [
+      "It compiles the Go code into a plugin executable.",
+      "It constructs and returns an instance of the defined resource struct.",
+      "It generates the Pulumi schema JSON file.",
+      "It serves as the entry point for the `pulumi preview` command."
+    ],
+    "answer": "It constructs and returns an instance of the defined resource struct.",
+    "explanation": "In Go providers, `MakeResource` is the factory function responsible for initializing the resource's state and struct, facilitating the creation of the resource within the Pulumi engine.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 87,
+    "question": "How are secrets treated in the Pulumi state file by default?",
+    "options": [
+      "They are stored in plain text but marked with a 'secret' key for UI filtering.",
+      "They are encrypted using a stack-specific encryption key (e.g., AES-256) before being written to disk.",
+      "They are never written to the state file and are injected at runtime via environment variables.",
+      "They are replaced with a placeholder string `REDACTED` and deleted from memory."
+    ],
+    "answer": "They are encrypted using a stack-specific encryption key (e.g., AES-256) before being written to disk.",
+    "explanation": "Pulumi treats secrets as opaque values. When a value is marked as a secret, it is encrypted using the stack's configured key provider before being persisted in the checkpoint file.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 88,
+    "question": "What does the `--target` flag do when running `pulumi up` or `pulumi destroy`?",
+    "options": [
+      "It specifies the specific version of the Pulumi CLI to run.",
+      "It limits the operation to a specific resource and its dependencies rather than the whole stack.",
+      "It sets the cloud region for the deployment.",
+      "It targets a specific branch in the Git repository for deployment."
+    ],
+    "answer": "It limits the operation to a specific resource and its dependencies rather than the whole stack.",
+    "explanation": "Targeted deployments are useful for repairs or testing. By targeting a resource, Pulumi calculates the dependency subgraph and only updates or destroys those specific items.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 89,
+    "question": "Which configuration setting is required to use AWS S3 as a self-managed Pulumi backend?",
+    "options": [
+      "`PULUMI_BACKEND_URL`",
+      "`AWS_S3_BUCKET`",
+      "`PULUMI_CONFIG_PASSPHRASE`",
+      "`PULUMI_STACK_NAME`"
+    ],
+    "answer": "`PULUMI_BACKEND_URL`",
+    "explanation": "The `PULUMI_BACKEND_URL` environment variable or `--backend-url` flag tells the CLI where to store state. For S3, this is typically set to `s3://bucket-name/path`.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 90,
+    "question": "When using Policy Packs, what is the fundamental difference between `PolicyPolicy` and `ValidationPolicy`?",
+    "options": [
+      "`PolicyPolicy` logs warnings, while `ValidationPolicy` enforces failures.",
+      "`ValidationPolicy` runs after resource creation, while `PolicyPolicy` runs before.",
+      "`ValidationPolicy` prevents deployment on violation, while `PolicyPolicy` is primarily for advisory auditing.",
+      "There is no difference; they are aliases for the same interface."
+    ],
+    "answer": "`ValidationPolicy` prevents deployment on violation, while `PolicyPolicy` is primarily for advisory auditing.",
+    "explanation": "While both can analyze resources, `ValidationPolicy` is strictly enforced (causing `pulumi up` to fail if violated), whereas standard `Policy` implementations might be used for analysis or logging warnings depending on the enforcement level configuration.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 91,
+    "question": "In Pulumi, what is a 'URN' (Uniform Resource Name)?",
+    "options": [
+      "The unique identifier of the cloud provider account.",
+      "The hierarchical name assigned to a resource within the state file containing stack, project, type, and name.",
+      "The URL endpoint for the Pulumi Service API.",
+      "The username used to authenticate to the backend."
+    ],
+    "answer": "The hierarchical name assigned to a resource within the state file containing stack, project, type, and name.",
+    "explanation": "The URN is a stable, globally unique identifier for a resource within a stack, usually formatted as `urn:pulumi:stack::project::type::name`.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 92,
+    "question": "What is the result of applying a resource option `provider: myProvider` to a Component Resource?",
+    "options": [
+      "Only the component's own internal logic uses `myProvider`.",
+      "`myProvider` is passed down to all children resources of the Component Resource that do not explicitly define their own provider.",
+      "The operation fails because providers cannot be attached to Component Resources, only Custom Resources.",
+      "It overrides the global provider for all resources in the stack regardless of parentage."
+    ],
+    "answer": "`myProvider` is passed down to all children resources of the Component Resource that do not explicitly define their own provider.",
+    "explanation": "Provider options are inherited. If a Component Resource is configured with a specific provider (e.g., a specific AWS region), all child resources default to that provider unless they opt-out.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 93,
+    "question": "How does the `replaceOnChanges` option function?",
+    "options": [
+      "It creates a new resource if the listed properties change, instead of updating the existing one.",
+      "It triggers a rollback to the previous version if the change fails.",
+      "It forces a refresh of the state file before applying changes.",
+      "It ignores changes to the listed properties to prevent updates."
+    ],
+    "answer": "It creates a new resource if the listed properties change, instead of updating the existing one.",
+    "explanation": "This is useful for immutable infrastructure resources where an update is impossible or dangerous (like changing an AMI ID on a running instance), forcing a destroy+create (replace) cycle.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 94,
+    "question": "What is required to import an existing cloud resource into Pulumi management?",
+    "options": [
+      "Only the resource's name in the cloud provider console.",
+      "The resource's ID (or ARN) and a matching resource definition in the Pulumi code.",
+      "A full state file export from the cloud provider's native IaC tool.",
+      "Root access credentials to the cloud account."
+    ],
+    "answer": "The resource's ID (or ARN) and a matching resource definition in the Pulumi code.",
+    "explanation": "Import (via CLI or code) requires mapping the physical ID of the existing resource to a logical name in your Pulumi program so the engine can link the state to the live resource.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 95,
+    "question": "Which CLI command is used to migrate a stack's state from a local backend to the Pulumi Cloud backend?",
+    "options": [
+      "`pulumi state migrate`",
+      "`pulumi stack export` followed by `pulumi stack import`",
+      "`pulumi login` to change backends, then `pulumi up`",
+      "`pulumi backend switch`"
+    ],
+    "answer": "`pulumi login` to change backends, then `pulumi up`",
+    "explanation": "Logging into a new backend effectively switches the context. If the stack exists locally, the next operation (like `up` or `stack init`) handles the logic of pushing the state file to the new logged-in backend.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 96,
+    "question": "In the context of the `pulumi.Config` object, how do you retrieve a configuration value that is known to be a secret?",
+    "options": [
+      "`config.get('secretName')`",
+      "`config.requireSecret('secretName')`",
+      "`config.getSecret('secretName')`",
+      "`pulumi.secret(config.get('secretName'))`"
+    ],
+    "answer": "`config.requireSecret('secretName')`",
+    "explanation": "The Config class provides helper methods like `requireSecret` (and `getSecret`). These return an `Output<T>` marked as a secret, ensuring it is encrypted in state and never displayed in plain text in the CLI.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 97,
+    "question": "What is 'Drift Detection' in Pulumi?",
+    "options": [
+      "The process of identifying dependencies between resources.",
+      "The ability to detect changes made to cloud resources outside of Pulumi.",
+      "The mechanism used to roll back failed deployments.",
+      "The validation of code formatting standards."
+    ],
+    "answer": "The ability to detect changes made to cloud resources outside of Pulumi.",
+    "explanation": "Drift occurs when manual changes are made in the cloud console. Pulumi can detect this via `pulumi refresh` or specific provider checks to highlight discrepancies between the desired state (code) and actual state.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 98,
+    "question": "When defining a resource in Python, how do you assign the result of `Output.apply` to a property of another resource?",
+    "options": [
+      "You use the `=` assignment operator as usual, because Python handles the `await` implicitly.",
+      "You cannot assign an Output directly; you must pass the Output object itself.",
+      "You must await the function before passing it to the resource constructor.",
+      "You use the `pulumi.Output.from_input` helper to cast it."
+    ],
+    "answer": "You cannot assign an Output directly; you must pass the Output object itself.",
+    "explanation": "In Python (and other languages), you do not unwrap the output. You pass the `Output` object (returned by `.apply` or directly from a resource) into the input property of the next resource, letting Pulumi's engine manage the data flow.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 99,
+    "question": "What is the `--secrets-provider` flag used for?",
+    "options": [
+      "To rotate secrets stored in AWS Secrets Manager.",
+      "To specify a backend service (like AWS KMS, Azure KeyVault, or HashiCorp Vault) for encrypting the Pulumi state file.",
+      "To define where to fetch runtime secrets for the application code.",
+      "To configure the public keys for SSH access to provisioned VMs."
+    ],
+    "answer": "To specify a backend service (like AWS KMS, Azure KeyVault, or HashiCorp Vault) for encrypting the Pulumi state file.",
+    "explanation": "This flag configures the encryption service for the stack's secrets. By default, Pulumi uses a passphrase-based encryption, but this allows integration with cloud KMS for automatic key management.",
+    "difficulty": "Advanced"
+  }
+]
