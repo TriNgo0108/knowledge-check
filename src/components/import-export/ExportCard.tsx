@@ -20,7 +20,7 @@ export function ExportCard() {
       id="export-progress-btn"
       onClick={handleExport}
       disabled={!hasProgress}
-      className="export-action-card group w-full text-left rounded-xl p-5 transition-all duration-300"
+      className="group w-full text-left rounded-xl p-5 transition-all duration-300 disabled:opacity-50 hover:border-primary hover:shadow-[0_4px_20px_var(--color-brand-glow)]"
       style={{
         background: "var(--color-bg-elevated)",
         border: "1px solid var(--color-border)",

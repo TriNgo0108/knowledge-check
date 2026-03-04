@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { BookOpen, SearchX, Search, X } from "lucide-react";
 import { Topic, TopicCategory } from "@data/types";
 import { useState, useEffect, useMemo, useCallback, memo } from "react";
 import { getAllTopicsProgress } from "@hooks/useQuizProgress";
@@ -8,6 +9,8 @@ import {
   ImportExportSidebar,
   ImportExportButton,
 } from "@components/import-export";
+import { Badge } from "@components/ui/badge";
+import { Input } from "@components/ui/input";
 import { allTopics, categories } from "@constants/topics";
 
 const TopicCard = memo(function TopicCard({
@@ -59,14 +62,23 @@ const CategorySection = memo(function CategorySection({
     <section className="mb-10">
       {/* Category Header */}
       <div className="category-header">
-        <span className="text-2xl">{category.icon}</span>
+        <TopicIcon
+          name={category.icon}
+          className="w-6 h-6"
+          style={{ color: "var(--color-brand)" }}
+        />
         <h2
           className="text-xl font-semibold"
           style={{ color: "var(--color-text)" }}
         >
           {category.name}
         </h2>
-        <span className="category-badge">{category.topics.length} topics</span>
+        <Badge
+          variant="secondary"
+          className="rounded-full text-xs text-muted-foreground bg-secondary/20 hover:bg-secondary/30 border-none px-3 font-normal"
+        >
+          {category.topics.length} topics
+        </Badge>
       </div>
 
       {/* Topic Grid */}
@@ -146,10 +158,13 @@ export default function Home() {
             {/* Logo/Title */}
             <div className="flex items-center gap-3">
               <div
-                className="w-10 h-10 rounded-xl flex items-center justify-center text-xl"
+                className="w-10 h-10 rounded-xl flex items-center justify-center"
                 style={{ background: "var(--color-brand-glow)" }}
               >
-                📚
+                <BookOpen
+                  className="w-5 h-5"
+                  style={{ color: "var(--color-brand)" }}
+                />
               </div>
               <h1
                 className="text-xl font-bold hidden sm:block"
@@ -163,46 +178,20 @@ export default function Home() {
             <div className="flex items-center gap-3">
               {/* Search */}
               <div className="relative">
-                <input
+                <Input
                   type="text"
                   placeholder="Search topics..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="search-input w-48 sm:w-64"
+                  className="w-48 sm:w-64 pl-10 pr-10 h-10 bg-card border-border shadow-sm rounded-xl focus-visible:ring-primary focus-visible:ring-offset-2 transition-all duration-200"
                 />
-                <svg
-                  className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4"
-                  style={{ color: "var(--color-text-muted)" }}
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                  />
-                </svg>
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                 {searchQuery && (
                   <button
                     onClick={() => setSearchQuery("")}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-white/10 transition-colors"
-                    style={{ color: "var(--color-text-muted)" }}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-muted transition-colors text-muted-foreground"
                   >
-                    <svg
-                      className="w-4 h-4"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M6 18L18 6M6 6l12 12"
-                      />
-                    </svg>
+                    <X className="w-4 h-4" />
                   </button>
                 )}
               </div>
@@ -253,7 +242,9 @@ export default function Home() {
           ))
         ) : (
           <div className="text-center py-16">
-            <div className="text-5xl mb-4">🔍</div>
+            <div className="flex justify-center mb-4 text-muted-foreground opacity-50">
+              <SearchX className="w-12 h-12" />
+            </div>
             <p
               className="text-xl mb-2"
               style={{ color: "var(--color-text-secondary)" }}
@@ -262,8 +253,7 @@ export default function Home() {
             </p>
             <button
               onClick={() => setSearchQuery("")}
-              className="mt-4 text-brand hover:underline font-medium"
-              style={{ color: "var(--color-brand)" }}
+              className="mt-4 text-primary hover:underline font-medium"
             >
               Clear search
             </button>

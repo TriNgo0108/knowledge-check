@@ -1,158 +1,302 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap");
 @import "tailwindcss";
-
+@plugin "tailwindcss-animate";
 /* ============================================
    Knowledge Check - Design System
-   Modern Learning UI with Light/Dark Mode
+   Tailwind v4 OKLCH Palette + M3 Color Roles
    ============================================ */
 
-/* Dark theme (default) - "Deep Focus" */
+/* ═══════════════════════════════════════════
+   Dark theme (default) — "Deep Focus"
+   M3 roles mapped to Tailwind color scales
+   ═══════════════════════════════════════════ */
 :root,
 .dark {
   --font-heading: "Poppins", sans-serif;
   --font-body: "Inter", sans-serif;
 
-  /* Primary Brand - Vibrant Teal */
-  --color-brand: hsl(174, 72%, 46%);
-  --color-brand-hover: hsl(174, 72%, 52%);
-  --color-brand-glow: hsla(174, 72%, 46%, 0.35);
+  /* ─── M3 Accent: Primary (Teal) ─── */
+  --md-primary: var(--color-teal-400);
+  --md-on-primary: var(--color-teal-950);
+  --md-primary-container: var(--color-teal-900);
+  --md-on-primary-container: var(--color-teal-200);
 
-  /* Secondary - Cyan Accent */
-  --color-secondary: hsl(186, 90%, 50%);
-  --color-accent: hsl(35, 95%, 55%);
+  /* ─── M3 Accent: Secondary (Cyan) ─── */
+  --md-secondary: var(--color-cyan-400);
+  --md-on-secondary: var(--color-cyan-950);
+  --md-secondary-container: var(--color-cyan-900);
+  --md-on-secondary-container: var(--color-cyan-200);
 
-  /* Deep Slate Backgrounds */
-  --color-bg: hsl(222, 47%, 8%);
-  --color-bg-card: hsla(220, 35%, 14%, 0.85);
-  --color-bg-card-solid: hsl(220, 35%, 14%);
-  --color-bg-elevated: hsl(220, 35%, 18%);
-  --color-bg-hover: hsl(220, 35%, 20%);
+  /* ─── M3 Accent: Tertiary (Amber) ─── */
+  --md-tertiary: var(--color-amber-400);
+  --md-on-tertiary: var(--color-amber-950);
+  --md-tertiary-container: var(--color-amber-900);
+  --md-on-tertiary-container: var(--color-amber-200);
 
-  /* High Contrast Text */
-  --color-text: hsl(210, 40%, 98%);
-  --color-text-secondary: hsl(215, 25%, 80%);
-  --color-text-muted: hsl(215, 20%, 55%);
+  /* ─── M3 Status: Error (Rose) ─── */
+  --md-error: var(--color-rose-400);
+  --md-on-error: var(--color-rose-950);
+  --md-error-container: var(--color-rose-950);
+  --md-on-error-container: var(--color-rose-200);
 
-  /* Borders */
-  --color-border: hsla(220, 30%, 40%, 0.3);
-  --color-border-hover: hsla(174, 72%, 46%, 0.5);
+  /* ─── M3 Status: Success (Emerald) — Custom Extension ─── */
+  --md-success: var(--color-emerald-400);
+  --md-on-success: var(--color-emerald-950);
+  --md-success-container: var(--color-emerald-950);
+  --md-on-success-container: var(--color-emerald-200);
 
-  /* Feedback Colors */
-  --color-correct: hsl(160, 70%, 42%);
-  --color-correct-bg: hsla(160, 70%, 42%, 0.15);
-  --color-wrong: hsl(350, 80%, 55%);
-  --color-wrong-bg: hsla(350, 80%, 55%, 0.15);
+  /* ─── M3 Status: Warning (Amber) — Custom Extension ─── */
+  --md-warning: var(--color-amber-500);
+  --md-on-warning: var(--color-amber-950);
+  --md-warning-container: var(--color-amber-950);
+  --md-on-warning-container: var(--color-amber-200);
 
-  /* Gradients */
+  /* ─── M3 Status: Info (Sky) — Custom Extension ─── */
+  --md-info: var(--color-sky-400);
+  --md-on-info: var(--color-sky-950);
+  --md-info-container: var(--color-sky-950);
+  --md-on-info-container: var(--color-sky-200);
+
+  /* ─── M3 Surface (Slate) ─── */
+  --md-surface: var(--color-slate-950);
+  --md-surface-dim: oklch(10% 0.04 265);
+  --md-surface-bright: var(--color-slate-800);
+  --md-surface-container-lowest: oklch(8% 0.04 265);
+  --md-surface-container-low: var(--color-slate-900);
+  --md-surface-container: var(--color-slate-800);
+  --md-surface-container-high: var(--color-slate-700);
+  --md-surface-container-highest: var(--color-slate-600);
+  --md-on-surface: var(--color-slate-100);
+  --md-on-surface-variant: var(--color-slate-400);
+
+  /* ─── M3 Outline ─── */
+  --md-outline: var(--color-slate-500);
+  --md-outline-variant: var(--color-slate-700);
+
+  /* ─── M3 Inverse ─── */
+  --md-inverse-surface: var(--color-slate-100);
+  --md-inverse-on-surface: var(--color-slate-900);
+  --md-inverse-primary: var(--color-teal-600);
+
+  /* ─── M3 Utilities ─── */
+  --md-scrim: oklch(0% 0 0 / 0.5);
+  --md-shadow: oklch(0% 0 0 / 0.3);
+
+  /* ─── Brand Glow (derived) ─── */
+  --color-brand-glow: oklch(77.7% 0.152 181.912 / 0.35);
+
+  /* ─── Gradients ─── */
   --bg-gradient:
-    radial-gradient(
-      ellipse at top left,
-      hsla(174, 50%, 20%, 0.4) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      ellipse at bottom right,
-      hsla(220, 40%, 15%, 0.5) 0%,
-      transparent 50%
-    ),
-    linear-gradient(180deg, hsl(222, 47%, 8%) 0%, hsl(222, 47%, 6%) 100%);
+    radial-gradient(ellipse at top left,
+      oklch(43.7% 0.078 188.216 / 0.4) 0%,
+      transparent 50%),
+    radial-gradient(ellipse at bottom right,
+      oklch(27.9% 0.041 260.031 / 0.5) 0%,
+      transparent 50%),
+    linear-gradient(180deg, var(--color-slate-950) 0%, oklch(10% 0.04 265) 100%);
 
-  --card-gradient: linear-gradient(
-    135deg,
-    hsla(220, 35%, 18%, 0.9) 0%,
-    hsla(220, 35%, 12%, 0.9) 100%
-  );
+  --card-gradient: linear-gradient(135deg,
+      oklch(27.9% 0.041 260.031 / 0.9) 0%,
+      oklch(20.8% 0.042 265.755 / 0.9) 100%);
 
-  /* Shadows */
+  /* ─── Shadows ─── */
   --card-shadow:
-    0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+    0 4px 6px -1px oklch(0% 0 0 / 0.3),
+    0 10px 25px -5px oklch(0% 0 0 / 0.4);
   --card-shadow-lg:
-    0 10px 40px -10px rgba(0, 0, 0, 0.5),
+    0 10px 40px -10px oklch(0% 0 0 / 0.5),
     0 4px 25px -5px var(--color-brand-glow);
-  --input-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  --input-shadow: 0 2px 10px oklch(0% 0 0 / 0.2);
 }
 
-/* Light theme - "Clear Mind" */
+/* ═══════════════════════════════════════════
+   Light theme — "Clear Mind"
+   ═══════════════════════════════════════════ */
 .light {
-  --font-heading: "Poppins", sans-serif;
-  --font-body: "Inter", sans-serif;
+  /* ─── M3 Accent: Primary (Teal) ─── */
+  --md-primary: var(--color-teal-600);
+  --md-on-primary: var(--color-teal-50);
+  --md-primary-container: var(--color-teal-100);
+  --md-on-primary-container: var(--color-teal-900);
 
-  /* Primary Brand - Deeper Teal for light mode */
-  --color-brand: hsl(174, 75%, 38%);
-  --color-brand-hover: hsl(174, 75%, 32%);
-  --color-brand-glow: hsla(174, 75%, 38%, 0.2);
+  /* ─── M3 Accent: Secondary (Cyan) ─── */
+  --md-secondary: var(--color-cyan-600);
+  --md-on-secondary: var(--color-cyan-50);
+  --md-secondary-container: var(--color-cyan-100);
+  --md-on-secondary-container: var(--color-cyan-900);
 
-  /* Secondary - Cyan Accent */
-  --color-secondary: hsl(186, 85%, 40%);
-  --color-accent: hsl(35, 100%, 48%);
+  /* ─── M3 Accent: Tertiary (Amber) ─── */
+  --md-tertiary: var(--color-amber-600);
+  --md-on-tertiary: var(--color-amber-50);
+  --md-tertiary-container: var(--color-amber-100);
+  --md-on-tertiary-container: var(--color-amber-900);
 
-  /* Soft Paper Backgrounds */
-  --color-bg: hsl(180, 20%, 97%);
-  --color-bg-card: hsla(0, 0%, 100%, 0.9);
-  --color-bg-card-solid: hsl(0, 0%, 100%);
-  --color-bg-elevated: hsl(0, 0%, 100%);
-  --color-bg-hover: hsl(180, 15%, 95%);
+  /* ─── M3 Status: Error (Rose) ─── */
+  --md-error: var(--color-rose-600);
+  --md-on-error: var(--color-rose-50);
+  --md-error-container: var(--color-rose-100);
+  --md-on-error-container: var(--color-rose-900);
 
-  /* Sharp Contrast Text */
-  --color-text: hsl(222, 47%, 11%);
-  --color-text-secondary: hsl(215, 25%, 35%);
-  --color-text-muted: hsl(215, 20%, 50%);
+  /* ─── M3 Status: Success (Emerald) ─── */
+  --md-success: var(--color-emerald-600);
+  --md-on-success: var(--color-emerald-50);
+  --md-success-container: var(--color-emerald-100);
+  --md-on-success-container: var(--color-emerald-900);
 
-  /* Borders */
-  --color-border: hsla(220, 20%, 70%, 0.4);
-  --color-border-hover: hsla(174, 75%, 38%, 0.6);
+  /* ─── M3 Status: Warning (Amber) ─── */
+  --md-warning: var(--color-amber-500);
+  --md-on-warning: var(--color-amber-50);
+  --md-warning-container: var(--color-amber-100);
+  --md-on-warning-container: var(--color-amber-900);
 
-  /* Feedback Colors */
-  --color-correct: hsl(160, 70%, 38%);
-  --color-correct-bg: hsla(160, 70%, 38%, 0.12);
-  --color-wrong: hsl(350, 80%, 50%);
-  --color-wrong-bg: hsla(350, 80%, 50%, 0.12);
+  /* ─── M3 Status: Info (Sky) ─── */
+  --md-info: var(--color-sky-600);
+  --md-on-info: var(--color-sky-50);
+  --md-info-container: var(--color-sky-100);
+  --md-on-info-container: var(--color-sky-900);
 
-  /* Gradients */
+  /* ─── M3 Surface (Slate) ─── */
+  --md-surface: var(--color-slate-50);
+  --md-surface-dim: var(--color-slate-200);
+  --md-surface-bright: white;
+  --md-surface-container-lowest: white;
+  --md-surface-container-low: var(--color-slate-50);
+  --md-surface-container: var(--color-slate-100);
+  --md-surface-container-high: var(--color-slate-200);
+  --md-surface-container-highest: var(--color-slate-300);
+  --md-on-surface: var(--color-slate-900);
+  --md-on-surface-variant: var(--color-slate-500);
+
+  /* ─── M3 Outline ─── */
+  --md-outline: var(--color-slate-400);
+  --md-outline-variant: var(--color-slate-200);
+
+  /* ─── M3 Inverse ─── */
+  --md-inverse-surface: var(--color-slate-900);
+  --md-inverse-on-surface: var(--color-slate-100);
+  --md-inverse-primary: var(--color-teal-300);
+
+  /* ─── M3 Utilities ─── */
+  --md-scrim: oklch(0% 0 0 / 0.4);
+  --md-shadow: oklch(0% 0 0 / 0.1);
+
+  /* ─── Brand Glow (derived) ─── */
+  --color-brand-glow: oklch(60% 0.118 184.704 / 0.2);
+
+  /* ─── Gradients ─── */
   --bg-gradient:
-    radial-gradient(
-      ellipse at top left,
-      hsla(174, 40%, 92%, 0.8) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      ellipse at bottom right,
-      hsla(220, 30%, 94%, 0.6) 0%,
-      transparent 50%
-    ),
-    linear-gradient(180deg, hsl(180, 20%, 97%) 0%, hsl(180, 15%, 95%) 100%);
+    radial-gradient(ellipse at top left,
+      oklch(95.3% 0.051 180.801 / 0.8) 0%,
+      transparent 50%),
+    radial-gradient(ellipse at bottom right,
+      oklch(96.8% 0.007 247.896 / 0.6) 0%,
+      transparent 50%),
+    linear-gradient(180deg, var(--color-slate-50) 0%, var(--color-slate-100) 100%);
 
-  --card-gradient: linear-gradient(
-    135deg,
-    hsla(0, 0%, 100%, 0.95) 0%,
-    hsla(180, 10%, 98%, 0.95) 100%
-  );
+  --card-gradient: linear-gradient(135deg,
+      oklch(100% 0 0 / 0.95) 0%,
+      oklch(98.4% 0.003 247.858 / 0.95) 100%);
 
-  /* Shadows */
+  /* ─── Shadows ─── */
   --card-shadow:
-    0 1px 3px rgba(0, 0, 0, 0.05), 0 4px 20px -4px rgba(0, 50, 50, 0.08);
+    0 1px 3px oklch(0% 0 0 / 0.05),
+    0 4px 20px -4px oklch(38.6% 0.063 188.416 / 0.08);
   --card-shadow-lg:
-    0 8px 30px -8px rgba(0, 50, 50, 0.12),
+    0 8px 30px -8px oklch(38.6% 0.063 188.416 / 0.12),
     0 4px 20px -4px var(--color-brand-glow);
-  --input-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  --input-shadow: 0 2px 8px oklch(0% 0 0 / 0.05);
 }
 
-/* Tailwind theme tokens */
+/* ═══════════════════════════════════════════
+   Backward-Compatible Aliases
+   Maps old --color-* names → M3 roles
+   ═══════════════════════════════════════════ */
+:root,
+.dark,
+.light {
+  --color-brand: var(--md-primary);
+  --color-brand-hover: var(--md-primary);
+  --color-secondary: var(--md-secondary);
+  --color-accent: var(--md-tertiary);
+  --color-bg: var(--md-surface);
+  --color-bg-card: var(--md-surface-container);
+  --color-bg-card-solid: var(--md-surface-container);
+  --color-bg-elevated: var(--md-surface-container-high);
+  --color-bg-hover: var(--md-surface-container-highest);
+  --color-text: var(--md-on-surface);
+  --color-text-secondary: var(--md-on-surface-variant);
+  --color-text-muted: var(--md-on-surface-variant);
+  --color-border: var(--md-outline-variant);
+  --color-border-hover: var(--md-outline);
+  --color-correct: var(--md-success);
+  --color-correct-bg: var(--md-success-container);
+  --color-wrong: var(--md-error);
+  --color-wrong-bg: var(--md-error-container);
+}
+
+/* ═══════════════════════════════════════════
+   Tailwind @theme — Semantic M3 Utilities
+   Enables: bg-primary, text-on-surface, etc.
+   ═══════════════════════════════════════════ */
 @theme {
   --font-heading: var(--font-heading);
   --font-body: var(--font-body);
 
-  --color-brand: var(--color-brand);
+  /* M3 Accent Colors */
+  --color-primary: var(--md-primary);
+  --color-on-primary: var(--md-on-primary);
+  --color-primary-container: var(--md-primary-container);
+  --color-on-primary-container: var(--md-on-primary-container);
+  --color-secondary: var(--md-secondary);
+  --color-on-secondary: var(--md-on-secondary);
+  --color-tertiary: var(--md-tertiary);
+  --color-on-tertiary: var(--md-on-tertiary);
+
+  /* M3 Status Colors */
+  --color-error: var(--md-error);
+  --color-error-container: var(--md-error-container);
+  --color-success: var(--md-success);
+  --color-success-container: var(--md-success-container);
+  --color-warning: var(--md-warning);
+  --color-warning-container: var(--md-warning-container);
+  --color-info: var(--md-info);
+  --color-info-container: var(--md-info-container);
+
+  /* M3 Surface & Outline */
+  --color-surface: var(--md-surface);
+  --color-surface-container: var(--md-surface-container);
+  --color-surface-container-high: var(--md-surface-container-high);
+  --color-surface-container-highest: var(--md-surface-container-highest);
+  --color-on-surface: var(--md-on-surface);
+  --color-on-surface-variant: var(--md-on-surface-variant);
+  --color-outline: var(--md-outline);
+  --color-outline-variant: var(--md-outline-variant);
+
+  /* Legacy Tailwind Utility Aliases */
+  --color-brand: var(--md-primary);
   --color-brand-glow: var(--color-brand-glow);
+  --color-correct: var(--md-success);
+  --color-wrong: var(--md-error);
 
-  --color-bg-dark: var(--color-bg);
-  --color-bg-card: var(--color-bg-card);
-
-  --color-text-main: var(--color-text);
-  --color-text-muted: var(--color-text-muted);
-
-  --color-correct: var(--color-correct);
-  --color-wrong: var(--color-wrong);
+  /* Shadcn exact naming aliases */
+  --color-primary-foreground: var(--color-on-primary);
+  --color-secondary-foreground: var(--color-on-secondary);
+  --color-destructive: var(--color-error);
+  --color-destructive-foreground: var(--color-error-container);
+  --color-muted: var(--color-surface-container-high);
+  --color-muted-foreground: var(--color-on-surface-variant);
+  --color-card: var(--color-surface-container);
+  --color-card-foreground: var(--color-on-surface);
+  --color-popover: var(--color-surface-container-high);
+  --color-popover-foreground: var(--color-on-surface);
+  --color-border: var(--md-outline-variant);
+  --color-input: var(--md-outline-variant);
+  --color-background: var(--color-surface);
+  --color-foreground: var(--color-on-surface);
+  --color-ring: var(--color-primary);
+  --radius-lg: 1rem;
+  --radius-md: 0.875rem;
+  --radius-sm: 0.5rem;
 }
 
 /* ============================================
@@ -160,10 +304,6 @@
    ============================================ */
 
 @layer base {
-  html {
-    scrollbar-gutter: stable;
-  }
-
   * {
     box-sizing: border-box;
   }
@@ -181,6 +321,7 @@
       background-color 0.4s ease,
       color 0.3s ease;
   }
+
 
   h1,
   h2,
@@ -224,6 +365,7 @@
 
   /* Reduced motion */
   @media (prefers-reduced-motion: reduce) {
+
     *,
     *::before,
     *::after {
@@ -239,91 +381,8 @@
    ============================================ */
 
 @layer components {
-  /* Primary Button */
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    background: linear-gradient(
-      135deg,
-      var(--color-brand) 0%,
-      var(--color-brand-hover) 100%
-    );
-    color: white;
-    padding: 0.875rem 1.75rem;
-    border-radius: 0.875rem;
-    font-family: var(--font-heading);
-    font-weight: 600;
-    font-size: 0.9375rem;
-    letter-spacing: -0.01em;
-    border: none;
-    cursor: pointer;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 4px 15px -3px var(--color-brand-glow);
-  }
 
-  .btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px -5px var(--color-brand-glow);
-    filter: brightness(1.1);
-  }
 
-  .btn:active {
-    transform: translateY(0) scale(0.98);
-  }
-
-  .btn:focus-visible {
-    ring: 2px;
-    ring-color: var(--color-brand);
-    ring-offset: 2px;
-  }
-
-  /* Outline Button */
-  .btn-outline {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    background: transparent;
-    color: var(--color-text);
-    padding: 0.75rem 1.5rem;
-    border-radius: 0.875rem;
-    font-family: var(--font-heading);
-    font-weight: 500;
-    font-size: 0.9375rem;
-    border: 1.5px solid var(--color-border);
-    cursor: pointer;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .btn-outline:hover {
-    border-color: var(--color-brand);
-    background: var(--color-brand-glow);
-    color: var(--color-brand);
-  }
-
-  .btn-outline:active {
-    transform: scale(0.98);
-  }
-
-  /* Glass Card */
-  .card {
-    background: var(--card-gradient);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid var(--color-border);
-    border-radius: 1.25rem;
-    padding: 1.5rem;
-    box-shadow: var(--card-shadow);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  @media (min-width: 640px) {
-    .card {
-      padding: 2rem;
-    }
-  }
 
   /* Topic Card - Glassmorphism Style */
   .topic-card {
@@ -351,11 +410,9 @@
     content: "";
     position: absolute;
     inset: 0;
-    background: radial-gradient(
-      circle at 50% 0%,
-      var(--glow-color, transparent) 0%,
-      transparent 70%
-    );
+    background: radial-gradient(circle at 50% 0%,
+        var(--glow-color, transparent) 0%,
+        transparent 70%);
     opacity: 0;
     transition: opacity 0.35s ease;
     pointer-events: none;
@@ -375,132 +432,7 @@
     transform: translateY(-2px) scale(1.01);
   }
 
-  /* Import/Export Action Cards */
-  .export-action-card:not(:disabled):hover {
-    border-color: var(--color-border-hover) !important;
-    box-shadow: 0 4px 20px var(--color-brand-glow) !important;
-  }
 
-  .import-action-card:hover {
-    border-color: hsla(270, 60%, 55%, 0.5) !important;
-    box-shadow: 0 4px 20px hsla(270, 60%, 55%, 0.2) !important;
-  }
-
-  /* Input Styles */
-  .search-input {
-    width: 100%;
-    padding: 0.875rem 1rem 0.875rem 2.75rem;
-    background: var(--color-bg-card-solid);
-    border: 1.5px solid var(--color-border);
-    border-radius: 0.875rem;
-    color: var(--color-text);
-    font-family: var(--font-body);
-    font-size: 0.9375rem;
-    box-shadow: var(--input-shadow);
-    transition: all 0.25s ease;
-  }
-
-  .search-input::placeholder {
-    color: var(--color-text-muted);
-    opacity: 0.7;
-  }
-
-  .search-input:focus {
-    outline: none;
-    border-color: var(--color-brand);
-    box-shadow:
-      0 0 0 3px var(--color-brand-glow),
-      var(--input-shadow);
-  }
-
-  /* Progress Bar */
-  .progress-bar {
-    position: relative;
-    height: 0.5rem;
-    background: var(--color-border);
-    border-radius: 9999px;
-    overflow: hidden;
-  }
-
-  .progress-bar-fill {
-    height: 100%;
-    background: linear-gradient(
-      90deg,
-      var(--color-brand) 0%,
-      var(--color-secondary) 100%
-    );
-    border-radius: 9999px;
-    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-  }
-
-  .progress-bar-fill::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(
-      90deg,
-      transparent 0%,
-      rgba(255, 255, 255, 0.3) 50%,
-      transparent 100%
-    );
-    animation: shimmer 2s infinite;
-  }
-
-  /* Stats Badge */
-  .stats-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.5rem 0.875rem;
-    background: var(--color-bg-elevated);
-    border: 1px solid var(--color-border);
-    border-radius: 0.625rem;
-    font-size: 0.875rem;
-    font-weight: 500;
-  }
-
-  /* Option Card for Quiz */
-  .option-card {
-    position: relative;
-    width: 100%;
-    text-align: left;
-    padding: 1rem 1.25rem;
-    background: var(--color-bg-elevated);
-    border: 1.5px solid var(--color-border);
-    border-radius: 0.875rem;
-    cursor: pointer;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .option-card:not(:disabled):hover {
-    background: var(--color-bg-hover);
-    border-color: var(--color-brand);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px -3px var(--color-brand-glow);
-  }
-
-  .option-card:not(:disabled):active {
-    transform: translateY(0) scale(0.99);
-  }
-
-  .option-card.selected {
-    border-color: var(--color-brand);
-    background: var(--color-brand-glow);
-  }
-
-  .option-card.correct {
-    background: var(--color-correct-bg);
-    border-color: var(--color-correct);
-  }
-
-  .option-card.wrong {
-    background: var(--color-wrong-bg);
-    border-color: var(--color-wrong);
-  }
 
   /* Category Section */
   .category-header {
@@ -512,15 +444,6 @@
     border-bottom: 1px solid var(--color-border);
   }
 
-  .category-badge {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.25rem 0.75rem;
-    background: var(--color-bg-elevated);
-    border-radius: 9999px;
-    font-size: 0.75rem;
-    color: var(--color-text-muted);
-  }
 
   /* Fade In Animation */
   .fade-in {
@@ -541,6 +464,7 @@
     opacity: 0;
     transform: translateY(12px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -552,6 +476,7 @@
     opacity: 0;
     transform: translateY(24px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -563,6 +488,7 @@
     opacity: 0;
     transform: translateY(-24px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -574,6 +500,7 @@
     opacity: 0;
     transform: scale(0.92);
   }
+
   to {
     opacity: 1;
     transform: scale(1);
@@ -585,12 +512,15 @@
     opacity: 0;
     transform: scale(0.3);
   }
+
   50% {
     transform: scale(1.05);
   }
+
   70% {
     transform: scale(0.95);
   }
+
   100% {
     opacity: 1;
     transform: scale(1);
@@ -598,10 +528,12 @@
 }
 
 @keyframes shake {
+
   0%,
   100% {
     transform: translateX(0);
   }
+
   10%,
   30%,
   50%,
@@ -609,6 +541,7 @@
   90% {
     transform: translateX(-4px);
   }
+
   20%,
   40%,
   60%,
@@ -618,10 +551,12 @@
 }
 
 @keyframes pulse {
+
   0%,
   100% {
     opacity: 1;
   }
+
   50% {
     opacity: 0.6;
   }
@@ -631,18 +566,21 @@
   0% {
     transform: translateX(-100%);
   }
+
   100% {
     transform: translateX(200%);
   }
 }
 
 @keyframes progressGlow {
+
   0%,
   100% {
     box-shadow:
       0 0 8px var(--color-brand),
       0 0 16px var(--color-brand-glow);
   }
+
   50% {
     box-shadow:
       0 0 16px var(--color-brand),
@@ -654,9 +592,11 @@
   0% {
     transform: scale(1);
   }
+
   50% {
     transform: scale(1.25);
   }
+
   100% {
     transform: scale(1);
   }
@@ -666,28 +606,35 @@
   0% {
     transform: scale(1);
   }
+
   30% {
     transform: scale(1.08);
   }
+
   100% {
     transform: scale(1);
   }
 }
 
 @keyframes wrongShake {
+
   0%,
   100% {
     transform: translateX(0);
   }
+
   20% {
     transform: translateX(-6px);
   }
+
   40% {
     transform: translateX(6px);
   }
+
   60% {
     transform: translateX(-4px);
   }
+
   80% {
     transform: translateX(4px);
   }
@@ -697,16 +644,19 @@
   from {
     stroke-dashoffset: 283;
   }
+
   to {
     stroke-dashoffset: var(--ring-offset, 0);
   }
 }
 
 @keyframes float {
+
   0%,
   100% {
     transform: translateY(0);
   }
+
   50% {
     transform: translateY(-8px);
   }
@@ -757,15 +707,19 @@
 .stagger-1 {
   animation-delay: 0.05s;
 }
+
 .stagger-2 {
   animation-delay: 0.1s;
 }
+
 .stagger-3 {
   animation-delay: 0.15s;
 }
+
 .stagger-4 {
   animation-delay: 0.2s;
 }
+
 .stagger-5 {
   animation-delay: 0.25s;
 }

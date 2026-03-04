@@ -5,11 +5,12 @@ import { iconMap } from "@constants/topicIcons";
 interface TopicIconProps {
   name: string;
   className?: string;
+  style?: React.CSSProperties;
 }
 
-function TopicIcon({ name, className }: TopicIconProps) {
+function TopicIcon({ name, className, style }: TopicIconProps) {
   const Icon = iconMap[name] || Book;
-  return <Icon className={className} />;
+  return <Icon className={className} style={style} />;
 }
 
 export default memo(TopicIcon);

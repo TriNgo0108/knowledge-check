@@ -25,6 +25,10 @@ import {
   ServerCog,
   CloudLightning,
   Link,
+  Terminal,
+  Component,
+  Rocket,
+  BookOpen,
 } from "lucide-react";
 
 export const iconMap: Record<string, ComponentType<{ className?: string }>> = {
@@ -53,4 +57,8 @@ export const iconMap: Record<string, ComponentType<{ className?: string }>> = {
   ServerCog,
   CloudLightning,
   Link,
+  Terminal,
+  Component,
+  Rocket,
+  BookOpen,
 };

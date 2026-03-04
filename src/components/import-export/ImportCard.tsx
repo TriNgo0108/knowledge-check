@@ -43,7 +43,7 @@ export function ImportCard() {
     <button
       {...getRootProps()}
       id="import-progress-btn"
-      className="import-action-card group w-full text-left rounded-xl p-5 transition-all duration-300"
+      className="group w-full text-left rounded-xl p-5 transition-all duration-300 hover:border-[#a855f780] hover:shadow-[0_4px_20px_#a855f733]"
       style={{
         background: isDragActive
           ? "var(--color-brand-glow)"
