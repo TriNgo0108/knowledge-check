@@ -1,0 +1,1302 @@
+[
+  {
+    "id": 1,
+    "question": "Which architectural model does PostgreSQL use to handle client connections?",
+    "options": [
+      "A single-threaded process model",
+      "A multi-threaded process model",
+      "A process-per-connection model",
+      "A synchronous event loop model"
+    ],
+    "answer": "A process-per-connection model",
+    "explanation": "PostgreSQL spawns a new OS process (forked from the postmaster) for each client connection. This provides strong isolation but is heavier than a multi-threaded model.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 2,
+    "question": "What is the primary purpose of the Global Interpreter Lock (GIL) equivalent in PostgreSQL?",
+    "options": [
+      "PostgreSQL does not use a Global Interpreter Lock; it uses a process model",
+      "To prevent multiple threads from accessing shared memory simultaneously",
+      "To manage the reference counting of Python objects in PL/Python",
+      "To serialize access to the WAL buffer"
+    ],
+    "answer": "PostgreSQL does not use a Global Interpreter Lock; it uses a process model",
+    "explanation": "Unlike Python's CPython, PostgreSQL uses a process-based architecture where each connection is a separate OS process, avoiding the need for a global lock like the GIL.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 3,
+    "question": "Which configuration parameter determines the maximum number of concurrent client connections allowed?",
+    "options": [
+      "max_connections",
+      "max_workers",
+      "superuser_reserved_connections",
+      "connection_limit"
+    ],
+    "answer": "max_connections",
+    "explanation": "The `max_connections` parameter sets the maximum number of concurrent backend processes that can be running simultaneously.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 4,
+    "question": "What is the default recommended starting value for the shared_buffers configuration parameter?",
+    "options": [
+      "5% of total system RAM",
+      "25% of total system RAM",
+      "75% of total system RAM",
+      "100% of total system RAM"
+    ],
+    "answer": "25% of total system RAM",
+    "explanation": "A common rule of thumb for PostgreSQL installations is to set `shared_buffers` to approximately 25% of the system's total RAM, though this varies by workload and OS.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 5,
+    "question": "Which component of PostgreSQL architecture is responsible for spawning new backend processes upon connection requests?",
+    "options": [
+      "The Background Writer (BgWriter)",
+      "The Postmaster process",
+      "The WAL Writer",
+      "The Autovacuum Launcher"
+    ],
+    "answer": "The Postmaster process",
+    "explanation": "The Postmaster daemon is the parent process that listens for connection requests and spawns a new server process for each client.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 6,
+    "question": "What is the function of the work_mem parameter in PostgreSQL?",
+    "options": [
+      "Limits the total memory used by all connections combined",
+      "Defines the amount of memory available for internal sort and hash operations",
+      "Sets the size of the shared buffer pool",
+      "Reserves memory for the query cache"
+    ],
+    "answer": "Defines the amount of memory available for internal sort and hash operations",
+    "explanation": "`work_mem` specifies the maximum amount of memory to be used by a single internal operation like sorting or hashing before writing to temporary disk files.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 7,
+    "question": "Why is setting the max_connections parameter too high potentially dangerous?",
+    "options": [
+      "It causes the database to ignore indexing",
+      "It leads to excessive context switching and memory exhaustion",
+      "It prevents the WAL writer from flushing logs",
+      "It disables the query planner"
+    ],
+    "answer": "It leads to excessive context switching and memory exhaustion",
+    "explanation": "Each connection consumes RAM and CPU. Too many connections can overwhelm system resources, causing performance degradation or out-of-memory errors.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 8,
+    "question": "Which tool is commonly used as middleware to maintain a pool of active connections for PostgreSQL?",
+    "options": [
+      "PgBouncer",
+      "PgAdmin",
+      "Postmaster",
+      "psql"
+    ],
+    "answer": "PgBouncer",
+    "explanation": "PgBouncer is a lightweight connection pooler that sits between the application and the database, reducing the overhead of connection management.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 9,
+    "question": "In PostgreSQL, what does the acronym ACID stand for regarding database transactions?",
+    "options": [
+      "Atomicity, Consistency, Isolation, Durability",
+      "Automaticity, Concurrency, Integrity, Distribution",
+      "Atomicity, Commitment, Indexing, Distribution",
+      "Availability, Consistency, Isolation, Durability"
+    ],
+    "answer": "Atomicity, Consistency, Isolation, Durability",
+    "explanation": "ACID is a standard set of properties that guarantee that database transactions are processed reliably. PostgreSQL has been ACID-compliant since 2001.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 10,
+    "question": "What type of storage structure does PostgreSQL use for standard tables?",
+    "options": [
+      "B-Tree storage",
+      "Heap storage",
+      "Hash storage",
+      "Array storage"
+    ],
+    "answer": "Heap storage",
+    "explanation": "PostgreSQL stores table data in a structure called a 'heap', which is an unordered collection of data pages, relying on indexes for ordered retrieval.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 11,
+    "question": "Which extension is most commonly associated with adding geospatial database capabilities to PostgreSQL?",
+    "options": [
+      "pgAdmin",
+      "PostGIS",
+      "PL/pgSQL",
+      "pgCrypto"
+    ],
+    "answer": "PostGIS",
+    "explanation": "PostGIS is the standard open-source extension for adding support for geographic objects to the PostgreSQL object-relational database.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 12,
+    "question": "What is the default size of a data page in PostgreSQL?",
+    "options": [
+      "4KB",
+      "8KB",
+      "16KB",
+      "32KB"
+    ],
+    "answer": "8KB",
+    "explanation": "The default page size in PostgreSQL is 8KB. This is the unit of storage and I/O for tables and indexes.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 13,
+    "question": "What mechanism allows PostgreSQL to perform non-blocking reads and writes simultaneously?",
+    "options": [
+      "Table Locking",
+      "Multi-Version Concurrency Control (MVCC)",
+      "Global Interpreter Lock",
+      "Two-Phase Commit"
+    ],
+    "answer": "Multi-Version Concurrency Control (MVCC)",
+    "explanation": "MVCC allows readers to access data without locking out writers, and vice versa, by maintaining multiple versions of a single tuple (row).",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 14,
+    "question": "Which command is used to view the execution plan of a query without actually executing it?",
+    "options": [
+      "EXPLAIN ANALYZE",
+      "EXPLAIN",
+      "DESCRIBE",
+      "SHOW PLAN"
+    ],
+    "answer": "EXPLAIN",
+    "explanation": "The `EXPLAIN` command displays the query planner's execution plan. `EXPLAIN ANALYZE` actually executes the query and shows timing statistics.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 15,
+    "question": "What is the purpose of the Write-Ahead Log (WAL) in PostgreSQL?",
+    "options": [
+      "To store user queries for later analysis",
+      "To log errors for system administrators",
+      "To ensure data integrity and enable crash recovery",
+      "To cache query results"
+    ],
+    "answer": "To ensure data integrity and enable crash recovery",
+    "explanation": "WAL records all data changes before they are written to the main data files, allowing PostgreSQL to recover from crashes by replaying the log.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 16,
+    "question": "Which default index type is created automatically when a primary key is defined?",
+    "options": [
+      "HASH",
+      "GiST",
+      "GIN",
+      "B-Tree"
+    ],
+    "answer": "B-Tree",
+    "explanation": "PostgreSQL creates a B-Tree index by default for primary keys and unique constraints because it handles equality and range queries efficiently.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 17,
+    "question": "What is the primary risk associated with setting shared_buffers too high?",
+    "options": [
+      "Queries will run slower",
+      "The OS may run out of memory for caching and start swapping",
+      "The database will refuse to start",
+      "Replication will lag"
+    ],
+    "answer": "The OS may run out of memory for caching and start swapping",
+    "explanation": "Setting `shared_buffers` too high can starve the operating system of RAM, forcing it to swap memory to disk, which drastically degrades performance.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 18,
+    "question": "Which logical container in PostgreSQL maps a specific directory on the host filesystem?",
+    "options": [
+      "Schema",
+      "Tablespace",
+      "Database",
+      "Table"
+    ],
+    "answer": "Tablespace",
+    "explanation": "A tablespace allows a database administrator to define an alternative location on the file system where data files for database objects can be stored.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 19,
+    "question": "Which SQL command is used to obtain statistics about the contents of a table for the query planner?",
+    "options": [
+      "VACUUM",
+      "ANALYZE",
+      "REFRESH MATERIALIZED VIEW",
+      "REINDEX"
+    ],
+    "answer": "ANALYZE",
+    "explanation": "The `ANALYZE` command collects statistics about the contents of tables and indexes, which the query planner uses to determine the most efficient execution strategies.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 20,
+    "question": "What is the main benefit of separating data files and WAL files onto different physical disks?",
+    "options": [
+      "Reduced storage costs",
+      "Increased security",
+      "Reduced I/O contention",
+      "Simpler backup procedures"
+    ],
+    "answer": "Reduced I/O contention",
+    "explanation": "Placing WAL and data files on separate disks prevents write-heavy logging operations from competing with read-heavy data queries for the same disk I/O resources.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 21,
+    "question": "Which of the following best describes a 'dead tuple' in PostgreSQL?",
+    "options": [
+      "A row that is NULL",
+      "A row that has been updated or deleted but not yet cleaned up",
+      "A row that violates a constraint",
+      "A row locked by a transaction"
+    ],
+    "answer": "A row that has been updated or deleted but not yet cleaned up",
+    "explanation": "Due to MVCC, old versions of rows remain on disk until removed by the VACUUM process to prevent other transactions from seeing them.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 22,
+    "question": "Which configuration file controls authentication methods in PostgreSQL?",
+    "options": [
+      "postgresql.conf",
+      "pg_hba.conf",
+      "pg_ident.conf",
+      "recovery.conf"
+    ],
+    "answer": "pg_hba.conf",
+    "explanation": "The `pg_hba.conf` (Host-Based Authentication) file controls which hosts are allowed to connect, how they are authenticated, and which databases they can access.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 23,
+    "question": "What is the default behavior of PostgreSQL regarding unquoted identifiers (table/column names)?",
+    "options": [
+      "They are treated as uppercase",
+      "They are treated as case-sensitive",
+      "They are folded to lowercase",
+      "They are rejected with a syntax error"
+    ],
+    "answer": "They are folded to lowercase",
+    "explanation": "PostgreSQL folds all unquoted identifiers to lowercase. To preserve case (or use mixed case), identifiers must be enclosed in double quotes.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 24,
+    "question": "Which data type in PostgreSQL is optimized for storing binary JSON data?",
+    "options": [
+      "JSON",
+      "JSONB",
+      "TEXT",
+      "BYTEA"
+    ],
+    "answer": "JSONB",
+    "explanation": "`JSONB` stores data in a decomposed binary format, which is slower to input but significantly faster to process and supports indexing, unlike the plain text `JSON` type.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 25,
+    "question": "Which process is responsible for cleaning up dead tuples (bloat) from tables?",
+    "options": [
+      "The Checkpointer",
+      "The Writer",
+      "The Autovacuum daemon",
+      "The Logger"
+    ],
+    "answer": "The Autovacuum daemon",
+    "explanation": "Autovacuum automatically runs VACUUM and ANALYZE to reclaim storage from dead tuples and update statistics, preventing table bloat.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 26,
+    "question": "What is the default 'search_path' in PostgreSQL?",
+    "options": [
+      "public, pg_catalog",
+      "pg_catalog, public",
+      "postgres, public",
+      "public"
+    ],
+    "answer": "pg_catalog, public",
+    "explanation": "The default search path is `pg_catalog, public` (or `$user, public`). This ensures system objects are found first, followed by objects in the public schema.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 27,
+    "question": "Which data type is best suited for storing IP addresses in PostgreSQL?",
+    "options": [
+      "INET",
+      "CIDR",
+      "VARCHAR",
+      "TEXT"
+    ],
+    "answer": "INET",
+    "explanation": "The `INET` type stores an IPv4 or IPv6 hostname or address and supports subnet masks efficiently. `CIDR` is strictly for network blocks.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 28,
+    "question": "What does the 'psql' command-line tool use to indicate it is ready for input?",
+    "options": [
+      "->",
+      "=>",
+      "#",
+      ">"
+    ],
+    "answer": "=>",
+    "explanation": "The standard prompt for the `psql` interactive terminal is the database name followed by `=#` (for superusers) or `=>` (for regular users).",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 29,
+    "question": "Which command is used to install an extension in a database?",
+    "options": [
+      "INSTALL EXTENSION name;",
+      "LOAD EXTENSION name;",
+      "CREATE EXTENSION name;",
+      "ADD EXTENSION name;"
+    ],
+    "answer": "CREATE EXTENSION name;",
+    "explanation": "The SQL command `CREATE EXTENSION` loads new extensions into the current database.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 30,
+    "question": "In the context of MVCC, what does a transaction see when it reads a row modified by an uncommitted transaction?",
+    "options": [
+      "The old version of the row",
+      "The new version of the row",
+      "An error is thrown",
+      "A NULL value"
+    ],
+    "answer": "The old version of the row",
+    "explanation": "MVCC uses snapshots to provide transaction isolation. A transaction reads the version of the row that was committed before the current transaction began.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 31,
+    "question": "Which utility is used to perform a logical backup of a PostgreSQL database (dumping data as SQL text)?",
+    "options": [
+      "pg_restore",
+      "pg_dump",
+      "pg_basebackup",
+      "psql"
+    ],
+    "answer": "pg_dump",
+    "explanation": "`pg_dump` is a standard utility for backing up a PostgreSQL database by extracting data into a SQL script or custom archive file.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 32,
+    "question": "What is the primary purpose of the Checkpointer process?",
+    "options": [
+      "To kill idle connections",
+      "To flush all dirty buffers from shared memory to disk",
+      "To analyze query statistics",
+      "To replicate data to standby servers"
+    ],
+    "answer": "To flush all dirty buffers from shared memory to disk",
+    "explanation": "The checkpointer process ensures that data modified in shared memory is periodically written to disk, reducing the time required for crash recovery.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 33,
+    "question": "Which operation creates a new table from the result set of a query?",
+    "options": [
+      "CREATE TABLE ... AS SELECT",
+      "INSERT INTO ... SELECT",
+      "SELECT ... INTO",
+      "CREATE VIEW ... AS"
+    ],
+    "answer": "CREATE TABLE ... AS SELECT",
+    "explanation": "`CREATE TABLE AS` (CTAS) defines a new table and populates it with data computed by a query. (`SELECT INTO` is also valid syntax but CTAS is the standard SQL form).",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 34,
+    "question": "Which parameter sets the amount of memory reserved specifically for sorting operations?",
+    "options": [
+      "maintenance_work_mem",
+      "shared_buffers",
+      "work_mem",
+      "temp_buffers"
+    ],
+    "answer": "work_mem",
+    "explanation": "While `maintenance_work_mem` applies to maintenance commands (like VACUUM), `work_mem` applies to sorting and hashing during complex queries.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 35,
+    "question": "What is a 'Cluster' in the context of PostgreSQL?",
+    "options": [
+      "A group of tables stored on the same disk",
+      "A collection of databases managed by a single PostgreSQL server instance",
+      "A High-Availability replication setup",
+      "A group of connected client nodes"
+    ],
+    "answer": "A collection of databases managed by a single PostgreSQL server instance",
+    "explanation": "A PostgreSQL 'cluster' refers to a single installation (or server instance) that manages multiple databases using the same configuration and data directory.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 36,
+    "question": "Which memory configuration parameter specifically controls the maximum amount of memory available for each sorting or hashing operation (such as ORDER BY, DISTINCT, or hash joins) before PostgreSQL writes temporary data to disk?",
+    "options": [
+      "shared_buffers",
+      "work_mem",
+      "maintenance_work_mem",
+      "effective_cache_size"
+    ],
+    "answer": "work_mem",
+    "explanation": "work_mem defines the maximum memory for internal sort and hash operations per operation node. If exceeded, the operation spills to disk, significantly slowing down complex queries.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 37,
+    "question": "What is the primary function of the Write-Ahead Log (WAL) in PostgreSQL?",
+    "options": [
+      "To store query execution plans for faster retrieval",
+      "To ensure data integrity by logging changes before they are written to data files",
+      "To maintain a history of all user connections and queries",
+      "To compress backup files to reduce disk usage"
+    ],
+    "answer": "To ensure data integrity by logging changes before they are written to data files",
+    "explanation": "WAL provides crash recovery durability by recording all data changes prior to writing them to the actual data files. This ensures that the database can be restored to a consistent state after a crash.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 38,
+    "question": "How does the Multi-Version Concurrency Control (MVCC) mechanism in PostgreSQL affect table storage during an UPDATE operation?",
+    "options": [
+      "It locks the row exclusively until the transaction commits",
+      "It overwrites the existing data block directly with the new data",
+      "It creates a new version of the row (tuple) and marks the old one as expired",
+      "It moves the updated row to a separate tablespace automatically"
+    ],
+    "answer": "It creates a new version of the row (tuple) and marks the old one as expired",
+    "explanation": "PostgreSQL uses MVCC where an UPDATE creates a new tuple and marks the old one for future cleanup (vacuum), rather than overwriting data. This allows readers to access the old version without blocking writers.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 39,
+    "question": "When using the EXPLAIN command, what does the 'Seq Scan' operation indicate?",
+    "options": [
+      "The database is reading every row in the table sequentially to satisfy the query",
+      "The database is jumping between indexes to find matching rows",
+      "The query is waiting for a lock to be released",
+      "The planner found an efficient index to retrieve data"
+    ],
+    "answer": "The database is reading every row in the table sequentially to satisfy the query",
+    "explanation": "A 'Seq Scan' indicates the planner chose to read the entire table row-by-row. This is often efficient for small tables but can be a performance bottleneck for large tables where an index scan would be preferable.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 40,
+    "question": "What distinguishes a GIN index from a B-tree index in terms of use case?",
+    "options": [
+      "GIN indexes are used for sorting data in ascending or descending order",
+      "GIN indexes are optimized for containing values within composite types like arrays or JSONB",
+      "B-tree indexes are only used for text data, while GIN is for numeric data",
+      "GIN indexes enforce uniqueness constraints on columns"
+    ],
+    "answer": "GIN indexes are optimized for containing values within composite types like arrays or JSONB",
+    "explanation": "GIN (Generalized Inverted Index) is designed for handling composite types where you need to search for individual element values within a column (e.g., searching for a specific item inside an array or JSONB document).",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 41,
+    "question": "In the context of PostgreSQL replication, what is a 'Logical Decoding Slot' used for?",
+    "options": [
+      "To temporarily store passwords for replication users",
+      "To stream changes on a transaction level for logical replication",
+      "To limit the physical size of the WAL segments",
+      "To perform a base backup of the standby server"
+    ],
+    "answer": "To stream changes on a transaction level for logical replication",
+    "explanation": "Logical decoding slots allow the extraction of changes (INSERT, UPDATE, DELETE) from WAL in a customizable format. This facilitates logical replication and event streaming, distinguishing it from physical byte-stream replication.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 42,
+    "question": "Why is setting the 'shared_buffers' parameter too high (e.g., > 40% of RAM) generally discouraged on a Linux server?",
+    "options": [
+      "It causes the CPU to overheat due to excessive context switching",
+      "It interferes with the operating system's page cache, leading to double buffering",
+      "It prevents the background writer from flushing dirty pages",
+      "It limits the maximum number of connections to less than 10"
+    ],
+    "answer": "It interferes with the operating system's page cache, leading to double buffering",
+    "explanation": "PostgreSQL relies on the OS cache for file system data. If shared_buffers consumes too much RAM, the OS has no room for its own page cache, resulting in redundant caching (double buffering) and reduced performance.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 43,
+    "question": "What is the specific danger of Transaction ID Wraparound in PostgreSQL?",
+    "options": [
+      "The database shuts down and refuses to execute write commands to prevent data loss",
+      "All indexes become permanently corrupted",
+      "The system automatically deletes all data older than 2 billion transactions",
+      "The server runs out of memory and crashes"
+    ],
+    "answer": "The database shuts down and refuses to execute write commands to prevent data loss",
+    "explanation": "Transaction IDs are 32-bit integers (approx 4 billion). When they approach the limit, PostgreSQL forces a vacuum to reclaim space or stops accepting writes to prevent old data from being overwritten by new data with an older ID.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 44,
+    "question": "Which index access method is 'BRIN' best suited for?",
+    "options": [
+      "Small lookup tables with frequent random updates",
+      "Very large tables where data is physically sorted or ordered by the indexed column",
+      "Columns containing distinct text values for full-text search",
+      "Columns requiring unique constraints"
+    ],
+    "answer": "Very large tables where data is physically sorted or ordered by the indexed column",
+    "explanation": "BRIN (Block Range INdexes) stores summary information for ranges of blocks. It is extremely space-efficient for huge tables where data correlates with physical storage (like timestamps in a log table), allowing the planner to skip large irrelevant sections.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 45,
+    "question": "What happens if you run a VACUUM FREEZE operation on a table?",
+    "options": [
+      "It compacts the table by rewriting it completely to the smallest possible size",
+      "It sets the transaction ID on every row to a value that prevents wraparound for a very long time",
+      "It removes all indexes from the table to speed up bulk loads",
+      "It locks the table exclusively preventing all reads and writes"
+    ],
+    "answer": "It sets the transaction ID on every row to a value that prevents wraparound for a very long time",
+    "explanation": "VACUUM FREEZE aggressively 'freezes' tuples by setting their transaction ID to a special frozen value (2 billion). This marks them as visible to all future transactions, deferring the need to vacuum them for anti-wraparound purposes.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 46,
+    "question": "What is the role of the 'effective_cache_size' configuration parameter?",
+    "options": [
+      "It limits the amount of RAM PostgreSQL can allocate dynamically",
+      "It estimates how much memory is available for disk caching by the OS and PostgreSQL combined",
+      "It configures the size of the disk cache for the WAL files",
+      "It sets the memory limit for the query execution plan cache"
+    ],
+    "answer": "It estimates how much memory is available for disk caching by the OS and PostgreSQL combined",
+    "explanation": "effective_cache_size is a hint to the query planner about the total cacheable memory (OS cache + shared_buffers). It helps the planner decide whether using an index is cost-effective, as higher values favor index scans over sequential scans.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 47,
+    "question": "Which isolation level prevents 'Phantom Reads' but may incur a performance penalty due to serializable execution checks?",
+    "options": [
+      "Read Uncommitted",
+      "Read Committed",
+      "Repeatable Read",
+      "Serializable"
+    ],
+    "answer": "Serializable",
+    "explanation": "The Serializable isolation level provides the strictest transaction isolation by ensuring transactions appear to run sequentially. It prevents phantom reads by detecting serialization failures and rolling back conflicting transactions.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 48,
+    "question": "What is the primary benefit of using a 'Covering Index' (Index-Only Scan)?",
+    "options": [
+      "It eliminates the need for the VACUUM process on indexed tables",
+      "It retrieves all required data from the index structure alone, avoiding the heap fetch",
+      "It automatically compresses the table data on the disk",
+      "It allows the index to be used for full-text search queries"
+    ],
+    "answer": "It retrieves all required data from the index structure alone, avoiding the heap fetch",
+    "explanation": "If a query's SELECT and WHERE clauses can be satisfied entirely using columns present in the index, PostgreSQL performs an Index-Only Scan. This avoids expensive random I/O to look up the actual row (heap) data.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 49,
+    "question": "What is the purpose of the 'bgwriter' background process?",
+    "options": [
+      "To accept incoming TCP/IP connections and authenticate users",
+      "To write dirty buffers from shared memory to disk during idle periods",
+      "To perform automatic vacuuming of tables to reclaim space",
+      "To replicate changes to the standby server"
+    ],
+    "answer": "To write dirty buffers from shared memory to disk during idle periods",
+    "explanation": "The background writer (bgwriter) aims to ensure that a sufficient number of clean buffers are available. It writes dirty pages to disk incrementally to reduce the spike of I/O that would occur when a backend process needs to find a clean buffer.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 50,
+    "question": "When considering the storage of TOAST data, which condition triggers PostgreSQL to move column data out of the main table heap?",
+    "options": [
+      "When the column is marked as NULL",
+      "When the total size of a row exceeds the TOAST threshold (typically 2KB)",
+      "When the column is indexed using a B-tree",
+      "When the table has more than 1000 rows"
+    ],
+    "answer": "When the total size of a row exceeds the TOAST threshold (typically 2KB)",
+    "explanation": "TOAST (The Oversized-Attribute Storage Technique) is used to store large column values. If a row's tuple exceeds the page size limit (usually 8KB) or a specific threshold (approx 2KB), the large field is compressed and moved to a secondary TOAST table.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 51,
+    "question": "Which tool or command is specifically designed to visualize the query execution plan provided by EXPLAIN in a more human-readable format?",
+    "options": [
+      "pg_stat_activity",
+      "pg_top",
+      "EXPLAIN (ANALYZE, BUFFERS)",
+      "pgAdmin Explain Graph"
+    ],
+    "answer": "EXPLAIN (ANALYZE, BUFFERS)",
+    "explanation": "While graphical tools like pgAdmin visualize plans, the standard textual command to visualize the execution details (including actual run times and I/O stats) is EXPLAIN combined with options like ANALYZE and BUFFERS.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 52,
+    "question": "What is a 'HOT Update' (Heap Only Tuple) in PostgreSQL?",
+    "options": [
+      "An update that increases the temperature of the data in the buffer pool",
+      "An update that places the new tuple on the same page as the old one and updates only indexes that point to the new tuple",
+      "An update that modifies the index directly without touching the heap",
+      "An update that is logged to a separate high-speed journal"
+    ],
+    "answer": "An update that places the new tuple on the same page as the old one and updates only indexes that point to the new tuple",
+    "explanation": "A HOT update optimizes performance by placing the new tuple version on the same heap page as the old one. It allows some index maintenance to be skipped because indexes can still use the old tuple to find the new one on the same page.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 53,
+    "question": "How does the 'checkpoint_completion_target' parameter affect database performance?",
+    "options": [
+      "It limits the CPU usage of the checkpointer process",
+      "It spreads the I/O load of a checkpoint over a longer period to reduce spikes",
+      "It determines how often checkpoints are triggered based on WAL volume",
+      "It defines the percentage of shared buffers that must be dirty before a checkpoint starts"
+    ],
+    "answer": "It spreads the I/O load of a checkpoint over a longer period to reduce spikes",
+    "explanation": "checkpoint_completion_target controls the duration of the checkpoint process. Setting it higher (e.g., 0.9) spreads the intense I/O operations over a longer time, smoothing out load compared to a sudden, rapid flush of all dirty buffers.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 54,
+    "question": "What is the difference between 'template0' and 'template1' databases in PostgreSQL?",
+    "options": [
+      "template0 is used for logical replication; template1 is used for physical replication",
+      "template1 can be modified to include custom extensions for new databases; template0 should remain untouched for pristine cloning",
+      "template0 contains user data, while template1 is empty",
+      "template0 is a slave database, while template1 is the master"
+    ],
+    "answer": "template1 can be modified to include custom extensions for new databases; template0 should remain untouched for pristine cloning",
+    "explanation": "template1 is the template used by default for CREATE DATABASE; any changes made to template1 (like installing extensions) appear in new databases. template0 is a bare, pristine copy intended for creating databases without template1's customizations or for different encodings.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 55,
+    "question": "Which type of index scan involves fetching the Table Access Method (TID) from the index and then sorting those TIDs to minimize random access on the heap?",
+    "options": [
+      "Index Scan",
+      "Index Only Scan",
+      "Bitmap Heap Scan",
+      "Sequential Scan"
+    ],
+    "answer": "Bitmap Heap Scan",
+    "explanation": "A Bitmap Heap Scan extracts all TIDs (row locations) matching the index condition into a bitmap in memory. It then sorts the bitmap and accesses the heap pages in order, turning random I/O into more efficient sequential I/O, often used for low-selectivity queries.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 56,
+    "question": "What is the function of 'autovacuum' regarding bloated tables?",
+    "options": [
+      "To delete the table and recreate it from scratch",
+      "To reclaim space occupied by dead tuples (bloat) and prevent transaction ID wraparound",
+      "To compress the table files using a compression algorithm like gzip",
+      "To move the table to a slower storage tier"
+    ],
+    "answer": "To reclaim space occupied by dead tuples (bloat) and prevent transaction ID wraparound",
+    "explanation": "Autovacuum automates the maintenance of dead tuples. Without it, dead rows remain in the table (bloating storage) and the transaction ID usage increases, eventually forcing the database to shut down to prevent wraparound data loss.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 57,
+    "question": "In the context of table partitioning, what is 'Partition Pruning'?",
+    "options": [
+      "The process of deleting old partitions that are no longer needed",
+      "The optimizer skipping scans of partitions that cannot contain relevant data based on the query constraints",
+      "The merging of two partitions into a single larger partition",
+      "The act of splitting a partition based on a hash function"
+    ],
+    "answer": "The optimizer skipping scans of partitions that cannot contain relevant data based on the query constraints",
+    "explanation": "Partition pruning is a performance optimization where the query planner analyzes the WHERE clause and excludes (prunes) specific partitions from the scan plan if they logically cannot contain data matching the query.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 58,
+    "question": "What does the 'random_page_cost' parameter signify in the query planner?",
+    "options": [
+      "The cost of writing a random page to the WAL log",
+      "The planner's estimate of the cost of fetching a non-sequentially located disk page relative to a sequential page fetch",
+      "The penalty for using a RANDOM() function in a query",
+      "The cost of a context switch between CPU cores"
+    ],
+    "answer": "The planner's estimate of the cost of fetching a non-sequentially located disk page relative to a sequential page fetch",
+    "explanation": "random_page_cost is a cost estimation factor used by the planner to weigh index scans (which are usually random I/O) against sequential scans. It is often lowered for SSDs (to 1.1 or similar) compared to HDDs (default 4.0) to reflect their faster random access.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 59,
+    "question": "Which statement is true regarding 'Unlogged' tables in PostgreSQL?",
+    "options": [
+      "They are not backed up by the pg_dump utility",
+      "They do not write to the Write-Ahead Log (WAL), making them faster but non-crash-safe",
+      "They are automatically dropped when the database restarts",
+      "They cannot have indexes created on them"
+    ],
+    "answer": "They do not write to the Write-Ahead Log (WAL), making them faster but non-crash-safe",
+    "explanation": "Unlogged tables skip WAL writing to reduce I/O overhead and increase speed. However, they are truncated (emptied) after an unclean shutdown or crash because the changes required to restore them were never logged.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 60,
+    "question": "What is the 'visibility map' used for in PostgreSQL?",
+    "options": [
+      "To manage user permissions on table rows",
+      "To track which pages contain only tuples visible to all transactions, allowing vacuum to skip them",
+      "To store the physical location of foreign keys",
+      "To log all queries executed by the database administrator"
+    ],
+    "answer": "To track which pages contain only tuples visible to all transactions, allowing vacuum to skip them",
+    "explanation": "The visibility map stores one bit per page, indicating if all tuples on that page are visible to every current transaction. Autovacuum uses this to skip scanning pages that don't need cleaning, significantly reducing maintenance overhead.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 61,
+    "question": "Which command creates a 'Materialized View' and why is it used?",
+    "options": [
+      "CREATE VIEW, to simplify complex SQL logic",
+      "CREATE MATERIALIZED VIEW, to cache the result of a complex query physically on disk",
+      "CREATE INDEX, to speed up lookups on a column",
+      "CREATE TEMP TABLE, to store intermediate results for a session"
+    ],
+    "answer": "CREATE MATERIALIZED VIEW, to cache the result of a complex query physically on disk",
+    "explanation": "Unlike a standard view (which runs the query at runtime), a materialized view stores the query result. It is used for expensive aggregations or joins where the data does not change frequently, allowing for instantaneous reads.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 62,
+    "question": "What is the purpose of the 'max_standby_streaming_delay' parameter on a streaming replication standby server?",
+    "options": [
+      "It controls how long the standby waits before connecting to the primary",
+      "It limits the time the standby waits before canceling queries that conflict with incoming WAL data",
+      "It sets the interval for status updates sent back to the primary server",
+      "It defines the maximum lag allowed before the standby becomes the primary"
+    ],
+    "answer": "It limits the time the standby waits before canceling queries that conflict with incoming WAL data",
+    "explanation": "When a standby server applies WAL, it may drop page data needed by long-running queries on the standby. This parameter sets a limit on how long the standby will delay WAL application to preserve those queries before canceling them to keep up with replication.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 63,
+    "question": "How does the 'GiST' (Generalized Search Tree) index differ from 'B-tree'?",
+    "options": [
+      "GiST is used only for text data, while B-tree is for numbers",
+      "GiST is lossy and optimized for geometric data and full-text search; B-tree is exact for sorting",
+      "GiST stores data in a random order, while B-tree enforces uniqueness",
+      "GiST is always faster than B-tree for equality checks"
+    ],
+    "answer": "GiST is lossy and optimized for geometric data and full-text search; B-tree is exact for sorting",
+    "explanation": "GiST is a framework for building generalized index structures that can handle 'contains' or 'overlaps' operators (like <@, &&) common in GIS and full-text search. B-tree handles equality and range queries on sorted data.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 64,
+    "question": "What is 'Synchronous Commit' set to 'off' useful for?",
+    "options": [
+      "Improving write latency by acknowledging a transaction before writing to WAL",
+      "Disabling all write operations to the disk",
+      "Ensuring that the standby server is always in sync before the primary commits",
+      "Allowing the database to read from uncommitted transactions"
+    ],
+    "answer": "Improving write latency by acknowledging a transaction before writing to WAL",
+    "explanation": "Setting synchronous_commit = off allows the server to report success to the client immediately after sending the WAL to the OS buffer, rather than waiting for it to be flushed to disk. This speeds up transactions but risks recent data loss in a crash.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 65,
+    "question": "In a partitioned table, what happens to the indexes defined on the parent table?",
+    "options": [
+      "They automatically apply to all child partitions (unless specifically created ONLY on the parent)",
+      "They only apply to future partitions, not existing ones",
+      "They must be dropped before partitions can be created",
+      "They are ignored by the query planner entirely"
+    ],
+    "answer": "They automatically apply to all child partitions (unless specifically created ONLY on the parent)",
+    "explanation": "Indexes created on the partitioned parent table are 'propagated' to all existing and future child partitions. This ensures that queries utilizing the partition key can leverage the index consistently across the whole table.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 66,
+    "question": "Which extension allows you to implement 'Row Level Security' (RLS) to control which rows are visible to which users?",
+    "options": [
+      "pgcrypto",
+      "pg_stat_statements",
+      "This is a built-in core feature, not an extension",
+      "postgis"
+    ],
+    "answer": "This is a built-in core feature, not an extension",
+    "explanation": "Row Level Security is a core PostgreSQL feature (available since version 9.5) that allows table owners to set policies controlling access to specific rows based on the current user's role or attributes, without needing an external extension.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 67,
+    "question": "What is the primary function of the 'pg_stat_statements' extension?",
+    "options": [
+      "To track the execution statistics for all SQL statements run on the server",
+      "To monitor the network traffic between the client and the server",
+      "To display the current state of the replication connections",
+      "To calculate the checksums of all data blocks"
+    ],
+    "answer": "To track the execution statistics for all SQL statements run on the server",
+    "explanation": "pg_stat_statements captures and aggregates execution statistics (calls, total time, rows returned, etc.) for queries running on the server. It is indispensable for identifying high-impact or frequently executed queries for tuning.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 68,
+    "question": "What is the main advantage of using 'Hash Partitioning' over 'Range Partitioning'?",
+    "options": [
+      "Hash partitioning ensures that rows with similar partition keys are stored close together",
+      "Hash partitioning provides a more even distribution of data across partitions when there is no natural range",
+      "Hash partitioning allows for partition pruning on inequality operators",
+      "Hash partitioning automatically creates partitions based on time"
+    ],
+    "answer": "Hash partitioning provides a more even distribution of data across partitions when there is no natural range",
+    "explanation": "Hash partitioning uses a hash of the partition key to determine the partition. This prevents data skew (where one partition is much larger than others) which can happen with Range or List partitioning if the data distribution is uneven.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 69,
+    "question": "What is the 'CLOG' (Commit Log) in PostgreSQL?",
+    "options": [
+      "A file containing the text of all queries submitted to the database",
+      "A data structure tracking the transaction status (committed, aborted, in-progress) for every transaction ID",
+      "The archive of old WAL files",
+      "The log file used by the autovacuum daemon"
+    ],
+    "answer": "A data structure tracking the transaction status (committed, aborted, in-progress) for every transaction ID",
+    "explanation": "The Commit Log (CLOG) stores the status of every transaction. MVCC uses this to quickly determine if a transaction's changes should be visible to other transactions without needing to inspect the transaction data itself.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 70,
+    "question": "What does the 'fsync' parameter disable when set to 'off'?",
+    "options": [
+      "It disables the checkpointer process",
+      "It disables the operating system's request to flush data to physical disk storage",
+      "It disables the WAL archiving process",
+      "It disables foreign key checks"
+    ],
+    "answer": "It disables the operating system's request to flush data to physical disk storage",
+    "explanation": "When fsync is off, PostgreSQL does not force the OS to write modified data/files to the physical disk. This yields massive performance gains but poses a catastrophic risk of database corruption in the event of a system crash.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 71,
+    "question": "In the context of PostgreSQL MVCC, what is the specific danger of 'transaction ID wraparound' if `autovacuum` fails to prevent it?",
+    "options": [
+      "The database enters a read-only mode to protect data integrity until manual intervention occurs",
+      "Historical transaction logs are deleted causing permanent data loss",
+      "The `pg_xact` folder exceeds disk limits causing the server to crash",
+      "All indexes become invalid and must be rebuilt using `REINDEX`"
+    ],
+    "answer": "The database enters a read-only mode to protect data integrity until manual intervention occurs",
+    "explanation": "To prevent data loss where new transactions appear old due to XID exhaustion, PostgreSQL forces a shutdown and prevents new transactions once the wraparound threshold is reached.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 72,
+    "question": "Which memory configuration parameter specifically acts as a hint to the query planner regarding the operating system's cache size?",
+    "options": [
+      "shared_buffers",
+      "effective_cache_size",
+      "work_mem",
+      "wal_buffers"
+    ],
+    "answer": "effective_cache_size",
+    "explanation": "Unlike `shared_buffers`, `effective_cache_size` does not allocate memory; it estimates the total combined memory available for disk caching (OS + DB) to help the planner judge the cost of index scans vs. sequential scans.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 73,
+    "question": "How does the 'SKIP LOCKED' option modify the behavior of a `SELECT ... FOR UPDATE` statement?",
+    "options": [
+      "It causes the transaction to fail immediately if a requested row is locked",
+      "It skips rows that are currently locked by other transactions and returns the unlocked rows",
+      "It waits indefinitely for the locked rows to become available",
+      "It promotes the lock from a row-level lock to a page-level lock"
+    ],
+    "answer": "It skips rows that are currently locked by other transactions and returns the unlocked rows",
+    "explanation": "This option is useful for implementing queue-like systems where you want to process available items without being blocked by other consumers holding locks.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 74,
+    "question": "What is the primary architectural advantage of using a 'Covering Index' (created with the INCLUDE clause) over a standard composite index?",
+    "options": [
+      "It allows the index to be used for filtering on additional columns without rewriting the query",
+      "It enables Index-Only Scans by storing non-key columns in the index leaf, avoiding table access",
+      "It automatically creates a hash index on the included columns for faster equality checks",
+      "It reduces the size of the index by compressing the included columns using TOAST"
+    ],
+    "answer": "It enables Index-Only Scans by storing non-key columns in the index leaf, avoiding table access",
+    "explanation": "Included columns are stored in the index but are not part of the b-tree ordering key, allowing the optimizer to fetch all required data directly from the index.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 75,
+    "question": "In Postgres-XL or similar distributed variants, what specific ACID property is most compromised when performing a 'Shard' re-balancing operation?",
+    "options": [
+      "Atomicity, because distributed transactions cannot commit across all nodes",
+      "Consistency, because foreign keys between shards are not enforced",
+      "Isolation, because locking mechanisms do not span across logical shards",
+      "Durability, because the write-ahead log is duplicated across nodes"
+    ],
+    "answer": "Consistency, because foreign keys between shards are not enforced",
+    "explanation": "Distributed PostgreSQL architectures generally relax cross-shard referential integrity to maintain performance and availability.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 76,
+    "question": "When analyzing `EXPLAIN ANALYZE` output, what does the phrase 'HINT: Times include I/O' suggest about the execution?",
+    "options": [
+      "The query spent significant time waiting for data to be read from disk",
+      "The query was executed using the Hash Join strategy exclusively",
+      "The planner estimates were significantly off, forcing a re-scan",
+      "The `shared_buffers` were too small, forcing the use of the OS cache"
+    ],
+    "answer": "The query spent significant time waiting for data to be read from disk",
+    "explanation": "This specific timing context indicates that I/O operations were a major bottleneck during the execution of the specific node.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 77,
+    "question": "What is the specific function of the `bgwriter` process in PostgreSQL architecture?",
+    "options": [
+      "It writes dirty buffers from shared_buffers to disk at regular intervals to prevent spikes during checkpoints",
+      "It flushes the Write-Ahead Log (WAL) to persistent storage on every transaction commit",
+      "It performs automatic VACUUM operations on tables to reclaim space",
+      "It accepts incoming TCP/IP connections and authenticates client requests"
+    ],
+    "answer": "It writes dirty buffers from shared_buffers to disk at regular intervals to prevent spikes during checkpoints",
+    "explanation": "The background writer ensures that a steady number of buffers are flushed to disk, smoothing out I/O load compared to the massive bursts generated by a checkpoint.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 78,
+    "question": "Regarding Write-Ahead Logging (WAL), what is the consequence of setting `synchronous_commit = off`?",
+    "options": [
+      "The transaction is not written to the WAL at all",
+      "The server reports success before the WAL is guaranteed to be on disk",
+      "The transaction log is written to a remote standby before the primary",
+      "Only DDL statements are logged to the WAL"
+    ],
+    "answer": "The server reports success before the WAL is guaranteed to be on disk",
+    "explanation": "While the transaction is still written to WAL buffers, the asynchronous mode returns 'success' to the client before fsync confirms the data is physically stored.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 79,
+    "question": "What is the distinction between `wal_level = replica` and `wal_level = logical`?",
+    "options": [
+      "Replica logs only the necessary data for physical replication, while logical adds information needed for decoding table row changes",
+      "Replica mode enables streaming replication, while logical mode only enables file-based log shipping",
+      "Replica mode compresses the WAL files, while logical mode keeps them uncompressed",
+      "Replica mode is for failover only, while logical mode is for load balancing"
+    ],
+    "answer": "Replica logs only the necessary data for physical replication, while logical adds information needed for decoding table row changes",
+    "explanation": "`logical` wal level includes extra context (e.g., old values of updated rows) to allow logical decoding tools to interpret changes independent of physical disk location.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 80,
+    "question": "How does the `fillfactor` storage parameter affect table updates?",
+    "options": [
+      "It determines the percentage of page space reserved for future tuple expansion during HOT (Heap Only Tuple) updates",
+      "It controls how full the index pages are allowed to get before splitting",
+      "It limits the number of columns that can be updated in a single statement",
+      "It sets the threshold for when a VACUUM operation should trigger"
+    ],
+    "answer": "It determines the percentage of page space reserved for future tuple expansion during HOT (Heap Only Tuple) updates",
+    "explanation": "Setting a lower `fillfactor` (e.g., 80) leaves empty space on each data page, allowing updated rows to stay on the same page (HOT update) without requiring off-page storage.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 81,
+    "question": "Which index type is statistically most efficient for querying large text columns for the presence of specific lexemes (words) using containment operators like `@>`?",
+    "options": [
+      "B-tree",
+      "GiST",
+      "GIN",
+      "BRIN"
+    ],
+    "answer": "GIN",
+    "explanation": "GIN (Generalized Inverted Index) is optimized for cases where each index entry contains multiple references to rows, making it ideal for array or full-text search containment.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 82,
+    "question": "In a partitioned table scenario, what is 'Constraint Exclusion'?",
+    "options": [
+      "The planner ignoring partitions that have constraints ruling out the query's data",
+      "The mechanism that prevents a child partition from accepting data violating the parent's check",
+      "The process of dropping a partition to reclaim its disk space",
+      "The automatic creation of indexes on the partition key"
+    ],
+    "answer": "The planner ignoring partitions that have constraints ruling out the query's data",
+    "explanation": "When `constraint_exclusion` is enabled, the optimizer checks the `CHECK` constraints of partitions to skip scanning tables that cannot contain relevant data.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 83,
+    "question": "What triggers the switch from a 'Nested Loop' join to a 'Hash Join' in the query execution plan?",
+    "options": [
+      "A lack of available indexes on the join columns and a mismatch in row estimates",
+      "The presence of a foreign key constraint between the two tables",
+      "When the input tables are sorted on the join keys",
+      "When the work_mem setting is set to zero"
+    ],
+    "answer": "A lack of available indexes on the join columns and a mismatch in row estimates",
+    "explanation": "Nested loops rely on index lookups; without indexes or with large datasets, the cost of repeated lookups becomes too high, and the planner switches to hashing or merging.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 84,
+    "question": "What is the unique characteristic of the `unlogged` table feature in PostgreSQL?",
+    "options": [
+      "Data written to these tables is not recorded in the Write-Ahead Log (WAL)",
+      "These tables are automatically truncated upon server restart",
+      "Queries against these tables ignore MVCC rules for faster access",
+      "These tables are stored exclusively in the operating system's page cache"
+    ],
+    "answer": "Data written to these tables is not recorded in the Write-Ahead Log (WAL)",
+    "explanation": "Unlogged tables bypass the WAL, offering faster write performance, but they are truncated (emptied) in the event of a crash or unclean shutdown.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 85,
+    "question": "What is the primary purpose of the `pg_stats` view compared to the `pg_statistics` catalog?",
+    "options": [
+      "`pg_stats` presents readable statistics derived from `pg_statistics`, hiding internal raw data",
+      "`pg_stats` contains real-time query performance data",
+      "`pg_statistics` is user-readable while `pg_stats` requires superuser privileges",
+      "`pg_stats` estimates the size of the table, while `pg_statistics` estimates the row count"
+    ],
+    "answer": "`pg_stats` presents readable statistics derived from `pg_statistics`, hiding internal raw data",
+    "explanation": "`pg_statistics` contains raw statistical data in internal formats, whereas `pg_stats` is a public view that formats this data for user readability.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 86,
+    "question": "In the context of `pgBouncer` connection pooling, what differentiates 'Transaction Pooling' mode from 'Session Pooling'?",
+    "options": [
+      "Transaction pooling releases the server connection back to the pool after every transaction commit",
+      "Transaction pooling keeps the connection associated with a client for the life of the application",
+      "Session pooling requires the client to manually manage the pool size",
+      "Transaction pooling is only compatible with databases not using prepared statements"
+    ],
+    "answer": "Transaction pooling releases the server connection back to the pool after every transaction commit",
+    "explanation": "This allows a small number of database connections to serve a large number of clients, but it breaks session-level features like temporary tables or prepared statements.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 87,
+    "question": "What specific issue is mitigated by enabling `jit` (Just-In-Time compilation) in PostgreSQL?",
+    "options": [
+      "The overhead of interpreting and executing the query plan is reduced by compiling parts of it to machine code",
+      "The network latency between the client and the database server",
+      "The time taken to parse the SQL query string into an Abstract Syntax Tree",
+      "The I/O wait time when reading data from the disk"
+    ],
+    "answer": "The overhead of interpreting and executing the query plan is reduced by compiling parts of it to machine code",
+    "explanation": "JIT uses LLVM to compile expressions and parts of the query plan into native code at runtime, significantly accelerating complex analytical queries.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 88,
+    "question": "What happens when `max_worker_processes` is set lower than `max_parallel_workers`?",
+    "options": [
+      "The system cannot utilize the configured parallel workers because the global process pool is too small",
+      "The database automatically switches to using background workers instead",
+      "Queries will fail with an out-of-memory error",
+      "The setting is ignored, and the default value is used"
+    ],
+    "answer": "The system cannot utilize the configured parallel workers because the global process pool is too small",
+    "explanation": "`max_worker_processes` is the hard limit on background processes the system can spawn; if this cap is reached, additional parallel workers requested by the planner cannot be created.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 89,
+    "question": "Regarding TOAST storage, what does the 'EXTERNAL' storage strategy imply for large variable-length fields?",
+    "options": [
+      "Data is stored out-of-line in a secondary TOAST table, but not compressed",
+      "Data is compressed and stored inline up to the page size limit",
+      "Data is moved to a remote storage server",
+      "Data is stored inline until the page fills, then moved to extended memory"
+    ],
+    "answer": "Data is stored out-of-line in a secondary TOAST table, but not compressed",
+    "explanation": "While EXTENT (default) and MAIN compress data, EXTERNAL allows for large text/bytea fields to be stored out-of-line without compression to support substring operations efficiently.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 90,
+    "question": "What is the function of `vacuum_freeze_table_age`?",
+    "options": [
+      "It triggers a forced aggressive vacuum to freeze tuples on the entire table if the table hasn't been scanned in this many transactions",
+      "It sets the frequency with which VACUUM runs to remove dead rows",
+      "It determines the age at which transaction IDs are wrapped around",
+      "It controls the retention period for dead tuples before they are reused"
+    ],
+    "answer": "It triggers a forced aggressive vacuum to freeze tuples on the entire table if the table hasn't been scanned in this many transactions",
+    "explanation": "This parameter prevents transaction ID wraparound by ensuring every table is periodically scanned to freeze old transaction IDs, even if it doesn't have many dead rows.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 91,
+    "question": "Why is `maintenance_work_mem` typically configured higher than `work_mem`?",
+    "options": [
+      "Maintenance operations like VACUUM and CREATE INDEX can consume large amounts of memory for sorting and hashing",
+      "Background workers require more memory to handle authentication",
+      "It prevents the `wal_writer` from stalling during high traffic",
+      "It is used to cache the system catalog tables"
+    ],
+    "answer": "Maintenance operations like VACUUM and CREATE INDEX can consume large amounts of memory for sorting and hashing",
+    "explanation": "Utility commands often operate on entire tables at once; giving them more memory allows them to complete faster without spilling to disk excessively.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 92,
+    "question": "What is the specific behavior of `ON COMMIT PRESERVE ROWS` for a temporary table?",
+    "options": [
+      "The data in the temporary table is kept at the end of a transaction block",
+      "The table persists after the session ends",
+      "The rows are deleted only when the database server restarts",
+      "The table structure is dropped, but the data is saved to a permanent table"
+    ],
+    "answer": "The data in the temporary table is kept at the end of a transaction block",
+    "explanation": "This is the default behavior for temp tables; `ON COMMIT DELETE ROWS` would truncate the table, while `PRESERVE ROWS` maintains data across transaction commits within the session.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 93,
+    "question": "Which utility command is used to rewrite a table to its current structure without a lock, thereby reclaiming space from bloat?",
+    "options": [
+      "VACUUM FULL",
+      "CLUSTER",
+      "REINDEX CONCURRENTLY",
+      "pg_repack"
+    ],
+    "answer": "pg_repack",
+    "explanation": "While `VACUUM FULL` and `CLUSTER` rewrite tables, they require an exclusive lock. `pg_repack` is an extension (or external tool) that reorganizes tables online without holding an exclusive lock for the duration.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 94,
+    "question": "What is the correct interpretation of `random_page_cost` in the context of SSD storage?",
+    "options": [
+      "It should be lowered (e.g., to 1.1) to reflect that random I/O is nearly as fast as sequential I/O on SSDs",
+      "It should be raised to 4.0 to account for the wear leveling algorithms of SSDs",
+      "It should be set to 0 to disable random I/O usage",
+      "It has no impact on SSDs because it only applies to spinning magnetic disks"
+    ],
+    "answer": "It should be lowered (e.g., to 1.1) to reflect that random I/O is nearly as fast as sequential I/O on SSDs",
+    "explanation": "The default value (4.0) assumes HDD mechanical latency. Lowering it informs the query planner that index scans (random access) are relatively cheaper than the default assumes.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 95,
+    "question": "What distinguishes a 'Materialized View' from a standard 'View'?",
+    "options": [
+      "A materialized view stores the result of the query physically on disk and must be refreshed to reflect data changes",
+      "A materialized view allows writes (INSERT/UPDATE) directly to the view definition",
+      "A standard view stores data permanently, while a materialized view is purely virtual",
+      "A materialized view cannot have indexes created on it"
+    ],
+    "answer": "A materialized view stores the result of the query physically on disk and must be refreshed to reflect data changes",
+    "explanation": "Standard views are essentially saved queries (virtual), while materialized views act like cached snapshots of the query result at the time of the last refresh.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 96,
+    "question": "How does the `track_io_timing` configuration parameter affect `EXPLAIN` output?",
+    "options": [
+      "It adds actual read and write time for block I/O to the EXPLAIN output",
+      "It estimates the I/O cost based on system statistics",
+      "It tracks the time spent by the background writer",
+      "It logs all I/O operations to the csv log files"
+    ],
+    "answer": "It adds actual read and write time for block I/O to the EXPLAIN output",
+    "explanation": "When enabled, `EXPLAIN (ANALYZE, BUFFERS)` will display detailed timing information for data reads/writes, which is otherwise not collected to avoid overhead.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 97,
+    "question": "What is the primary risk associated with `autovacuum_naptime` being set too high?",
+    "options": [
+      "Dead tuples accumulate for too long, leading to table bloat and increased transaction ID wraparound risk",
+      "The autovacuum launcher will consume too much CPU and throttle the main server processes",
+      "It will prevent VACUUM from ever running on the system tables",
+      "It causes the statistics target to be lowered automatically"
+    ],
+    "answer": "Dead tuples accumulate for too long, leading to table bloat and increased transaction ID wraparound risk",
+    "explanation": "This parameter controls how often the autovacuum daemon wakes up to check for work; too long a delay prevents timely cleanup.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 98,
+    "question": "What does the statement `ALTER SYSTEM SET` do that differs from `postgresql.conf` or `ALTER DATABASE SET`?",
+    "options": [
+      "It modifies the `postgresql.auto.conf` file which overrides settings in `postgresql.conf` and persists across restarts",
+      "It changes the configuration for all databases in the cluster immediately",
+      "It requires a superuser to restart the PostgreSQL service",
+      "It only applies to background workers and not user sessions"
+    ],
+    "answer": "It modifies the `postgresql.auto.conf` file which overrides settings in `postgresql.conf` and persists across restarts",
+    "explanation": "This SQL command provides an interface to change global configuration settings programmatically without manually editing text files.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 99,
+    "question": "In Logical Replication, what is the purpose of the `pgoutput` plugin?",
+    "options": [
+      "It is the standard logical decoding plugin used to stream WAL changes for logical replication subscriptions",
+      "It compresses the WAL output before sending it to the standby",
+      "It converts physical replication slots into logical ones",
+      "It filters out DDL statements from the replication stream"
+    ],
+    "answer": "It is the standard logical decoding plugin used to stream WAL changes for logical replication subscriptions",
+    "explanation": "Prior to PG 10, custom output plugins were often required; `pgoutput` is now the default, built-in plugin that handles the protocol for logical replication.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 100,
+    "question": "When does a Heap Only Tuple (HOT) update optimization NOT occur?",
+    "options": [
+      "When the indexed columns are updated",
+      "When the new tuple does not fit on the same page",
+      "When there are no indexes on the table",
+      "When the transaction isolation level is set to Serializable"
+    ],
+    "answer": "When the indexed columns are updated",
+    "explanation": "HOT updates only work when the update does not modify any indexed columns; otherwise, the index entries must be updated to point to the new tuple location, negating the HOT optimization.",
+    "difficulty": "Advanced"
+  }
+]
