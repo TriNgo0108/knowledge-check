@@ -15,7 +15,7 @@ import {
 import ThemeToggle from "@components/ThemeToggle";
 import { Card, CardContent } from "@components/ui/card";
 import { Button } from "@components/ui/button";
-import { topicNames } from "@constants/topics";
+import { topicNames } from "@features/topics/constants/topics";
 
 interface LocationState {
   score: number;

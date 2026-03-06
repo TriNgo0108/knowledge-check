@@ -2,16 +2,16 @@ import { Link } from "react-router-dom";
 import { BookOpen, SearchX, Search, X } from "lucide-react";
 import { Topic, TopicCategory } from "@data/types";
 import { useState, useEffect, useMemo, useCallback, memo } from "react";
-import { getAllTopicsProgress } from "@hooks/useQuizProgress";
+import { useQuizProgressStore } from "@features/quiz/store/quizProgressStore";
 import ThemeToggle from "@components/ThemeToggle";
-import TopicIcon from "@components/TopicIcon";
+import TopicIcon from "@features/topics/components/TopicIcon";
 import {
   ImportExportSidebar,
   ImportExportButton,
-} from "@components/import-export";
+} from "@features/topics/components/import-export";
 import { Badge } from "@components/ui/badge";
 import { Input } from "@components/ui/input";
-import { allTopics, categories } from "@constants/topics";
+import { allTopics, categories } from "@features/topics/constants/topics";
 
 const TopicCard = memo(function TopicCard({
   topic,
@@ -99,34 +99,28 @@ const CategorySection = memo(function CategorySection({
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [progressData, setProgressData] = useState<ProgressData>({});
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const openSidebar = useCallback(() => setIsSidebarOpen(true), []);
   const closeSidebar = useCallback(() => setIsSidebarOpen(false), []);
 
-  // Load progress on mount and when window gains focus (returning from quiz)
-  useEffect(() => {
-    const loadProgress = () => {
-      const allProgress = getAllTopicsProgress();
-      const data: ProgressData = {};
+  // Reactively track all progress natively from Zustand store
+  const allProgress = useQuizProgressStore((state) => state.progressByKey);
 
-      Object.entries(allProgress).forEach(([topicId, progress]) => {
-        const questions = Object.values(progress.questions);
-        data[topicId] = {
-          correct: questions.filter((q) => q.status === "correct").length,
-          wrong: questions.filter((q) => q.status === "wrong").length,
-          skipped: questions.filter((q) => q.status === "skipped").length,
-          total: questions.length,
-        };
-      });
+  const progressData = useMemo(() => {
+    const data: ProgressData = {};
 
-      setProgressData(data);
-    };
+    Object.entries(allProgress).forEach(([topicId, progress]) => {
+      const questions = Object.values(progress.questions);
+      data[topicId] = {
+        correct: questions.filter((q) => q.status === "correct").length,
+        wrong: questions.filter((q) => q.status === "wrong").length,
+        skipped: questions.filter((q) => q.status === "skipped").length,
+        total: questions.length,
+      };
+    });
 
-    loadProgress();
-    window.addEventListener("focus", loadProgress);
-    return () => window.removeEventListener("focus", loadProgress);
-  }, []);
+    return data;
+  }, [allProgress]);
 
   const filteredCategories = useMemo(() => {
     return searchQuery.trim()

@@ -3,6 +3,6 @@ export {
   useQuizProgressStore,
   useTestProgress,
   useTestProgressStats,
-} from './quizProgressStore';
+} from "@features/quiz/store/quizProgressStore";
 
-export type { } from './quizProgressStore';
+export type {} from "@features/quiz/store/quizProgressStore";

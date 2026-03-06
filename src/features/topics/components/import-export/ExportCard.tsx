@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { toast } from "sonner";
 import { Download, ChevronRight } from "lucide-react";
-import { useQuizProgressStore } from "@store/quizProgressStore";
+import { useQuizProgressStore } from "@features/quiz/store/quizProgressStore";
 
 export function ExportCard() {
   const exportProgress = useQuizProgressStore((s) => s.exportProgress);

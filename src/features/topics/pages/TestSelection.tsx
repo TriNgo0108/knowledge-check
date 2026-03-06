@@ -6,7 +6,7 @@ import {
 } from "@hooks";
 import { useTestProgressStats } from "@store";
 import ThemeToggle from "@components/ThemeToggle";
-import TopicIcon from "@components/TopicIcon";
+import TopicIcon from "@features/topics/components/TopicIcon";
 import { BookOpen, HelpCircle, Timer, ArrowLeft, Check, X } from "lucide-react";
 import { Progress } from "@components/ui/progress";
 import { Card, CardContent } from "@components/ui/card";

@@ -1,8 +1,8 @@
 import { useState, useEffect, useCallback } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { useQuizProgress } from "@hooks/useQuizProgress";
-import { useQuestions } from "@hooks/useQuestions";
-import QuestionNav from "@components/QuestionNav";
+import { useQuizProgress } from "@features/quiz/hooks/useQuizProgress";
+import { useQuestions } from "@features/quiz/hooks/useQuestions";
+import QuestionNav from "@features/quiz/components/QuestionNav";
 import ThemeToggle from "@components/ThemeToggle";
 import {
   BookOpen,
@@ -14,7 +14,7 @@ import { Progress } from "@components/ui/progress";
 import { Card, CardContent } from "@components/ui/card";
 import { Badge } from "@components/ui/badge";
 import { Button } from "@components/ui/button";
-import { topicNames } from "@constants/topics";
+import { topicNames } from "@features/topics/constants/topics";
 
 export default function Quiz() {
   const { topicId, testId } = useParams<{ topicId: string; testId: string }>();
@@ -313,7 +313,7 @@ export default function Quiz() {
                 <div className="space-y-3">
                   {currentQuestion.options.map((option, idx) => (
                     <button
-                      key={`${currentIndex}-${idx}`}
+                      key={option}
                       disabled={isAnswered}
                       className={`${getOptionClass(option)} animate-slideUp stagger-${idx + 1}
                       ${isAnswered && option === currentQuestion.answer ? "animate-correctPop" : ""}

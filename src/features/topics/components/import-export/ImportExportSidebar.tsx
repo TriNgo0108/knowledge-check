@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { ArrowUpDown, BarChart3, Info } from "lucide-react";
-import { useQuizProgressStore } from "@store/quizProgressStore";
+import { useQuizProgressStore } from "@features/quiz/store/quizProgressStore";
 import { ExportCard } from "./ExportCard";
 import { ImportCard } from "./ImportCard";
 import {

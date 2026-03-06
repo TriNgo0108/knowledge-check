@@ -2,10 +2,24 @@ import { HashRouter, Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "sonner";
 import { ThemeProvider } from "@hooks/useTheme";
-import Home from "@pages/Home";
-import TestSelection from "@pages/TestSelection";
-import Quiz from "@pages/Quiz";
-import Results from "@pages/Results";
+import loadable from "@loadable/component";
+import LoadingFallback from "@components/LoadingFallback";
+
+const Home = loadable(() => import("@features/topics/pages/Home"), {
+  fallback: <LoadingFallback />,
+});
+const TestSelection = loadable(
+  () => import("@features/topics/pages/TestSelection"),
+  {
+    fallback: <LoadingFallback />,
+  },
+);
+const Quiz = loadable(() => import("@features/quiz/pages/Quiz"), {
+  fallback: <LoadingFallback />,
+});
+const Results = loadable(() => import("@features/results/pages/Results"), {
+  fallback: <LoadingFallback />,
+});
 
 const queryClient = new QueryClient({
   defaultOptions: {
