@@ -1,4 +1,4 @@
-import { Link, useLocation, Navigate } from "react-router-dom";
+import { Link, Navigate, useRouterState } from "@tanstack/react-router";
 import {
   Trophy,
   Star,
@@ -16,13 +16,6 @@ import ThemeToggle from "@components/ThemeToggle";
 import { Card, CardContent } from "@components/ui/card";
 import { Button } from "@components/ui/button";
 import { topicNames } from "@features/topics/constants/topics";
-
-interface LocationState {
-  score: number;
-  total: number;
-  topic: string;
-  skipped?: number;
-}
 
 function PercentageRing({ percentage }: { percentage: number }) {
   const circumference = 2 * Math.PI * 54;
@@ -87,10 +80,15 @@ function PercentageRing({ percentage }: { percentage: number }) {
 }
 
 export default function Results() {
-  const location = useLocation();
-  const state = location.state as LocationState;
+  const state = useRouterState({ select: (s) => s.location.state });
 
-  if (!state) {
+  if (
+    !state ||
+    Object.keys(state).length === 0 ||
+    !state.topic ||
+    state.score === undefined ||
+    state.total === undefined
+  ) {
     return <Navigate to="/" />;
   }
 
@@ -273,7 +271,10 @@ export default function Results() {
             {/* Actions */}
             <div className="space-y-3">
               <Button asChild size="lg" className="w-full">
-                <Link to={`/quiz/${topic}`}>
+                <Link
+                  to="/quiz/$topicId/$testId"
+                  params={{ topicId: topic, testId: "original" }}
+                >
                   <RefreshCw className="w-5 h-5 mr-2" />
                   Retry Quiz
                 </Link>

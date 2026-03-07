@@ -9,10 +9,7 @@ export function ImportExportButton({ onClick }: { onClick: () => void }) {
       title="Import / Export Progress"
       aria-label="Open data transfer panel"
     >
-      <ArrowUpDown
-        className="w-5 h-5"
-        style={{ color: "var(--color-text-muted)" }}
-      />
+      <ArrowUpDown className="w-5 h-5 text-muted-foreground" />
     </button>
   );
 }

@@ -36,19 +36,12 @@ export default function ImportExportSidebar({
     <Sheet open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <SheetContent
         side="right"
-        className="flex flex-col h-full w-full max-w-md p-0 gap-0"
+        className="flex flex-col h-full w-full max-w-md p-0 gap-0 bg-card border-l border-border"
         style={{
-          background: "var(--color-bg-card-solid)",
-          borderLeft: "1px solid var(--color-border)",
           boxShadow: "-8px 0 30px rgba(0,0,0,0.25)",
         }}
       >
-        <SheetHeader
-          className="flex flex-row items-center justify-between px-6 py-5 space-y-0 text-left"
-          style={{
-            borderBottom: "1px solid var(--color-border)",
-          }}
-        >
+        <SheetHeader className="flex flex-row items-center justify-between px-6 py-5 space-y-0 text-left border-b border-border">
           <div className="flex items-center gap-3">
             <div
               className="w-9 h-9 rounded-lg flex items-center justify-center"
@@ -62,18 +55,14 @@ export default function ImportExportSidebar({
             </div>
             <div className="space-y-0.5">
               <SheetTitle
-                className="text-lg font-semibold m-0"
+                className="text-lg font-semibold m-0 text-foreground"
                 style={{
                   fontFamily: "var(--font-heading)",
-                  color: "var(--color-text)",
                 }}
               >
                 Data Transfer
               </SheetTitle>
-              <SheetDescription
-                className="text-xs m-0"
-                style={{ color: "var(--color-text-muted)" }}
-              >
+              <SheetDescription className="text-xs m-0 text-muted-foreground">
                 Import & export your progress
               </SheetDescription>
             </div>
@@ -85,47 +74,21 @@ export default function ImportExportSidebar({
         <div className="flex-1 px-6 py-6 space-y-5 overflow-y-auto">
           {/* Stats */}
           {hasProgress && (
-            <div
-              className="flex items-center justify-between px-4 py-3 rounded-xl"
-              style={{
-                background: "var(--color-bg-elevated)",
-                border: "1px solid var(--color-border)",
-              }}
-            >
+            <div className="flex items-center justify-between px-4 py-3 rounded-xl bg-muted border border-border">
               <div className="flex items-center gap-2">
-                <BarChart3
-                  className="w-4 h-4"
-                  style={{ color: "var(--color-brand)" }}
-                />
-                <span
-                  className="text-sm font-medium"
-                  style={{ color: "var(--color-text-secondary)" }}
-                >
+                <BarChart3 className="w-4 h-4 text-primary" />
+                <span className="text-sm font-medium text-muted-foreground">
                   Your Progress
                 </span>
               </div>
-              <div
-                className="flex items-center gap-3 text-xs"
-                style={{ color: "var(--color-text-muted)" }}
-              >
+              <div className="flex items-center gap-3 text-xs text-muted-foreground">
                 <span>
-                  <strong style={{ color: "var(--color-brand)" }}>
-                    {topicCount}
-                  </strong>{" "}
+                  <strong className="text-primary">{topicCount}</strong>{" "}
                   {topicCount === 1 ? "topic" : "topics"}
                 </span>
-                <span
-                  style={{
-                    width: "1px",
-                    height: "12px",
-                    background: "var(--color-border)",
-                    display: "inline-block",
-                  }}
-                />
+                <span className="w-px h-3 inline-block bg-border" />
                 <span>
-                  <strong style={{ color: "var(--color-brand)" }}>
-                    {totalAnswered}
-                  </strong>{" "}
+                  <strong className="text-primary">{totalAnswered}</strong>{" "}
                   answers
                 </span>
               </div>
@@ -136,13 +99,7 @@ export default function ImportExportSidebar({
           <ImportCard />
 
           {/* Format note */}
-          <div
-            className="flex items-start gap-2.5 px-4 py-3 rounded-lg text-xs"
-            style={{
-              background: "var(--color-bg-hover)",
-              color: "var(--color-text-muted)",
-            }}
-          >
+          <div className="flex items-start gap-2.5 px-4 py-3 rounded-lg text-xs bg-muted text-muted-foreground">
             <Info className="w-4 h-4 flex-shrink-0 mt-0.5" />
             <span>
               Files are saved in <strong>JSON format</strong> with versioned

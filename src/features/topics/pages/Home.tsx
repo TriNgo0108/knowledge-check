@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link } from "@tanstack/react-router";
 import { BookOpen, SearchX, Search, X } from "lucide-react";
 import { Topic, TopicCategory } from "@data/types";
 import { useState, useEffect, useMemo, useCallback, memo } from "react";
@@ -11,7 +11,8 @@ import {
 } from "@features/topics/components/import-export";
 import { Badge } from "@components/ui/badge";
 import { Input } from "@components/ui/input";
-import { allTopics, categories } from "@features/topics/constants/topics";
+import { allTopics } from "@features/topics/constants/topics";
+import { useTopicFilters } from "@features/topics/hooks/useTopicFilters";
 
 const TopicCard = memo(function TopicCard({
   topic,
@@ -22,7 +23,8 @@ const TopicCard = memo(function TopicCard({
 }) {
   return (
     <Link
-      to={`/topic/${topic.id}`}
+      to="/topic/$topicId"
+      params={{ topicId: topic.id }}
       className="topic-card group"
       style={{ "--glow-color": topic.color } as React.CSSProperties}
     >
@@ -62,15 +64,8 @@ const CategorySection = memo(function CategorySection({
     <section className="mb-10">
       {/* Category Header */}
       <div className="category-header">
-        <TopicIcon
-          name={category.icon}
-          className="w-6 h-6"
-          style={{ color: "var(--color-brand)" }}
-        />
-        <h2
-          className="text-xl font-semibold"
-          style={{ color: "var(--color-text)" }}
-        >
+        <TopicIcon name={category.icon} className="w-6 h-6 text-primary" />
+        <h2 className="text-xl font-semibold text-foreground">
           {category.name}
         </h2>
         <Badge
@@ -98,7 +93,7 @@ const CategorySection = memo(function CategorySection({
 });
 
 export default function Home() {
-  const [searchQuery, setSearchQuery] = useState("");
+  const { searchQuery, setSearchQuery, filteredCategories } = useTopicFilters();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const openSidebar = useCallback(() => setIsSidebarOpen(true), []);
   const closeSidebar = useCallback(() => setIsSidebarOpen(false), []);
@@ -122,48 +117,20 @@ export default function Home() {
     return data;
   }, [allProgress]);
 
-  const filteredCategories = useMemo(() => {
-    return searchQuery.trim()
-      ? categories
-          .map((cat) => ({
-            ...cat,
-            topics: cat.topics.filter((t) =>
-              t.title.toLowerCase().includes(searchQuery.toLowerCase()),
-            ),
-          }))
-          .filter((cat) => cat.topics.length > 0)
-      : categories;
-  }, [searchQuery]);
-
   const totalQuestions = allTopics.length * 100;
 
   return (
     <div className="min-h-screen fade-in">
       {/* Floating Header */}
-      <header
-        className="sticky top-0 z-50 backdrop-blur-xl border-b"
-        style={{
-          background: "var(--color-bg-card)",
-          borderColor: "var(--color-border)",
-        }}
-      >
+      <header className="sticky top-0 z-50 backdrop-blur-xl border-b bg-card border-border">
         <div className="container mx-auto px-4 py-4 max-w-5xl">
           <div className="flex items-center justify-between">
             {/* Logo/Title */}
             <div className="flex items-center gap-3">
-              <div
-                className="w-10 h-10 rounded-xl flex items-center justify-center"
-                style={{ background: "var(--color-brand-glow)" }}
-              >
-                <BookOpen
-                  className="w-5 h-5"
-                  style={{ color: "var(--color-brand)" }}
-                />
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-brand-glow">
+                <BookOpen className="w-5 h-5 text-primary" />
               </div>
-              <h1
-                className="text-xl font-bold hidden sm:block"
-                style={{ color: "var(--color-brand)" }}
-              >
+              <h1 className="text-xl font-bold hidden sm:block text-primary">
                 Knowledge Check
               </h1>
             </div>
@@ -213,14 +180,11 @@ export default function Home() {
           >
             Master Your Skills
           </h1>
-          <p
-            className="text-lg mb-2"
-            style={{ color: "var(--color-text-secondary)" }}
-          >
+          <p className="text-lg mb-2 text-muted-foreground">
             Challenge yourself with {allTopics.length} topics and{" "}
             {totalQuestions.toLocaleString()} questions
           </p>
-          <p className="text-sm" style={{ color: "var(--color-text-muted)" }}>
+          <p className="text-sm text-muted-foreground">
             Track your progress • Learn at your pace • Achieve mastery
           </p>
         </div>
@@ -239,10 +203,7 @@ export default function Home() {
             <div className="flex justify-center mb-4 text-muted-foreground opacity-50">
               <SearchX className="w-12 h-12" />
             </div>
-            <p
-              className="text-xl mb-2"
-              style={{ color: "var(--color-text-secondary)" }}
-            >
+            <p className="text-xl mb-2 text-muted-foreground">
               No topics found for "{searchQuery}"
             </p>
             <button
@@ -259,12 +220,9 @@ export default function Home() {
       <ImportExportSidebar isOpen={isSidebarOpen} onClose={closeSidebar} />
 
       {/* Footer */}
-      <footer
-        className="border-t py-6 mt-8"
-        style={{ borderColor: "var(--color-border)" }}
-      >
+      <footer className="border-t py-6 mt-8 border-border">
         <div className="container mx-auto px-4 max-w-5xl text-center">
-          <p className="text-sm" style={{ color: "var(--color-text-muted)" }}>
+          <p className="text-sm text-muted-foreground">
             Built with ❤️ for continuous learning
           </p>
         </div>

@@ -1,4 +1,5 @@
-import { useParams, Link } from "react-router-dom";
+import { Link } from "@tanstack/react-router";
+import { Route } from "@/routes/topic.$topicId";
 import {
   useTopics,
   useOriginalQuestions,
@@ -38,22 +39,16 @@ function TestCard({
 
   return (
     <Link
-      to={`/quiz/${topicId}/${testId}`}
-      className="block p-5 rounded-xl transition-all duration-300 hover:scale-[1.02] hover:shadow-lg"
-      style={{
-        background: "var(--color-bg-card)",
-        border: "1px solid var(--color-border)",
-      }}
+      to="/quiz/$topicId/$testId"
+      params={{ topicId, testId }}
+      className="block p-5 rounded-xl transition-all duration-300 hover:scale-[1.02] hover:shadow-lg bg-card border border-border"
     >
       <div className="flex items-start justify-between mb-3">
         <div>
-          <h3
-            className="font-semibold text-lg"
-            style={{ color: "var(--color-text)" }}
-          >
+          <h3 className="font-semibold text-lg text-foreground">
             {displayName}
           </h3>
-          <p className="text-sm" style={{ color: "var(--color-text-muted)" }}>
+          <p className="text-sm text-muted-foreground">
             {questionCount} questions
           </p>
         </div>
@@ -79,24 +74,15 @@ function TestCard({
 
       {/* Stats */}
       <div className="flex items-center gap-4 text-sm">
-        <span
-          className="flex items-center gap-1"
-          style={{ color: "var(--color-correct)" }}
-        >
-          <Check
-            className="w-4 h-4"
-            style={{ color: "var(--color-correct)" }}
-          />
+        <span className="flex items-center gap-1 text-success">
+          <Check className="w-4 h-4 text-success" />
           {stats.correct}
         </span>
-        <span
-          className="flex items-center gap-1"
-          style={{ color: "var(--color-wrong)" }}
-        >
-          <X className="w-4 h-4" style={{ color: "var(--color-wrong)" }} />
+        <span className="flex items-center gap-1 text-error">
+          <X className="w-4 h-4 text-error" />
           {stats.wrong}
         </span>
-        <span style={{ color: "var(--color-text-muted)" }}>
+        <span className="text-muted-foreground">
           {stats.unanswered} remaining
         </span>
       </div>
@@ -105,7 +91,7 @@ function TestCard({
 }
 
 export default function TestSelection() {
-  const { topicId } = useParams<{ topicId: string }>();
+  const { topicId } = Route.useParams();
 
   // Fetch topic data and original questions
   const { data: topics = [] } = useTopics();
@@ -158,18 +144,9 @@ export default function TestSelection() {
   const topicColor = topic?.color || "hsl(200, 70%, 50%)";
 
   return (
-    <div
-      className="min-h-screen fade-in"
-      style={{ background: "var(--color-bg)" }}
-    >
+    <div className="min-h-screen fade-in bg-background">
       {/* Header */}
-      <header
-        className="sticky top-0 z-50 backdrop-blur-xl border-b"
-        style={{
-          background: "var(--color-bg-card)",
-          borderColor: "var(--color-border)",
-        }}
-      >
+      <header className="sticky top-0 z-50 backdrop-blur-xl border-b bg-card border-border">
         <div className="container mx-auto px-4 py-4 max-w-3xl">
           <div className="flex items-center justify-between">
             <Button variant="outline" size="sm" asChild className="gap-2">
@@ -193,9 +170,7 @@ export default function TestSelection() {
           <h1 className="text-3xl font-bold mb-2" style={{ color: topicColor }}>
             {topicTitle}
           </h1>
-          <p style={{ color: "var(--color-text-muted)" }}>
-            Select a test to begin
-          </p>
+          <p className="text-muted-foreground">Select a test to begin</p>
         </div>
 
         {/* Tests List */}
@@ -214,20 +189,11 @@ export default function TestSelection() {
           {generatedTests.length > 0 && (
             <>
               <div className="flex items-center gap-3 mt-8 mb-4">
-                <div
-                  className="flex-1 h-px"
-                  style={{ background: "var(--color-border)" }}
-                />
-                <span
-                  className="text-sm font-medium"
-                  style={{ color: "var(--color-text-muted)" }}
-                >
+                <div className="flex-1 h-px bg-border" />
+                <span className="text-sm font-medium text-muted-foreground">
                   Weekly Generated Tests
                 </span>
-                <div
-                  className="flex-1 h-px"
-                  style={{ background: "var(--color-border)" }}
-                />
+                <div className="flex-1 h-px bg-border" />
               </div>
 
               {generatedTests.map((test) => (
@@ -244,17 +210,11 @@ export default function TestSelection() {
           )}
 
           {generatedTests.length === 0 && (
-            <div
-              className="text-center py-8 rounded-xl mt-6"
-              style={{
-                background: "var(--color-bg-elevated)",
-                border: "1px dashed var(--color-border)",
-              }}
-            >
+            <div className="text-center py-8 rounded-xl mt-6 bg-muted border border-dashed border-border">
               <div className="flex justify-center mb-2 text-muted-foreground opacity-50">
                 <Timer className="w-8 h-8" />
               </div>
-              <p style={{ color: "var(--color-text-muted)" }}>
+              <p className="text-muted-foreground">
                 Weekly generated tests coming soon!
               </p>
             </div>

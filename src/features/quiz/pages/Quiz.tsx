@@ -1,7 +1,9 @@
 import { useState, useEffect, useCallback } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link } from "@tanstack/react-router";
+import { Route } from "@/routes/quiz.$topicId.$testId";
 import { useQuizProgress } from "@features/quiz/hooks/useQuizProgress";
 import { useQuestions } from "@features/quiz/hooks/useQuestions";
+import { useKeyboardNavigation } from "@features/quiz/hooks/useKeyboardNavigation";
 import QuestionNav from "@features/quiz/components/QuestionNav";
 import ThemeToggle from "@components/ThemeToggle";
 import {
@@ -17,7 +19,7 @@ import { Button } from "@components/ui/button";
 import { topicNames } from "@features/topics/constants/topics";
 
 export default function Quiz() {
-  const { topicId, testId } = useParams<{ topicId: string; testId: string }>();
+  const { topicId, testId } = Route.useParams();
   const navigate = useNavigate();
 
   const safeTopicId = topicId as string;
@@ -111,7 +113,8 @@ export default function Quiz() {
 
   const finishQuiz = () => {
     markComplete();
-    navigate("/results", {
+    navigate({
+      to: "/results",
       state: {
         score: stats.correct,
         total: questions.length,
@@ -122,33 +125,13 @@ export default function Quiz() {
   };
 
   // Keyboard navigation
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (!currentQuestion) return;
-
-      // Number keys to select options
-      if (!isAnswered && ["1", "2", "3", "4"].includes(e.key)) {
-        const index = parseInt(e.key) - 1;
-        if (index < currentQuestion.options.length) {
-          handleOptionClick(currentQuestion.options[index]);
-        }
-      }
-
-      // Enter or Space to continue
-      if (isAnswered && (e.key === "Enter" || e.key === " ")) {
-        e.preventDefault();
-        handleNext();
-      }
-
-      // S to skip
-      if (!isAnswered && e.key.toLowerCase() === "s") {
-        handleSkip();
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [currentQuestion, isAnswered, handleOptionClick, handleNext, handleSkip]);
+  useKeyboardNavigation({
+    currentQuestion,
+    isAnswered,
+    handleOptionClick,
+    handleNext,
+    handleSkip,
+  });
 
   // Loading state
   if (isLoading) {
@@ -203,27 +186,18 @@ export default function Quiz() {
       return `${baseClass} bg-card hover:bg-muted border-border hover:border-primary hover:-translate-y-0.5 hover:shadow-md`;
     }
     if (option === currentQuestion.answer) {
-      return `${baseClass} bg-[var(--color-correct-bg)] border-[var(--color-correct)]`;
+      return `${baseClass} bg-success-container border-success`;
     }
     if (option === selectedOption) {
-      return `${baseClass} bg-[var(--color-wrong-bg)] border-[var(--color-wrong)]`;
+      return `${baseClass} bg-error-container border-error`;
     }
     return `${baseClass} bg-card border-border opacity-50`;
   };
 
   return (
-    <div
-      className="min-h-screen fade-in"
-      style={{ background: "var(--color-bg)" }}
-    >
+    <div className="min-h-screen fade-in bg-background">
       {/* Header */}
-      <header
-        className="sticky top-0 z-50 backdrop-blur-xl border-b"
-        style={{
-          background: "var(--color-bg-card)",
-          borderColor: "var(--color-border)",
-        }}
-      >
+      <header className="sticky top-0 z-50 backdrop-blur-xl border-b bg-card border-border">
         <div className="container mx-auto px-4 py-3 max-w-5xl">
           <div className="flex items-center justify-between">
             {/* Back Button */}
@@ -247,7 +221,7 @@ export default function Quiz() {
               >
                 <span
                   key={stats.correct}
-                  className="font-bold animate-countUp text-[var(--color-correct)]"
+                  className="font-bold animate-countUp text-success"
                 >
                   {stats.correct}
                 </span>
@@ -287,19 +261,10 @@ export default function Quiz() {
               <CardContent className="p-6 sm:p-8">
                 {/* Question Number Badge */}
                 <div className="flex items-center gap-3 mb-4">
-                  <span
-                    className="px-3 py-1 rounded-full text-sm font-bold text-white"
-                    style={{ background: "var(--color-brand)" }}
-                  >
+                  <span className="px-3 py-1 rounded-full text-sm font-bold text-primary-foreground bg-primary">
                     Q{currentIndex + 1}
                   </span>
-                  <span
-                    className="text-xs font-medium px-2 py-0.5 rounded-full"
-                    style={{
-                      background: "var(--color-bg-elevated)",
-                      color: "var(--color-text-muted)",
-                    }}
-                  >
+                  <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-muted text-muted-foreground">
                     {currentQuestion.difficulty || "Standard"}
                   </span>
                 </div>
@@ -327,22 +292,15 @@ export default function Quiz() {
                         text-sm font-bold transition-all duration-300
                         ${
                           isAnswered && option === currentQuestion.answer
-                            ? "bg-correct text-white scale-110"
+                            ? "bg-success text-success-foreground scale-110"
                             : isAnswered &&
                                 option === selectedOption &&
                                 option !== currentQuestion.answer
-                              ? "bg-wrong text-white"
+                              ? "bg-error text-error-foreground"
                               : "bg-white/10"
                         }
+                        ${!isAnswered ? "bg-muted text-muted-foreground" : ""}
                       `}
-                          style={
-                            !isAnswered
-                              ? {
-                                  background: "var(--color-bg-hover)",
-                                  color: "var(--color-text-secondary)",
-                                }
-                              : {}
-                          }
                         >
                           {idx + 1}
                         </span>
@@ -356,8 +314,7 @@ export default function Quiz() {
                 {!isAnswered && (
                   <button
                     onClick={handleSkip}
-                    className="w-full mt-5 py-2.5 rounded-lg text-sm font-medium transition-all hover:bg-white/5"
-                    style={{ color: "var(--color-text-muted)" }}
+                    className="w-full mt-5 py-2.5 rounded-lg text-sm font-medium transition-all hover:bg-white/5 text-muted-foreground"
                   >
                     Skip this question <kbd>S</kbd>
                   </button>
@@ -366,26 +323,16 @@ export default function Quiz() {
                 {/* Explanation Panel */}
                 {showExplanation && (
                   <div
-                    className="mt-6 p-5 rounded-xl animate-slideUp"
-                    style={{
-                      background:
-                        selectedOption === currentQuestion.answer
-                          ? "var(--color-correct-bg)"
-                          : "var(--color-wrong-bg)",
-                      borderLeft: `4px solid ${
-                        selectedOption === currentQuestion.answer
-                          ? "var(--color-correct)"
-                          : "var(--color-wrong)"
-                      }`,
-                    }}
+                    className={`mt-6 p-5 rounded-xl animate-slideUp border-l-4 ${
+                      selectedOption === currentQuestion.answer
+                        ? "bg-success-container border-success"
+                        : "bg-error-container border-error"
+                    }`}
                   >
                     {/* Result Header */}
                     <div className="font-bold text-lg mb-3 flex items-center gap-2">
                       {selectedOption === currentQuestion.answer ? (
-                        <span
-                          className="flex items-center gap-2"
-                          style={{ color: "var(--color-correct)" }}
-                        >
+                        <span className="flex items-center gap-2 text-success">
                           <svg
                             className="w-6 h-6"
                             fill="currentColor"
@@ -400,10 +347,7 @@ export default function Quiz() {
                           Correct!
                         </span>
                       ) : (
-                        <span
-                          className="flex items-center gap-2"
-                          style={{ color: "var(--color-wrong)" }}
-                        >
+                        <span className="flex items-center gap-2 text-error">
                           <svg
                             className="w-6 h-6"
                             fill="currentColor"
@@ -421,10 +365,7 @@ export default function Quiz() {
                     </div>
 
                     {/* Explanation Text */}
-                    <p
-                      className="leading-relaxed mb-5"
-                      style={{ color: "var(--color-text-secondary)" }}
-                    >
+                    <p className="leading-relaxed mb-5 text-muted-foreground">
                       {currentQuestion.explanation}
                     </p>
 
@@ -447,10 +388,7 @@ export default function Quiz() {
             </Card>
 
             {/* Keyboard Hints */}
-            <div
-              className="mt-5 text-center hidden sm:block"
-              style={{ color: "var(--color-text-muted)" }}
-            >
+            <div className="mt-5 text-center hidden sm:block text-muted-foreground">
               <span className="text-xs">
                 Press <kbd>1-4</kbd> to select • <kbd>S</kbd> to skip •{" "}
                 <kbd>Enter</kbd> to continue
