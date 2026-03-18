@@ -1,0 +1,1302 @@
+[
+  {
+    "id": 1,
+    "question": "What category of library does Dapper belong to?",
+    "options": [
+      "A full-featured Object-Relational Mapper (ORM)",
+      "A micro-ORM",
+      "A database migration tool",
+      "A connection pooling provider"
+    ],
+    "answer": "A micro-ORM",
+    "explanation": "Dapper is classified as a micro-ORM because it provides object mapping while focusing on speed and raw SQL control, lacking the heavy change-tracking and LINQ generation of full ORMs like Entity Framework.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 2,
+    "question": "Which .NET interface does Dapper extend to add its functionality?",
+    "options": [
+      "IDbCommand",
+      "IDbConnection",
+      "IDataReader",
+      "IQueryable"
+    ],
+    "answer": "IDbConnection",
+    "explanation": "Dapper adds extension methods to the `IDbConnection` interface, allowing any database connection implementing this interface (like SqlConnection) to use Dapper's features.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 3,
+    "question": "Which Dapper method is used to execute a SQL statement that does not return rows, such as INSERT, UPDATE, or DELETE?",
+    "options": [
+      "Query",
+      "QueryFirst",
+      "Execute",
+      "QueryMultiple"
+    ],
+    "answer": "Execute",
+    "explanation": "The `Execute` method is designed for commands that do not return result sets, returning an integer representing the number of rows affected.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 4,
+    "question": "How are parameters passed to a Dapper query to prevent SQL injection?",
+    "options": [
+      "By concatenating strings into the command text",
+      "By using an anonymous object with property names matching the SQL parameters",
+      "By calling the `Parameter.Add` method manually on the command object",
+      "By using a special `@` prefix on the query string only"
+    ],
+    "answer": "By using an anonymous object with property names matching the SQL parameters",
+    "explanation": "Dapper maps the properties of an anonymous object passed as the second argument to SQL parameters, handling the underlying ADO.NET parameter creation automatically.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 5,
+    "question": "What does the `Query` method return by default when executed?",
+    "options": [
+      "A single object instance",
+      "An IEnumerable of the specified type",
+      "A DataTable",
+      "An integer indicating row count"
+    ],
+    "answer": "An IEnumerable of the specified type",
+    "explanation": "The `Query` method returns data as an `IEnumerable` mapped to the type provided, or `IEnumerable<dynamic>` if no type is specified.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 6,
+    "question": "Which method allows you to execute multiple SQL queries within a single database round-trip?",
+    "options": [
+      "Query",
+      "Execute",
+      "QueryMultiple",
+      "QueryAsync"
+    ],
+    "answer": "QueryMultiple",
+    "explanation": "`QueryMultiple` enables the execution of multiple SELECT statements in one command, returning a `GridReader` that allows sequential reading of each result set.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 7,
+    "question": "When using Dapper, what is the primary purpose of the `splitOn` parameter in a multi-mapping query?",
+    "options": [
+      "To split the query execution into multiple threads",
+      "To specify the column name that separates the mapped objects",
+      "To divide the result set into pages",
+      "To separate the SQL command from the parameters"
+    ],
+    "answer": "To specify the column name that separates the mapped objects",
+    "explanation": "`splitOn` tells Dapper which column in the result set marks the boundary between the parent object and the next object to be mapped.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 8,
+    "question": "How do you explicitly tell Dapper to treat a SQL string as a Stored Procedure instead of standard text?",
+    "options": [
+      "Set the `commandType` parameter to `CommandType.StoredProcedure`",
+      "Use the `ExecuteProcedure` method instead of `Query`",
+      "Prefix the SQL string with 'EXEC '",
+      "Add a `@Procedure` named parameter to the anonymous object"
+    ],
+    "answer": "Set the `commandType` parameter to `CommandType.StoredProcedure`",
+    "explanation": "Dapper accepts a `commandType` optional parameter. Setting it to `CommandType.StoredProcedure` ensures Dapper uses the appropriate ADO.NET command type.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 9,
+    "question": "Which of the following best describes Dapper's approach to generating SQL?",
+    "options": [
+      "It generates SQL from LINQ expressions",
+      "It requires you to write raw SQL strings",
+      "It builds SQL based on entity attributes",
+      "It generates SQL automatically using conventions"
+    ],
+    "answer": "It requires you to write raw SQL strings",
+    "explanation": "Unlike Entity Framework, Dapper does not generate SQL; the developer writes the SQL queries, and Dapper maps the results to objects.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 10,
+    "question": "What is returned when calling `connection.Query<dynamic>(sql)`?",
+    "options": [
+      "A list of strings",
+      "A list of strongly typed objects",
+      "A list of dynamic objects with properties matching column names",
+      "A single dynamic object"
+    ],
+    "answer": "A list of dynamic objects with properties matching column names",
+    "explanation": "Using `dynamic` as the generic type tells Dapper to return objects that implement `IDynamicMetaObjectProvider`, allowing access to columns by their database name.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 11,
+    "question": "Which method retrieves the first record from a result set and throws an exception if no records are found?",
+    "options": [
+      "QueryFirstOrDefault",
+      "QuerySingle",
+      "QueryFirst",
+      "Execute"
+    ],
+    "answer": "QueryFirst",
+    "explanation": "`QueryFirst` returns the first row but throws an `InvalidOperationException` if the result set contains zero rows.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 12,
+    "question": "What is the main performance advantage of Dapper over full ORMs like Entity Framework?",
+    "options": [
+      "Dapper uses binary serialization",
+      "Dapper performs complex caching of all queries",
+      "Dapper has minimal overhead and maps results directly to objects",
+      "Dapper compiles C# code to SQL"
+    ],
+    "answer": "Dapper has minimal overhead and maps results directly to objects",
+    "explanation": "Dapper is essentially a set of extension methods that buffer data and map it using IL emission or reflection, avoiding the heavy overhead of change tracking and complex SQL translation.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 13,
+    "question": "How do you pass a list of integers to a Dapper `IN` clause (e.g., `WHERE Id IN @Ids`)?",
+    "options": [
+      "Pass a comma-separated string",
+      "Pass an `IEnumerable<int>` or `List<int>` directly as a parameter",
+      "Dapper does not support IN clauses",
+      "Create a temporary table"
+    ],
+    "answer": "Pass an `IEnumerable<int>` or `List<int>` directly as a parameter",
+    "explanation": "Dapper detects `IEnumerable` parameters and automatically expands them into parameter placeholders for the SQL `IN` clause.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 14,
+    "question": "Which attribute from Dapper.Contrib is used to mark a property as an auto-incrementing primary key?",
+    "options": [
+      "[PrimaryKey]",
+      "[Key]",
+      "[ExplicitKey]",
+      "[Identity]"
+    ],
+    "answer": "[Key]",
+    "explanation": "In Dapper.Contrib, `[Key]` is used for auto-incrementing columns. `[ExplicitKey]` is used when the key is not auto-incremented.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 15,
+    "question": "What is the default behavior of Dapper regarding connection state?",
+    "options": [
+      "It opens the connection if it is closed and leaves it open",
+      "It throws an exception if the connection is not open",
+      "It opens the connection and closes it after the query",
+      "It requires the connection to be opened manually before any call"
+    ],
+    "answer": "It opens the connection if it is closed and leaves it open",
+    "explanation": "Dapper checks if the connection is closed; if so, it opens it. However, it leaves the connection open to allow the caller to manage its lifecycle (e.g., for transactions).",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 16,
+    "question": "Which method should be used to retrieve a single scalar value (like a COUNT or SUM) from a query?",
+    "options": [
+      "Query",
+      "QuerySingle",
+      "ExecuteScalar",
+      "Execute"
+    ],
+    "answer": "ExecuteScalar",
+    "explanation": "`ExecuteScalar` is the standard ADO.NET pattern Dapper exposes via `IDbConnection` or supports through its extension methods to return the first column of the first row.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 17,
+    "question": "In the context of `QueryMultiple`, what does the `Read` method on the `GridReader` object do?",
+    "options": [
+      "Reads the entire result set into memory",
+      "Advances to the next result set in the grid",
+      "Reads the next row of the current result set",
+      "Executes the next SQL command"
+    ],
+    "answer": "Advances to the next result set in the grid",
+    "explanation": "The `GridReader.Read()` method shifts the reader to the next grid returned by `QueryMultiple`, allowing you to map subsequent results to different types.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 18,
+    "question": "Why might a developer choose Dapper over Entity Framework Core?",
+    "options": [
+      "To avoid writing SQL code",
+      "To maximize query execution performance and control",
+      "To utilize automatic database migration tools",
+      "To enable lazy loading of navigation properties"
+    ],
+    "answer": "To maximize query execution performance and control",
+    "explanation": "Developers choose Dapper for its raw speed and absolute control over SQL execution, trading off the convenience of automatic migrations and LINQ generation.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 19,
+    "question": "Which Dapper extension method allows you to perform an asynchronous query?",
+    "options": [
+      "QueryAsync",
+      "ExecuteAsync",
+      "QueryMultipleAsync",
+      "All of the listed methods have async equivalents"
+    ],
+    "answer": "All of the listed methods have async equivalents",
+    "explanation": "Dapper provides asynchronous versions for almost all its standard data retrieval and execution methods, following standard .NET TAP (Task-based Asynchronous Pattern) naming conventions.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 20,
+    "question": "What happens if Dapper detects a mismatch between the SQL column name and the C# property name?",
+    "options": [
+      "It throws a mapping exception immediately",
+      "It sets the property to null",
+      "It ignores the property and maps the rest",
+      "It attempts to map them case-insensitively"
+    ],
+    "answer": "It ignores the property and maps the rest",
+    "explanation": "Dapper maps properties strictly by name (case-insensitive). If a name is not found in the result set, the property is skipped and not set.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 21,
+    "question": "How do you handle a database transaction in Dapper?",
+    "options": [
+      "Create a transaction on the connection and pass it to the `transaction` parameter",
+      "Use the `TransactionScope` class exclusively",
+      "Dapper automatically wraps every query in a transaction",
+      "Pass `IsolationLevel.ReadCommitted` to the query string"
+    ],
+    "answer": "Create a transaction on the connection and pass it to the `transaction` parameter",
+    "explanation": "You must begin a transaction using standard ADO.NET methods (`BeginTransaction`) and then pass that transaction object into the Dapper method call.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 22,
+    "question": "Which of the following namespaces is required to use Dapper?",
+    "options": [
+      "System.Data.SqlClient",
+      "Dapper",
+      "System.Data",
+      "Microsoft.EntityFrameworkCore"
+    ],
+    "answer": "Dapper",
+    "explanation": "You must import the `Dapper` namespace to access the extension methods that Dapper provides on the `IDbConnection` interface.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 23,
+    "question": "What is the `buffered` parameter default in Dapper's `Query` method?",
+    "options": [
+      "true",
+      "false",
+      "null",
+      "It depends on the database provider"
+    ],
+    "answer": "true",
+    "explanation": "By default, Dapper buffers the entire result set in memory. Setting `buffered: false` returns a streaming IEnumerable that yields data as it arrives from the network.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 24,
+    "question": "Which method is part of Dapper.Contrib (not core Dapper) for inserting an entity?",
+    "options": [
+      "connection.Execute(sql)",
+      "connection.Insert(entity)",
+      "connection.Query(sql)",
+      "connection.Add(entity)"
+    ],
+    "answer": "connection.Insert(entity)",
+    "explanation": "Dapper.Contrib provides generic helper methods like `Insert`, `Get`, and `Update` that abstract away the need to write SQL for simple CRUD operations.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 25,
+    "question": "When using Dapper with an Oracle database, how are parameters typically named?",
+    "options": [
+      "Starting with a colon (e.g., :Id)",
+      "Starting with an at sign (e.g., @Id)",
+      "Starting with a question mark (e.g., ?Id)",
+      "Using named parameters only in the order they appear"
+    ],
+    "answer": "Starting with a colon (e.g., :Id)",
+    "explanation": "While Dapper normalizes parameters internally, the SQL string provided by the user must match the target database syntax; Oracle uses colons.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 26,
+    "question": "What does the `AsTableValuedParameter` extension method do?",
+    "options": [
+      "Converts a list into a SQL Table-Valued Parameter",
+      "Converts a query result into a DataTable",
+      "Joins two tables in memory",
+      "Maps a generic list to a temporary table"
+    ],
+    "answer": "Converts a list into a SQL Table-Valued Parameter",
+    "explanation": "This method facilitates passing lists of data (like DataTables or `IEnumerable`) to SQL Server Stored Procedures that accept Table-Valued Parameters.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 27,
+    "question": "How do you handle large text or binary data (LOB) in Dapper?",
+    "options": [
+      "Use the `QueryLarge` method",
+      "Dapper handles LOBs automatically like any other column",
+      "You must disable buffering explicitly",
+      "You must convert LOBs to Base64 strings"
+    ],
+    "answer": "Dapper handles LOBs automatically like any other column",
+    "explanation": "Dapper relies on the underlying `IDataReader`, so it handles LOBs transparently, converting them to strings or byte arrays in C#.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 28,
+    "question": "Which tool or library was the origin of Dapper?",
+    "options": [
+      "Microsoft Entity Framework Team",
+      "Stack Overflow",
+      "NHibernate Community",
+      "Mono Project"
+    ],
+    "answer": "Stack Overflow",
+    "explanation": "Dapper was developed by the team at Stack Overflow to solve performance issues they experienced with full ORMs.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 29,
+    "question": "What is the return type of the `Execute` method in Dapper?",
+    "options": [
+      "bool",
+      "int",
+      "long",
+      "object"
+    ],
+    "answer": "int",
+    "explanation": "The `Execute` method returns an integer representing the total number of rows affected by the SQL command.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 30,
+    "question": "How do you map a SQL column named `First_Name` to a C# property `FirstName`?",
+    "options": [
+      "Use the `[Column]` attribute",
+      "Dapper maps them automatically because it ignores underscores",
+      "You must use an alias in the SQL (AS FirstName)",
+      "You must use the `map` parameter"
+    ],
+    "answer": "You must use an alias in the SQL (AS FirstName)",
+    "explanation": "Standard Dapper relies on name matching. To map `First_Name` to `FirstName`, the easiest way is to alias the column in the SQL statement.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 31,
+    "question": "Which method allows you to map a single row to a single object efficiently?",
+    "options": [
+      "QueryFirst",
+      "QuerySingle",
+      "QueryFirstOrDefault",
+      "All of the above"
+    ],
+    "answer": "All of the above",
+    "explanation": "All these methods map a row to an object; the distinction lies in how they handle multiple rows (exceptions) or empty result sets (nulls).",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 32,
+    "question": "What happens if you do not specify a `splitOn` parameter in a multi-mapping query (e.g., Query<User, Profile>)?",
+    "options": [
+      "It defaults to 'Id'",
+      "It throws an ArgumentNullException",
+      "It attempts to split on the first column after the primary key",
+      "It maps all columns to the first object"
+    ],
+    "answer": "It defaults to 'Id'",
+    "explanation": "If `splitOn` is omitted, Dapper searches for a column named 'Id' to determine where to stop mapping the first type and start mapping the second.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 33,
+    "question": "How do you execute a SQL command multiple times with different parameters (e.g., bulk insert) using Dapper?",
+    "options": [
+      "Pass a list of objects to the `Execute` method",
+      "Use a `foreach` loop in C#",
+      "Use the `QueryMultiple` method",
+      "Pass a JSON string to the parameters"
+    ],
+    "answer": "Pass a list of objects to the `Execute` method",
+    "explanation": "Dapper detects when the parameter object is an `IEnumerable` and executes the command once for every item in the list.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 34,
+    "question": "What does the `TypeHandler` class in Dapper allow you to do?",
+    "options": [
+      "Execute SQL based on the type of the object",
+      "Customize how values of a specific type are parsed and set from the database",
+      "Handle SQL exceptions based on type",
+      "Generate stored procedures dynamically"
+    ],
+    "answer": "Customize how values of a specific type are parsed and set from the database",
+    "explanation": "`TypeHandler` allows you to implement custom logic for converting database values to CLR types and vice versa (e.g., handling JSON columns or Enums).",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 35,
+    "question": "What is the correct way to ensure a connection is closed after using Dapper?",
+    "options": [
+      "Call connection.Close() manually after the query",
+      "Wrap the connection in a `using` statement",
+      "Set the `autoClose` parameter to true",
+      "Dapper closes the connection automatically 5 seconds after the query"
+    ],
+    "answer": "Wrap the connection in a `using` statement",
+    "explanation": "While Dapper can open a connection, it leaves it open. The standard pattern is to wrap the connection in a `using` block to ensure `Dispose` (and `Close`) is called.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 36,
+    "question": "Which parameter in the Dapper `Query` method signature controls whether the entire result set is loaded into memory before iteration or streamed row-by-row?",
+    "options": [
+      "buffered",
+      "streamed",
+      "fetchSize",
+      "lazyLoading"
+    ],
+    "answer": "buffered",
+    "explanation": "By default, Dapper buffers results. Setting `buffered: false` enables streaming, effectively using a `yield return` statement to read data as the network stream provides it.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 37,
+    "question": "When using Dapper's multi-mapping feature to map a single SQL row to multiple objects (e.g., `Order` and `Customer`), what is the default column name Dapper looks for to split the mapping?",
+    "options": [
+      "The first column returned by the query",
+      "A column named 'Id'",
+      "A column named 'SplitId'",
+      "The primary key of the first type parameter"
+    ],
+    "answer": "A column named 'Id'",
+    "explanation": "Unless specified otherwise via the `splitOn` parameter, Dapper attempts to split the object mapping at the first column named 'Id'. If your primary key is named differently, you must explicitly define the split point.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 38,
+    "question": "What does the `Execute` method return when performing an INSERT, UPDATE, or DELETE operation in Dapper?",
+    "options": [
+      "A boolean indicating success or failure",
+      "The ID of the inserted row",
+      "An integer representing the number of rows affected",
+      "The IDataReader object containing the result"
+    ],
+    "answer": "An integer representing the number of rows affected",
+    "explanation": "The `Execute` method returns an `int` indicating how many rows were affected by the command, consistent with standard ADO.NET `ExecuteNonQuery` behavior.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 39,
+    "question": "How does Dapper handle a C# `List<int>` passed as a parameter value to an `IN` clause in a SQL query?",
+    "options": [
+      "It serializes the list into a JSON string and requires deserialization in SQL",
+      "It automatically expands the list into individual parameters (e.g., @p0, @p1)",
+      "It throws an InvalidOperationException because lists are not supported",
+      "It converts the list to a comma-separated string and requires string splitting in SQL"
+    ],
+    "answer": "It automatically expands the list into individual parameters (e.g., @p0, @p1)",
+    "explanation": "Dapper detects IEnumerable parameters and expands them into individual SQL parameters to ensure safe query generation and prevent SQL injection.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 40,
+    "question": "Which method must be used to execute multiple SELECT statements within a single round-trip and access the disparate result sets?",
+    "options": [
+      "QueryMultiple",
+      "ExecuteReader",
+      "QueryBatch",
+      "ExecuteScript"
+    ],
+    "answer": "QueryMultiple",
+    "explanation": "`QueryMultiple` returns a `GridReader` object that allows you to sequentially read different result sets from a single command execution.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 41,
+    "question": "In the context of Dapper, which static class contains the extension methods that extend the `IDbConnection` interface?",
+    "options": [
+      "Dapper.Connection",
+      "Dapper.SqlMapper",
+      "Dapper.DapperExtensions",
+      "System.Data.Common.DbConnectionExtensions"
+    ],
+    "answer": "Dapper.SqlMapper",
+    "explanation": "The `SqlMapper` static class houses all Dapper extension methods, such as `Query`, `Execute`, and `QueryMultiple`, which attach to `IDbConnection`.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 42,
+    "question": "When calling a Stored Procedure that returns both a result set and an OUTPUT parameter, how must the parameter be defined in C# to retrieve the value?",
+    "options": [
+      "As a standard input parameter",
+      "As a `DynamicParameters` object with ParameterDirection set to Output",
+      "As a property in the return type class",
+      "As a Tuple passed to the Execute method"
+    ],
+    "answer": "As a `DynamicParameters` object with ParameterDirection set to Output",
+    "explanation": "While `DynamicParameters` can handle complex scenarios, simple output parameters can also be retrieved using `DynamicParameters` or by adding parameters with direction `Output` to the `IDbCommand` parameters collection before execution.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 43,
+    "question": "What is the primary technical reason Dapper is often cited as faster than Entity Framework for read operations?",
+    "options": [
+      "Dapper pre-compiles LINQ expressions into stored procedures",
+      "Dapper uses a sophisticated caching algorithm for SQL queries",
+      "Dapper focuses on raw object mapping without the overhead of change tracking or complex query translation",
+      "Dapper runs in a separate background process to avoid main thread blocking"
+    ],
+    "answer": "Dapper focuses on raw object mapping without the overhead of change tracking or complex query translation",
+    "explanation": "As a Micro-ORM, Dapper maps results directly to objects without maintaining a context state tracker or translating LINQ expressions to SQL, resulting in significantly lower overhead.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 44,
+    "question": "When using the `splitOn` parameter in a multi-mapping query, what value should you pass to indicate the split occurs at a column named 'CustomerId'?",
+    "options": [
+      "The index of the CustomerId column",
+      "\"CustomerId\"",
+      "\"Id, CustomerId\"",
+      "The type of the Customer object"
+    ],
+    "answer": "\"CustomerId\"",
+    "explanation": "The `splitOn` parameter accepts a string representing the column name(s) that mark the boundary between the mapped objects.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 45,
+    "question": "Which generic return type is utilized by the `QueryMultiple` method to allow sequential reading of heterogeneous result sets?",
+    "options": [
+      "IEnumerable<IMultipleResult>",
+      "SqlMapper.GridReader",
+      "IDataReader",
+      "IResultSequence"
+    ],
+    "answer": "SqlMapper.GridReader",
+    "explanation": "`QueryMultiple` returns a `GridReader` which implements `IDisposable` and provides methods like `Read<T>()` to buffer specific subsets of the grid.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 46,
+    "question": "How does Dapper handle null values returned from the database when mapping to a .NET `string` or `int`?",
+    "options": [
+      "It throws a NullReferenceException for non-nullable types",
+      "It automatically converts null to default(T) or null for nullable types",
+      "It requires the use of a special [Nullable] attribute on the model",
+      "It converts all database NULLs to an empty string or 0"
+    ],
+    "answer": "It automatically converts null to default(T) or null for nullable types",
+    "explanation": "Dapper handles standard CLR nullability semantics; nullable types (e.g., `int?`) are set to null, while non-nullable value types throw an exception if the value is null from the database (unless a type handler intervenes).",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 47,
+    "question": "To use TransactionScope with Dapper for distributed transactions across multiple connections, which configuration is strictly required?",
+    "options": [
+      "Passing the TransactionScope object to the transaction parameter of Query",
+      "Ensuring the database server supports MSDTC and the connection string allows enlistment",
+      "Setting `CommandTimeout` to 0",
+      "Using only `ReadUncommitted` isolation level"
+    ],
+    "answer": "Ensuring the database server supports MSDTC and the connection string allows enlistment",
+    "explanation": "`TransactionScope` manages distributed transactions via MSDTC. The resource manager (SQL Server) and connection string must support promoting the transaction to a distributed one.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 48,
+    "question": "What is the result of calling `QueryFirstOrDefaultAsync<T>` on a connection that executes a SQL statement returning no rows?",
+    "options": [
+      "An InvalidOperationException is thrown",
+      "It returns the default value for type T (e.g., null for reference types)",
+      "It returns an empty List",
+      "It returns a new instance of T with all properties set to default"
+    ],
+    "answer": "It returns the default value for type T (e.g., null for reference types)",
+    "explanation": "`FirstOrDefault` methods are designed to return `default(T)` if the sequence is empty, rather than throwing an exception.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 49,
+    "question": "Which Dapper feature allows executing a SQL query and mapping the result to an object where the property names do not exactly match the column names?",
+    "options": [
+      "The `alias` parameter in the Query method",
+      "Using the `ColumnAttribute` from Dapper.Contrib",
+      "SQL aliases (AS) in the query text itself",
+      "Implementing a custom ITypeHandler"
+    ],
+    "answer": "SQL aliases (AS) in the query text itself",
+    "explanation": "Standard Dapper maps by column name. To map to differently named properties, you must alias the columns in your SQL (e.g., `SELECT col_name AS PropertyName`).",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 50,
+    "question": "Why might a developer use the `commandType: CommandType.StoredProcedure` parameter when calling `Query` or `Execute`?",
+    "options": [
+      "To enable query plan caching for parameterized SQL text",
+      "To instruct ADO.NET to treat the command text as a stored procedure name rather than raw SQL",
+      "To automatically wrap the execution in a transaction",
+      "To force Dapper to encrypt the command payload"
+    ],
+    "answer": "To instruct ADO.NET to treat the command text as a stored procedure name rather than raw SQL",
+    "explanation": "Without specifying `CommandType.StoredProcedure`, ADO.NET attempts to execute the string as literal SQL (e.g., `EXEC 'SpName'`), which can fail or have performance implications.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 51,
+    "question": "What is the maximum number of types supported in a single Dapper `Query` overload for multi-mapping?",
+    "options": [
+      "2",
+      "5",
+      "7",
+      "Unlimited"
+    ],
+    "answer": "7",
+    "explanation": "The Dapper library provides generic `Query` overloads up to 7 type parameters to support complex parent-child hierarchies. Beyond that, developers must map to dynamic types or simplify the query.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 52,
+    "question": "How do you pass a Table-Valued Parameter (TVP) to a Dapper query in SQL Server?",
+    "options": [
+      "As a generic List object",
+      "As a DataTable implementing IList<SqlDataRecord>",
+      "As a JSON string",
+      "As a specialized SqlParameter with SqlDbType.Structured"
+    ],
+    "answer": "As a specialized SqlParameter with SqlDbType.Structured",
+    "explanation": "Dapper passes parameters to ADO.NET. TVPs require an `IDbDataParameter` configured with `SqlDbType.Structured` and a populated `DataTable` as the value.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 53,
+    "question": "Which namespace must be imported to utilize Dapper's extension methods on `IDbConnection`?",
+    "options": [
+      "System.Data",
+      "Dapper",
+      "Dapper.SqlMapper",
+      "System.Data.SqlClient"
+    ],
+    "answer": "Dapper",
+    "explanation": "The extension methods are defined within the `Dapper` namespace. Importing this namespace enables `Query`, `Execute`, etc., on connection objects.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 54,
+    "question": "In Dapper.Contrib, what attribute is used to explicitly mark a property as a database column that should be excluded from INSERT operations?",
+    "options": [
+      "[Key]",
+      "[Computed]",
+      "[IgnoreInsert]",
+      "[ReadOnly]"
+    ],
+    "answer": "[Computed]",
+    "explanation": "In Dapper.Contrib, the `[Computed]` attribute signals that a column is calculated by the database and should be ignored during `Insert` and `Update` operations.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 55,
+    "question": "What is the behavior of `Query<Dynamic>` (returning `IEnumerable<dynamic>`) when the result set contains duplicate column names?",
+    "options": [
+      "It appends a number to the second duplicate (e.g., 'Name', 'Name1')",
+      "It throws a DuplicateColumnException",
+      "It only maps the last instance of the duplicate column",
+      "It merges the values into an array"
+    ],
+    "answer": "It only maps the last instance of the duplicate column",
+    "explanation": "When using dynamic types, standard dictionary behavior applies; if keys are identical, the last value read overwrites previous ones. Using distinct column aliases is the solution.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 56,
+    "question": "Which method is best suited for executing a SQL command and retrieving a single scalar value (e.g., COUNT(*) or SCOPE_IDENTITY())?",
+    "options": [
+      "Execute",
+      "QuerySingle",
+      "ExecuteScalar",
+      "QueryFirst"
+    ],
+    "answer": "ExecuteScalar",
+    "explanation": "`ExecuteScalar` maps the first row's first column directly to the return type, offering better performance and convenience for single-value lookups.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 57,
+    "question": "Dapper uses IL Emitting to generate code. What does this specifically refer to?",
+    "options": [
+      "Translating LINQ expressions into SQL strings",
+      "Generating C# code dynamically at runtime to map DataReader fields to object properties",
+      "Intercepting SQL commands to modify them before execution",
+      "Creating proxy classes for lazy loading relationships"
+    ],
+    "answer": "Generating C# code dynamically at runtime to map DataReader fields to object properties",
+    "explanation": "Dapper generates highly optimized IL code at runtime based on the specific types being queried, avoiding the overhead of Reflection-based mapping on every row.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 58,
+    "question": "What is the purpose of the `commandTimeout` parameter in Dapper's execution methods?",
+    "options": [
+      "To set the timeout for the Dapper internal processing only",
+      "To specify the time in seconds to wait for the command to execute before throwing a SqlException",
+      "To set the connection timeout",
+      "To define the delay before a query is retried"
+    ],
+    "answer": "To specify the time in seconds to wait for the command to execute before throwing a SqlException",
+    "explanation": "This value is passed directly to the underlying `IDbCommand.CommandTimeout` property, controlling how long the database engine is allowed to run the query.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 59,
+    "question": "Which scenario strictly requires the use of `IDbTransaction` within Dapper operations?",
+    "options": [
+      "When querying a database view",
+      "When executing multiple `Execute` or `Query` commands that must succeed or fail atomistically",
+      "When using `QueryAsync` instead of `Query`",
+      "When mapping to anonymous types"
+    ],
+    "answer": "When executing multiple `Execute` or `Query` commands that must succeed or fail atomistically",
+    "explanation": "To ensure ACID properties across multiple distinct commands, they must run within a transaction scope, passed explicitly to Dapper methods.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 60,
+    "question": "When using `QueryMultiple`, what happens if you attempt to read more result sets than were returned by the SQL command?",
+    "options": [
+      "It returns an empty enumerable for the extra reads",
+      "It returns null for the extra reads",
+      "It throws an InvalidOperationException when calling `Read`",
+      "It throws an ObjectDisposedException"
+    ],
+    "answer": "It throws an InvalidOperationException when calling `Read`",
+    "explanation": "Once the underlying reader has consumed all grids, subsequent calls to `Read` throw an exception because there is no data to consume.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 61,
+    "question": "How does Dapper handle `enum` types when passed as parameters in a query?",
+    "options": [
+      "It always passes the string name of the enum",
+      "It passes the underlying integer value by default",
+      "It converts the enum to a byte array",
+      "It requires the user to cast the enum to int manually"
+    ],
+    "answer": "It passes the underlying integer value by default",
+    "explanation": "By default, Dapper maps parameters by value. An Enum is passed as its numeric representation unless a custom type handler or specific configuration (e.g., `StringEnum`) is used.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 62,
+    "question": "Which `Dapper.Contrib` method would you use to retrieve a single entity by its primary key without writing SQL?",
+    "options": [
+      "Get",
+      "GetById",
+      "Find",
+      "Select"
+    ],
+    "answer": "Get",
+    "explanation": "The `Get<T>(id)` extension method provided by Dapper.Contrib generates the SQL to select a record based on the marked `[Key]` or `Id` property.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 63,
+    "question": "What is a specific limitation of the `FastExpando` object returned when using `dapper: true` or dynamic queries in older versions?",
+    "options": [
+      "It cannot be serialized to JSON",
+      "It cannot be iterated over",
+      "It is read-only",
+      "It does not support case-sensitive property access"
+    ],
+    "answer": "It cannot be serialized to JSON",
+    "explanation": "Dapper's `FastExpando` (utilizing `IDynamicMetaObjectProvider`) often breaks standard JSON serializers like Newtonsoft.Json because it doesn't behave like a standard Dictionary or POCO.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 64,
+    "question": "In a high-throughput web API using Dapper, which pattern is most recommended for managing connection lifecycles?",
+    "options": [
+      "Keeping a single static connection open for the application lifetime",
+      "Creating a new connection, opening it, and disposing it within a `using` block per request",
+      "Using connection pooling exclusively without opening connections",
+      "Storing the connection in HttpSessionState"
+    ],
+    "answer": "Creating a new connection, opening it, and disposing it within a `using` block per request",
+    "explanation": "While Dapper *can* open a connection if closed, the best practice is to explicitly scope the connection to the unit of work (the request) to ensure proper resource cleanup and connection pooling utilization.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 65,
+    "question": "What is the function of the `ITypeHandler` interface in Dapper?",
+    "options": [
+      "To intercept exceptions and log them",
+      "To customize how Dapper reads and writes a specific .NET type to/from the database",
+      "To implement soft deletes in queries",
+      "To handle asynchronous execution flows"
+    ],
+    "answer": "To customize how Dapper reads and writes a specific .NET type to/from the database",
+    "explanation": "Implementing `ITypeHandler` allows developers to override the default parameter and value mapping logic for complex types like JSONB, Enums, or custom structs.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 66,
+    "question": "Why does the `Query` method return `IEnumerable` instead of `List` by default (when buffered)?",
+    "options": [
+      "To support lazy loading of child objects",
+      "To allow for deferred execution via the underlying reader (if unbuffered) or abstraction",
+      "IEnumerable is the interface for List",
+      "To minimize memory overhead by returning the internal buffer directly"
+    ],
+    "answer": "To allow for deferred execution via the underlying reader (if unbuffered) or abstraction",
+    "explanation": "While Dapper buffers to a List by default, returning `IEnumerable` provides a consistent contract that works whether the result is buffered (List) or streamed (yield return).",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 67,
+    "question": "How do you implement \"Bulk Insert\" functionality using standard Dapper?",
+    "options": [
+      "Use the `BulkInsert` method included in Dapper core",
+      "Use `TransactionScope` combined with standard `Execute` inside a loop",
+      "Use `SqlBulkCopy` class directly, passing the Dapper-mapped objects",
+      "Dapper does not support bulk inserts; you must use Entity Framework"
+    ],
+    "answer": "Use `TransactionScope` combined with standard `Execute` inside a loop",
+    "explanation": "Standard Dapper lacks a true bulk insert API. While `Execute` can insert a list (one parameter set per row), it is not a true bulk operation. For high-performance bulk loads, one typically bypasses Dapper for `SqlBulkCopy`.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 68,
+    "question": "In Dapper's `QueryMultiple` method, what is the behavior of the `GridReader.Read` method if it encounters an empty result set in the sequence of returned queries?",
+    "options": [
+      "It returns null immediately.",
+      "It returns an empty IEnumerable and advances the reader to the next result set.",
+      "It throws an InvalidOperationException because result sets cannot be empty.",
+      "It retries the query automatically up to three times."
+    ],
+    "answer": "It returns an empty IEnumerable and advances the reader to the next result set.",
+    "explanation": "The `GridReader` iterates sequentially through result sets regardless of whether a specific set contains rows. It yields an empty collection for empty sets and moves the cursor to the next grid, allowing subsequent `Read` calls to access valid data.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 69,
+    "question": "When using Dapper's multi-mapping feature (e.g., `Query<TFirst, TSecond, TReturn>`), what is the default value of the `splitOn` parameter?",
+    "options": [
+      "It defaults to 'Id'.",
+      "It defaults to the first property alphabetically.",
+      "It defaults to null, requiring all columns to be unique.",
+      "It defaults to the primary key of the first type."
+    ],
+    "answer": "It defaults to 'Id'.",
+    "explanation": "If the `splitOn` parameter is omitted, Dapper attempts to split the result set based on a column named 'Id'. This is a common convention but requires explicit specification if the split column is named differently (e.g., 'CustomerID').",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 70,
+    "question": "How does the `buffered` parameter affect the execution of a Dapper query?",
+    "options": [
+      "When false, it yields rows one by one via a deferred enumerable, consuming the reader while iterating.",
+      "When false, it loads all rows into client-side memory before returning the collection.",
+      "When true, it streams data directly to the client file system to save RAM.",
+      "When true, it disables database connection pooling."
+    ],
+    "answer": "When false, it yields rows one by one via a deferred enumerable, consuming the reader while iterating.",
+    "explanation": "Setting `buffered: false` (equivalent to `AsEnumerable`) forces Dapper to stream results. This keeps the connection open and the `IDataReader` active until the iteration is complete, reducing memory usage for large datasets.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 71,
+    "question": "What is the specific requirement when passing an `IEnumerable` as a parameter value to a Dapper `IN` clause expansion?",
+    "options": [
+      "The collection must be declared as a specific array type (e.g., `int[]`), not a generic list.",
+      "The collection must contain exactly 2100 items or fewer.",
+      "The parameter name in the SQL string must end with 'In'.",
+      "The collection must be wrapped in a `DynamicParameters` object."
+    ],
+    "answer": "The collection must contain exactly 2100 items or fewer.",
+    "explanation": "SQL Server limits the number of parameters in a single query to 2100. Dapper's automatic expansion of a collection into parameters (e.g., `@ids0`, `@ids1`) fails if the collection size exceeds this hard limit of the underlying database engine.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 72,
+    "question": "Which Dapper feature allows you to add output parameters dynamically at runtime without creating a specific POCO class?",
+    "options": [
+      "The `DynamicParameters` class.",
+      "The `OutputParameter` attribute.",
+      "The `QueryMultiple` method.",
+      "The `DbString` type handler."
+    ],
+    "answer": "The `DynamicParameters` class.",
+    "explanation": "`DynamicParameters` implements `IDynamicParameters` and acts as a dictionary for parameters. It supports adding Output and InputOutput parameters via the `Add` method, allowing values to be retrieved after execution via the `Get` method.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 73,
+    "question": "In Dapper.Contrib, what is the functional difference between the `[Key]` and `[ExplicitKey]` attributes?",
+    "options": [
+      "`[Key]` marks an auto-incrementing identity column, while `[ExplicitKey]` marks a primary key that the application must provide.",
+      "`[Key]` creates a clustered index, while `[ExplicitKey]` creates a non-clustered index.",
+      "`[Key]` is for string columns, while `[ExplicitKey]` is for integer columns.",
+      "`[Key]` enforces uniqueness in the database, while `[ExplicitKey]` is only for Dapper internal caching."
+    ],
+    "answer": "`[Key]` marks an auto-incrementing identity column, while `[ExplicitKey]` marks a primary key that the application must provide.",
+    "explanation": "When using `Insert`, Dapper.Contrib attempts to retrieve and return the ID for `[Key]` columns (assuming identity). `[ExplicitKey]` tells Dapper that the key is provided manually and no retrieval scope is needed.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 74,
+    "question": "When calling `connection.QueryAsync` inside an async method, what is the state of the underlying `SqlConnection` if it was closed prior to the call?",
+    "options": [
+      "It remains closed; the query fails immediately.",
+      "It is opened asynchronously, the query is executed, and then it is closed.",
+      "It is opened but remains open after execution to allow connection reuse.",
+      "It is converted into a connection factory."
+    ],
+    "answer": "It is opened asynchronously, the query is executed, and then it is closed.",
+    "explanation": "Dapper's async methods check the connection state. If it is closed, Dapper opens it, executes the command, and then returns the connection to its original state (closed) to manage resource lifecycle efficiently.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 75,
+    "question": "What is the primary function of the `ITypeHandler` interface in Dapper?",
+    "options": [
+      "To intercept and modify the SQL text before execution.",
+      "To control how Dapper parses a database value into a .NET type and vice versa.",
+      "To log query execution times to a file.",
+      "To manage connection pooling automatically."
+    ],
+    "answer": "To control how Dapper parses a database value into a .NET type and vice versa.",
+    "explanation": "Implementing `ITypeHandler` allows developers to customize the mapping between `DbDataReader` values (e.g., a specific string format in the DB) and .NET properties (e.g., parsing to a custom struct or Enum).",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 76,
+    "question": "Why might you use the `DbString` class in Dapper instead of passing a standard C# `string` parameter?",
+    "options": [
+      "To encrypt the string value before sending it over the network.",
+      "To explicitly set the `Length`, `IsAnsi`, and `IsFixedSize` properties for optimal parameter type mapping.",
+      "To convert the string to uppercase automatically.",
+      "To enable full-text search capabilities on the parameter."
+    ],
+    "answer": "To explicitly set the `Length`, `IsAnsi`, and `IsFixedSize` properties for optimal parameter type mapping.",
+    "explanation": "Standard strings often default to `NVARCHAR(max)` or inefficient types. `DbString` allows fine-grained control over the parameter definition (e.g., forcing `VARCHAR` instead of `NVARCHAR`), which improves query plan caching and performance.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 77,
+    "question": "What does the `literalReplacement` option in Dapper do?",
+    "options": [
+      "It replaces all parameter values with their string equivalent to avoid injection.",
+      "It allows values to be interpolated directly into the SQL string rather than sent as parameters.",
+      "It replaces table names with their fully qualified schema names.",
+      "It converts SQL literals like `GETDATE()` into .NET `DateTime.Now`."
+    ],
+    "answer": "It allows values to be interpolated directly into the SQL string rather than sent as parameters.",
+    "explanation": "This is useful for scenarios where parameters cannot be used (e.g., inside a function call or `ORDER BY` clause). Dapper sanitizes the input (usually by validating it is a simple word) and inlines it.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 78,
+    "question": "Which method is used to map the result of a Stored Procedure that returns a Return Value (e.g., `RETURN 5`) rather than a result set?",
+    "options": [
+      "Use `Query` and check the first element.",
+      "Use `Execute` and check the return value.",
+      "Use `QueryMultiple` and check `IsConsumed`.",
+      "Use `ExecuteScalar` and access the `ReturnValue` parameter."
+    ],
+    "answer": "Use `Execute` and check the return value.",
+    "explanation": "The `Execute` method returns an `int` representing the number of rows affected. For Stored Procedures, this return value is populated by the `RETURN` statement. To retrieve specific output parameters, you must add them to `DynamicParameters` and read them after execution.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 79,
+    "question": "How does Dapper handle the `[Computed]` attribute (in Dapper.Contrib extensions)?",
+    "options": [
+      "It marks the property to be excluded from `INSERT` and `UPDATE` statements.",
+      "It creates a calculated column in the database if it does not exist.",
+      "It forces Dapper to recalculate the property value before every save.",
+      "It indicates that the property is a foreign key."
+    ],
+    "answer": "It marks the property to be excluded from `INSERT` and `UPDATE` statements.",
+    "explanation": "The `[Computed]` attribute signals to Dapper.Contrib's `Insert`, `Update`, and `Delete` extensions that this column is managed by the database (e.g., a trigger or computed column) and should not be included in the SQL modification statements.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 80,
+    "question": "When using `QueryMultiple`, what happens if you attempt to read a `GridReader` that has been fully consumed?",
+    "options": [
+      "It throws a `ObjectDisposedException`.",
+      "It returns an empty list.",
+      "It throws a `InvalidOperationException` stating the reader has been consumed.",
+      "It automatically reconnects to the database."
+    ],
+    "answer": "It throws a `InvalidOperationException` stating the reader has been consumed.",
+    "explanation": "Once the underlying `IDataReader` is fully traversed or closed, the `GridReader` is marked as consumed. Attempting to access further data violates the state contract, resulting in an exception.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 81,
+    "question": "In Dapper, what is the specific advantage of using `SqlMapper.SetTypeMap`?",
+    "options": [
+      "It creates a new table in the database matching the class properties.",
+      "It overrides the default convention-based mapping to specify exact column-to-property mappings.",
+      "It enables encryption for specific POCOs.",
+      "It registers the type for JSON serialization."
+    ],
+    "answer": "It overrides the default convention-based mapping to specify exact column-to-property mappings.",
+    "explanation": "While Dapper works by default on name matching, `SetTypeMap` allows injection of a custom `ITypeMap` (e.g., `CustomPropertyTypeMap`). This permits mapping columns with different names or prefixes to specific properties without aliasing every SQL query.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 82,
+    "question": "When performing a bulk operation using Dapper, which library extension is typically required to achieve high-performance bulk inserts comparable to `SqlBulkCopy`?",
+    "options": [
+      "Dapper.Contrib",
+      "Dapper.Rainbow",
+      "Dapper.EntityFramework",
+      "DapperPlus"
+    ],
+    "answer": "DapperPlus",
+    "explanation": "Core Dapper is a Micro-ORM and loops through data for standard `Execute` calls. For true Bulk Insert operations (Batch operations), external extensions like Dapper Plus (or manually wrapping `SqlBulkCopy`) are used, as Dapper.Contrib only offers simple single-row `Insert` commands.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 83,
+    "question": "What is the behavior of Dapper when a query returns a `null` value from the database for a non-nullable `int` property?",
+    "options": [
+      "It sets the property to 0.",
+      "It throws a `DataException`.",
+      "It skips the object entirely in the results.",
+      "It sets the property to `int.MinValue`."
+    ],
+    "answer": "It sets the property to 0.",
+    "explanation": "Dapper uses `Convert.ChangeType` or direct assignment. When a `DBNull` is mapped to a non-nullable value type, it generally defaults to the type's default value (0 for integers, false for bools) unless the `Nullable<T>` type is used.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 84,
+    "question": "Which mechanism allows Dapper to execute SQL in a high-performance manner by caching the mapping strategy between specific `IDbConnection` types?",
+    "options": [
+      "IL Generation and Delegates",
+      "Reflection on every execution",
+      "XML Serialization",
+      "Roslyn Code Analysis"
+    ],
+    "answer": "IL Generation and Delegates",
+    "explanation": "Dapper dynamically generates IL (Intermediate Language) code and delegates to handle the mapping from `IDataReader` to properties. This IL is cached per `IDbConnection` type, making it significantly faster than reflection-based mappers like EF6 initial versions.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 85,
+    "question": "How does Dapper handle a POCO property named `Description` when the query returns a column named `desc`?",
+    "options": [
+      "It maps them automatically based on attribute mapping.",
+      "It fails to map the property because the names differ.",
+      "It maps them only if `ColumnAttribute` is used.",
+      "It triggers a `AmbiguousMatchException`."
+    ],
+    "answer": "It fails to map the property because the names differ.",
+    "explanation": "By default, Dapper maps strictly by column name (case-insensitive). If the database column `desc` does not match the property `Description`, the property will be set to its default value. You must alias the SQL (`SELECT desc as Description...`) or use a custom Type Map.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 86,
+    "question": "What is the output of `connection.Execute(@",
+    "options": [
+      "3",
+      "1",
+      "The total row count of the table.",
+      "The newly created Identity ID."
+    ],
+    "answer": "3",
+    "explanation": "The `Execute` method returns the total number of rows affected by the SQL command. Even if parameter lists are expanded, the return value is the cumulative count of affected rows.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 87,
+    "question": "When using `QueryAsync`, what is the impact of `CommandBehavior.SequentialAccess`?",
+    "options": [
+      "It disables the internal buffering used by `QueryAsync`, forcing a non-buffered load.",
+      "It enables parallel processing of the query.",
+      "It caches the results in a static list for the application lifetime.",
+      "It forces the query to run on the UI thread."
+    ],
+    "answer": "It disables the internal buffering used by `QueryAsync`, forcing a non-buffered load.",
+    "explanation": "Dapper defaults to buffered queries (`buffered: true`). Specifying `CommandBehavior.SequentialAccess` (or `buffered: false`) prevents Dapper from consuming the entire reader immediately, allowing for streaming of large BLOBs or text fields.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 88,
+    "question": "In the context of Dapper's `QueryMultiple`, which method is used to retrieve a single scalar value from the second result set without reading it into a list?",
+    "options": [
+      "ReadFirstOrDefault",
+      "ReadSingle",
+      "ExecuteScalar",
+      "Read<type>.First()"
+    ],
+    "answer": "ReadSingle",
+    "explanation": "The `GridReader` provides `Read`, `ReadFirst`, `ReadSingle`, etc. `ReadSingle` consumes the single row from the stream and maps it, effectively retrieving a scalar object (or single object) from the current result set position.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 89,
+    "question": "Which interface must be implemented on a Dapper extension to support passing a custom object to the `param` argument that contains complex nested types?",
+    "options": [
+      "IDynamicParameters",
+      "ICustomTypeDescriptor",
+      "IParameterMapper",
+      "ILookup"
+    ],
+    "answer": "IDynamicParameters",
+    "explanation": "The `SqlMapper.Execute` and `Query` methods check if the `param` object implements `IDynamicParameters`. If so, Dapper delegates the parameter addition logic to the object's `AddParameters` method, allowing for custom logic like expanding nested objects.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 90,
+    "question": "What is a specific characteristic of the `[Table]` attribute in Dapper.Contrib?",
+    "options": [
+      "It defines the database table name, overriding the class name.",
+      "It creates the table if it does not exist.",
+      "It marks the class for serialization.",
+      "It sets the schema to 'dbo' implicitly."
+    ],
+    "answer": "It defines the database table name, overriding the class name.",
+    "explanation": "If the class name `User` maps to a table named `Users` or `AppUser`, the `[Table(\"AppUser\")]` attribute allows explicit specification of the table name used in auto-generated SQL for `Get`, `Insert`, `Update`, and `Delete`.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 91,
+    "question": "When using `AsEnumerable()` on a Dapper result, at what point is the SQL actually executed against the database?",
+    "options": [
+      "When the connection is opened.",
+      "When `AsEnumerable()` is called.",
+      "When the query is iterated (e.g., via `foreach`).",
+      "Immediately upon calling `Query`."
+    ],
+    "answer": "When the query is iterated (e.g., via `foreach`).",
+    "explanation": "If `buffered: false` is used (or `AsEnumerable` is utilized), Dapper returns an `IEnumerable` that defers execution. The SQL runs and the reader is consumed only when the application code begins to iterate over the collection.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 92,
+    "question": "How does Dapper treat properties marked with the `[Write]` attribute (False) in Dapper.Contrib?",
+    "options": [
+      "They are excluded from `SELECT` queries.",
+      "They are excluded from `INSERT` and `UPDATE` operations.",
+      "They are treated as encrypted fields.",
+      "They are ignored entirely during mapping."
+    ],
+    "answer": "They are excluded from `INSERT` and `UPDATE` operations.",
+    "explanation": "The `[Write(false)]` attribute specifically tells Dapper.Contrib's `Update` and `Insert` methods to ignore this property. This is useful for columns that should be read but never written back via the ORM.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 93,
+    "question": "What is the return type of Dapper's `Query` method when the generic type parameter is `dynamic`?",
+    "options": [
+      "List<dynamic>",
+      "IEnumerable<dynamic>",
+      "ExpandoObject",
+      "DataTable"
+    ],
+    "answer": "IEnumerable<dynamic>",
+    "explanation": "Dapper maps the result to a `DapperRow` object which implements `IDynamicMetaObjectProvider`. The returned collection implements `IEnumerable<dynamic>`, allowing late-bound access to column names.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 94,
+    "question": "Which command behavior is implicitly used by Dapper's `QueryMultiple` to ensure multiple result sets can be accessed?",
+    "options": [
+      "CommandBehavior.CloseConnection",
+      "CommandBehavior.SequentialAccess",
+      "CommandBehavior.SingleResult",
+      "CommandBehavior.Default"
+    ],
+    "answer": "CommandBehavior.SequentialAccess",
+    "explanation": "`QueryMultiple` relies on `CommandBehavior.SequentialAccess` to allow reading the result stream sequentially. This allows the `GridReader` to parse the first result set, then move forward to the second, etc., without loading the entire batch into memory at once.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 95,
+    "question": "How do you prevent Dapper from throwing an exception when a `QueryFirstOrDefault` call returns no data?",
+    "options": [
+      "Catch the `InvalidOperationException`.",
+      "Use `Query` instead and check `Count() > 0`.",
+      "Set the `commandTimeout` to 0.",
+      "Pass `buffered: false`."
+    ],
+    "answer": "Use `Query` instead and check `Count() > 0`.",
+    "explanation": "`QueryFirstOrDefault` returns `null` (or default for value types) if no rows are found; it does not throw. The question implies a common confusion with `QuerySingle`, which *does* throw if the result set is empty. The correct answer highlights the distinction: `QuerySingle` throws, `QueryFirstOrDefault` does not. (Correction: `QueryFirstOrDefault` returns null. If the question implies throwing, it refers to `QuerySingle`.)",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 96,
+    "question": "What is the specific purpose of the `SqlMapper.AddTypeHandler` method?",
+    "options": [
+      "To map a .NET Type to a specific Database Type handler implementation globally.",
+      "To add a new database connection string.",
+      "To register a new SQL command timeout policy.",
+      "To map a POCO to a Stored Procedure."
+    ],
+    "answer": "To map a .NET Type to a specific Database Type handler implementation globally.",
+    "explanation": "This method registers a custom `ITypeHandler` for a specific .NET type. Once registered, Dapper will use this handler for all parameters and result parsing involving that type across the application domain.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 97,
+    "question": "Which of the following best describes the limitation of Dapper regarding Transaction management?",
+    "options": [
+      "It cannot participate in distributed transactions.",
+      "It requires the `IDbTransaction` object to be passed explicitly into every `Query` or `Execute` call.",
+      "It automatically commits transactions on garbage collection.",
+      "It only supports ReadCommitted isolation levels."
+    ],
+    "answer": "It requires the `IDbTransaction` object to be passed explicitly into every `Query` or `Execute` call.",
+    "explanation": "Unlike Entity Framework, which might implicitly track the transaction on the context, Dapper is stateless. If you start a transaction, you must pass that specific `IDbTransaction` instance to the `transaction` parameter of your Dapper calls.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 98,
+    "question": "When using `Query` with a `Tuple` return type, how does Dapper map the result set columns?",
+    "options": [
+      "It maps the first column to Item1, the second to Item2, etc., ignoring column names.",
+      "It maps columns to properties named 'Item1', 'Item2' on a dynamic object.",
+      "It requires all columns to be named 'Tuple1', 'Tuple2'.",
+      "It throws an exception because Tuples are not supported."
+    ],
+    "answer": "It maps the first column to Item1, the second to Item2, etc., ignoring column names.",
+    "explanation": "When mapping to Tuples, Dapper uses ordinal mapping. The first column returned by the SQL maps to `Item1`, the second to `Item2`, regardless of the actual column names in the result set.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 99,
+    "question": "What happens if you pass an object to Dapper where a property name matches a SQL parameter, but the value is null?",
+    "options": [
+      "The parameter is omitted from the SQL command.",
+      "Dapper passes `DBNull.Value` to the parameter.",
+      "Dapper converts the null to an empty string.",
+      "The query fails with a syntax error."
+    ],
+    "answer": "Dapper passes `DBNull.Value` to the parameter.",
+    "explanation": "Dapper handles null references in the parameter object by converting them to `DBNull.Value` when assigning to the `IDbDataParameter`. This ensures the database receives a proper SQL null rather than a .NET null reference.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 100,
+    "question": "In advanced Dapper tuning, what is the effect of `SqlMapper.Settings.CommandTimeout`?",
+    "options": [
+      "It changes the connection string timeout.",
+      "It sets the default timeout for all commands that do not explicitly specify one.",
+      "It limits the total time a connection can stay open in the pool.",
+      "It disables async cancellation tokens."
+    ],
+    "answer": "It sets the default timeout for all commands that do not explicitly specify one.",
+    "explanation": "The static `SqlMapper.Settings` properties allow global configuration. Setting `CommandTimeout` here establishes the default time (in seconds) a command is allowed to run before timing out, which applies unless overridden by the `commandTimeout` parameter in specific method calls.",
+    "difficulty": "Advanced"
+  }
+]
