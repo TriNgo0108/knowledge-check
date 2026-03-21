@@ -36,6 +36,7 @@ on:
           - entityframework
           - terraform
           - pulumi
+          - frontend
 
 jobs:
   generate:
@@ -50,8 +51,8 @@ jobs:
       - name: Determine today's topic
         id: topic
         run: |
-          # Topics array (24 topics = 3-day rotation at 8/day)
-          TOPICS=("grammar" "pronunciation" "pandas" "sql" "postgres" "aws" "python" "javascript" "typescript" "react" "systemdesign" "designpatterns" "algorithms" "aiagents" "financial" "aiengineer" "langchain" "interview" "csharp" "dotnet" "dapper" "entityframework" "terraform" "pulumi")
+          # Topics array (25 topics)
+          TOPICS=("grammar" "pronunciation" "pandas" "sql" "postgres" "aws" "python" "javascript" "typescript" "react" "systemdesign" "designpatterns" "algorithms" "aiagents" "financial" "aiengineer" "langchain" "interview" "csharp" "dotnet" "dapper" "entityframework" "terraform" "pulumi" "frontend")
 
           if [ -n "${{ inputs.topic }}" ]; then
             # Manual trigger with specific topic
@@ -63,8 +64,8 @@ jobs:
             HOUR=$(date +%-H)
             SLOT=$((HOUR / 3))
             
-            # Calculate index: ((Day-1)*8 + Slot) % 24
-            INDEX=$(( ((DAY_OF_MONTH - 1) * 8 + SLOT) % 24 ))
+            # Calculate index: ((Day-1)*8 + Slot) % 25
+            INDEX=$(( ((DAY_OF_MONTH - 1) * 8 + SLOT) % 25 ))
             SELECTED_TOPIC="${TOPICS[$INDEX]}"
           fi
 

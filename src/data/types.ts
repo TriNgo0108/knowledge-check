@@ -31,7 +31,8 @@ export type TopicId =
   | "entityframework"
   | "terraform"
   | "pulumi"
-  | "langchain";
+  | "langchain"
+  | "frontend";
 
 export interface Topic {
   id: TopicId;

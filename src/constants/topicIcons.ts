@@ -29,6 +29,7 @@ import {
   Component,
   Rocket,
   BookOpen,
+  Layout,
 } from "lucide-react";
 
 export const iconMap: Record<string, ComponentType<{ className?: string }>> = {
@@ -61,4 +62,5 @@ export const iconMap: Record<string, ComponentType<{ className?: string }>> = {
   Component,
   Rocket,
   BookOpen,
+  Layout,
 };

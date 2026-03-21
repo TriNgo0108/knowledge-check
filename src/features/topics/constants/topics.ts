@@ -140,6 +140,12 @@ export const allTopics: Topic[] = [
     icon: "CloudLightning",
     color: "oklch(66.7% 0.295 322.15)", // fuchsia-500
   },
+  {
+    id: "frontend",
+    title: "Frontend Architecture",
+    icon: "Layout",
+    color: "oklch(70% 0.2 240)", // vibrant blue
+  },
 ];
 
 export const categories: TopicCategory[] = [
@@ -154,7 +160,7 @@ export const categories: TopicCategory[] = [
     name: "Frameworks & Libraries",
     icon: "Component",
     topics: allTopics.filter((t) =>
-      ["react", "pandas", "dotnet", "dapper", "entityframework"].includes(t.id),
+      ["react", "frontend", "pandas", "dotnet", "dapper", "entityframework"].includes(t.id),
     ),
   },
   {
