@@ -2,8 +2,7 @@ name: Daily Question Generation
 
 on:
   schedule:
-    # Run 2 times daily (every 12 hours) - generates 2 topics per day
-    - cron: "0 */12 * * *"
+    - cron: "0 0 * * Mon,Wed,Fri"
   workflow_dispatch: # Manual trigger
     inputs:
       topic:
@@ -11,32 +10,31 @@ on:
         required: false
         type: choice
         options:
-          - ""
-          - grammar
-          - pronunciation
+          # - grammar
+          # - pronunciation
           - pandas
           - sql
           - postgres
           - aws
           - python
-          - javascript
-          - typescript
-          - react
-          - systemdesign
-          - designpatterns
-          - algorithms
-          - aiagents
-          - financial
-          - aiengineer
-          - langchain
-          - interview
-          - csharp
-          - dotnet
-          - dapper
-          - entityframework
-          - terraform
-          - pulumi
-          - frontend
+          # - javascript
+          # - typescript
+          # - react
+          # - systemdesign
+          # - designpatterns
+          # - algorithms
+          # - aiagents
+          # - financial
+          # - aiengineer
+          # - langchain
+          # - interview
+          # - csharp
+          # - dotnet
+          # - dapper
+          # - entityframework
+          # - terraform
+          # - pulumi
+          # - frontend
 
 jobs:
   generate:
@@ -51,21 +49,18 @@ jobs:
       - name: Determine today's topic
         id: topic
         run: |
-          # Topics array (25 topics)
-          TOPICS=("grammar" "pronunciation" "pandas" "sql" "postgres" "aws" "python" "javascript" "typescript" "react" "systemdesign" "designpatterns" "algorithms" "aiagents" "financial" "aiengineer" "langchain" "interview" "csharp" "dotnet" "dapper" "entityframework" "terraform" "pulumi" "frontend")
+          # Topics array (5 active topics)
+          TOPICS=("pandas" "sql" "postgres" "aws" "python")
 
           if [ -n "${{ inputs.topic }}" ]; then
             # Manual trigger with specific topic
             SELECTED_TOPIC="${{ inputs.topic }}"
           else
-            # Auto-select based on day and time (8 topics per day)
-            # 8 slots per day: every 3 hours
-            DAY_OF_MONTH=$(date +%-d)
-            HOUR=$(date +%-H)
-            SLOT=$((HOUR / 3))
+            # Auto-select based on day of year
+            DAY_OF_YEAR=$(date +%-j)
             
-            # Calculate index: ((Day-1)*8 + Slot) % 25
-            INDEX=$(( ((DAY_OF_MONTH - 1) * 8 + SLOT) % 25 ))
+            # Calculate index: day_of_year % 5
+            INDEX=$(( DAY_OF_YEAR % 5 ))
             SELECTED_TOPIC="${TOPICS[$INDEX]}"
           fi
 
