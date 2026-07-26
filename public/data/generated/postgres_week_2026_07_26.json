@@ -1,0 +1,1302 @@
+[
+  {
+    "id": 1,
+    "question": "What concurrency control mechanism does PostgreSQL primarily use to implement transaction isolation?",
+    "options": [
+      "Two-phase locking (2PL)",
+      "Multi-Version Concurrency Control (MVCC)",
+      "Optimistic concurrency control with retries",
+      "Strict serial execution of transactions"
+    ],
+    "answer": "Multi-Version Concurrency Control (MVCC)",
+    "explanation": "PostgreSQL uses MVCC to maintain multiple versions of rows, allowing readers to see a consistent snapshot without blocking writers. This avoids lock contention for read/write operations.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 2,
+    "question": "In PostgreSQL, what does the WAL (Write-Ahead Log) primarily ensure?",
+    "options": [
+      "Faster query execution through caching",
+      "Durability and crash recovery of transactions",
+      "Automatic creation of B-tree indexes",
+      "Replication of materialized views"
+    ],
+    "answer": "Durability and crash recovery of transactions",
+    "explanation": "WAL records changes before they are written to data files, enabling PostgreSQL to recover committed transactions after a crash. It is central to the Durability property of ACID.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 3,
+    "question": "Which transaction isolation level is the default in PostgreSQL?",
+    "options": [
+      "Read Uncommitted",
+      "Read Committed",
+      "Repeatable Read",
+      "Serializable"
+    ],
+    "answer": "Read Committed",
+    "explanation": "Read Committed is PostgreSQL's default isolation level. Each statement sees a snapshot of data committed before the statement began, balancing consistency and concurrency.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 4,
+    "question": "Under PostgreSQL's implementation, what happens at the Read Uncommitted isolation level?",
+    "options": [
+      "Dirty reads are allowed",
+      "It behaves identically to Read Committed",
+      "Non-repeatable reads are prevented",
+      "It enforces strict serializable execution"
+    ],
+    "answer": "It behaves identically to Read Committed",
+    "explanation": "In PostgreSQL, Read Uncommitted is internally treated as Read Committed, so dirty reads are never allowed. The SQL standard permits dirty reads at this level, but PostgreSQL does not implement them.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 5,
+    "question": "Which index type is the default in PostgreSQL for columns with equality and range queries?",
+    "options": [
+      "GIN",
+      "GiST",
+      "B-tree",
+      "BRIN"
+    ],
+    "answer": "B-tree",
+    "explanation": "B-tree is PostgreSQL's default index type, optimized for equality and range searches. GIN, GiST, and BRIN are specialized for other use cases like full-text search or large tables.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 6,
+    "question": "Which PostgreSQL index type is best suited for full-text search and array containment queries?",
+    "options": [
+      "B-tree",
+      "BRIN",
+      "GIN",
+      "Hash"
+    ],
+    "answer": "GIN",
+    "explanation": "GIN (Generalized Inverted Index) excels at querying composite values such as full-text documents and arrays. It maps elements back to the rows containing them, enabling fast containment searches.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 7,
+    "question": "What is the primary use case for a BRIN (Block Range Index) in PostgreSQL?",
+    "options": [
+      "Enforcing foreign key constraints",
+      "Indexing very large tables with naturally ordered data",
+      "Accelerating exact-match hash lookups",
+      "Managing JSON document validation"
+    ],
+    "answer": "Indexing very large tables with naturally ordered data",
+    "explanation": "BRIN stores summary metadata for ranges of blocks, making it highly space-efficient for large tables where data is physically correlated with a key (e.g., time-series data).",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 8,
+    "question": "Which PostgreSQL command is used to physically reclaim storage occupied by dead tuples?",
+    "options": [
+      "REINDEX",
+      "ANALYZE",
+      "VACUUM",
+      "CLUSTER"
+    ],
+    "answer": "VACUUM",
+    "explanation": "VACUUM removes dead tuples left behind by UPDATE and DELETE operations, reclaiming space and preventing transaction ID wraparound. ANALYZE only updates planner statistics.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 9,
+    "question": "What does the ANALYZE command do in PostgreSQL?",
+    "options": [
+      "Validates schema integrity constraints",
+      "Updates statistical information used by the query planner",
+      "Compacts physical table storage",
+      "Rebuilds all B-tree indexes automatically"
+    ],
+    "answer": "Updates statistical information used by the query planner",
+    "explanation": "ANALYZE samples table data and stores statistics in pg_statistic. The query optimizer uses these stats to choose efficient execution plans.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 10,
+    "question": "Which SQL command displays the execution plan of a query without executing it?",
+    "options": [
+      "EXPLAIN",
+      "DESCRIBE",
+      "PROFILE",
+      "ANALYZE"
+    ],
+    "answer": "EXPLAIN",
+    "explanation": "EXPLAIN shows the query plan generated by the planner. Adding ANALYZE (i.e., EXPLAIN ANALYZE) actually executes the query to provide runtime statistics.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 11,
+    "question": "In ACID, which property guarantees that all operations within a transaction are completed successfully or none are applied?",
+    "options": [
+      "Consistency",
+      "Isolation",
+      "Atomicity",
+      "Durability"
+    ],
+    "answer": "Atomicity",
+    "explanation": "Atomicity ensures a transaction is treated as a single indivisible unit—either all changes commit or none do. PostgreSQL implements this through its transaction commit/rollback machinery.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 12,
+    "question": "Which SQL statement is used to permanently save the changes made by a transaction in PostgreSQL?",
+    "options": [
+      "SAVE",
+      "COMMIT",
+      "APPLY",
+      "FLUSH"
+    ],
+    "answer": "COMMIT",
+    "explanation": "COMMIT finalizes a transaction, making its changes visible and durable. PostgreSQL writes the commit record to WAL at this point to guarantee durability.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 13,
+    "question": "Which statement correctly undoes all changes made within the current transaction?",
+    "options": [
+      "UNDO",
+      "REVERT",
+      "ROLLBACK",
+      "DISCARD"
+    ],
+    "answer": "ROLLBACK",
+    "explanation": "ROLLBACK aborts the current transaction and discards all changes made within it. PostgreSQL uses MVCC versions to discard the uncommitted modifications.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 14,
+    "question": "Which PostgreSQL data type is recommended for storing arbitrarily large text of variable length?",
+    "options": [
+      "CHAR(n)",
+      "VARCHAR(n)",
+      "TEXT",
+      "BPCHAR"
+    ],
+    "answer": "TEXT",
+    "explanation": "TEXT stores variable-length strings with no length limit. In PostgreSQL, VARCHAR without a limit and TEXT are functionally equivalent performance-wise.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 15,
+    "question": "Which PostgreSQL data type stores binary JSON data, allowing efficient indexing and element access?",
+    "options": [
+      "JSON",
+      "JSONB",
+      "XML",
+      "HSTORE"
+    ],
+    "answer": "JSONB",
+    "explanation": "JSONB stores JSON in a parsed binary format that supports GIN indexing and fast key lookups. Plain JSON preserves input text exactly but is slower to process.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 16,
+    "question": "Which pseudo-type is commonly used to auto-generate integer primary keys in PostgreSQL?",
+    "options": [
+      "AUTO_INCREMENT",
+      "IDENTITY",
+      "SERIAL",
+      "SEQUENCE"
+    ],
+    "answer": "SERIAL",
+    "explanation": "SERIAL creates an integer column backed by an automatically generated sequence. Newer PostgreSQL versions also support GENERATED ... AS IDENTITY, but SERIAL remains widely used.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 17,
+    "question": "What is the effect of defining a column with the UUID data type in PostgreSQL?",
+    "options": [
+      "It auto-generates sequential integer values",
+      "It stores 128-bit universally unique identifiers",
+      "It encrypts user credentials",
+      "It stores Base64-encoded blobs"
+    ],
+    "answer": "It stores 128-bit universally unique identifiers",
+    "explanation": "UUID is a native PostgreSQL type for storing 128-bit identifiers, commonly generated by extensions like uuid-ossp or pgcrypto for distributed uniqueness.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 18,
+    "question": "Which isolation level prevents non-repeatable reads but still allows serialization anomalies in some databases per the SQL standard?",
+    "options": [
+      "Read Uncommitted",
+      "Read Committed",
+      "Repeatable Read",
+      "Serializable Snapshot Isolation"
+    ],
+    "answer": "Repeatable Read",
+    "explanation": "Repeatable Read ensures a transaction sees a stable snapshot, preventing non-repeatable reads. PostgreSQL's implementation also prevents phantom reads, though full serializability requires the Serializable level.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 19,
+    "question": "Which concurrency anomaly occurs when a transaction reads uncommitted changes made by another transaction?",
+    "options": [
+      "Phantom read",
+      "Non-repeatable read",
+      "Dirty read",
+      "Lost update"
+    ],
+    "answer": "Dirty read",
+    "explanation": "A dirty read happens when a transaction observes uncommitted data from another transaction. PostgreSQL prevents dirty reads even at its lowest isolation level.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 20,
+    "question": "Which anomaly involves a transaction re-executing a query and finding rows that were not present in the previous execution?",
+    "options": [
+      "Dirty read",
+      "Phantom read",
+      "Write skew",
+      "Lost update"
+    ],
+    "answer": "Phantom read",
+    "explanation": "A phantom read occurs when new rows matching a query predicate appear due to another transaction's insertions or deletions. PostgreSQL's Repeatable Read prevents this using snapshot isolation.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 21,
+    "question": "Which constraint ensures that a column cannot contain NULL values?",
+    "options": [
+      "UNIQUE",
+      "CHECK",
+      "NOT NULL",
+      "DEFAULT"
+    ],
+    "answer": "NOT NULL",
+    "explanation": "NOT NULL disallows NULL values in a column. UNIQUE allows multiple NULLs (unless explicitly constrained), and CHECK only enforces arbitrary boolean conditions.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 22,
+    "question": "What does a CHECK constraint enforce in PostgreSQL?",
+    "options": [
+      "Referential integrity between tables",
+      "A Boolean expression that must evaluate to true for each row",
+      "Automatic indexing of foreign keys",
+      "Uniqueness of values in a column"
+    ],
+    "answer": "A Boolean expression that must evaluate to true for each row",
+    "explanation": "CHECK constraints validate that a specified Boolean condition holds for every row. They are commonly used to enforce domain rules like non-negative balances.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 23,
+    "question": "Which feature allows a query to temporarily name a result set for reuse within a single statement?",
+    "options": [
+      "Materialized view",
+      "Common Table Expression (CTE)",
+      "Subselect",
+      "Window function"
+    ],
+    "answer": "Common Table Expression (CTE)",
+    "explanation": "A CTE, defined with the WITH clause, creates a named temporary result set. CTEs improve readability and can be recursive for hierarchical queries.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 24,
+    "question": "What distinguishes a materialized view from a regular view in PostgreSQL?",
+    "options": [
+      "A materialized view stores the query result physically and must be refreshed",
+      "A materialized view can only contain aggregate functions",
+      "A materialized view cannot be indexed",
+      "A materialized view updates automatically in real time"
+    ],
+    "answer": "A materialized view stores the query result physically and must be refreshed",
+    "explanation": "Materialized views persist computed results on disk, enabling indexing and fast reads, but require REFRESH MATERIALIZED VIEW to update. Regular views are merely stored queries.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 25,
+    "question": "Which PostgreSQL feature enables computations across a set of rows related to the current row without collapsing them?",
+    "options": [
+      "Aggregate functions",
+      "Window functions",
+      "Subqueries",
+      "Triggers"
+    ],
+    "answer": "Window functions",
+    "explanation": "Window functions perform calculations across related rows using an OVER clause, preserving row granularity. Examples include ROW_NUMBER, RANK, and SUM(...) OVER(PARTITION BY ...).",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 26,
+    "question": "Which data type is most appropriate for storing monetary values requiring exact decimal precision in PostgreSQL?",
+    "options": [
+      "FLOAT",
+      "REAL",
+      "NUMERIC",
+      "INTEGER"
+    ],
+    "answer": "NUMERIC",
+    "explanation": "NUMERIC (also called DECIMAL) stores exact decimal values with user-specified precision and scale, avoiding the rounding errors of floating-point types.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 27,
+    "question": "Which PostgreSQL data type is ideal for storing fixed-length arrays of values in a single column?",
+    "options": [
+      "JSONB",
+      "ARRAY",
+      "SET",
+      "ENUM"
+    ],
+    "answer": "ARRAY",
+    "explanation": "PostgreSQL supports native multi-dimensional arrays (e.g., INTEGER[]), allowing indexed access to elements. JSONB stores documents, while ENUM defines enumerated labels.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 28,
+    "question": "Which command-line tool is the standard interactive terminal for connecting to a PostgreSQL database?",
+    "options": [
+      "pgcli",
+      "psql",
+      "mysql",
+      "sqlplus"
+    ],
+    "answer": "psql",
+    "explanation": "psql is the official PostgreSQL interactive terminal, providing query execution, scripting, and metadata introspection. pgcli is a third-party alternative with auto-completion.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 29,
+    "question": "What is a schema in PostgreSQL?",
+    "options": [
+      "A backup file of the database",
+      "A namespace that contains named database objects like tables",
+      "A physical storage device for indexes",
+      "A user authentication role"
+    ],
+    "answer": "A namespace that contains named database objects like tables",
+    "explanation": "A schema is a logical container within a database, used to organize objects such as tables, views, and functions. The default schema is named 'public'.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 30,
+    "question": "Which clause is used to filter the results of an aggregate query based on grouped values?",
+    "options": [
+      "WHERE",
+      "HAVING",
+      "GROUP BY",
+      "ORDER BY"
+    ],
+    "answer": "HAVING",
+    "explanation": "HAVING filters groups after aggregation, whereas WHERE filters individual rows before grouping. HAVING is typically used with aggregate functions like COUNT or SUM.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 31,
+    "question": "Which type of join returns only rows where there is a match in both tables?",
+    "options": [
+      "LEFT JOIN",
+      "RIGHT JOIN",
+      "INNER JOIN",
+      "FULL OUTER JOIN"
+    ],
+    "answer": "INNER JOIN",
+    "explanation": "INNER JOIN returns only the rows present in both joined tables based on the join condition. OUTER joins include unmatched rows from one or both tables.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 32,
+    "question": "Which SQL keyword is used to remove all rows from a table without logging individual row deletions?",
+    "options": [
+      "DELETE",
+      "DROP",
+      "TRUNCATE",
+      "REMOVE"
+    ],
+    "answer": "TRUNCATE",
+    "explanation": "TRUNCATE quickly removes all rows by deallocating data pages and is not transactional in the same row-level way as DELETE. It resets sequences and cannot be filtered.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 33,
+    "question": "What does the COALESCE function do in PostgreSQL?",
+    "options": [
+      "Concatenates two text values",
+      "Returns the first non-NULL value from a list of arguments",
+      "Aggregates numeric values into a sum",
+      "Converts timestamps to UTC"
+    ],
+    "answer": "Returns the first non-NULL value from a list of arguments",
+    "explanation": "COALESCE evaluates its arguments left to right and returns the first that is not NULL. It is commonly used to provide default values for nullable columns.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 34,
+    "question": "Which PostgreSQL data type stores both date and time of day without a time zone?",
+    "options": [
+      "DATE",
+      "TIME",
+      "TIMESTAMP",
+      "TIMESTAMPTZ"
+    ],
+    "answer": "TIMESTAMP",
+    "explanation": "TIMESTAMP stores date and time without time zone awareness. TIMESTAMPTZ stores the same with time zone conversion, while DATE and TIME store only those respective components.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 35,
+    "question": "Which PostgreSQL object maintains a monotonic counter typically used to generate sequential primary key values?",
+    "options": [
+      "Cursor",
+      "Sequence",
+      "Trigger",
+      "View"
+    ],
+    "answer": "Sequence",
+    "explanation": "A sequence is a database object that generates unique increasing or decreasing integers. The SERIAL pseudo-type creates a sequence automatically for a column.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 36,
+    "question": "How does PostgreSQL's Multi-Version Concurrency Control (MVCC) handle concurrent read and write operations?",
+    "options": [
+      "Readers acquire shared locks that block writers until the transaction commits",
+      "Writers acquire exclusive locks that block readers until the transaction commits",
+      "Readers access a snapshot of the data, while writers create a new version of the row",
+      "Readers and writers are serialized through a centralized global lock"
+    ],
+    "answer": "Readers access a snapshot of the data, while writers create a new version of the row",
+    "explanation": "MVCC ensures that reads do not block writes and writes do not block reads by maintaining multiple versions of rows. Readers see a snapshot of the data at a specific point in time, while writers create new versions.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 37,
+    "question": "Which transaction isolation level is the default in PostgreSQL?",
+    "options": [
+      "Read Uncommitted",
+      "Read Committed",
+      "Repeatable Read",
+      "Serializable"
+    ],
+    "answer": "Read Committed",
+    "explanation": "Read Committed is the default isolation level in PostgreSQL. In this level, a query sees only rows committed before the query began, preventing dirty reads.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 38,
+    "question": "According to the SQL standard, Repeatable Read allows phantom reads. How does PostgreSQL implement Repeatable Read?",
+    "options": [
+      "It allows phantom reads to prioritize concurrency",
+      "It prevents phantom reads by using Snapshot Isolation",
+      "It prevents phantom reads by acquiring range locks",
+      "It allows phantom reads only when executing analytical queries"
+    ],
+    "answer": "It prevents phantom reads by using Snapshot Isolation",
+    "explanation": "PostgreSQL implements Repeatable Read using Snapshot Isolation, which is stricter than the SQL standard's definition. It ensures that a transaction sees a consistent snapshot of the data, preventing non-repeatable reads and phantom reads.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 39,
+    "question": "How does PostgreSQL implement Serializable Snapshot Isolation (SSI) to prevent anomalies?",
+    "options": [
+      "By acquiring strict table-level write locks",
+      "By tracking read/write dependencies among concurrent transactions",
+      "By serializing all transactions through a single background worker",
+      "By using a global timestamp ordering protocol"
+    ],
+    "answer": "By tracking read/write dependencies among concurrent transactions",
+    "explanation": "PostgreSQL uses Serializable Snapshot Isolation (SSI) to detect potential serialization anomalies among concurrent transactions. It tracks read/write dependencies and aborts transactions that could cause anomalies.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 40,
+    "question": "What is the primary purpose of the Write-Ahead Log (WAL) in PostgreSQL?",
+    "options": [
+      "To cache frequently accessed data pages in memory",
+      "To automatically vacuum dead tuples",
+      "To ensure durability by logging changes before they are written to data files",
+      "To maintain multiple versions of rows for concurrency control"
+    ],
+    "answer": "To ensure durability by logging changes before they are written to data files",
+    "explanation": "The Write-Ahead Log (WAL) ensures durability and crash recovery by recording all modifications to the database before they are applied to the actual data files. This allows PostgreSQL to redo changes during recovery.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 41,
+    "question": "What command is used to inspect the raw contents of a Write-Ahead Log (WAL) file in PostgreSQL?",
+    "options": [
+      "pg_walinspect",
+      "pg_waldump",
+      "pg_stat_wal",
+      "pg_logdump"
+    ],
+    "answer": "pg_waldump",
+    "explanation": "The `pg_waldump` utility reads a WAL file and prints a human-readable representation of its contents. It is used to inspect the changes made by transactions.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 42,
+    "question": "Which type of index is best suited for a large table where the physical order of rows strongly correlates with a specific column?",
+    "options": [
+      "B-tree",
+      "GIN",
+      "GiST",
+      "BRIN"
+    ],
+    "answer": "BRIN",
+    "explanation": "A Block Range Index (BRIN) is highly efficient for large tables where physical row order correlates with a column. It stores summary information for blocks of data, taking up very little space and speeding up range queries.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 43,
+    "question": "Which PostgreSQL index type is specifically optimized for indexing composite values, such as arrays and full-text search documents?",
+    "options": [
+      "B-tree",
+      "GIN",
+      "GiST",
+      "Hash"
+    ],
+    "answer": "GIN",
+    "explanation": "Generalized Inverted Indexes (GIN) are optimized for cases where multiple values map to a single row, such as arrays or tsvector documents. They support efficient querying of composite values.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 44,
+    "question": "Which PostgreSQL index type is commonly used for geometric data types and full-text search using trigrams?",
+    "options": [
+      "B-tree",
+      "BRIN",
+      "GiST",
+      "Hash"
+    ],
+    "answer": "GiST",
+    "explanation": "Generalized Search Tree (GiST) indexes are used for complex data types and querying paradigms that B-trees cannot handle, such as geometric intersection (using R-trees) or full-text search with trigrams.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 45,
+    "question": "What happens to indexes when a VACUUM FULL is executed on a PostgreSQL table?",
+    "options": [
+      "Indexes are bypassed and rebuilt automatically on the next query",
+      "Indexes are incrementally rebuilt in the background",
+      "Indexes are rebuilt from scratch",
+      "Indexes remain completely unaffected"
+    ],
+    "answer": "Indexes are rebuilt from scratch",
+    "explanation": "`VACUUM FULL` rewrites the entire table to reclaim disk space, physically moving rows. Because row locations change, all associated indexes must be rebuilt from scratch.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 46,
+    "question": "How does a Materialized View differ from a standard View in PostgreSQL?",
+    "options": [
+      "A Materialized View executes its underlying query on every access, while a standard View caches the result",
+      "A Materialized View stores the result of its underlying query physically on disk, while a standard View executes the query on access",
+      "A Materialized View allows data modification via INSTEAD OF triggers, while a standard View does not",
+      "A Materialized View requires a JOIN, while a standard View can only select from a single table"
+    ],
+    "answer": "A Materialized View stores the result of its underlying query physically on disk, while a standard View executes the query on access",
+    "explanation": "A Materialized View persists the query result set to disk, allowing for faster read performance at the cost of data staleness, which requires manual or scheduled `REFRESH` operations.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 47,
+    "question": "What is the primary function of the VACUUM command in PostgreSQL?",
+    "options": [
+      "To defragment indexes and shrink the physical table size on disk",
+      "To reclaim space occupied by dead tuples and update visibility maps",
+      "To completely lock a table for maintenance operations",
+      "To migrate data to a new tablespace"
+    ],
+    "answer": "To reclaim space occupied by dead tuples and update visibility maps",
+    "explanation": "`VACUUM` scans tables to identify dead tuples (rows deleted or updated) and marks that space as available for future inserts. Unlike `VACUUM FULL`, standard `VACUUM` does not shrink the file size on disk.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 48,
+    "question": "Under what condition does an `UPDATE` statement create a new row version in PostgreSQL?",
+    "options": [
+      "Only when the updated column is part of an index",
+      "Only when the table lacks a primary key",
+      "Always, for any data modification in the row",
+      "Only when the updated column is part of a foreign key"
+    ],
+    "answer": "Always, for any data modification in the row",
+    "explanation": "Due to MVCC, PostgreSQL does not modify rows in place. Any `UPDATE` creates a completely new version of the row and marks the old version as dead.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 49,
+    "question": "In PostgreSQL's system catalogs, what do the hidden system columns `xmin` and `xmax` represent?",
+    "options": [
+      "The minimum and maximum values of the table's primary key",
+      "The transaction ID that inserted the row and the transaction ID that deleted it",
+      "The size limits of the row and its associated TOAST table",
+      "The lowest and highest execution plan costs for the row"
+    ],
+    "answer": "The transaction ID that inserted the row and the transaction ID that deleted it",
+    "explanation": "Every row in PostgreSQL has `xmin` (the transaction ID that inserted/created the row version) and `xmax` (the transaction ID that deleted or updated the row) to manage MVCC visibility.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 50,
+    "question": "Which feature allows a subquery in the FROM clause to reference columns from previous items in the FROM clause?",
+    "options": [
+      "CROSS APPLY",
+      "LATERAL",
+      "CORRELATED",
+      "RECURSIVE"
+    ],
+    "answer": "LATERAL",
+    "explanation": "The `LATERAL` keyword allows a subquery in the FROM clause to reference columns from other tables or subqueries that appear earlier in the FROM clause. This is useful for complex joins and generating sets.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 51,
+    "question": "What is the difference between the EXPLAIN and EXPLAIN ANALYZE commands?",
+    "options": [
+      "EXPLAIN estimates the plan cost without executing the query; EXPLAIN ANALYZE executes the query and shows actual timings",
+      "EXPLAIN shows the query text; EXPLAIN ANALYZE formats the query text for readability",
+      "EXPLAIN executes the query; EXPLAIN ANALYZE suggests index modifications",
+      "EXPLAIN works on SELECT statements; EXPLAIN ANALYZE works only on DML statements"
+    ],
+    "answer": "EXPLAIN estimates the plan cost without executing the query; EXPLAIN ANALYZE executes the query and shows actual timings",
+    "explanation": "`EXPLAIN` displays the query planner's execution plan and estimated costs without running the query. `EXPLAIN ANALYZE` actually executes the query to provide real execution times and row counts.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 52,
+    "question": "In PostgreSQL, what is the key functional difference between JSON and JSONB data types?",
+    "options": [
+      "JSONB is stored as text, while JSON is stored in a parsed binary format",
+      "JSON validates input schema, while JSONB does not",
+      "JSONB stores data in a decomposed binary format, allowing for efficient indexing and faster processing",
+      "JSON can store nested arrays, while JSONB cannot"
+    ],
+    "answer": "JSONB stores data in a decomposed binary format, allowing for efficient indexing and faster processing",
+    "explanation": "`JSON` stores the exact text of the input data, preserving whitespace and key order. `JSONB` parses the input into a binary format that does not preserve whitespace but allows for highly efficient indexing (via GIN) and faster element access.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 53,
+    "question": "What is the purpose of an Index-Only Scan in PostgreSQL?",
+    "options": [
+      "It scans the entire index to find matching rows without accessing the heap",
+      "It fetches all data directly from the index without needing to access the underlying table's heap",
+      "It drops the underlying table and relies entirely on the index",
+      "It uses a bitmap scan to merge multiple indexes"
+    ],
+    "answer": "It fetches all data directly from the index without needing to access the underlying table's heap",
+    "explanation": "An Index-Only Scan occurs when all the columns required by a query are present in the index itself, allowing PostgreSQL to bypass reading the main table data (heap) if visibility checks pass.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 54,
+    "question": "What is a Partial Index in PostgreSQL?",
+    "options": [
+      "An index that is built asynchronously in the background",
+      "An index that only contains entries for rows that satisfy a specified WHERE clause",
+      "An index that spans multiple tables via a foreign key",
+      "An index that stores only the first column of a composite key"
+    ],
+    "answer": "An index that only contains entries for rows that satisfy a specified WHERE clause",
+    "explanation": "A Partial Index is built using a `WHERE` clause, meaning it only indexes a subset of the table's rows. This reduces index size and improves query performance for specific common conditions.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 55,
+    "question": "When using Window Functions in PostgreSQL, what does the `PARTITION BY` clause do?",
+    "options": [
+      "It physically divides the table into separate partitions on disk",
+      "It splits the result set into groups to which the window function is applied independently",
+      "It aggregates the results into a single summary row per partition",
+      "It prevents the window function from accessing rows from other partitions"
+    ],
+    "answer": "It splits the result set into groups to which the window function is applied independently",
+    "explanation": "The `PARTITION BY` clause divides the rows into partitions (groups) to which the window function is applied. Unlike `GROUP BY`, it does not collapse the rows into a single output row per group.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 56,
+    "question": "What is the primary difference between `RECURSIVE` CTEs and standard CTEs in PostgreSQL?",
+    "options": [
+      "Recursive CTEs allow a query to reference itself to traverse hierarchical data",
+      "Recursive CTEs execute faster because they bypass the query planner",
+      "Recursive CTEs require a materialized view, while standard CTEs do not",
+      "Recursive CTEs allow data modification, while standard CTEs are read-only"
+    ],
+    "answer": "Recursive CTEs allow a query to reference itself to traverse hierarchical data",
+    "explanation": "By adding the `RECURSIVE` keyword to a Common Table Expression (CTE), the CTE can reference its own output, allowing it to iteratively process hierarchical or graph-structured data until a termination condition is met.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 57,
+    "question": "Which mechanism allows PostgreSQL to query data stored in external systems, such as another PostgreSQL database or a MySQL database?",
+    "options": [
+      "Materialized Views",
+      "Foreign Data Wrappers (FDW)",
+      "Logical Replication Slots",
+      "Point-in-Time Recovery"
+    ],
+    "answer": "Foreign Data Wrappers (FDW)",
+    "explanation": "Foreign Data Wrappers (FDW) implement SQL/MED (Management of External Data) standards, allowing PostgreSQL to access external data sources as if they were local tables.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 58,
+    "question": "What does the `RETURNING` clause do when appended to an `INSERT`, `UPDATE`, or `DELETE` statement?",
+    "options": [
+      "It returns the total number of rows affected by the operation",
+      "It rolls back the transaction if any constraints are violated",
+      "It returns the actual rows that were inserted, updated, or deleted",
+      "It logs the operation to the Write-Ahead Log"
+    ],
+    "answer": "It returns the actual rows that were inserted, updated, or deleted",
+    "explanation": "The `RETURNING` clause retrieves the exact rows (and specific columns) modified by a DML statement. This is highly useful for retrieving auto-generated primary keys immediately after an insert.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 59,
+    "question": "How are sequence values affected when a transaction that called `nextval()` is rolled back?",
+    "options": [
+      "The sequence is rolled back to its previous value",
+      "The sequence retains the incremented value, creating a gap",
+      "The sequence is reset to its starting value",
+      "The transaction fails because sequences do not support rollbacks"
+    ],
+    "answer": "The sequence retains the incremented value, creating a gap",
+    "explanation": "Sequences in PostgreSQL are non-transactional. Calling `nextval()` consumes a value permanently, so a rollback does not undo the sequence increment, potentially leaving gaps in generated IDs.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 60,
+    "question": "What are the two distinct types of triggers supported by PostgreSQL?",
+    "options": [
+      "BEFORE and AFTER",
+      "STATEMENT and ROW",
+      "IMMEDIATE and DEFERRED",
+      "SYNC and ASYNC"
+    ],
+    "answer": "STATEMENT and ROW",
+    "explanation": "PostgreSQL triggers can fire per row (executing once for each affected row) or per statement (executing once for the entire DML statement, regardless of how many rows are affected).",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 61,
+    "question": "In PostgreSQL declarative partitioning, what is partition pruning?",
+    "options": [
+      "Physically deleting old partitions based on retention policies",
+      "The query optimizer skipping the scanning of partitions that cannot contain matching rows",
+      "Compressing partitions to save disk space during low activity",
+      "Indexing all partitions concurrently to speed up complex joins"
+    ],
+    "answer": "The query optimizer skipping the scanning of partitions that cannot contain matching rows",
+    "explanation": "Partition pruning is an optimization where the query planner identifies that certain partitions cannot contain rows matching the query's WHERE clause, thus excluding those partitions from the execution plan.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 62,
+    "question": "What feature allows PostgreSQL to rank documents based on their relevance to a specific query?",
+    "options": [
+      "Trigram indexing",
+      "tsvector and tsquery data types",
+      "HStore extension",
+      "Foreign Data Wrappers"
+    ],
+    "answer": "tsvector and tsquery data types",
+    "explanation": "PostgreSQL's full-text search uses `tsvector` to represent a normalized document and `tsquery` to represent a query. Functions like `ts_rank` use these types to calculate relevance scores.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 63,
+    "question": "Which statement accurately describes the behavior of an Advisory Lock in PostgreSQL?",
+    "options": [
+      "It is automatically acquired by the database during large data imports",
+      "It prevents other users from modifying the schema of a specific table",
+      "It provides a locking mechanism bound to a session or transaction, independent of table data",
+      "It restricts read access to sensitive system catalogs"
+    ],
+    "answer": "It provides a locking mechanism bound to a session or transaction, independent of table data",
+    "explanation": "Advisory locks are application-defined locks that are not tied to any specific table or row. They are used to coordinate application logic across multiple concurrent sessions without modifying data.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 64,
+    "question": "What PostgreSQL feature allows handling exceptions and controlling transaction flow within a procedural language block (e.g., PL/pgSQL)?",
+    "options": [
+      "SAVEPOINT and ROLLBACK TO",
+      "COMMIT and ROLLBACK",
+      "TRY and CATCH",
+      "EXCEPTION blocks"
+    ],
+    "answer": "EXCEPTION blocks",
+    "explanation": "In PL/pgSQL, a block can contain an `EXCEPTION` section. If an error occurs in the block, the transaction enters a sub-transaction state, allowing the exception handler to catch the error and recover, effectively functioning like a savepoint.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 65,
+    "question": "In PostgreSQL query planning, when is a Hash Join typically used?",
+    "options": [
+      "When joining large, unsorted datasets where an equality condition exists",
+      "When joining datasets that must return exact counts without duplicates",
+      "When joining very small tables that fit entirely in CPU cache",
+      "When joining datasets on inequality conditions (e.g., < or >)"
+    ],
+    "answer": "When joining large, unsorted datasets where an equality condition exists",
+    "explanation": "A Hash Join builds an in-memory hash table of the smaller dataset and scans the larger dataset to probe the hash table. It is optimal for large, unsorted data when joined via an equality operator.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 66,
+    "question": "What is a \"TOAST\" table in PostgreSQL used for?",
+    "options": [
+      "To store temporary data for complex aggregate functions",
+      "To optimize the storage of records that exceed the standard page size limit",
+      "To manage transaction states for long-running queries",
+      "To keep track of foreign key dependencies"
+    ],
+    "answer": "To optimize the storage of records that exceed the standard page size limit",
+    "explanation": "TOAST (The Oversized-Attribute Storage Technique) automatically handles values that are too large to fit within a standard 8KB page block by compressing them or moving them to a separate, associated TOAST table.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 67,
+    "question": "How does PostgreSQL handle the `IDENTITY` column feature compared to traditional `SERIAL` types?",
+    "options": [
+      "IDENTITY columns rely on external sequences, while SERIAL types do not",
+      "IDENTITY columns are SQL-standard compliant and ensure better schema consistency than SERIAL",
+      "IDENTITY columns generate UUIDs automatically, while SERIAL types generate integers",
+      "IDENTITY columns are deprecated in favor of GENERATED ALWAYS"
+    ],
+    "answer": "IDENTITY columns are SQL-standard compliant and ensure better schema consistency than SERIAL",
+    "explanation": "Introduced in PostgreSQL 10, the `IDENTITY` column (`GENERATED AS IDENTITY`) is SQL-standard compliant. Unlike `SERIAL`, it avoids creating standalone database objects (like sequences) that users might accidentally drop or alter.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 68,
+    "question": "In the context of PostgreSQL replication, what is the primary purpose of Logical Replication?",
+    "options": [
+      "To stream block-level changes for disk-level mirroring",
+      "To replicate data at the file system level asynchronously",
+      "To publish and subscribe to specific tables or databases based on row-level changes",
+      "To synchronize sequences across multiple read replicas"
+    ],
+    "answer": "To publish and subscribe to specific tables or databases based on row-level changes",
+    "explanation": "Logical Replication uses a publish/subscribe model to replicate data changes (INSERT, UPDATE, DELETE) at the row level. It allows for selective table replication and cross-major-version upgrades, unlike physical streaming replication.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 69,
+    "question": "What characterizes a \"Deadlock\" in PostgreSQL, and how does the server respond?",
+    "options": [
+      "Transactions wait indefinitely until the administrator cancels one; the server does not respond",
+      "The server detects the cycle and aborts one transaction to resolve the block",
+      "The server automatically grants both transactions shared locks to resolve the deadlock",
+      "The server switches to Read Uncommitted isolation to allow the transactions to proceed"
+    ],
+    "answer": "The server detects the cycle and aborts one transaction to resolve the block",
+    "explanation": "A deadlock occurs when two or more transactions hold locks that the others need. PostgreSQL's deadlock detector identifies these cyclic dependencies and terminates one transaction, returning an error to the client.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 70,
+    "question": "What is the function of the `pg_stat_statements` extension in PostgreSQL?",
+    "options": [
+      "To monitor real-time execution plans of active queries",
+      "To track execution statistics of all SQL statements run on the server",
+      "To validate syntax and optimize queries before execution",
+      "To restrict access to resource-intensive queries"
+    ],
+    "answer": "To track execution statistics of all SQL statements run on the server",
+    "explanation": "`pg_stat_statements` is an extension that records execution details (like total time, rows, and I/O) for all SQL statements executed by the server. It is crucial for identifying slow or resource-heavy queries for tuning.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 71,
+    "question": "In PostgreSQL's MVCC implementation, what do the hidden system columns 'xmin' and 'xmax' represent on a tuple?",
+    "options": [
+      "xmin is the minimum transaction ID that can read the row; xmax is the maximum transaction ID allowed",
+      "xmin is the transaction ID that inserted/updated the row; xmax is the transaction ID that deleted/updated the row",
+      "xmin is the lowest XID in the current snapshot; xmax is the highest XID in the current snapshot",
+      "xmin tracks the first WAL segment for the row; xmax tracks the last WAL segment for the row"
+    ],
+    "answer": "xmin is the transaction ID that inserted/updated the row; xmax is the transaction ID that deleted/updated the row",
+    "explanation": "Each tuple in PostgreSQL stores xmin (the XID of the inserting/committing transaction) and xmax (the XID of the deleting/updating transaction). These fields, combined with the current snapshot's visibility rules, determine whether a tuple is visible to a given transaction.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 72,
+    "question": "PostgreSQL's Repeatable Read isolation level actually provides Snapshot Isolation (SI). Which anomaly does it prevent that the SQL standard does not require Repeatable Read to prevent?",
+    "options": [
+      "Dirty reads",
+      "Non-repeatable reads",
+      "Phantom reads",
+      "Write skew"
+    ],
+    "answer": "Phantom reads",
+    "explanation": "In PostgreSQL, Repeatable Read implements Snapshot Isolation, which prevents phantom reads by using a single consistent snapshot for the entire transaction. This exceeds the SQL standard's Repeatable Read requirements, which still permit phantom reads.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 73,
+    "question": "Which concurrency anomaly is NOT prevented by PostgreSQL's Serializable Snapshot Isolation (SSI) but IS prevented by true serializability?",
+    "options": [
+      "Phantom reads",
+      "Write skew",
+      "Dirty reads",
+      "Lost updates"
+    ],
+    "answer": "Write skew",
+    "explanation": "This is a trick question — PostgreSQL's SSI implementation actually DOES prevent write skew. SSI detects serialization hazards through predicate locks and read-write dependencies, achieving true serializability by aborting transactions that could produce anomalous results under any serial execution.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 74,
+    "question": "How does PostgreSQL implement Serializable Snapshot Isolation (SSI) to detect serialization failures?",
+    "options": [
+      "By acquiring table-level predicate locks that block all concurrent writes",
+      "By tracking read-write dependencies (rw-conflicts) between concurrent transactions using SIREAD locks",
+      "By serializing all transactions through a single-writer queue",
+      "By using optimistic concurrency control with post-commit validation"
+    ],
+    "answer": "By tracking read-write dependencies (rw-conflicts) between concurrent transactions using SIREAD locks",
+    "explanation": "SSI tracks predicate reads via SIREAD locks and builds a serialization graph of rw-dependencies. When a dangerous structure (a cycle of rw-conflicts) is detected, one transaction is aborted with SQLSTATE 40001 to maintain serializability.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 75,
+    "question": "In PostgreSQL's WAL mechanism, what is the purpose of a 'checkpoint'?",
+    "options": [
+      "It creates a full backup of the database cluster directory",
+      "It flushes all dirty buffers from shared_buffers to disk and records the WAL position, establishing a recovery starting point",
+      "It truncates the pg_wal directory to reclaim disk space",
+      "It switches the active WAL segment file to the next segment"
+    ],
+    "answer": "It flushes all dirty buffers from shared_buffers to disk and records the WAL position, establishing a recovery starting point",
+    "explanation": "A checkpoint writes all modified shared_buffers to data files and records the redo point in WAL. During crash recovery, PostgreSQL only needs to replay WAL records from the last checkpoint, making recovery time bounded by checkpoint_timeout and max_wal_size.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 76,
+    "question": "What is the significance of the 'full_page_writes' parameter in PostgreSQL WAL configuration?",
+    "options": [
+      "It forces every transaction to write entire data pages instead of individual rows for performance",
+      "It ensures the first WAL record modifying each data page after a checkpoint includes the full page image to guard against partial page writes",
+      "It enables writing complete WAL segment files instead of individual records",
+      "It duplicates all WAL writes to a secondary location for redundancy"
+    ],
+    "answer": "It ensures the first WAL record modifying each data page after a checkpoint includes the full page image to guard against partial page writes",
+    "explanation": "After a checkpoint, the first modification to each page triggers a full page image (FPI) in WAL. This protects against torn page writes on crash, as recovery can reconstruct a consistent page before applying subsequent WAL records.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 77,
+    "question": "What PostgreSQL index type is specifically optimized for columns whose values are strongly correlated with their physical table ordering, such as timestamp columns in append-only tables?",
+    "options": [
+      "GIN (Generalized Inverted Index)",
+      "GiST (Generalized Search Tree)",
+      "BRIN (Block Range Index)",
+      "SP-GiST (Space-Partitioned GiST)"
+    ],
+    "answer": "BRIN (Block Range Index)",
+    "explanation": "BRIN stores summary statistics (min/max values) for ranges of contiguous data blocks. For naturally ordered data, BRIN indexes are extremely compact and effective, as they can quickly eliminate large block ranges from scan consideration.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 78,
+    "question": "Under what condition will a B-tree index in PostgreSQL be used for an ORDER BY clause without requiring a separate sort step?",
+    "options": [
+      "When the index is created with the INCLUDE clause for covering queries",
+      "When the index key ordering matches the ORDER BY clause and the planner chooses an index scan that returns rows in the required order",
+      "When the query uses LIMIT in combination with ORDER BY",
+      "When the table has been recently VACUUMed and the index is marked as valid"
+    ],
+    "answer": "When the index key ordering matches the ORDER BY clause and the planner chooses an index scan that returns rows in the required order",
+    "explanation": "A B-tree index stores entries in sorted order. If the ORDER BY clause matches the index key order (including ASC/DESC and NULLS positioning), PostgreSQL can satisfy the ordering via an index scan, avoiding an explicit Sort node in the execution plan.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 79,
+    "question": "What is the primary advantage of a GIN (Generalized Inverted Index) over a B-tree for indexing array or full-text search columns in PostgreSQL?",
+    "options": [
+      "GIN indexes support unique constraints on array elements",
+      "GIN indexes map individual elements (like array members or lexemes) to their containing rows, enabling fast containment and search queries",
+      "GIN indexes maintain sorted order of the indexed values for range queries",
+      "GIN indexes are smaller than B-tree indexes for scalar column types"
+    ],
+    "answer": "GIN indexes map individual elements (like array members or lexemes) to their containing rows, enabling fast containment and search queries",
+    "explanation": "GIN uses an inverted index structure where each key element points to a posting list of row TIDs. This is ideal for operations like array containment (@>), full-text search (@@), and JSONB key lookups.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 80,
+    "question": "In PostgreSQL, what does a GiST (Generalized Search Tree) index provide that a standard B-tree does not?",
+    "options": [
+      "Support for unique constraints on composite keys",
+      "Support for domain-specific balancing strategies via user-defined methods, enabling indexing of geometric, range, and nearest-neighbor data",
+      "Automatic maintenance of statistics for the query planner",
+      "Faster sequential scans on large tables"
+    ],
+    "answer": "Support for domain-specific balancing strategies via user-defined methods, enabling indexing of geometric, range, and nearest-neighbor data",
+    "explanation": "GiST is an extensible index framework allowing custom data types to define their own consistency and union methods. It supports operations like spatial containment, overlap, and KNN (k-nearest neighbor) searches that B-trees cannot handle.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 81,
+    "question": "What is the purpose of the 'hint bits' stored in tuple headers within PostgreSQL's heap?",
+    "options": [
+      "They provide the query optimizer with cardinality hints for faster planning",
+      "They cache the commit/abort status of the inserting and deleting transactions to avoid repeated CLOG lookups during visibility checks",
+      "They indicate which index entries reference the tuple for faster index cleanup",
+      "They store checksum hints to detect page corruption without full verification"
+    ],
+    "answer": "They cache the commit/abort status of the inserting and deleting transactions to avoid repeated CLOG lookups during visibility checks",
+    "explanation": "Hint bits (HEAP_XMIN_COMMITTED, HEAP_XMIN_INVALID, etc.) are set in the tuple header after the first visibility check confirms a transaction's commit status via the commit log. Subsequent reads skip the CLOG lookup, significantly reducing overhead on hot data.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 82,
+    "question": "What happens during PostgreSQL's 'HOT (Heap-Only Tuple) update' mechanism, and what is a key requirement for it to be used?",
+    "options": [
+      "The update modifies only heap-resident columns without changing any indexed columns, allowing the update without touching indexes",
+      "The update keeps the tuple in the same data page and acquires an exclusive lock on the table",
+      "The update is applied only to the heap without generating any WAL records",
+      "The update modifies the tuple in-place by overwriting the existing version"
+    ],
+    "answer": "The update modifies only heap-resident columns without changing any indexed columns, allowing the update without touching indexes",
+    "explanation": "When an UPDATE does not change any indexed columns, PostgreSQL uses HOT to insert the new tuple in the same page (if possible) with a forwarding pointer, avoiding index updates. This dramatically reduces write amplification and speeds up VACUUM.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 83,
+    "question": "In PostgreSQL, what does 'autovacuum' primarily do to maintain MVCC health, and what triggers it?",
+    "options": [
+      "It reorganizes data pages for physical sequential ordering, triggered by table bloat thresholds",
+      "It identifies and reclaims dead tuples (from updates/deletes) and updates visibility maps, triggered by thresholds based on modified row counts relative to table size",
+      "It defragments indexes on all tables, triggered on a fixed time schedule",
+      "It recreates statistics for the query planner, triggered after every DML statement"
+    ],
+    "answer": "It identifies and reclaims dead tuples (from updates/deletes) and updates visibility maps, triggered by thresholds based on modified row counts relative to table size",
+    "explanation": "Autovacuum daemon launches workers based on autovacuum_vacuum_scale_factor and autovacuum_vacuum_threshold. Workers scan for dead tuples (no longer visible to any transaction) and reclaim space, also updating the visibility map and freezing old tuples to prevent XID wraparound.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 84,
+    "question": "What is 'transaction ID wraparound' in PostgreSQL, and what mechanism prevents data loss from it?",
+    "options": [
+      "XIDs exhaust 32-bit space; autovacuum freezes old tuples by setting xmin to FrozenXID before the XID counter wraps around",
+      "XIDs overflow 64-bit space; pg_resetwal resets the counter to prevent corruption",
+      "XID assignment becomes non-monotonic under heavy concurrency; advisory locks serialize XID allocation",
+      "XIDs conflict across replication standbys; logical replication slots reconcile XID mappings"
+    ],
+    "answer": "XIDs exhaust 32-bit space; autovacuum freezes old tuples by setting xmin to FrozenXID before the XID counter wraps around",
+    "explanation": "PostgreSQL uses 32-bit transaction IDs. Without intervention, an XID counter wraparound would make old tuples appear to be in the future. Autovacuum 'freezes' tuples by replacing their xmin with a special FrozenXID (2), making them permanently visible and immune to wraparound issues.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 85,
+    "question": "What is the critical difference between PostgreSQL's 'VACUUM' and 'VACUUM FULL' commands?",
+    "options": [
+      "VACUUM runs automatically; VACUUM FULL must be manually triggered",
+      "VACUUM marks dead tuples as reusable space within existing pages; VACUUM FULL rewrites the entire table to reclaim and return disk space to the OS, acquiring an exclusive lock",
+      "VACUUM only processes the heap; VACUUM FULL only processes indexes",
+      "VACUUM updates planner statistics; VACUUM FULL defragments data pages"
+    ],
+    "answer": "VACUUM marks dead tuples as reusable space within existing pages; VACUUM FULL rewrites the entire table to reclaim and return disk space to the OS, acquiring an exclusive lock",
+    "explanation": "Regular VACUUM makes dead tuple space available for future inserts/updates but does not shrink the file or return space to the OS. VACUUM FULL physically rewrites the table and rebuilds indexes, reclaiming space but holding an AccessExclusiveLock that blocks all concurrent access.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 86,
+    "question": "In PostgreSQL's cost-based query optimizer, what does the 'random_page_cost' parameter represent?",
+    "options": [
+      "The CPU cost of processing a single random tuple",
+      "The estimated cost of fetching a non-sequentially-stored data page, expressed as a multiple of sequential page cost",
+      "The monetary cost per page for cloud-hosted PostgreSQL instances",
+      "The overhead of acquiring buffer pins for concurrent random reads"
+    ],
+    "answer": "The estimated cost of fetching a non-sequentially-stored data page, expressed as a multiple of sequential page cost",
+    "explanation": "random_page_cost (default 4.0) estimates the cost of a random disk page fetch relative to seq_page_cost (default 1.0). This ratio influences whether the planner chooses sequential scans over index scans, especially on HDDs where random I/O is significantly slower.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 87,
+    "question": "In PostgreSQL query planning, what is a 'Parameterized Nested Loop Join' and when is it most efficient?",
+    "options": [
+      "It nests query parameters to reduce parsing overhead; most efficient for bulk inserts",
+      "It scans the inner table once for each row of the outer table using index lookups parameterized by outer row values; most efficient when the inner table has a selective index and outer row count is small",
+      "It caches query parameters across executions in prepared statements; most efficient for OLTP workloads",
+      "It uses nested subqueries to pass parameters between execution stages; most efficient for large unindexed joins"
+    ],
+    "answer": "It scans the inner table once for each row of the outer table using index lookups parameterized by outer row values; most efficient when the inner table has a selective index and outer row count is small",
+    "explanation": "A parameterized nested loop passes each outer row's join key to an inner index scan. When the inner scan is selective (few rows match per outer row) and the outer relation is small, this avoids sorting and hashing overhead that Hash/Merge joins require.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 88,
+    "question": "What is the role of the 'visibility map' in PostgreSQL, and which operations benefit most from it?",
+    "options": [
+      "It maps user roles to visible schemas for access control",
+      "It tracks which data pages contain only tuples visible to all transactions, enabling index-only scans and VACUUM optimization",
+      "It maintains a log of visibility changes for replication to standby servers",
+      "It maps WAL segment numbers to their visibility status for crash recovery"
+    ],
+    "answer": "It tracks which data pages contain only tuples visible to all transactions, enabling index-only scans and VACUUM optimization",
+    "explanation": "The visibility map has one bit per heap page indicating whether all tuples on that page are visible to all current and future transactions. Index-only scans check this map to avoid heap fetches, and VACUUM uses it to skip pages with no dead tuples.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 89,
+    "question": "How does PostgreSQL's 'Index-Only Scan' avoid accessing the heap, and under what condition might it still need to perform heap fetches?",
+    "options": [
+      "It uses a covering index with INCLUDE; heap fetches occur when the visibility map bit is unset for the page, requiring a visibility check on the tuple's xmin/xmax",
+      "It caches all heap data in shared_buffers; heap fetches occur when the buffer is evicted under memory pressure",
+      "It stores visibility information within the index entry; heap fetches occur when the index is marked as invalid",
+      "It uses materialized views; heap fetches occur when the view is stale"
+    ],
+    "answer": "It uses a covering index with INCLUDE; heap fetches occur when the visibility map bit is unset for the page, requiring a visibility check on the tuple's xmin/xmax",
+    "explanation": "When all columns needed by a query exist in the index, PostgreSQL can use an Index-Only Scan. However, it must still verify tuple visibility. If the visibility map shows the page is all-visible, it skips the heap fetch; otherwise, it fetches the heap tuple to check xmin/xmax.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 90,
+    "question": "What is the purpose of 'synchronous_commit' parameter in PostgreSQL, and what durability trade-off does setting it to 'off' introduce?",
+    "options": [
+      "It controls whether COMMIT waits for WAL flush to disk; 'off' allows commit acknowledgment before WAL is flushed, risking data loss on crash for committed transactions",
+      "It controls whether transactions block on replica acknowledgments; 'off' disables replication entirely",
+      "It controls WAL segment archiving; 'off' prevents PITR capability",
+      "It controls two-phase commit coordination; 'off' disables distributed transactions"
+    ],
+    "answer": "It controls whether COMMIT waits for WAL flush to disk; 'off' allows commit acknowledgment before WAL is flushed, risking data loss on crash for committed transactions",
+    "explanation": "With synchronous_commit=off, COMMIT returns success before WAL records are fsync'd to durable storage. This improves latency and throughput but means recently committed transactions can be lost if the server crashes before WAL reaches disk.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 91,
+    "question": "What is the role of 'tuple freezing' in PostgreSQL, and what system column value indicates a tuple has been frozen?",
+    "options": [
+      "Freezing optimizes tuple storage layout; the frozen flag is stored in xmax",
+      "Freezing prevents XID wraparound by replacing xmin with the special FrozenXID, making the tuple permanently visible to all snapshots",
+      "Freezing caches the tuple in shared_buffers permanently; indicated by a bit in the page header",
+      "Freezing deduplicates identical tuples across partitions; indicated by the tableoid column"
+    ],
+    "answer": "Freezing prevents XID wraparound by replacing xmin with the special FrozenXID, making the tuple permanently visible to all snapshots",
+    "explanation": "When VACUUM freezes a tuple, it replaces the xmin with FrozenTransactionId (a constant, value 2). This means the tuple's visibility no longer depends on the original inserting transaction's commit status, protecting it when the 32-bit XID counter wraps around.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 92,
+    "question": "In PostgreSQL's transaction isolation, what happens when two concurrent transactions both use SELECT ... FOR UPDATE on the same rows under Read Committed isolation?",
+    "options": [
+      "Both transactions succeed immediately with stale snapshots",
+      "The first transaction to acquire the locks proceeds; the second blocks until the first commits or rolls back, then re-evaluates the query against the new row versions",
+      "Both transactions deadlock immediately and are automatically rolled back",
+      "The second transaction receives a serialization failure (SQLSTATE 40001)"
+    ],
+    "answer": "The first transaction to acquire the locks proceeds; the second blocks until the first commits or rolls back, then re-evaluates the query against the new row versions",
+    "explanation": "Under Read Committed, SELECT FOR UPDATE acquires row-level locks. The blocking transaction waits, and upon release, it re-reads the latest committed version of the locked rows (not its original snapshot), preventing lost updates.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 93,
+    "question": "What is the key behavioral difference between 'ALTER TABLE ... SET (fillfactor=N)' values of 100 versus 75 for a frequently updated table?",
+    "options": [
+      "fillfactor=100 enables page compression; fillfactor=75 disables compression for faster reads",
+      "fillfactor=100 leaves no free space per page, forcing all updates to new pages; fillfactor=75 reserves 25% free space per page to enable HOT updates within the same page",
+      "fillfactor=100 forces sequential writes; fillfactor=75 enables parallel writes",
+      "fillfactor=100 enables index-only scans; fillfactor=75 requires heap access for all queries"
+    ],
+    "answer": "fillfactor=100 leaves no free space per page, forcing all updates to new pages; fillfactor=75 reserves 25% free space per page to enable HOT updates within the same page",
+    "explanation": "fillfactor controls how full each data page is packed during inserts. A lower fillfactor (e.g., 75) leaves free space so that UPDATE operations can place new tuple versions in the same page, increasing the likelihood of HOT updates and reducing index maintenance.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 94,
+    "question": "What is the purpose of PostgreSQL's 'pg_stat_statements' extension, and what data does it aggregate?",
+    "options": [
+      "It provides real-time session monitoring for active blocking queries",
+      "It tracks execution statistics (calls, total time, rows, I/O, buffer usage) per query text fingerprint across all sessions",
+      "It logs all SQL statements to a file for audit compliance",
+      "It maintains statistics for the query planner's cost model estimation"
+    ],
+    "answer": "It tracks execution statistics (calls, total time, rows, I/O, buffer usage) per query text fingerprint across all sessions",
+    "explanation": "pg_stat_statements records normalized query texts (constants replaced with parameters) and aggregates metrics like total_exec_time, calls, rows, shared_blks_hit/read, and temp_blks_written per unique query fingerprint, enabling performance analysis.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 95,
+    "question": "How does PostgreSQL's 'Partition Pruning' differ at plan time versus execution time?",
+    "options": [
+      "Plan-time pruning uses constants in the WHERE clause to exclude partitions during planning; execution-time pruning uses values known only at runtime (e.g., from subqueries or parameterized prepared statements) to skip partitions during the Append/Merge Append node execution",
+      "Plan-time pruning defragments partitions; execution-time pruning compacts partition data",
+      "Plan-time pruning creates new partitions; execution-time pruning drops unnecessary partitions",
+      "Plan-time pruning optimizes partition key indexes; execution-time pruning rebuilds partition statistics"
+    ],
+    "answer": "Plan-time pruning uses constants in the WHERE clause to exclude partitions during planning; execution-time pruning uses values known only at runtime (e.g., from subqueries or parameterized prepared statements) to skip partitions during the Append/Merge Append node execution",
+    "explanation": "Plan-time pruning eliminates partitions during query optimization when partition constraints can be evaluated against literal constants. Execution-time pruning defers partition elimination to runtime when the pruning values depend on subquery results or parameterized parameters, utilizing a RuntimePruningInfo mechanism.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 96,
+    "question": "What is a 'deadlock' resolution behavior in PostgreSQL when two transactions acquire conflicting locks in reverse order?",
+    "options": [
+      "Both transactions are immediately rolled back with SQLSTATE 40P01",
+      "The deadlock detector aborts one transaction (the one that started later) with SQLSTATE 40P01, and the other transaction continues",
+      "The lock manager forces one transaction to release all locks and retry automatically",
+      "The transactions remain blocked indefinitely until manual intervention via pg_terminate_backend"
+    ],
+    "answer": "The deadlock detector aborts one transaction (the one that started later) with SQLSTATE 40P01, and the other transaction continues",
+    "explanation": "PostgreSQL's deadlock detector runs periodically (controlled by deadlock_timeout). When it detects a deadlock cycle, it selects one transaction as the victim (typically the one that started most recently), aborts it with error code 40P01, and allows the other to proceed.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 97,
+    "question": "In PostgreSQL replication, what is the difference between 'synchronous_standby_names = FIRST 1 (standby1)' and 'synchronous_standby_names = ANY 1 (standby1, standby2)'?",
+    "options": [
+      "FIRST 1 uses physical replication; ANY 1 uses logical replication",
+      "FIRST 1 waits for confirmation from specifically standby1; ANY 1 waits for confirmation from any one of the listed standbys",
+      "FIRST 1 uses synchronous mode; ANY 1 uses asynchronous mode",
+      "FIRST 1 commits after standby1 applies WAL; ANY 1 commits after standby1 or standby2 receives WAL"
+    ],
+    "answer": "FIRST 1 waits for confirmation from specifically standby1; ANY 1 waits for confirmation from any one of the listed standbys",
+    "explanation": "FIRST (priority-based) requires the first N standbys in the listed priority order to acknowledge WAL flush before commit. ANY (quorum-based) requires any N of the listed standbys to acknowledge, providing more flexibility for high availability.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 98,
+    "question": "What is the 'commit log (CLOG)' in PostgreSQL, and how does it interact with tuple visibility checks?",
+    "options": [
+      "It is the human-readable log of all committed transactions for auditing",
+      "It is a shared memory structure (and SLRU file) storing the commit/abort status (committed, aborted, in-progress, sub-committed) for each transaction ID, consulted during visibility checks before hint bits are set",
+      "It is the log of schema changes committed by DDL statements for replication",
+      "It is the log of all COMMIT statements written by applications for debugging"
+    ],
+    "answer": "It is a shared memory structure (and SLRU file) storing the commit/abort status (committed, aborted, in-progress, sub-committed) for each transaction ID, consulted during visibility checks before hint bits are set",
+    "explanation": "CLOG uses SLRU (Simple Least Recently Used) pages to store two-bit status codes per transaction ID. When checking tuple visibility, if hint bits are not yet set, PostgreSQL reads the CLOG to determine whether the inserting/deleting transaction committed, then sets the hint bits.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 99,
+    "question": "What is the purpose of a 'TOAST' table in PostgreSQL, and which threshold determines whether a value is stored out-of-line?",
+    "options": [
+      "TOAST optimizes table storage by compressing all text columns below 8KB",
+      "TOAST stores oversized field values in a separate side table when a tuple's total size would exceed the TOAST_TUPLE_THRESHOLD (approximately 2KB), keeping main heap tuples compact",
+      "TOAST tracks statistics for the optimizer on large text and bytea columns",
+      "TOAST is a cache layer for large objects stored outside the database"
+    ],
+    "answer": "TOAST stores oversized field values in a separate side table when a tuple's total size would exceed the TOAST_TUPLE_THRESHOLD (approximately 2KB), keeping main heap tuples compact",
+    "explanation": "PostgreSQL has an 8KB page size limit. When a row's data approaches the TOAST_TUPLE_THRESHOLD (~2KB), PostgreSQL compresses and/or moves large variable-length columns to an associated TOAST table, storing only a pointer (TOAST pointer OID) in the main tuple.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 100,
+    "question": "In PostgreSQL, what is the difference between 'cmin/cmax' and 'xmin/xmax' system columns on a tuple?",
+    "options": [
+      "cmin/cmax track the CPU and memory cost of tuple operations; xmin/xmax track transaction IDs",
+      "cmin/cmax store the command identifier (sequence within a transaction) for the inserting and deleting commands; xmin/xmax store the transaction identifiers for those operations",
+      "cmin/cmax are minimum and maximum column values for the tuple; xmin/xmax are the same",
+      "cmin/cmax store checkpoint IDs; xmin/xmax store WAL segment numbers"
+    ],
+    "answer": "cmin/cmax store the command identifier (sequence within a transaction) for the inserting and deleting commands; xmin/xmax store the transaction identifiers for those operations",
+    "explanation": "While xmin/xmax identify the transactions that inserted/deleted a tuple, cmin/cmax identify the specific command (statement) within that transaction. This allows a single transaction to see its own earlier changes but not the effects of its own later statements at earlier scan positions.",
+    "difficulty": "Advanced"
+  }
+]
