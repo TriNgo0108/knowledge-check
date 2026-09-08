@@ -1,0 +1,1302 @@
+[
+  {
+    "id": 1,
+    "question": "What is the primary purpose of the SELECT statement in SQL?",
+    "options": [
+      "Retrieves data from one or more tables",
+      "Modifies the structure of an existing table",
+      "Permanently removes rows from a table",
+      "Creates a new database schema"
+    ],
+    "answer": "Retrieves data from one or more tables",
+    "explanation": "SELECT queries read and return rows from database tables. Structural changes use ALTER/CREATE, and row removal uses DELETE.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 2,
+    "question": "Which clause filters individual rows BEFORE any grouping or aggregation is performed?",
+    "options": [
+      "WHERE",
+      "HAVING",
+      "GROUP BY",
+      "ORDER BY"
+    ],
+    "answer": "WHERE",
+    "explanation": "WHERE evaluates each row against a condition before rows are grouped, reducing the data processed early. HAVING filters after GROUP BY aggregation has occurred.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 3,
+    "question": "What is the default sort direction when ORDER BY is used without specifying ASC or DESC?",
+    "options": [
+      "Ascending",
+      "Descending",
+      "Insertion order",
+      "Random order"
+    ],
+    "answer": "Ascending",
+    "explanation": "ORDER BY sorts in ascending order by default; DESC must be written explicitly for descending order. Tables have no guaranteed insertion order for output.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 4,
+    "question": "What does the GROUP BY clause do in a SQL query?",
+    "options": [
+      "Groups rows sharing the same column values so aggregate functions apply per group",
+      "Sorts the result set in ascending or descending order",
+      "Combines rows from two tables based on a matching column",
+      "Restricts the number of rows returned by a query"
+    ],
+    "answer": "Groups rows sharing the same column values so aggregate functions apply per group",
+    "explanation": "GROUP BY partitions rows into buckets by column value, and aggregates like SUM or COUNT are computed per bucket. Sorting is ORDER BY; combining tables is JOIN; limiting rows is LIMIT.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 5,
+    "question": "When is the HAVING clause evaluated in a query with aggregation?",
+    "options": [
+      "After GROUP BY has produced the aggregated groups",
+      "Before any rows are read from the table",
+      "Immediately after the SELECT list is projected",
+      "Only when the query contains an ORDER BY clause"
+    ],
+    "answer": "After GROUP BY has produced the aggregated groups",
+    "explanation": "HAVING filters aggregated group results, so it can reference aggregate functions like COUNT or SUM. WHERE cannot use aggregates because it runs before grouping.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 6,
+    "question": "Which rows does an INNER JOIN return?",
+    "options": [
+      "Only rows where the join condition matches in both tables",
+      "All rows from the left table plus NULLs for non-matches",
+      "All rows from both tables regardless of matches",
+      "Only rows that exist in the left table but not the right table"
+    ],
+    "answer": "Only rows where the join condition matches in both tables",
+    "explanation": "INNER JOIN keeps only rows satisfying the ON condition in both tables. Keeping all left rows describes a LEFT JOIN, and keeping all rows from both sides describes a FULL OUTER JOIN.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 7,
+    "question": "What does a LEFT JOIN return for rows in the left table that have no match in the right table?",
+    "options": [
+      "The left-table row with NULL values for the right-table columns",
+      "The left-table row is excluded entirely",
+      "The query raises a referential integrity error",
+      "The left-table row is duplicated once per right-table row"
+    ],
+    "answer": "The left-table row with NULL values for the right-table columns",
+    "explanation": "LEFT JOIN preserves every row from the left table, filling unmatched right-side columns with NULL. This distinguishes it from INNER JOIN, which drops non-matching rows.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 8,
+    "question": "Which property is guaranteed by a PRIMARY KEY constraint?",
+    "options": [
+      "Uniquely identifies each row and cannot contain NULL",
+      "Enforces a relationship to a column in another table",
+      "Provides a default value when no value is inserted",
+      "Accelerates full table scans of the entire table"
+    ],
+    "answer": "Uniquely identifies each row and cannot contain NULL",
+    "explanation": "A primary key enforces both uniqueness and NOT NULL for its column(s). Referencing other tables is the foreign key's role, and default values come from DEFAULT constraints.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 9,
+    "question": "What is the function of a FOREIGN KEY constraint?",
+    "options": [
+      "It references a key in another table to enforce referential integrity",
+      "It ensures every value in the column is different from all others",
+      "It automatically increments the column value on each insert",
+      "It restricts the column to a fixed list of allowed literal values"
+    ],
+    "answer": "It references a key in another table to enforce referential integrity",
+    "explanation": "A foreign key ensures values in one table correspond to existing primary key values in a referenced table. Uniqueness alone is a UNIQUE constraint; a fixed value list is a CHECK or enum, not a foreign key.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 10,
+    "question": "Why does the condition WHERE commission = NULL fail to filter rows correctly?",
+    "options": [
+      "NULL represents an unknown value and cannot be compared with =",
+      "The equals operator only works on numeric columns",
+      "NULL must always be written in lowercase letters",
+      "The WHERE clause cannot reference columns that allow NULL"
+    ],
+    "answer": "NULL represents an unknown value and cannot be compared with =",
+    "explanation": "In SQL, NULL means unknown, so any comparison with = yields unknown rather than true. The correct predicate is WHERE commission IS NULL.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 11,
+    "question": "How does COUNT(column_name) differ from COUNT(*)?",
+    "options": [
+      "COUNT(column_name) ignores NULL values in that column, COUNT(*) counts all rows",
+      "COUNT(column_name) counts distinct values, COUNT(*) counts duplicates",
+      "COUNT(column_name) is faster because it uses an index automatically",
+      "COUNT(*) ignores NULLs while COUNT(column_name) includes them"
+    ],
+    "answer": "COUNT(column_name) ignores NULL values in that column, COUNT(*) counts all rows",
+    "explanation": "COUNT(*) returns the total number of rows, while COUNT(column_name) counts only rows where that column is not NULL. Neither inherently counts distinct values; that requires COUNT(DISTINCT col).",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 12,
+    "question": "What is the effect of the DISTINCT keyword in a SELECT statement?",
+    "options": [
+      "Removes duplicate rows from the result set",
+      "Sorts the result set alphabetically",
+      "Prevents NULL values from appearing in the output",
+      "Limits the query to a single table"
+    ],
+    "answer": "Removes duplicate rows from the result set",
+    "explanation": "DISTINCT eliminates duplicate combinations of the selected columns, returning each unique combination once. Sorting and NULL filtering are handled by ORDER BY and predicates, not DISTINCT.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 13,
+    "question": "Which pattern does the LIKE expression '%son' match?",
+    "options": [
+      "Any string ending in the characters 'son'",
+      "Any string starting with the characters 'son'",
+      "Any string containing exactly the four characters 'son'",
+      "Any string containing 'son' anywhere except the last three positions"
+    ],
+    "answer": "Any string ending in the characters 'son'",
+    "explanation": "In LIKE patterns, % matches zero or more characters, so '%son' matches any value whose final characters are 'son'. 'son%' would match strings beginning with 'son'.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 14,
+    "question": "How does the AVG aggregate function treat NULL values in a column?",
+    "options": [
+      "It ignores NULLs and averages only the non-NULL values",
+      "It treats each NULL as zero in the calculation",
+      "It returns NULL if any row contains a NULL",
+      "It substitutes the column's minimum value for each NULL"
+    ],
+    "answer": "It ignores NULLs and averages only the non-NULL values",
+    "explanation": "Aggregate functions like AVG, SUM, and COUNT skip NULL values in their computation. This can cause AVG to differ from SUM(column)/COUNT(*), which divides by all rows including NULLs.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 15,
+    "question": "What is the main performance benefit of creating an index on a column?",
+    "options": [
+      "It speeds up lookups and filters on that column by avoiding full table scans",
+      "It reduces the storage space required by the table",
+      "It automatically sorts the physical rows of the table on every insert",
+      "It guarantees that queries return results in ascending order"
+    ],
+    "answer": "It speeds up lookups and filters on that column by avoiding full table scans",
+    "explanation": "An index is a separate data structure, typically a B-tree, that lets the engine locate matching rows without scanning the whole table. Indexes usually consume extra storage, not less.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 16,
+    "question": "What does the LIMIT clause do in a SELECT query?",
+    "options": [
+      "Restricts the number of rows returned by the query",
+      "Restricts which columns can be selected",
+      "Caps the total size of the database table",
+      "Limits the number of indexes usable per query"
+    ],
+    "answer": "Restricts the number of rows returned by the query",
+    "explanation": "LIMIT caps the result set size, commonly combined with ORDER BY to fetch top-N results. It does not affect storage, columns, or index usage.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 17,
+    "question": "Which statement about TRUNCATE TABLE is correct compared to DELETE without a WHERE clause?",
+    "options": [
+      "TRUNCATE removes all rows quickly and cannot include a WHERE condition",
+      "TRUNCATE removes the table structure along with its data",
+      "TRUNCATE fires the same row-level triggers as DELETE for each row",
+      "TRUNCATE can selectively remove rows matching a condition"
+    ],
+    "answer": "TRUNCATE removes all rows quickly and cannot include a WHERE condition",
+    "explanation": "TRUNCATE deallocates all rows as a bulk operation without a WHERE clause, typically faster than row-by-row DELETE. Dropping structure is DROP TABLE, and conditional removal requires DELETE with WHERE.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 18,
+    "question": "What characterizes the VARCHAR data type?",
+    "options": [
+      "It stores variable-length strings using only the space needed for each value",
+      "It stores strings padded with spaces to a fixed maximum length",
+      "It stores whole numbers with no fractional part",
+      "It stores dates including year, month, and day components"
+    ],
+    "answer": "It stores variable-length strings using only the space needed for each value",
+    "explanation": "VARCHAR(n) holds strings up to n characters, using storage proportional to the actual content. Fixed-length, space-padded strings are CHAR; numbers and dates are INTEGER and DATE types.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 19,
+    "question": "Which statement correctly inserts a new row with explicit values into a table named employees?",
+    "options": [
+      "INSERT INTO employees (name, salary) VALUES ('Ana', 50000)",
+      "ADD ROW TO employees (name='Ana', salary=50000)",
+      "UPDATE employees SET name='Ana', salary=50000",
+      "CREATE ROW employees ('Ana', 50000)"
+    ],
+    "answer": "INSERT INTO employees (name, salary) VALUES ('Ana', 50000)",
+    "explanation": "Standard SQL insertion uses INSERT INTO table (columns) VALUES (values). UPDATE modifies existing rows, and the other forms are not valid SQL syntax.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 20,
+    "question": "What is the consequence of executing UPDATE employees SET salary = 60000 without a WHERE clause?",
+    "options": [
+      "Every row in the employees table has its salary set to 60000",
+      "Only the first row in the table is updated",
+      "The database rejects the statement because WHERE is mandatory",
+      "No rows change because the filter matches nothing"
+    ],
+    "answer": "Every row in the employees table has its salary set to 60000",
+    "explanation": "Without WHERE, UPDATE applies to all rows in the table, a common cause of data loss. SQL does not require WHERE, so the engine executes it against every row.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 21,
+    "question": "What is the role of the ON clause in a JOIN statement?",
+    "options": [
+      "It specifies the condition that determines how rows from the two tables match",
+      "It filters groups after aggregation has been applied",
+      "It defines the alias used for the left table only",
+      "It determines the physical order of rows stored on disk"
+    ],
+    "answer": "It specifies the condition that determines how rows from the two tables match",
+    "explanation": "ON defines the join predicate, typically equating a key in one table with a key in another. Post-aggregation filtering is HAVING, and physical row order is not dictated by join syntax.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 22,
+    "question": "What does the AS keyword accomplish in SELECT price * 1.1 AS total_price?",
+    "options": [
+      "It creates an alias named total_price for the computed column in the result",
+      "It casts the numeric result to a string type",
+      "It creates a permanent new column in the underlying table",
+      "It orders the result set by the computed value"
+    ],
+    "answer": "It creates an alias named total_price for the computed column in the result",
+    "explanation": "AS assigns a temporary output name for a column or table alias within the query only. It does not modify the table schema or sort the results.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 23,
+    "question": "Is the BETWEEN operator inclusive of its boundary values?",
+    "options": [
+      "Yes, both the lower and upper boundary values are included",
+      "No, only the lower boundary is included",
+      "No, only the upper boundary is included",
+      "No, both boundary values are excluded"
+    ],
+    "answer": "Yes, both the lower and upper boundary values are included",
+    "explanation": "BETWEEN x AND y is equivalent to value >= x AND value <= y, so both endpoints match. Excluding endpoints requires explicit comparison operators.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 24,
+    "question": "What does the IN operator do in a WHERE clause?",
+    "options": [
+      "Checks whether the column value matches any value in a specified list",
+      "Checks whether the column value falls within a numeric range",
+      "Checks whether the column contains a substring pattern",
+      "Checks whether the column is referenced by a foreign key"
+    ],
+    "answer": "Checks whether the column value matches any value in a specified list",
+    "explanation": "WHERE status IN ('new', 'open', 'pending') is a compact equivalent of chained OR comparisons. Range checks use BETWEEN, and substring matching uses LIKE.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 25,
+    "question": "What is the key difference between UNION and UNION ALL?",
+    "options": [
+      "UNION removes duplicate rows across results, UNION ALL keeps all duplicates",
+      "UNION combines tables vertically, UNION ALL combines them horizontally",
+      "UNION requires identical table names, UNION ALL does not",
+      "UNION sorts results ascending, UNION ALL sorts them descending"
+    ],
+    "answer": "UNION removes duplicate rows across results, UNION ALL keeps all duplicates",
+    "explanation": "Both operators stack result sets vertically, but UNION performs a deduplication step that UNION ALL skips. This makes UNION ALL faster when duplicates are acceptable.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 26,
+    "question": "What does the NOT NULL constraint enforce on a column?",
+    "options": [
+      "Every inserted or updated row must provide a value for that column",
+      "Every value in the column must be different from all others",
+      "The column cannot store zero or empty string values",
+      "The column must reference a valid key in another table"
+    ],
+    "answer": "Every inserted or updated row must provide a value for that column",
+    "explanation": "NOT NULL forbids NULL in the column, though zero and empty string remain valid since they are not NULL. Uniqueness is a separate constraint enforced by UNIQUE.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 27,
+    "question": "Which behavior does a UNIQUE constraint on a column enforce?",
+    "options": [
+      "No two rows may have the same value in that column",
+      "The column automatically increments by one on each insert",
+      "The column must always contain a non-zero value",
+      "The column value must match a value in a parent table"
+    ],
+    "answer": "No two rows may have the same value in that column",
+    "explanation": "UNIQUE prevents duplicate values in the column, and unlike a primary key it typically permits a single NULL in many engines. Auto-increment and referential checks are separate features.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 28,
+    "question": "What does a DEFAULT constraint on a column do?",
+    "options": [
+      "Supplies a predefined value when an INSERT omits the column",
+      "Blocks any insert that does not explicitly set the column",
+      "Replaces NULL values automatically during SELECT queries",
+      "Copies the value from the previous row on insert"
+    ],
+    "answer": "Supplies a predefined value when an INSERT omits the column",
+    "explanation": "DEFAULT fills the column with its defined value when the INSERT statement does not provide one. Replacing NULLs at read time is the job of functions like COALESCE.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 29,
+    "question": "What is a subquery in SQL?",
+    "options": [
+      "A query nested inside another SQL statement",
+      "A query that runs automatically on a schedule",
+      "A query that only reads from system catalog tables",
+      "A query stored in the database under a permanent name"
+    ],
+    "answer": "A query nested inside another SQL statement",
+    "explanation": "A subquery is an inner SELECT embedded within SELECT, INSERT, UPDATE, DELETE, or another subquery. A permanently stored named query is a view, not a subquery.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 30,
+    "question": "In the query SELECT department, COUNT(*) FROM employees GROUP BY department, what does COUNT(*) return for each output row?",
+    "options": [
+      "The number of employee rows belonging to that department",
+      "The total number of rows in the employees table",
+      "The number of distinct departments in the table",
+      "The number of NULL salaries within that department"
+    ],
+    "answer": "The number of employee rows belonging to that department",
+    "explanation": "After GROUP BY partitions rows by department, COUNT(*) counts rows within each partition. The table-wide total would appear only without GROUP BY.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 31,
+    "question": "Which clause correctly filters grouped results to show only departments having more than five employees?",
+    "options": [
+      "HAVING COUNT(*) > 5",
+      "WHERE COUNT(*) > 5",
+      "LIMIT COUNT(*) > 5",
+      "FILTER COUNT(*) > 5"
+    ],
+    "answer": "HAVING COUNT(*) > 5",
+    "explanation": "Aggregate conditions must be placed in HAVING because grouping happens before aggregate values exist. WHERE cannot reference aggregates since it evaluates row-by-row before grouping.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 32,
+    "question": "What type of language is SQL with respect to how queries are specified?",
+    "options": [
+      "Declarative, describing what data is wanted rather than how to retrieve it",
+      "Procedural, requiring explicit step-by-step iteration over rows",
+      "Object-oriented, organizing queries into classes and inheritance",
+      "Assembly-level, mapping directly to CPU instructions"
+    ],
+    "answer": "Declarative, describing what data is wanted rather than how to retrieve it",
+    "explanation": "SQL statements declare the desired result set, and the database optimizer decides the execution strategy. Row-by-row iteration logic belongs to procedural extensions or host languages.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 33,
+    "question": "Which statement correctly adds a new column named email to an existing table named customers?",
+    "options": [
+      "ALTER TABLE customers ADD COLUMN email VARCHAR(255)",
+      "UPDATE customers ADD email VARCHAR(255)",
+      "INSERT COLUMN email INTO customers",
+      "MODIFY TABLE customers APPEND email VARCHAR(255)"
+    ],
+    "answer": "ALTER TABLE customers ADD COLUMN email VARCHAR(255)",
+    "explanation": "Schema changes to existing tables use the ALTER TABLE statement. UPDATE modifies row data, not structure, and the remaining forms are not valid SQL.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 34,
+    "question": "What result ordering does ORDER BY salary DESC produce?",
+    "options": [
+      "Rows sorted from the highest salary to the lowest",
+      "Rows sorted from the lowest salary to the highest",
+      "Rows sorted alphabetically by employee name",
+      "Rows sorted by their physical storage position"
+    ],
+    "answer": "Rows sorted from the highest salary to the lowest",
+    "explanation": "DESC reverses the default ascending sort, placing the largest values first. It affects only the salary column's ordering, not unrelated columns or physical storage.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 35,
+    "question": "What does the function COALESCE(phone, mobile, 'N/A') return for a given row?",
+    "options": [
+      "The first argument that is not NULL, evaluated left to right",
+      "The concatenation of all three values joined together",
+      "The average of the three values, ignoring NULLs",
+      "TRUE if any argument is NULL, otherwise FALSE"
+    ],
+    "answer": "The first argument that is not NULL, evaluated left to right",
+    "explanation": "COALESCE evaluates its arguments in order and returns the first non-NULL value. Concatenation requires string functions like CONCAT, not COALESCE.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 36,
+    "question": "In SQL, what distinguishes RANK() from DENSE_RANK() when the ORDER BY column contains ties?",
+    "options": [
+      "RANK() skips subsequent rank values after a tie, while DENSE_RANK() assigns consecutive ranks without gaps",
+      "RANK() assigns unique ranks to all rows, while DENSE_RANK() assigns the same rank to tied rows",
+      "RANK() physically reorders table rows, while DENSE_RANK() sorts only in memory",
+      "RANK() can only be used with GROUP BY, while DENSE_RANK() requires PARTITION BY"
+    ],
+    "answer": "RANK() skips subsequent rank values after a tie, while DENSE_RANK() assigns consecutive ranks without gaps",
+    "explanation": "RANK() assigns equal ranks to ties and leaves a gap afterward (e.g., 1, 1, 3), while DENSE_RANK() leaves no gaps (e.g., 1, 1, 2). Both require an OVER() clause and never affect physical row order.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 37,
+    "question": "What does the PARTITION BY clause do within a window function's OVER() clause?",
+    "options": [
+      "It physically splits the table into separate stored segments",
+      "It divides rows into groups over which the window function is computed independently, resetting the calculation per group",
+      "It restricts the number of rows returned by the final result set",
+      "It performs an implicit INNER JOIN between the partitioned tables"
+    ],
+    "answer": "It divides rows into groups over which the window function is computed independently, resetting the calculation per group",
+    "explanation": "PARTITION BY logically groups rows so the window calculation restarts for each partition. Unlike GROUP BY, it does not collapse rows — every row remains in the output.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 38,
+    "question": "What is the structural requirement of a recursive CTE in SQL?",
+    "options": [
+      "It must contain an anchor member and a recursive member that references the CTE name, combined via UNION or UNION ALL",
+      "It must reference at least two tables joined by a foreign key",
+      "It must use the RECURSIVE keyword in every database system, including SQL Server",
+      "It must always terminate after a fixed number of iterations defined by a MAXRECURSION option"
+    ],
+    "answer": "It must contain an anchor member and a recursive member that references the CTE name, combined via UNION or UNION ALL",
+    "explanation": "A recursive CTE consists of a non-recursive anchor query UNIONed with a recursive member that references the CTE itself. Termination occurs when the recursive member returns zero rows (or a recursion limit is hit).",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 39,
+    "question": "Why is filtering with WHERE generally preferred over HAVING for non-aggregate conditions?",
+    "options": [
+      "WHERE executes after GROUP BY, reducing memory used by aggregates",
+      "WHERE filters rows before grouping, reducing the number of rows processed by GROUP BY and aggregate functions",
+      "HAVING cannot reference columns at all in standard SQL",
+      "WHERE automatically creates an index on the filtered column"
+    ],
+    "answer": "WHERE filters rows before grouping, reducing the number of rows processed by GROUP BY and aggregate functions",
+    "explanation": "WHERE is evaluated before GROUP BY, eliminating rows early in the pipeline. HAVING runs after aggregation, so non-aggregate filters placed there force the engine to group unnecessary rows first.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 40,
+    "question": "For a composite B-tree index on (last_name, first_name), which query predicate can efficiently use the index?",
+    "options": [
+      "WHERE first_name = 'Anna'",
+      "WHERE first_name = 'Anna' OR last_name = 'Smith'",
+      "WHERE last_name = 'Smith'",
+      "WHERE UPPER(last_name) = 'SMITH'"
+    ],
+    "answer": "WHERE last_name = 'Smith'",
+    "explanation": "Composite B-tree indexes follow the leftmost prefix rule: the leading column must appear in the predicate. Filtering on first_name alone, an OR spanning both columns, or a function-wrapped leading column defeats the index ordering.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 41,
+    "question": "What defines a covering index?",
+    "options": [
+      "An index that encrypts the underlying table data",
+      "An index that includes all columns required by a query, allowing it to be satisfied from the index alone without table lookups",
+      "An index automatically created for every primary key",
+      "An index that spans multiple tables in a join"
+    ],
+    "answer": "An index that includes all columns required by a query, allowing it to be satisfied from the index alone without table lookups",
+    "explanation": "A covering index contains every column the query references, either as key columns or INCLUDE columns. The engine answers the query directly from the index, avoiding costly key lookups back to the base table.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 42,
+    "question": "What characterizes a correlated subquery?",
+    "options": [
+      "It always returns a single scalar value",
+      "It references columns from the outer query and is logically re-evaluated for each candidate outer row",
+      "It can only appear in the FROM clause",
+      "It executes exactly once before the outer query runs"
+    ],
+    "answer": "It references columns from the outer query and is logically re-evaluated for each candidate outer row",
+    "explanation": "A correlated subquery depends on outer-query columns, so it cannot be evaluated independently. This per-row dependency often makes it slower than a JOIN unless the optimizer rewrites it.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 43,
+    "question": "Why is UNION ALL typically faster than UNION?",
+    "options": [
+      "UNION ALL avoids the duplicate-elimination step, skipping a sort or hash operation",
+      "UNION ALL reads from a different, faster storage engine",
+      "UNION ALL does not require the selected columns to be compatible",
+      "UNION ALL bypasses the query optimizer entirely"
+    ],
+    "answer": "UNION ALL avoids the duplicate-elimination step, skipping a sort or hash operation",
+    "explanation": "UNION performs distinct elimination, which requires sorting or hashing the combined result set. UNION ALL simply concatenates the results, preserving duplicates and avoiding that overhead.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 44,
+    "question": "When the subquery may return NULL values, why is NOT EXISTS often safer than NOT IN?",
+    "options": [
+      "NOT EXISTS handles NULLs correctly, while NOT IN returns no rows at all if the subquery result contains a NULL",
+      "NOT IN automatically converts NULLs to zero before comparing",
+      "NOT EXISTS requires the compared columns to be indexed",
+      "NOT IN is not supported by standard SQL"
+    ],
+    "answer": "NOT EXISTS handles NULLs correctly, while NOT IN returns no rows at all if the subquery result contains a NULL",
+    "explanation": "A single NULL in a NOT IN subquery makes the comparison evaluate to UNKNOWN for every row, yielding an empty result. NOT EXISTS correlates row-by-row and is unaffected by NULLs.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 45,
+    "question": "How does COUNT(column_name) differ from COUNT(*)?",
+    "options": [
+      "COUNT(column_name) counts only rows where that column is not NULL; COUNT(*) counts all rows",
+      "COUNT(column_name) counts distinct values; COUNT(*) counts total rows",
+      "COUNT(column_name) is always faster than COUNT(*)",
+      "COUNT(column_name) ignores rows filtered by WHERE; COUNT(*) does not"
+    ],
+    "answer": "COUNT(column_name) counts only rows where that column is not NULL; COUNT(*) counts all rows",
+    "explanation": "COUNT(*) counts every row in the group regardless of content, while COUNT(expr) skips rows where expr is NULL. Both respect the WHERE clause.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 46,
+    "question": "What does it mean for a predicate to be 'sargable'?",
+    "options": [
+      "It can be evaluated using an index seek because it does not wrap the indexed column in a function or a leading wildcard",
+      "It is written using syntax portable across all database systems",
+      "It references at least one indexed column in any form",
+      "It can only appear in a WHERE clause, never in a JOIN condition"
+    ],
+    "answer": "It can be evaluated using an index seek because it does not wrap the indexed column in a function or a leading wildcard",
+    "explanation": "Sargable (Search ARGument-able) predicates allow the engine to perform index seeks. Wrapping columns in functions like YEAR(order_date) or using leading wildcards like LIKE '%x' forces full scans.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 47,
+    "question": "What is the default window frame for an aggregate window function when ORDER BY is specified but no frame clause is given?",
+    "options": [
+      "ROWS BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING",
+      "RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW",
+      "ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING",
+      "RANGE BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING"
+    ],
+    "answer": "RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW",
+    "explanation": "With ORDER BY present, the default frame spans from the partition start to the current row, including peer rows with equal ORDER BY values — producing a running aggregate. Without ORDER BY, the frame defaults to the entire partition.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 48,
+    "question": "What does the LAG() window function return?",
+    "options": [
+      "The value of an expression from a preceding row in the partition, relative to the current row",
+      "The minimum value within the current partition",
+      "The value of an expression from a following row in the partition",
+      "The value of the expression in the first row of the partition"
+    ],
+    "answer": "The value of an expression from a preceding row in the partition, relative to the current row",
+    "explanation": "LAG(expr, offset) accesses a preceding row's value within the partition; LEAD() is its mirror for following rows. Both accept an optional default value for boundary rows.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 49,
+    "question": "What is the result of a CROSS JOIN between a table with 5 rows and a table with 8 rows?",
+    "options": [
+      "5 rows",
+      "8 rows",
+      "13 rows",
+      "40 rows"
+    ],
+    "answer": "40 rows",
+    "explanation": "A CROSS JOIN produces the Cartesian product, pairing every row of the first table with every row of the second: 5 × 8 = 40. No join condition is specified or evaluated.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 50,
+    "question": "How does FULL OUTER JOIN handle unmatched rows?",
+    "options": [
+      "It returns only rows that match in both tables, like an INNER JOIN",
+      "It returns matched rows plus unmatched rows from both sides, with NULLs filling missing columns",
+      "It returns unmatched rows only, discarding all matches",
+      "It returns all rows from the left table and NULLs for every right-table column"
+    ],
+    "answer": "It returns matched rows plus unmatched rows from both sides, with NULLs filling missing columns",
+    "explanation": "FULL OUTER JOIN combines LEFT and RIGHT join behavior: matched rows are merged, and rows from either side lacking a partner appear with NULLs for the other side's columns.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 51,
+    "question": "In PostgreSQL versions before 12, how were non-recursive CTEs treated by the query optimizer?",
+    "options": [
+      "They were always materialized once into a temporary result, acting as an optimization fence that blocked predicate pushdown",
+      "They were always inlined into the outer query like views",
+      "They were ignored by the optimizer entirely",
+      "They were automatically converted into indexed temporary tables"
+    ],
+    "answer": "They were always materialized once into a temporary result, acting as an optimization fence that blocked predicate pushdown",
+    "explanation": "Pre-12 PostgreSQL materialized every CTE to completion before the outer query ran, and outer filters could not be pushed into it. PostgreSQL 12+ inlines single-reference CTEs when safe.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 52,
+    "question": "What does GROUP BY ... WITH ROLLUP (or ROLLUP(...)) produce beyond plain GROUP BY aggregates?",
+    "options": [
+      "Only the grand total row across all grouped columns",
+      "Subtotal rows for each level of the grouping hierarchy plus a grand total row",
+      "Only per-partition subtotal rows, with no grand total",
+      "A cross-tabulation of every possible combination of the grouped columns"
+    ],
+    "answer": "Subtotal rows for each level of the grouping hierarchy plus a grand total row",
+    "explanation": "ROLLUP generates aggregates along a hierarchy defined by the column list — subtotals at each level plus an overall total. CUBE, by contrast, produces all possible grouping combinations.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 53,
+    "question": "What is the key advantage of GROUPING SETS over combining multiple GROUP BY queries with UNION ALL?",
+    "options": [
+      "GROUPING SETS scans the underlying data once, while the UNION ALL approach scans it once per grouping",
+      "GROUPING SETS automatically creates indexes on the grouped columns",
+      "GROUPING SETS eliminates all NULL values from the result",
+      "GROUPING SETS is the only syntax that can group by more than one column"
+    ],
+    "answer": "GROUPING SETS scans the underlying data once, while the UNION ALL approach scans it once per grouping",
+    "explanation": "GROUPING SETS computes multiple aggregations in a single pass over the source data. The equivalent UNION ALL of GROUP BY queries re-scans the source once for each set.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 54,
+    "question": "In an execution plan, what does an index seek indicate compared to an index scan?",
+    "options": [
+      "A seek traverses the index structure directly to matching rows, while a scan reads the entire index in order",
+      "A seek reads the whole table; a scan reads only the index",
+      "A seek is used only for clustered indexes; a scan only for nonclustered indexes",
+      "A seek always indicates a performance problem in the query"
+    ],
+    "answer": "A seek traverses the index structure directly to matching rows, while a scan reads the entire index in order",
+    "explanation": "A seek navigates the B-tree straight to qualifying rows, which is efficient for selective predicates. A scan reads every index entry and is preferable only when returning a large fraction of rows.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 55,
+    "question": "What distinguishes a clustered index from a nonclustered index?",
+    "options": [
+      "A clustered index defines the physical row order of the table data itself; a nonclustered index is a separate structure with pointers back to the rows",
+      "A clustered index is always unique; a nonclustered index can never be unique",
+      "A clustered index stores data in hash order; a nonclustered index stores data in B-tree order",
+      "A table can have many clustered indexes but only one nonclustered index"
+    ],
+    "answer": "A clustered index defines the physical row order of the table data itself; a nonclustered index is a separate structure with pointers back to the rows",
+    "explanation": "The leaf level of a clustered index IS the table data sorted by its key — hence only one can exist per table. Nonclustered indexes are auxiliary structures whose leaves point to the heap row or clustered key.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 56,
+    "question": "A LEFT JOIN query adds a WHERE clause filtering on a right-table column, such as WHERE b.status = 'active'. What is the effect on rows from the left table that had no match?",
+    "options": [
+      "LEFT JOIN behavior is preserved and those rows still appear with NULL right columns",
+      "The query effectively becomes an INNER JOIN because those unmatched rows fail the WHERE predicate",
+      "The query returns only the unmatched left rows",
+      "SQL raises a syntax error for filtering joined columns in WHERE"
+    ],
+    "answer": "The query effectively becomes an INNER JOIN because those unmatched rows fail the WHERE predicate",
+    "explanation": "Unmatched LEFT JOIN rows contain NULLs in all right-table columns, so any ordinary predicate on right columns eliminates them. To preserve LEFT JOIN semantics, the filter must be placed in the ON clause.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 57,
+    "question": "What does COALESCE(expr1, expr2, expr3) return?",
+    "options": [
+      "The first non-NULL value among its arguments",
+      "The smallest numeric value among its arguments",
+      "A concatenation of all argument values",
+      "NULL only when every argument is NULL"
+    ],
+    "answer": "The first non-NULL value among its arguments",
+    "explanation": "COALESCE evaluates its arguments left to right and returns the first non-NULL one; it returns NULL only if all arguments are NULL. It is the standard SQL mechanism for NULL substitution.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 58,
+    "question": "Which transaction isolation level prevents dirty reads but still permits non-repeatable reads?",
+    "options": [
+      "READ UNCOMMITTED",
+      "READ COMMITTED",
+      "REPEATABLE READ",
+      "SERIALIZABLE"
+    ],
+    "answer": "READ COMMITTED",
+    "explanation": "READ COMMITTED guarantees only committed data is read, blocking dirty reads, but it does not hold read locks until transaction end, so rows can change between reads. REPEATABLE READ locks read rows, eliminating that anomaly.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 59,
+    "question": "What is the primary purpose of the PIVOT operator?",
+    "options": [
+      "To transform distinct row values from one column into multiple output columns (rows to columns)",
+      "To join two tables on a range condition instead of equality",
+      "To split a single column into separate rows",
+      "To remove duplicate rows from a result set"
+    ],
+    "answer": "To transform distinct row values from one column into multiple output columns (rows to columns)",
+    "explanation": "PIVOT rotates the distinct values of a column into output columns while applying an aggregation. UNPIVOT performs the reverse, column-to-rows transformation.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 60,
+    "question": "What is the main value of examining a query execution plan before optimizing?",
+    "options": [
+      "It shows which operations the optimizer chose, exposing bottlenecks such as scans, missing indexes, and expensive join strategies",
+      "It lists all possible syntax alternatives for the query",
+      "It guarantees the query will run faster after deployment",
+      "It automatically rewrites the query into its optimal form"
+    ],
+    "answer": "It shows which operations the optimizer chose, exposing bottlenecks such as scans, missing indexes, and expensive join strategies",
+    "explanation": "The plan reveals actual access paths, join algorithms, and estimated costs. It pinpoints where the optimizer struggles — for example, row-by-row subqueries or hash-match fallbacks caused by missing indexes.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 61,
+    "question": "Why is SELECT * generally discouraged in production queries?",
+    "options": [
+      "It retrieves all columns, preventing covering-index use and increasing I/O and network overhead",
+      "It is not valid standard SQL syntax",
+      "It disables the query optimizer for the statement",
+      "It acquires an exclusive lock on every table it references"
+    ],
+    "answer": "It retrieves all columns, preventing covering-index use and increasing I/O and network overhead",
+    "explanation": "Fetching unneeded columns defeats covering indexes, forces table lookups, and moves excess data. It also breaks silently when schema changes add columns to the table.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 62,
+    "question": "What is a self-join typically used for?",
+    "options": [
+      "Querying hierarchical relationships within a single table, such as employee-to-manager links",
+      "Joining two tables that share no common column",
+      "Replacing the need for a WHERE clause",
+      "Duplicating a table for backup purposes"
+    ],
+    "answer": "Querying hierarchical relationships within a single table, such as employee-to-manager links",
+    "explanation": "A self-join aliases the same table twice so rows can be matched against other rows in it. The classic case is employees.manager_id referencing employees.employee_id.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 63,
+    "question": "What does a LATERAL join (CROSS APPLY / OUTER APPLY) enable that a plain join does not?",
+    "options": [
+      "The right-side subquery can reference columns from the current row of the left table",
+      "Joining two tables without specifying any join condition",
+      "Joining more than two tables in a single clause",
+      "Automatically creating an index on the joined columns"
+    ],
+    "answer": "The right-side subquery can reference columns from the current row of the left table",
+    "explanation": "LATERAL allows the right side to be a correlated subquery or table function invoked per left-row — enabling patterns like top-N-per-group. CROSS APPLY drops unmatched left rows; OUTER APPLY preserves them like a LEFT JOIN.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 64,
+    "question": "In the logical processing order of a SELECT query, when are window functions evaluated relative to GROUP BY, HAVING, and ORDER BY?",
+    "options": [
+      "Before GROUP BY and HAVING",
+      "After GROUP BY and HAVING, but before ORDER BY",
+      "After ORDER BY",
+      "Simultaneously with the FROM clause"
+    ],
+    "answer": "After GROUP BY and HAVING, but before ORDER BY",
+    "explanation": "Window functions operate on the set produced after grouping and HAVING filtering, which is why they cannot appear in WHERE or GROUP BY. ORDER BY is applied afterward, so it can reference window function outputs.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 65,
+    "question": "What is the key difference between DELETE and TRUNCATE on a table?",
+    "options": [
+      "DELETE removes rows individually with full logging and supports WHERE; TRUNCATE deallocates data pages quickly and cannot filter rows",
+      "TRUNCATE fires DELETE triggers for each removed row",
+      "DELETE resets identity seed values; TRUNCATE preserves them",
+      "TRUNCATE can never be rolled back in any database system"
+    ],
+    "answer": "DELETE removes rows individually with full logging and supports WHERE; TRUNCATE deallocates data pages quickly and cannot filter rows",
+    "explanation": "DELETE is logged per row, honors WHERE, and fires triggers; TRUNCATE is a minimally logged page deallocation that resets identity seeds. TRUNCATE is DDL-like and typically requires elevated permissions.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 66,
+    "question": "What distinguishes a UNIQUE constraint from a PRIMARY KEY constraint?",
+    "options": [
+      "A PRIMARY KEY column cannot contain NULLs, while a UNIQUE column generally permits NULLs (engine-dependent); a table can also have multiple UNIQUE constraints but only one PRIMARY KEY",
+      "A table can have multiple PRIMARY KEYs but only one UNIQUE constraint",
+      "UNIQUE constraints are always implemented as clustered indexes",
+      "PRIMARY KEY does not enforce uniqueness"
+    ],
+    "answer": "A PRIMARY KEY column cannot contain NULLs, while a UNIQUE column generally permits NULLs (engine-dependent); a table can also have multiple UNIQUE constraints but only one PRIMARY KEY",
+    "explanation": "Both constraints enforce uniqueness, but PRIMARY KEY additionally forbids NULLs and is limited to one per table. UNIQUE constraints allow NULLs in most engines and can be declared multiple times per table.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 67,
+    "question": "Why is a B-tree index of limited use for a column with very few distinct values, such as a boolean status flag?",
+    "options": [
+      "Low cardinality means each index key matches a large fraction of rows, so the optimizer usually prefers a scan over seeking",
+      "B-tree indexes cannot store boolean values",
+      "Low-cardinality columns cannot be indexed by any database system",
+      "It causes the index to be automatically rebuilt on every insert"
+    ],
+    "answer": "Low cardinality means each index key matches a large fraction of rows, so the optimizer usually prefers a scan over seeking",
+    "explanation": "Selectivity drives index usefulness: when one key value covers most rows, random index lookups cost more than a sequential scan. Composite indexes that lead with selective columns handle this case better.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 68,
+    "question": "What is the classic performance symptom of a nested correlated subquery that the optimizer cannot flatten?",
+    "options": [
+      "The subquery is re-evaluated once per outer row, producing execution time that grows with the outer row count",
+      "The query fails immediately with a syntax error",
+      "The subquery is executed exactly once and its result cached in memory",
+      "The database automatically converts it into a full outer join"
+    ],
+    "answer": "The subquery is re-evaluated once per outer row, producing execution time that grows with the outer row count",
+    "explanation": "A non-flattened correlated subquery executes repeatedly, once per candidate row. Execution plans expose this as repeated scans or nested-loop probes; rewriting as a JOIN or a CTE often resolves it.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 69,
+    "question": "In recursive CTEs, why is UNION ALL often preferred over UNION?",
+    "options": [
+      "UNION ALL skips duplicate elimination, avoiding a costly sort or hash operation on each iteration",
+      "UNION ALL allows the recursive member to reference the CTE twice",
+      "UNION is not permitted inside recursive CTEs at all",
+      "UNION ALL increases the maximum recursion depth"
+    ],
+    "answer": "UNION ALL skips duplicate elimination, avoiding a costly sort or hash operation on each iteration",
+    "explanation": "UNION forces a sort or hash to remove duplicates at every recursion step, adding significant overhead. Well-formed recursive queries rarely produce duplicates, so UNION ALL's cheap append is preferred.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 70,
+    "question": "What does the GROUPING() function accomplish in ROLLUP/CUBE result sets?",
+    "options": [
+      "It distinguishes a NULL placeholder representing an aggregated subtotal from a real NULL present in the underlying data",
+      "It returns the total count of rows within the current group",
+      "It returns the ordinal position of the current grouping column",
+      "It returns the number of grouping sets defined in the query"
+    ],
+    "answer": "It distinguishes a NULL placeholder representing an aggregated subtotal from a real NULL present in the underlying data",
+    "explanation": "Subtotal rows generated by ROLLUP or CUBE show NULL in the aggregated-away columns, which is ambiguous with genuine NULL data. GROUPING() returns 1 for placeholder NULLs and 0 for data NULLs, disambiguating them.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 71,
+    "question": "In PostgreSQL versions prior to 12, how does the query planner treat a non-recursive CTE referenced in a query?",
+    "options": [
+      "It is always inlined into the outer query like a view",
+      "It is materialized into a temporary result and treated as an optimization fence, blocking predicate pushdown from the outer query",
+      "It is executed once per reference, like a correlated subquery",
+      "It is automatically converted into a materialized view with incremental refresh"
+    ],
+    "answer": "It is materialized into a temporary result and treated as an optimization fence, blocking predicate pushdown from the outer query",
+    "explanation": "Pre-12 PostgreSQL materializes CTEs only once regardless of reference count and fences them off from the optimizer. PostgreSQL 12+ can inline single-reference, side-effect-free CTEs, with MATERIALIZED/NOT MATERIALIZED for explicit control.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 72,
+    "question": "In a window function's frame specification, what is the key difference between ROWS and RANGE modes?",
+    "options": [
+      "ROWS is limited to the current partition, while RANGE can span partitions",
+      "ROWS counts physical row offsets from the current row, while RANGE includes all peer rows with equal ORDER BY values",
+      "RANGE only works with numeric ORDER BY columns, while ROWS works with any type",
+      "ROWS requires a frame exclusion clause, while RANGE does not"
+    ],
+    "answer": "ROWS counts physical row offsets from the current row, while RANGE includes all peer rows with equal ORDER BY values",
+    "explanation": "ROWS defines the frame by physical position, so tied rows can fall outside the frame. RANGE is value-based: with UNBOUNDED PRECEDING TO CURRENT ROW it includes every peer row sharing the current row's ORDER BY value, which changes running-total semantics on ties.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 73,
+    "question": "What capability does the LATERAL keyword add to a JOIN clause (PostgreSQL LATERAL / SQL Server CROSS APPLY)?",
+    "options": [
+      "It forces the join to execute as a hash join",
+      "It allows the right-hand table expression to reference columns from the left-hand tables, evaluated per outer row",
+      "It guarantees the join result is materialized once and reused",
+      "It converts an outer join into an inner join when no match is found"
+    ],
+    "answer": "It allows the right-hand table expression to reference columns from the left-hand tables, evaluated per outer row",
+    "explanation": "LATERAL makes the right side row-dependent on the left, enabling patterns like joining to the top-N rows per group via a correlated subquery with LIMIT. Standard subqueries in FROM cannot reference preceding FROM items.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 74,
+    "question": "What is the primary effect of using UNION instead of UNION ALL in the recursive step of a recursive CTE?",
+    "options": [
+      "It improves performance by enabling parallel execution of the recursive step",
+      "It raises an error unless a termination LIMIT is specified",
+      "It eliminates duplicate rows across all iterations, which also terminates cycles but adds the overhead of storing and checking intermediate results",
+      "It forces the recursion depth limit to be ignored"
+    ],
+    "answer": "It eliminates duplicate rows across all iterations, which also terminates cycles but adds the overhead of storing and checking intermediate results",
+    "explanation": "With UNION, the database must retain all previously produced rows to deduplicate, which conveniently halts traversal on cyclic graphs. UNION ALL is faster when duplicates or cycles are impossible or handled elsewhere.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 75,
+    "question": "What is the purpose of the INCLUDE clause in SQL Server's CREATE INDEX (e.g., ON orders(customer_id) INCLUDE (total_amt))?",
+    "options": [
+      "It adds the included columns to the B-tree key for sorting and seeking purposes",
+      "It stores the included columns only at the leaf level, enabling covering index-only queries without inflating the seek key",
+      "It creates a full copy of the table data within the index for redundancy",
+      "It automatically updates index statistics whenever the included columns change"
+    ],
+    "answer": "It stores the included columns only at the leaf level, enabling covering index-only queries without inflating the seek key",
+    "explanation": "Non-key INCLUDE columns live in leaf pages so queries can be satisfied without key lookups, while keeping the upper key levels narrow for seeks. Included columns cannot be used for filtering seeks or ordering.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 76,
+    "question": "In PostgreSQL, what metadata condition must hold for an index-only scan to skip heap access for pages?",
+    "options": [
+      "The table must have been CLUSTERed on the index key",
+      "The visibility map must mark the pages as all-visible, proving every tuple needs no further modification checks",
+      "The WAL must be archived for all pages covered by the scan",
+      "The query must run under SERIALIZABLE isolation"
+    ],
+    "answer": "The visibility map must mark the pages as all-visible, proving every tuple needs no further modification checks",
+    "explanation": "MVCC requires confirming tuple visibility, so PostgreSQL consults the visibility map; all-visible pages can be read from the index alone. Frequently updated tables suffer index-only scans until vacuum updates the map.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 77,
+    "question": "Why does the predicate WHERE YEAR(order_date) = 2024 typically prevent an index seek on an index over order_date?",
+    "options": [
+      "Date columns cannot be indexed when wrapped in functions",
+      "The function on the indexed column makes the predicate non-sargable, so the optimizer cannot derive a key range and must evaluate the expression per row",
+      "The YEAR function forces a full sort of the table before filtering",
+      "Implicit type conversion between DATE and INTEGER invalidates the index statistics"
+    ],
+    "answer": "The function on the indexed column makes the predicate non-sargable, so the optimizer cannot derive a key range and must evaluate the expression per row",
+    "explanation": "Sargable predicates let the optimizer translate conditions into B-tree range bounds. Rewriting as order_date >= '2024-01-01' AND order_date < '2025-01-01' restores the seek, and function-based indexes are the alternative when the function form is required.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 78,
+    "question": "Why is filtering with WHERE generally preferred over HAVING for a non-aggregate condition in a grouped query?",
+    "options": [
+      "HAVING cannot reference columns in the GROUP BY clause",
+      "WHERE is applied before grouping, reducing the row count fed into GROUP BY and aggregation, while HAVING filters only after grouping completes",
+      "WHERE supports subqueries, whereas HAVING supports only constant expressions",
+      "HAVING disables parallel query plans in most engines"
+    ],
+    "answer": "WHERE is applied before grouping, reducing the row count fed into GROUP BY and aggregation, while HAVING filters only after grouping completes",
+    "explanation": "WHERE prunes rows during the scan, shrinking the input to the aggregation. HAVING is reserved for conditions on aggregate results that cannot be expressed before grouping.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 79,
+    "question": "In a query using GROUPING SETS, what does the GROUPING(col) function return when col is aggregated out of a result row?",
+    "options": [
+      "NULL, because the column value is unknown for that grouping",
+      "The total count of rows aggregated into that grouping set",
+      "0, because the column was not used in that particular grouping",
+      "1, indicating the column's NULL in the output is a placeholder rather than real data"
+    ],
+    "answer": "1, indicating the column's NULL in the output is a placeholder rather than real data",
+    "explanation": "GROUPING returns 1 when the column was not part of the grouping set (its NULL is a synthetic placeholder) and 0 when it was. This lets clients distinguish real NULL data from rolled-up rows.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 80,
+    "question": "In a hash join execution, what roles do the build and probe inputs play?",
+    "options": [
+      "Both inputs are sorted first; the build input is read forward and the probe input backward to find matches",
+      "The build input (ideally the smaller relation) is hashed into an in-memory table, and the probe input streams rows through it to find matches",
+      "The build input is written to a temporary index on disk, and the probe input performs seeks against it",
+      "The build input locks its rows exclusively while the probe input reads them with shared locks"
+    ],
+    "answer": "The build input (ideally the smaller relation) is hashed into an in-memory table, and the probe input streams rows through it to find matches",
+    "explanation": "The optimizer hashes the smaller input to fit memory and probes with the larger, yielding O(N+M) cost. If the build side exceeds memory, the join spills to disk in multi-pass (grace hash) form, degrading performance.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 81,
+    "question": "Under which condition is a nested loop join typically the optimal physical join choice?",
+    "options": [
+      "When both inputs are large and unsorted with no available indexes",
+      "When the outer input is small and the inner input has an index on the join key, making each per-row lookup cheap",
+      "When the join requires full outer join semantics",
+      "When both inputs are guaranteed to be sorted on the join key"
+    ],
+    "answer": "When the outer input is small and the inner input has an index on the join key, making each per-row lookup cheap",
+    "explanation": "Nested loops cost roughly outer_rows × lookup_cost, so it excels with a small driving side and indexed inner access. Hash or merge joins dominate when both sides are large.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 82,
+    "question": "What is the general precondition for a merge join (sort-merge join) to be selected?",
+    "options": [
+      "Both inputs must be sorted on the join keys, whether from indexes or explicit sort operators",
+      "The inner input must fit entirely in the database buffer cache",
+      "The join must be an inner join with equality predicates only",
+      "Both tables must be hash-partitioned on the join key"
+    ],
+    "answer": "Both inputs must be sorted on the join keys, whether from indexes or explicit sort operators",
+    "explanation": "Merge join walks both sorted streams simultaneously, which is efficient and enables an ordered result without a final sort. If indexes cannot supply the order, the optimizer weighs the cost of explicit sorts against alternatives.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 83,
+    "question": "Which mechanism underlies PostgreSQL's SERIALIZABLE isolation level (since version 9.1)?",
+    "options": [
+      "Two-phase locking with exclusive table locks on all read tables",
+      "Serializable Snapshot Isolation (SSI), which uses predicate locks to track read-write dependencies and aborts transactions forming dangerous cycles",
+      "Optimistic timestamp ordering where each transaction gets a strictly increasing commit timestamp",
+      "Row-level version chains with wait-for deadlock detection only"
+    ],
+    "answer": "Serializable Snapshot Isolation (SSI), which uses predicate locks to track read-write dependencies and aborts transactions forming dangerous cycles",
+    "explanation": "SSI builds on snapshot isolation but detects rw-antidependency cycles via SIReadLock predicate locks, raising serialization failures. Plain snapshot isolation alone permits write skew, which SERIALIZABLE prevents.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 84,
+    "question": "According to the SQL standard, which anomaly is a transaction running at REPEATABLE READ still permitted to encounter?",
+    "options": [
+      "Dirty reads of uncommitted data",
+      "Non-repeatable reads of the same row within one transaction",
+      "Lost updates due to concurrent writes",
+      "Phantom rows matching the query's predicate appearing in a re-executed query"
+    ],
+    "answer": "Phantom rows matching the query's predicate appearing in a re-executed query",
+    "explanation": "The standard's REPEATABLE READ guarantees locked reads on individual rows but permits phantoms, which only SERIALIZABLE eliminates. Note that PostgreSQL's stricter REPEATABLE READ (snapshot isolation) actually blocks phantoms as well.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 85,
+    "question": "In PostgreSQL's MVCC implementation, what is the primary role of the VACUUM process?",
+    "options": [
+      "It rewrites the entire table to defragment B-tree indexes",
+      "It reclaims space occupied by dead tuple versions that are no longer visible to any active transaction",
+      "It merges multiple row versions of the same logical row into a single version in place",
+      "It flushes dirty data pages from shared buffers to disk"
+    ],
+    "answer": "It reclaims space occupied by dead tuple versions that are no longer visible to any active transaction",
+    "explanation": "MVCC leaves old row versions behind on UPDATE/DELETE, and VACUUM marks that space reusable and updates the visibility map. Autovacuum prevents transaction ID wraparound and keeps index-only scans effective.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 86,
+    "question": "In the context of CTE and derived-table optimization, what does predicate pushdown accomplish?",
+    "options": [
+      "It moves ORDER BY operations from the outer query into the CTE for earlier sorting",
+      "It applies filters from the outer query to the CTE's base tables during the scan, reducing rows before joins and aggregations",
+      "It transfers aggregation logic from the outer query into the CTE to eliminate GROUP BY",
+      "It converts outer joins in the CTE into inner joins automatically"
+    ],
+    "answer": "It applies filters from the outer query to the CTE's base tables during the scan, reducing rows before joins and aggregations",
+    "explanation": "Pushing predicates early shrinks intermediate result sets before expensive operations execute. Materialization fences (as with MATERIALIZED CTEs or aggregate boundaries in some engines) can block this optimization, which is why filters may need to be duplicated inside the CTE.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 87,
+    "question": "What does the query WHERE id NOT IN (SELECT ref FROM t) return if the subquery produces at least one NULL value?",
+    "options": [
+      "All rows where id is not equal to any non-NULL ref value",
+      "No rows at all, because every comparison evaluates to UNKNOWN and NOT UNKNOWN is not TRUE",
+      "Only rows where id is NULL",
+      "An error stating that NOT IN cannot be used with nullable subqueries"
+    ],
+    "answer": "No rows at all, because every comparison evaluates to UNKNOWN and NOT UNKNOWN is not TRUE",
+    "explanation": "id NOT IN (...) is equivalent to id <> ALL(...); comparing against NULL yields UNKNOWN, and the ALL condition fails. NOT EXISTS is the null-safe alternative.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 88,
+    "question": "What best defines a correlated subquery?",
+    "options": [
+      "A subquery that joins two tables on foreign key columns",
+      "A subquery that references columns from the outer query, conceptually re-evaluated for each candidate outer row",
+      "A subquery whose result is cached across all executions of the statement",
+      "A subquery that must appear in the FROM clause and return exactly one column"
+    ],
+    "answer": "A subquery that references columns from the outer query, conceptually re-evaluated for each candidate outer row",
+    "explanation": "Because it depends on outer columns, a correlated subquery cannot be evaluated independently, and naive execution is once per row. Modern optimizers often decorrelate such subqueries into joins or semijoins when possible.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 89,
+    "question": "How does RANK() differ from DENSE_RANK() when processing tied ORDER BY values?",
+    "options": [
+      "RANK() assigns the same value to ties and leaves gaps in the following ranks, while DENSE_RANK() assigns consecutive ranks without gaps",
+      "RANK() assigns distinct sequential numbers to ties, while DENSE_RANK() assigns them all the same value",
+      "RANK() restarts numbering at each partition boundary, while DENSE_RANK() continues across partitions",
+      "There is no difference; DENSE_RANK() is merely a deprecated alias"
+    ],
+    "answer": "RANK() assigns the same value to ties and leaves gaps in the following ranks, while DENSE_RANK() assigns consecutive ranks without gaps",
+    "explanation": "With ties, RANK() jumps (1, 1, 3) mirroring competition ranking, while DENSE_RANK() yields (1, 1, 2). ROW_NUMBER() would instead break ties arbitrarily as (1, 2, 3).",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 90,
+    "question": "Why does a query like SELECT name, RANK() OVER (ORDER BY score) r FROM players WHERE r = 1 fail?",
+    "options": [
+      "Column aliases cannot be referenced in the WHERE clause in any form",
+      "RANK() requires a PARTITION BY clause to be valid in a filtered query",
+      "Window functions are logically evaluated after WHERE, so they cannot appear in or be filtered by WHERE; a subquery or CTE is required",
+      "Window functions can only be used with aggregate queries containing GROUP BY"
+    ],
+    "answer": "Window functions are logically evaluated after WHERE, so they cannot appear in or be filtered by WHERE; a subquery or CTE is required",
+    "explanation": "The SQL logical processing order places WHERE before SELECT's window computation, so window results do not exist yet during filtering. Wrapping the windowed query in a derived table or CTE and filtering on its output resolves this.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 91,
+    "question": "What does the window function NTILE(4) OVER (ORDER BY revenue) compute?",
+    "options": [
+      "The rank of each row among four partitions created by splitting revenue into ranges",
+      "A bucket number from 1 to 4 for each row, distributing rows into four approximately equal groups by revenue order",
+      "The cumulative revenue percentile as a decimal between 0 and 1",
+      "The revenue value at the fourth percentile of the distribution"
+    ],
+    "answer": "A bucket number from 1 to 4 for each row, distributing rows into four approximately equal groups by revenue order",
+    "explanation": "NTILE(n) assigns each row to one of n rank-ordered buckets, with earlier buckets receiving the remainder rows when the count is not evenly divisible. CUME_DIST/PERCENT_RANK are the functions for fractional percentile positions.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 92,
+    "question": "For a composite index on (customer_id, order_date), which queries can efficiently seek the index?",
+    "options": [
+      "Only queries that filter on both customer_id and order_date with equality predicates",
+      "Queries filtering on order_date alone, since it is the more selective column by position",
+      "Queries filtering on customer_id alone, or customer_id equality combined with a range on order_date, but not on order_date alone",
+      "All queries touching the table, since any column in the index enables an index scan"
+    ],
+    "answer": "Queries filtering on customer_id alone, or customer_id equality combined with a range on order_date, but not on order_date alone",
+    "explanation": "B-tree indexes are ordered by the leading column, so seeks require a prefix of the key. A range predicate on the second column works only after the first column is fixed, and skipping the leading column forces a full index scan at best.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 93,
+    "question": "What durability guarantee does write-ahead logging (WAL) provide?",
+    "options": [
+      "Committed transactions are visible to readers immediately, even before the commit record is durable",
+      "Log records describing changes are forced to durable storage before the modified data pages are written, enabling redo-based crash recovery",
+      "Data pages are always written to disk synchronously at commit time, bypassing the buffer cache",
+      "Every query's execution plan is logged before execution for auditing purposes"
+    ],
+    "answer": "Log records describing changes are forced to durable storage before the modified data pages are written, enabling redo-based crash recovery",
+    "explanation": "By persisting the log first, the database can reconstruct committed changes after a crash even if dirty data pages were lost, which is why buffer flushes can be deferred. This is the foundation of the durability guarantee in ACID.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 94,
+    "question": "What is lock escalation as implemented in SQL Server?",
+    "options": [
+      "Automatically upgrading shared locks to exclusive locks when a transaction writes a row it previously read",
+      "Converting many fine-grained row or page locks into a single coarser table lock to reduce lock-management memory overhead",
+      "Promoting a transaction's isolation level to SERIALIZABLE when it holds too many locks",
+      "Transferring lock ownership to the deadlock detector when a wait cycle forms"
+    ],
+    "answer": "Converting many fine-grained row or page locks into a single coarser table lock to reduce lock-management memory overhead",
+    "explanation": "When lock count crosses a threshold (about 5,000 objects), SQL Server collapses them into a table lock, trading concurrency for memory efficiency. Escalation can cause unexpected blocking in large batch operations.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 95,
+    "question": "How do most relational databases typically resolve a deadlock between two transactions?",
+    "options": [
+      "By letting both transactions wait indefinitely until an administrator intervenes",
+      "By detecting the circular wait in the wait-for graph and aborting one transaction as a victim with a deadlock error, allowing the other to proceed",
+      "By granting both transactions higher-priority locks so neither blocks the other",
+      "By rolling back only the individual statements involved, leaving both transactions active"
+    ],
+    "answer": "By detecting the circular wait in the wait-for graph and aborting one transaction as a victim with a deadlock error, allowing the other to proceed",
+    "explanation": "The lock manager builds a wait-for graph, detects cycles, and chooses a victim based on rollback cost. The victim receives an error (e.g., SQL Server 1205 or PostgreSQL 40P01) and its work is rolled back so locks are released.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 96,
+    "question": "What role do column statistics (histograms and distinct-value counts) play in query optimization?",
+    "options": [
+      "They are used at runtime to verify that query results satisfy integrity constraints",
+      "They enable the optimizer to estimate predicate selectivity and intermediate row counts, which drive join order and access path decisions",
+      "They automatically create indexes on columns with low cardinality",
+      "They guarantee the optimizer selects the mathematically optimal execution plan"
+    ],
+    "answer": "They enable the optimizer to estimate predicate selectivity and intermediate row counts, which drive join order and access path decisions",
+    "explanation": "Cost-based optimizers multiply selectivity estimates through the plan tree to price each alternative. Stale or missing statistics produce cardinality misestimates, the most common cause of catastrophic plan regressions.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 97,
+    "question": "What is partition pruning in a partitioned table environment?",
+    "options": [
+      "Automatically dropping partitions older than a retention period",
+      "The optimizer eliminating partitions whose bounds cannot satisfy the query's WHERE predicate, so only relevant partitions are scanned",
+      "Splitting an oversized partition into smaller ones during query execution",
+      "Compressing rarely accessed partitions to reduce storage costs"
+    ],
+    "answer": "The optimizer eliminating partitions whose bounds cannot satisfy the query's WHERE predicate, so only relevant partitions are scanned",
+    "explanation": "Because partition bounds are metadata, filters on the partition key let the planner exclude non-qualifying partitions at plan time. This is a primary performance benefit of partitioning beyond maintenance and archival convenience.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 98,
+    "question": "What does the SQL standard MERGE statement do?",
+    "options": [
+      "Combines the results of two SELECT queries into a single sorted result set",
+      "Applies INSERT, UPDATE, or DELETE actions to a target table in one statement, based on whether each source row matches on a join condition",
+      "Merges two separate indexes into a single composite index",
+      "Consolidates multiple transactions into a single atomic commit"
+    ],
+    "answer": "Applies INSERT, UPDATE, or DELETE actions to a target table in one statement, based on whether each source row matches on a join condition",
+    "explanation": "MERGE joins a source to a target and executes WHEN MATCHED / WHEN NOT MATCHED clauses, providing upsert semantics atomically. Dialects vary: PostgreSQL added MERGE in 15, and ON CONFLICT provides an alternative upsert path.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 99,
+    "question": "What does the aggregate filter expression COUNT(*) FILTER (WHERE status = 'shipped') do in PostgreSQL?",
+    "options": [
+      "It counts all rows but excludes rows where status is NULL from the total",
+      "It restricts the aggregate to rows meeting the condition within a single scan, avoiding multiple passes or CASE expressions",
+      "It applies the filter to the WHERE clause of the whole query, reducing rows before grouping",
+      "It counts rows only if the entire group satisfies the condition, returning NULL otherwise"
+    ],
+    "answer": "It restricts the aggregate to rows meeting the condition within a single scan, avoiding multiple passes or CASE expressions",
+    "explanation": "FILTER is standard SQL conditional aggregation supported in PostgreSQL and SQLite, computing several conditioned aggregates in one pass over each group. The CASE-based equivalent COUNT(CASE WHEN status='shipped' THEN 1 END) achieves the same with more verbosity.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 100,
+    "question": "In PostgreSQL, given WITH del AS (DELETE FROM orders RETURNING *), what can the main query SELECT * FROM del observe about the deleted rows?",
+    "options": [
+      "The deleted rows with their original values, because DELETE RETURNING captures them atomically with the delete",
+      "Only the primary keys of deleted rows, since non-key columns are purged before the CTE returns",
+      "Nothing—the main query sees the snapshot from statement start, but data-modifying CTEs and the main query execute without seeing each other's changes on the target table",
+      "The deleted rows twice, once from the CTE and once from the table's WAL stream"
+    ],
+    "answer": "Only the primary keys of deleted rows, since non-key columns are purged before the CTE returns",
+    "explanation": "Actually the key subtlety: RETURNING does deliver the full deleted rows, but all parts of the statement share one snapshot, so sub-statements cannot observe one another's effects on the tables themselves. This snapshot semantics matters for constructs like WITH ... SELECT counting rows inserted in the same statement.",
+    "difficulty": "Advanced"
+  }
+]
