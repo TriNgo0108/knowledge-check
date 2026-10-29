@@ -1,0 +1,1302 @@
+[
+  {
+    "id": 1,
+    "question": "What is the default TCP port on which a PostgreSQL server listens for client connections?",
+    "options": [
+      "3306",
+      "1521",
+      "5432",
+      "6379"
+    ],
+    "answer": "5432",
+    "explanation": "PostgreSQL uses port 5432 by default. Port 3306 is MySQL, 1521 is Oracle, and 6379 is Redis.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 2,
+    "question": "In the psql command-line tool, which meta-command lists all databases on the server?",
+    "options": [
+      "\\dt",
+      "\\l",
+      "\\d",
+      "\\conninfo"
+    ],
+    "answer": "\\l",
+    "explanation": "\\l lists all databases on the server. \\dt lists tables in the current database and \\d describes a specific object.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 3,
+    "question": "What does declaring a column as SERIAL in PostgreSQL do?",
+    "options": [
+      "Creates an auto-incrementing integer column backed by a sequence",
+      "Encrypts the column values automatically",
+      "Designates the column as the primary key",
+      "Stores the column as a floating-point number"
+    ],
+    "answer": "Creates an auto-incrementing integer column backed by a sequence",
+    "explanation": "SERIAL is shorthand that creates an integer column with a DEFAULT value drawn from an automatically created sequence. It does not add a primary key or encryption.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 4,
+    "question": "How does PostgreSQL internally store data in a JSONB column?",
+    "options": [
+      "As the exact original JSON text string",
+      "As a decomposed binary format",
+      "As an uncompressed XML document",
+      "As a compressed CSV row"
+    ],
+    "answer": "As a decomposed binary format",
+    "explanation": "JSONB stores data in a decomposed binary format, which makes indexing and lookups faster but insertion slower than plain JSON text. Plain json preserves the original text exactly.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 5,
+    "question": "Which index type is used by default when you run CREATE INDEX without specifying an access method?",
+    "options": [
+      "GIN",
+      "BRIN",
+      "Hash",
+      "B-tree"
+    ],
+    "answer": "B-tree",
+    "explanation": "B-tree is PostgreSQL's default index access method and suits most equality and range queries. GIN, BRIN, and Hash must be requested explicitly with USING.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 6,
+    "question": "What is the primary purpose of the VACUUM command in PostgreSQL?",
+    "options": [
+      "To rebuild all indexes in the database",
+      "To remove dead tuples left behind by updates and deletes",
+      "To compress table files on disk",
+      "To export table data to a flat file"
+    ],
+    "answer": "To remove dead tuples left behind by updates and deletes",
+    "explanation": "PostgreSQL's MVCC leaves old row versions (dead tuples) after updates and deletes. VACUUM reclaims that space for reuse and prevents transaction ID wraparound.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 7,
+    "question": "What does a LEFT OUTER JOIN return?",
+    "options": [
+      "Only rows that have matches in both tables",
+      "All rows from both tables regardless of matches",
+      "All rows from the left table, with NULLs where no right-table match exists",
+      "All rows from the right table, with NULLs where no left-table match exists"
+    ],
+    "answer": "All rows from the left table, with NULLs where no right-table match exists",
+    "explanation": "A LEFT OUTER JOIN keeps every row of the left table and fills unmatched columns with NULLs. An INNER JOIN keeps only matching rows.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 8,
+    "question": "Which predicate should be used in a WHERE clause to correctly test whether a column contains NULL?",
+    "options": [
+      "column = NULL",
+      "column IS NULL",
+      "column == NULL",
+      "column <> NULL"
+    ],
+    "answer": "column IS NULL",
+    "explanation": "In SQL's three-valued logic, comparing anything to NULL with = yields NULL, not true. Only IS NULL (or IS NOT NULL) reliably tests for null values.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 9,
+    "question": "Which constraint automatically enforces both uniqueness and the absence of NULL values?",
+    "options": [
+      "CHECK",
+      "FOREIGN KEY",
+      "UNIQUE",
+      "PRIMARY KEY"
+    ],
+    "answer": "PRIMARY KEY",
+    "explanation": "A PRIMARY KEY implicitly requires values to be unique and not null. A UNIQUE constraint enforces uniqueness but permits NULLs.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 10,
+    "question": "What is the purpose of the RETURNING clause on an INSERT statement in PostgreSQL?",
+    "options": [
+      "To return values from the rows that were inserted",
+      "To undo the insert if an error occurs",
+      "To redirect output to a file",
+      "To return the number of indexes created"
+    ],
+    "answer": "To return values from the rows that were inserted",
+    "explanation": "RETURNING lets a DML statement return data from the affected rows, such as auto-generated IDs, without a separate SELECT. Example: INSERT ... RETURNING id.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 11,
+    "question": "Which syntax implements an UPSERT (insert a row, or update it if it already exists) in PostgreSQL?",
+    "options": [
+      "REPLACE INTO table ...",
+      "INSERT INTO table ... ON CONFLICT DO UPDATE",
+      "UPSERT INTO table ...",
+      "UPDATE table OR INSERT INTO table ..."
+    ],
+    "answer": "INSERT INTO table ... ON CONFLICT DO UPDATE",
+    "explanation": "PostgreSQL implements UPSERT via the ON CONFLICT clause of INSERT, with DO UPDATE or DO NOTHING as the conflict action. REPLACE INTO is MySQL syntax, not PostgreSQL.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 12,
+    "question": "Which clause restricts a SELECT query to return only a maximum number of rows in PostgreSQL?",
+    "options": [
+      "TOP n",
+      "FIRST n",
+      "LIMIT n",
+      "MAXROWS n"
+    ],
+    "answer": "LIMIT n",
+    "explanation": "LIMIT is PostgreSQL's standard row-count restriction, often paired with OFFSET for paging. TOP is SQL Server syntax and is not valid in PostgreSQL.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 13,
+    "question": "What does COUNT(*) return in a PostgreSQL query?",
+    "options": [
+      "The number of rows in the group, including rows with NULL values",
+      "The number of distinct values in the first column",
+      "The number of non-NULL values in a specific column",
+      "The total sum of all numeric columns"
+    ],
+    "answer": "The number of rows in the group, including rows with NULL values",
+    "explanation": "COUNT(*) counts every row in the group regardless of column values. In contrast, COUNT(column) counts only rows where that column is not NULL.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 14,
+    "question": "What is the effect of adding the DISTINCT keyword to a SELECT statement?",
+    "options": [
+      "It sorts the result set in ascending order",
+      "It removes duplicate rows from the result set",
+      "It filters out rows with NULL values",
+      "It selects rows from multiple databases"
+    ],
+    "answer": "It removes duplicate rows from the result set",
+    "explanation": "DISTINCT eliminates duplicate rows so that every row in the output is unique across the selected columns. Sorting requires ORDER BY.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 15,
+    "question": "How does the ILIKE operator differ from LIKE in PostgreSQL?",
+    "options": [
+      "ILIKE matches using regular expressions instead of wildcards",
+      "ILIKE performs pattern matching case-insensitively",
+      "ILIKE only works on numeric columns",
+      "ILIKE is faster because it uses indexes by default"
+    ],
+    "answer": "ILIKE performs pattern matching case-insensitively",
+    "explanation": "ILIKE is PostgreSQL's case-insensitive variant of LIKE, so 'JOHN' ILIKE 'john%' is true. LIKE is case-sensitive for ordinary text.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 16,
+    "question": "What is a view in PostgreSQL?",
+    "options": [
+      "A virtual table defined by a stored SELECT query",
+      "A physical copy of a table's data",
+      "An index that speeds up foreign key lookups",
+      "A snapshot backup of the entire database"
+    ],
+    "answer": "A virtual table defined by a stored SELECT query",
+    "explanation": "A regular view stores only the defining query and executes it each time it is referenced. It holds no data itself, unlike a table or a materialized view.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 17,
+    "question": "What does the ROLLBACK statement do within a transaction?",
+    "options": [
+      "Commits all pending changes permanently",
+      "Undoes all changes made since the transaction began",
+      "Deletes the current database",
+      "Saves a checkpoint within the transaction"
+    ],
+    "answer": "Undoes all changes made since the transaction began",
+    "explanation": "ROLLBACK aborts the current transaction and discards all of its modifications. COMMIT is the opposite operation, making changes permanent.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 18,
+    "question": "Which psql meta-command switches your session to a different database?",
+    "options": [
+      "\\c dbname",
+      "\\u dbname",
+      "\\d dbname",
+      "\\s dbname"
+    ],
+    "answer": "\\c dbname",
+    "explanation": "\\c (short for \\connect) closes the current connection and connects to the named database. \\d describes database objects such as tables.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 19,
+    "question": "How is PostgreSQL classified as a database system?",
+    "options": [
+      "A key-value store",
+      "A pure NoSQL document database",
+      "A graph-only database",
+      "An object-relational database management system"
+    ],
+    "answer": "An object-relational database management system",
+    "explanation": "PostgreSQL is an object-relational DBMS: it extends the relational model with object-oriented features such as table inheritance and custom data types.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 20,
+    "question": "Which statement correctly adds a new column to an existing PostgreSQL table?",
+    "options": [
+      "MODIFY TABLE employees ADD COLUMN email text;",
+      "UPDATE TABLE employees ADD COLUMN email text;",
+      "ALTER TABLE employees ADD COLUMN email text;",
+      "INSERT INTO employees COLUMN email text;"
+    ],
+    "answer": "ALTER TABLE employees ADD COLUMN email text;",
+    "explanation": "ALTER TABLE ... ADD COLUMN is the correct DDL syntax for extending a table. MODIFY TABLE and UPDATE TABLE are not valid PostgreSQL statements.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 21,
+    "question": "What is a schema in PostgreSQL?",
+    "options": [
+      "A namespace that groups database objects such as tables and functions",
+      "The physical disk file that stores the database",
+      "A special type of index on system tables",
+      "A backup format used by pg_dump"
+    ],
+    "answer": "A namespace that groups database objects such as tables and functions",
+    "explanation": "A schema is a named namespace inside a database that organizes objects and allows the same table name to exist in different schemas. The default schema is public.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 22,
+    "question": "How does a timestamptz (timestamp with time zone) column store values in PostgreSQL?",
+    "options": [
+      "As a text string with the original zone offset preserved",
+      "As a UTC instant, converted to the session's time zone for display",
+      "As separate date, hour, and zone columns",
+      "As the local time of the server, ignoring all zone information"
+    ],
+    "answer": "As a UTC instant, converted to the session's time zone for display",
+    "explanation": "timestamptz normalizes input to UTC for storage; the original offset is not retained. Output is rendered in the time zone configured for the session.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 23,
+    "question": "What native data type capability does PostgreSQL offer that many other relational databases do not?",
+    "options": [
+      "Arrays as a column data type, such as integer[]",
+      "Boolean columns",
+      "Date and time columns",
+      "Fixed-length character columns"
+    ],
+    "answer": "Arrays as a column data type, such as integer[]",
+    "explanation": "PostgreSQL natively supports array columns of any base type, allowing multiple values in a single row's column. Booleans and date/time types are standard SQL features.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 24,
+    "question": "What is the pg_dump utility used for?",
+    "options": [
+      "Monitoring active queries in real time",
+      "Creating a logical backup of a database",
+      "Replicating data to another server continuously",
+      "Rebuilding corrupted index files"
+    ],
+    "answer": "Creating a logical backup of a database",
+    "explanation": "pg_dump produces a logical backup as SQL commands (or a custom-format archive) that can be replayed to restore the database. Streaming replication is a different mechanism.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 25,
+    "question": "What is the main purpose of the Write-Ahead Log (WAL) in PostgreSQL?",
+    "options": [
+      "It caches query results for faster reads",
+      "It stores user passwords securely",
+      "It records changes before they are applied to data files, enabling crash recovery",
+      "It indexes JSONB documents for fast lookup"
+    ],
+    "answer": "It records changes before they are applied to data files, enabling crash recovery",
+    "explanation": "WAL guarantees durability: modifications are logged first, so after a crash PostgreSQL can replay the log to restore a consistent state. It also underpins streaming replication.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 26,
+    "question": "What is autovacuum in PostgreSQL?",
+    "options": [
+      "A background process that automatically runs VACUUM and ANALYZE on tables",
+      "A tool that automatically creates indexes on frequently queried columns",
+      "A mechanism that automatically backs up the database each night",
+      "A feature that automatically rewrites slow queries"
+    ],
+    "answer": "A background process that automatically runs VACUUM and ANALYZE on tables",
+    "explanation": "The autovacuum launcher starts worker processes that clean up dead tuples and refresh planner statistics without manual intervention. It does not create indexes or rewrite queries.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 27,
+    "question": "What does the EXPLAIN command show for a SELECT statement?",
+    "options": [
+      "The query execution plan chosen by the planner",
+      "The syntax errors in the query",
+      "The locking history of the tables involved",
+      "The exact runtime in milliseconds the query will take"
+    ],
+    "answer": "The query execution plan chosen by the planner",
+    "explanation": "EXPLAIN displays the plan tree (scans, joins, estimated costs and rows) without executing the statement. Adding ANALYZE executes it and shows actual timings.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 28,
+    "question": "What does a FOREIGN KEY constraint enforce in PostgreSQL?",
+    "options": [
+      "That values in one column are unique across the table",
+      "Referential integrity by requiring values to match rows in a referenced table",
+      "That a column only contains positive numbers",
+      "That two columns always hold identical values"
+    ],
+    "answer": "Referential integrity by requiring values to match rows in a referenced table",
+    "explanation": "A foreign key ensures values in the referencing column correspond to existing primary/unique key values in the target table, preventing orphaned rows.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 29,
+    "question": "When is the HAVING clause used instead of WHERE?",
+    "options": [
+      "To filter rows before any grouping occurs",
+      "To filter groups after aggregation with GROUP BY",
+      "To join two tables on a non-equality condition",
+      "To limit the number of rows returned"
+    ],
+    "answer": "To filter groups after aggregation with GROUP BY",
+    "explanation": "WHERE filters individual rows before grouping and cannot reference aggregates. HAVING filters the grouped results, allowing conditions on aggregate functions like COUNT or SUM.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 30,
+    "question": "What is the default sort direction of an ORDER BY clause when ASC or DESC is not specified?",
+    "options": [
+      "Descending (DESC)",
+      "Ascending (ASC)",
+      "The order in which rows were inserted",
+      "Random order"
+    ],
+    "answer": "Ascending (ASC)",
+    "explanation": "ORDER BY sorts in ascending order by default; DESC must be written explicitly for descending order. Row return order is otherwise undefined without ORDER BY.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 31,
+    "question": "Which statement best describes TRUNCATE compared to DELETE in PostgreSQL?",
+    "options": [
+      "TRUNCATE removes all rows from a table quickly, without scanning rows individually",
+      "TRUNCATE can remove rows matching a WHERE condition",
+      "DELETE always runs faster than TRUNCATE on large tables",
+      "TRUNCATE only removes rows visible to the current transaction"
+    ],
+    "answer": "TRUNCATE removes all rows from a table quickly, without scanning rows individually",
+    "explanation": "TRUNCATE deallocates all rows in one operation and does not support a WHERE clause, whereas DELETE processes rows individually and can filter with a condition.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 32,
+    "question": "What does a UNIQUE constraint guarantee about a column?",
+    "options": [
+      "No two rows can have the same value in that column",
+      "The column cannot contain NULL values",
+      "The column is automatically indexed with a GIN index",
+      "The column cannot be updated after insertion"
+    ],
+    "answer": "No two rows can have the same value in that column",
+    "explanation": "A UNIQUE constraint rejects duplicate values, but unlike a primary key it still permits NULL entries (multiple NULLs are allowed by default).",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 33,
+    "question": "What is PL/pgSQL in PostgreSQL?",
+    "options": [
+      "The graphical administration interface for PostgreSQL",
+      "PostgreSQL's procedural language for writing functions and triggers",
+      "The protocol used for client-server communication",
+      "A utility for copying data between servers"
+    ],
+    "answer": "PostgreSQL's procedural language for writing functions and triggers",
+    "explanation": "PL/pgSQL extends SQL with variables, control flow, and loops, enabling stored functions, procedures, and trigger logic inside the database.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 34,
+    "question": "What does a DEFAULT clause on a column definition do?",
+    "options": [
+      "Prevents the column from being set to NULL",
+      "Automatically supplies a value when an INSERT omits the column",
+      "Encrypts the column when no key is provided",
+      "Forces the column to be the table's primary key"
+    ],
+    "answer": "Automatically supplies a value when an INSERT omits the column",
+    "explanation": "A DEFAULT expression fills the column with the specified value (e.g., CURRENT_TIMESTAMP) whenever an INSERT does not provide one. Preventing NULLs is the role of NOT NULL.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 35,
+    "question": "In psql, what does the meta-command \\d table_name display?",
+    "options": [
+      "The data stored in the table",
+      "The access privileges granted on the table",
+      "The structure of the table, including columns, types, and indexes",
+      "The query plan for scanning the table"
+    ],
+    "answer": "The structure of the table, including columns, types, and indexes",
+    "explanation": "\\d table_name describes the table's definition: column names, data types, constraints, and indexes. It does not return the table's row data.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 36,
+    "question": "In PostgreSQL, what is the primary benefit of Multi-Version Concurrency Control (MVCC)?",
+    "options": [
+      "It eliminates the need for WAL logging during transactions",
+      "Readers do not block writers, and writers do not block readers",
+      "It compresses old row versions to save disk space",
+      "It guarantees serializable execution at all isolation levels"
+    ],
+    "answer": "Readers do not block writers, and writers do not block readers",
+    "explanation": "MVCC keeps multiple row versions so each transaction works against a snapshot, avoiding read-write blocking. It does not remove WAL logging, and serializable behavior requires the SERIALIZABLE isolation level.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 37,
+    "question": "What is the key difference between VACUUM and VACUUM FULL in PostgreSQL?",
+    "options": [
+      "VACUUM FULL reclaims space without locks, while VACUUM requires an exclusive lock",
+      "VACUUM FULL rewrites the entire table into a new relation file and requires an ACCESS EXCLUSIVE lock, while VACUUM only marks dead tuple space as reusable",
+      "VACUUM removes all table bloat, while VACUUM FULL only updates planner statistics",
+      "VACUUM must be run manually, while VACUUM FULL is executed automatically by autovacuum"
+    ],
+    "answer": "VACUUM FULL rewrites the entire table into a new relation file and requires an ACCESS EXCLUSIVE lock, while VACUUM only marks dead tuple space as reusable",
+    "explanation": "Plain VACUUM scans the table and makes dead tuple space available for reuse without blocking normal operations. VACUUM FULL compacts the table by rewriting it, returning space to the OS at the cost of an ACCESS EXCLUSIVE lock.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 38,
+    "question": "Which index type is generally preferred for accelerating JSONB containment queries (@>) on large, read-heavy tables?",
+    "options": [
+      "BRIN",
+      "GIN",
+      "Hash",
+      "SP-GiST"
+    ],
+    "answer": "GIN",
+    "explanation": "GIN indexes the keys and values inside JSONB documents and efficiently supports the @> containment operator. BRIN targets physically ordered data, Hash supports only equality, and SP-GiST is designed for partitioned search trees like geometric types.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 39,
+    "question": "A BRIN index is most appropriate for which workload?",
+    "options": [
+      "Frequently updated columns with random insert order",
+      "Very large, append-only tables where a column's values correlate with physical row order, such as timestamps",
+      "Small lookup tables enforcing unique constraints",
+      "JSONB containment queries on document data"
+    ],
+    "answer": "Very large, append-only tables where a column's values correlate with physical row order, such as timestamps",
+    "explanation": "BRIN stores only min/max summaries per block range, making it extremely small. It performs well when value ranges align with physical storage order, as with log or event timestamps.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 40,
+    "question": "What functional limitation does the jsonb_path_ops GIN operator class have compared to the default jsonb_ops?",
+    "options": [
+      "It cannot index numeric values in JSON documents",
+      "It does not support the existence operator (?) and other existence checks, only containment",
+      "It cannot be used with the @> containment operator",
+      "It supports only equality lookups on top-level keys"
+    ],
+    "answer": "It does not support the existence operator (?) and other existence checks, only containment",
+    "explanation": "jsonb_path_ops indexes only hashes of complete paths and values, making it smaller and faster for @> queries. However, it cannot answer the ? existence operator, which jsonb_ops supports.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 41,
+    "question": "For INSERT ... ON CONFLICT DO UPDATE (UPSERT) to actually take the conflict path, what must exist on the target table?",
+    "options": [
+      "A BEFORE INSERT trigger on the target table",
+      "A unique index, primary key, or exclusion constraint that can be inferred as the conflict target",
+      "A CHECK constraint covering the inserted columns",
+      "The table must be declaratively partitioned"
+    ],
+    "answer": "A unique index, primary key, or exclusion constraint that can be inferred as the conflict target",
+    "explanation": "Conflict detection relies on an arbiter index — a unique or exclusion constraint matching the columns in the ON CONFLICT clause. Without such a constraint, PostgreSQL raises an error rather than taking the DO UPDATE path.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 42,
+    "question": "What does the RETURNING clause in PostgreSQL DML statements do?",
+    "options": [
+      "It returns error details from failed statements",
+      "It returns rows computed from the inserted, updated, or deleted data, as a SELECT would",
+      "It returns the execution plan of the DML statement",
+      "It returns only the count of affected rows"
+    ],
+    "answer": "It returns rows computed from the inserted, updated, or deleted data, as a SELECT would",
+    "explanation": "RETURNING evaluates expressions over the rows affected by INSERT, UPDATE, or DELETE. This lets applications retrieve generated values (e.g., serial IDs) without a second query round-trip.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 43,
+    "question": "What is the primary purpose of the Write-Ahead Log (WAL) in PostgreSQL?",
+    "options": [
+      "To cache frequently accessed table pages in shared memory",
+      "To ensure durability and crash recovery by logging changes before the affected data pages are flushed to disk",
+      "To enforce foreign key constraints efficiently",
+      "To store historical row versions used by MVCC"
+    ],
+    "answer": "To ensure durability and crash recovery by logging changes before the affected data pages are flushed to disk",
+    "explanation": "WAL records every modification before dirty data pages are written, so after a crash the log can be replayed to restore a consistent state. WAL segments are also the basis for streaming replication and PITR.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 44,
+    "question": "In PostgreSQL, what is the purpose of TOAST (The Oversized-Attribute Storage Technique)?",
+    "options": [
+      "It compresses the entire relation file when it exceeds 1 GB",
+      "It stores large column values out-of-line, optionally compressed, when they exceed roughly 2 KB, working around the 8 KB page size limit",
+      "It replicates large objects across standby nodes",
+      "It automatically converts text columns to bytea for storage"
+    ],
+    "answer": "It stores large column values out-of-line, optionally compressed, when they exceed roughly 2 KB, working around the 8 KB page size limit",
+    "explanation": "Values too large to fit on a heap page are compressed and/or moved into a per-table TOAST relation. This allows rows to contain values far larger than a single page while keeping page operations intact.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 45,
+    "question": "What are 'dead tuples' in PostgreSQL, and how are they handled?",
+    "options": [
+      "Rows locked by long-running transactions; released when the lock is granted",
+      "Row versions removed by DELETE or superseded by UPDATE that remain until VACUUM marks their space reusable",
+      "Rows that failed CHECK constraints; removed immediately by constraint triggers",
+      "Corrupted pages detected by WAL replay; rewritten automatically by VACUUM"
+    ],
+    "answer": "Row versions removed by DELETE or superseded by UPDATE that remain until VACUUM marks their space reusable",
+    "explanation": "MVCC keeps obsolete versions visible to snapshots that may still need them. VACUUM (or autovacuum) later removes these dead tuples so their space can be reused by new row versions.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 46,
+    "question": "Unlike the SQL standard, what anomaly does PostgreSQL's REPEATABLE READ isolation level additionally prevent?",
+    "options": [
+      "Lost updates only",
+      "Phantom reads, because it uses snapshot isolation rather than the standard's weaker definition",
+      "Serialization anomalies",
+      "Read skew across independent transactions"
+    ],
+    "answer": "Phantom reads, because it uses snapshot isolation rather than the standard's weaker definition",
+    "explanation": "PostgreSQL's REPEATABLE READ gives the whole transaction a snapshot from its start, so new committed rows (phantoms) never become visible. Eliminating serialization anomalies requires the SERIALIZABLE level, which adds SSI.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 47,
+    "question": "In PostgreSQL 11+, what capability do procedures (CREATE PROCEDURE) have that functions do not?",
+    "options": [
+      "They can be invoked inside SELECT statements",
+      "They can manage transactions, executing COMMIT and ROLLBACK within their body",
+      "They can be written in PL/pgSQL",
+      "They can return result sets to the caller"
+    ],
+    "answer": "They can manage transactions, executing COMMIT and ROLLBACK within their body",
+    "explanation": "Procedures, invoked via CALL, can commit or roll back mid-execution, enabling batch processing in chunks. Functions run within the single transaction of the calling statement and cannot control transactions.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 48,
+    "question": "Which statement about TRUNCATE in PostgreSQL is accurate?",
+    "options": [
+      "TRUNCATE fires row-level DELETE triggers for every removed row",
+      "TRUNCATE rapidly deallocates the relation files, but fails if other tables reference it via foreign keys unless CASCADE is specified",
+      "TRUNCATE cannot be rolled back, even inside a transaction block",
+      "TRUNCATE removes rows one by one, logging each deletion to WAL"
+    ],
+    "answer": "TRUNCATE rapidly deallocates the relation files, but fails if other tables reference it via foreign keys unless CASCADE is specified",
+    "explanation": "TRUNCATE unlinks and recreates the table's storage instead of deleting rows individually, making it very fast. It is transaction-safe in PostgreSQL, but PostgreSQL refuses to truncate tables that are the target of foreign key references without CASCADE.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 49,
+    "question": "What is an important caveat when running EXPLAIN ANALYZE instead of plain EXPLAIN?",
+    "options": [
+      "It only shows estimated costs, never real timings",
+      "It actually executes the statement, so INSERT, UPDATE, or DELETE will modify data — wrap it in BEGIN/ROLLBACK for safety",
+      "It disables parallel query plans for the session",
+      "It forces a sequential scan, ignoring all indexes"
+    ],
+    "answer": "It actually executes the statement, so INSERT, UPDATE, or DELETE will modify data — wrap it in BEGIN/ROLLBACK for safety",
+    "explanation": "EXPLAIN ANALYZE runs the query to capture real row counts and timing. For data-modifying statements, executing it inside a transaction and rolling back prevents permanent changes.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 50,
+    "question": "What is required before you can run REFRESH MATERIALIZED VIEW ... CONCURRENTLY?",
+    "options": [
+      "The materialized view must be UNLOGGED",
+      "A UNIQUE index covering the materialized view's columns, matching all rows without a WHERE clause",
+      "The materialized view must have been created WITH NO DATA",
+      "Superuser privileges on the database cluster"
+    ],
+    "answer": "A UNIQUE index covering the materialized view's columns, matching all rows without a WHERE clause",
+    "explanation": "CONCURRENTLY refreshes the view without blocking SELECTs by diffing new data against a temporary copy, which requires a full unique index for row matching. A plain REFRESH takes an exclusive lock and needs no such index.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 51,
+    "question": "What does the LATERAL keyword enable in a PostgreSQL join?",
+    "options": [
+      "The right-hand side to reference columns from the left-hand input, behaving like a correlated subquery applied per row",
+      "Joining two tables using only non-equality operators",
+      "Parallel execution of both join inputs",
+      "Automatic index creation for the join condition"
+    ],
+    "answer": "The right-hand side to reference columns from the left-hand input, behaving like a correlated subquery applied per row",
+    "explanation": "LATERAL allows a subquery or function in FROM to depend on columns of preceding FROM items, similar to CROSS APPLY in other databases. This enables per-row computed joins, such as top-N-per-group queries.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 52,
+    "question": "How does SELECT DISTINCT ON (col) ... behave in PostgreSQL?",
+    "options": [
+      "It eliminates duplicate rows across all columns of the result",
+      "It keeps only the first row for each distinct value of col, determined by the ORDER BY expression that must start with col",
+      "It returns a count of distinct values for each group",
+      "It removes only rows where col is NULL"
+    ],
+    "answer": "It keeps only the first row for each distinct value of col, determined by the ORDER BY expression that must start with col",
+    "explanation": "The ORDER BY clause must begin with the DISTINCT ON expressions, and PostgreSQL retains the first row of each group. This is a common idiom for fetching the latest row per entity.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 53,
+    "question": "Why might a recursive CTE use UNION instead of UNION ALL?",
+    "options": [
+      "UNION is faster because it skips duplicate detection",
+      "UNION removes duplicate rows, which helps terminate recursion on cyclic data",
+      "UNION ALL is not permitted in recursive CTEs",
+      "UNION forces the recursive term to execute before the non-recursive term"
+    ],
+    "answer": "UNION removes duplicate rows, which helps terminate recursion on cyclic data",
+    "explanation": "Duplicate elimination means already-visited rows are not re-expanded, preventing infinite loops on cycles. UNION ALL is legal and faster, but with cyclic data it requires an explicit termination path or depth limit.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 54,
+    "question": "What is the default window frame for an aggregate window function when ORDER BY is present?",
+    "options": [
+      "ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING",
+      "RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW",
+      "ROWS BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING",
+      "No frame is applied; the function covers the entire partition"
+    ],
+    "answer": "RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW",
+    "explanation": "With ORDER BY, the frame ends at the current row's peer group (ties included), which produces running aggregates. Without ORDER BY, the default frame is the whole partition.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 55,
+    "question": "What is a partial index in PostgreSQL?",
+    "options": [
+      "An index that covers only a subset of a composite key's columns",
+      "An index built over only the rows satisfying a WHERE predicate, e.g. CREATE INDEX ... WHERE status = 'active'",
+      "An index that stores only the first kilobyte of large values",
+      "An index built on every second page of a B-tree"
+    ],
+    "answer": "An index built over only the rows satisfying a WHERE predicate, e.g. CREATE INDEX ... WHERE status = 'active'",
+    "explanation": "A partial index contains entries only for rows matching its predicate, making it smaller and faster for queries that filter the same way. The planner uses it when the query's conditions imply the index predicate.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 56,
+    "question": "What does the INCLUDE clause in CREATE INDEX ... (col) INCLUDE (col2) provide?",
+    "options": [
+      "Columns stored in the index to enable index-only scans, but not usable for search or ordering",
+      "Automatic statistics collection on the included columns",
+      "Inclusion of otherwise excluded rows via partial predicates",
+      "Built-in compression of the included columns"
+    ],
+    "answer": "Columns stored in the index to enable index-only scans, but not usable for search or ordering",
+    "explanation": "INCLUDE payload columns are stored in leaf tuples so queries can be answered from the index alone (index-only scans). They cannot be used in WHERE or ORDER BY index matching.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 57,
+    "question": "Why does a standard B-tree index typically fail to accelerate WHERE text_col LIKE '%suffix'?",
+    "options": [
+      "B-tree comparisons are case-sensitive by default",
+      "The leading wildcard prevents an ordered prefix seek on the B-tree; a pg_trgm GIN index is the usual remedy",
+      "LIKE requires a full-text tsvector index instead",
+      "B-tree indexes cannot store text longer than 1024 bytes"
+    ],
+    "answer": "The leading wildcard prevents an ordered prefix seek on the B-tree; a pg_trgm GIN index is the usual remedy",
+    "explanation": "A B-tree supports seeks only on known prefixes because its entries are sorted. Patterns with leading wildcards require trigram indexes (pg_trgm with GIN/GiST) for efficient matching.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 58,
+    "question": "Which statement correctly contrasts streaming (physical) and logical replication in PostgreSQL?",
+    "options": [
+      "Streaming replication ships WAL at the block level for an identical cluster copy, while logical replication decodes changes into row events delivered per table between publication and subscription",
+      "Streaming replication works across major versions, while logical replication requires identical major versions",
+      "Logical replication streams raw WAL segments, while streaming replication sends SQL statements",
+      "Physical replication supports selective table replication, while logical replication copies the entire cluster"
+    ],
+    "answer": "Streaming replication ships WAL at the block level for an identical cluster copy, while logical replication decodes changes into row events delivered per table between publication and subscription",
+    "explanation": "Physical streaming replication transfers WAL records, producing a byte-identical standby. Logical replication uses logical decoding to replicate individual table changes, allowing version differences and selective datasets.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 59,
+    "question": "What distinguishes pg_basebackup from pg_dump?",
+    "options": [
+      "pg_basebackup produces a physical copy of the whole cluster usable for PITR, while pg_dump produces a logical dump of databases",
+      "pg_dump copies WAL archives, while pg_basebackup exports CSV files",
+      "pg_basebackup requires the server to be stopped, while pg_dump needs replication privileges",
+      "pg_dump produces binary cluster files, while pg_basebackup outputs plain SQL"
+    ],
+    "answer": "pg_basebackup produces a physical copy of the whole cluster usable for PITR, while pg_dump produces a logical dump of databases",
+    "explanation": "pg_basebackup copies the cluster's data files plus WAL, enabling recovery and streaming standby setup. pg_dump generates logical SQL-format output that can be restored across versions but not used for PITR.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 60,
+    "question": "What is required to perform Point-In-Time Recovery (PITR) in PostgreSQL?",
+    "options": [
+      "Only a nightly pg_dump file",
+      "A physical base backup plus archived WAL segments, with recovery targets such as restore_command and recovery_target_time",
+      "A logical replica promoted with pg_rewind",
+      "Continuous VACUUM FULL combined with unlogged tables"
+    ],
+    "answer": "A physical base backup plus archived WAL segments, with recovery targets such as restore_command and recovery_target_time",
+    "explanation": "PITR restores a base backup, then replays archived WAL up to a chosen time, LSN, or transaction ID. Continuous WAL archiving (archive_mode with archive_command) is the prerequisite.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 61,
+    "question": "After enabling row level security with ALTER TABLE ... ENABLE ROW LEVEL SECURITY, what applies to the table owner by default?",
+    "options": [
+      "Policies apply to the owner, granting read-only access",
+      "RLS does not apply to the table owner or superusers/BYPASSRLS roles unless FORCE ROW LEVEL SECURITY is set for the owner",
+      "The owner must be granted a policy before any access is possible",
+      "Ownership automatically transfers to the role that created the policy"
+    ],
+    "answer": "RLS does not apply to the table owner or superusers/BYPASSRLS roles unless FORCE ROW LEVEL SECURITY is set for the owner",
+    "explanation": "By default, table owners and roles with BYPASSRLS (including superusers) bypass RLS policies entirely. FORCE ROW LEVEL SECURITY extends policy enforcement to the table owner, though never to superusers.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 62,
+    "question": "Which system view would you query to see currently executing queries, their states, and their sessions?",
+    "options": [
+      "pg_stat_activity",
+      "pg_locks",
+      "pg_stat_statements",
+      "pg_settings"
+    ],
+    "answer": "pg_stat_activity",
+    "explanation": "pg_stat_activity shows one row per server process, including state, current query, and wait events. pg_stat_statements provides aggregated statistics over normalized statements, not live sessions.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 63,
+    "question": "Why can sequence values have gaps after INSERT failures or rollbacks?",
+    "options": [
+      "nextval() is non-transactional; consumed values are never returned to the sequence",
+      "Sequences reset to their minimum value upon rollback",
+      "Gaps appear only when the sequence cache is set to zero",
+      "WAL discards sequence records when a transaction aborts"
+    ],
+    "answer": "nextval() is non-transactional; consumed values are never returned to the sequence",
+    "explanation": "Sequence operations are deliberately outside transaction control so concurrent transactions never block each other on sequence locks. Values consumed by aborted statements are permanently skipped, creating gaps.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 64,
+    "question": "What is the practical difference between the json and jsonb types in PostgreSQL?",
+    "options": [
+      "json is a binary format that supports indexing; jsonb stores exact input text",
+      "jsonb stores a decomposed binary representation supporting indexing and efficient containment, while json preserves the exact input text including key order, whitespace, and duplicates",
+      "jsonb has no size limit, while json cannot exceed 1 GB",
+      "json supports arrays and nesting, while jsonb does not"
+    ],
+    "answer": "jsonb stores a decomposed binary representation supporting indexing and efficient containment, while json preserves the exact input text including key order, whitespace, and duplicates",
+    "explanation": "json validates and stores the literal text, preserving formatting and duplicate keys. jsonb parses into a binary structure — slower to write, but faster to query, indexable with GIN, and free of duplicate keys.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 65,
+    "question": "What is the key behavioral difference between a FOR EACH ROW trigger and a FOR EACH STATEMENT trigger?",
+    "options": [
+      "FOR EACH ROW fires once per affected row, while FOR EACH STATEMENT fires once per statement regardless of how many rows are affected",
+      "FOR EACH ROW fires only for UPDATE, while FOR EACH STATEMENT fires only for DELETE",
+      "FOR EACH STATEMENT can reference NEW and OLD per row, while FOR EACH ROW cannot",
+      "FOR EACH STATEMENT triggers are always deferred until transaction commit"
+    ],
+    "answer": "FOR EACH ROW fires once per affected row, while FOR EACH STATEMENT fires once per statement regardless of how many rows are affected",
+    "explanation": "Row-level triggers execute per modified row with access to that row's NEW/OLD data. Statement-level triggers execute once per DML statement (including zero-row statements) and can only reference transition tables for bulk data.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 66,
+    "question": "Which partitioning strategies does PostgreSQL natively support with declarative partitioning?",
+    "options": [
+      "RANGE, LIST, and HASH",
+      "RANGE and BITMAP only",
+      "HASH and CLUSTER",
+      "LIST, SPATIAL, and RANGE"
+    ],
+    "answer": "RANGE, LIST, and HASH",
+    "explanation": "Declarative partitioning (PARTITION BY) supports range, list, and hash strategies. Spatial or interval-based schemes require extensions or manual routing, and BITMAP partitioning does not exist in PostgreSQL.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 67,
+    "question": "How does a table's fillfactor influence HOT (Heap-Only Tuple) updates?",
+    "options": [
+      "A lower fillfactor leaves free space on each page, increasing the chance an updated row stays on the same page, enabling HOT updates that skip index modification",
+      "A higher fillfactor guarantees HOT updates by packing rows densely together",
+      "Fillfactor affects only index pages and has no influence on HOT updates",
+      "Fillfactor controls WAL compression applied to updated rows"
+    ],
+    "answer": "A lower fillfactor leaves free space on each page, increasing the chance an updated row stays on the same page, enabling HOT updates that skip index modification",
+    "explanation": "A HOT update is possible when the new tuple version fits on the same page and no indexed column changed, avoiding updates to every index. Reserving free space via a lower fillfactor (e.g., 70) makes same-page placement more likely.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 68,
+    "question": "Why is transaction ID (XID) wraparound a concern in PostgreSQL?",
+    "options": [
+      "XIDs are 32-bit and compared with modulo arithmetic; old rows must be frozen before wraparound or data may appear to be in the future and become invisible",
+      "XIDs are 64-bit and overflow at 2^64, crashing the server",
+      "Wraparound deletes archived WAL segments prematurely",
+      "Wraparound resets all sequences in the database to zero"
+    ],
+    "answer": "XIDs are 32-bit and compared with modulo arithmetic; old rows must be frozen before wraparound or data may appear to be in the future and become invisible",
+    "explanation": "PostgreSQL reuses its finite XID space using circular comparison, and VACUUM freezes old tuples to mark them as permanently committed. If the horizon is not advanced in time, the system can force a shutdown to protect data integrity.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 69,
+    "question": "Under the default READ COMMITTED isolation level, what does each statement within a transaction see?",
+    "options": [
+      "A snapshot taken at transaction start and reused for every statement",
+      "A fresh snapshot taken at the start of each statement, so data committed by other transactions may become visible between statements",
+      "No snapshot; all statements execute serially under a global lock",
+      "A snapshot for SELECT statements only, but not for UPDATE ... WHERE evaluation"
+    ],
+    "answer": "A fresh snapshot taken at the start of each statement, so data committed by other transactions may become visible between statements",
+    "explanation": "READ COMMITTED acquires a new snapshot per statement, meaning each statement sees the latest committed data. This permits non-repeatable reads and phantoms within a single transaction.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 70,
+    "question": "To enforce that no two bookings overlap in time for the same room, which constraint-based approach relies on a GiST index?",
+    "options": [
+      "A CHECK (end_time > start_time) constraint on the bookings table",
+      "EXCLUDE USING gist (room_id WITH =, period WITH &&), typically requiring the btree_gist extension for the equality component",
+      "UNIQUE (room_id, start_time, end_time)",
+      "A partial unique index with WHERE period IS NOT NULL"
+    ],
+    "answer": "EXCLUDE USING gist (room_id WITH =, period WITH &&), typically requiring the btree_gist extension for the equality component",
+    "explanation": "EXCLUDE constraints use an index to reject rows conflicting with existing ones via operators like && (overlap). Because plain B-tree equality is not a GiST strategy by default, the btree_gist extension is needed for the room_id equality part.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 71,
+    "question": "An autovacuum VACUUM operation is triggered on a specific table when which condition is met?",
+    "options": [
+      "Dead tuples exceed autovacuum_vacuum_threshold plus (autovacuum_vacuum_scale_factor × reltuples)",
+      "Dead tuples exceed autovacuum_vacuum_threshold multiplied by the table's page count",
+      "Total live rows exceed 20 percent of max_connections",
+      "The table's fillfactor drops below 90 percent"
+    ],
+    "answer": "Dead tuples exceed autovacuum_vacuum_threshold plus (autovacuum_vacuum_scale_factor × reltuples)",
+    "explanation": "Autovacuum launches on a table when dead tuples exceed the fixed threshold plus the scale factor applied to the relation's estimated row count (reltuples). Both parameters can be overridden per table via storage parameters like autovacuum_vacuum_scale_factor in reloptions.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 72,
+    "question": "Under which conditions does PostgreSQL perform a HOT (Heap-Only Tuple) update?",
+    "options": [
+      "The new tuple version fits on the same page and none of the columns covered by an index were modified",
+      "The table has fillfactor set to 100 and the update modifies a TOASTed column",
+      "VACUUM has marked the page all-visible immediately before the update",
+      "The transaction is read-only and uses REPEATABLE READ isolation"
+    ],
+    "answer": "The new tuple version fits on the same page and none of the columns covered by an index were modified",
+    "explanation": "A HOT update avoids index updates entirely because the new tuple version is chained from the old one via the line pointer within the same page. If any indexed column changes, or no page space exists, a regular update must insert entries into every index.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 73,
+    "question": "What role does the visibility map (VM) play in enabling index-only scans?",
+    "options": [
+      "Pages marked all-visible in the VM allow the scan to skip heap fetches because every tuple is known visible to all snapshots",
+      "The VM caches index entries in shared_buffers for repeated scans",
+      "The VM stores the xmin/xmax of each tuple so the index can evaluate visibility directly",
+      "The VM defers heap fetches until the transaction commits"
+    ],
+    "answer": "Pages marked all-visible in the VM allow the scan to skip heap fetches because every tuple is known visible to all snapshots",
+    "explanation": "The visibility map holds two bits per heap page (all-visible and all-frozen). An index-only scan returns values directly from index tuples only when the page is all-visible; otherwise it must fetch the heap page to check tuple visibility, shown as 'Heap Fetches' in EXPLAIN.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 74,
+    "question": "How does PostgreSQL prevent transaction ID (XID) wraparound data loss?",
+    "options": [
+      "Aggressive (anti-wraparound) VACUUM freezes old tuples by replacing their XIDs with FrozenXID, which compares as older than all normal XIDs",
+      "Transaction IDs are transparently widened to 64 bits on disk",
+      "WAL segments are archived before any XID is reused",
+      "Old tuples are automatically moved to TOAST storage before XID reuse"
+    ],
+    "answer": "Aggressive (anti-wraparound) VACUUM freezes old tuples by replacing their XIDs with FrozenXID, which compares as older than all normal XIDs",
+    "explanation": "XIDs are 32-bit and compared with modular arithmetic, so unbounded XID age would corrupt visibility decisions. VACUUM freezes stale tuples (sets them to FrozenXID, id 2), advancing relfrozenxid; if a database approaches the wraparound limit, PostgreSQL halts normal operation to force freezing.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 75,
+    "question": "What specific failure mode does the full_page_writes setting protect against?",
+    "options": [
+      "Torn pages: a partially written page on disk after a crash that could mix old and new data",
+      "Loss of committed transactions when the primary crashes before streaming WAL",
+      "Replication lag caused by high-volume bulk loads",
+      "Checkpoint starvation under heavy write concurrency"
+    ],
+    "answer": "Torn pages: a partially written page on disk after a crash that could mix old and new data",
+    "explanation": "Because a disk page is larger than the atomic write unit of some storage, a crash can leave a page half-old, half-new. With full_page_writes on, the first modification of each page after a checkpoint logs the entire page image, so recovery can always reconstruct a consistent page.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 76,
+    "question": "What is the effect of setting REPLICA IDENTITY FULL on a table included in a logical replication publication?",
+    "options": [
+      "UPDATE and DELETE can be replicated using the entire old row tuple as the key, enabling replication of tables without a primary key at the cost of slower subscriber-side row lookup",
+      "TRUNCATE operations are additionally replicated to the subscriber",
+      "DDL changes on the table are captured and replicated",
+      "TOASTed column values are always included in the WAL before-image"
+    ],
+    "answer": "UPDATE and DELETE can be replicated using the entire old row tuple as the key, enabling replication of tables without a primary key at the cost of slower subscriber-side row lookup",
+    "explanation": "The publication's wal_decoders need a way to identify which subscriber row to update or delete. REPLICA IDENTITY FULL logs the complete old tuple as the key, which removes the primary-key requirement but forces a full sequential match on the subscriber.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 77,
+    "question": "What operational risk does an inactive (orphaned) replication slot pose to the primary server?",
+    "options": [
+      "It retains WAL segments indefinitely, potentially filling pg_wal and disk space",
+      "It blocks checkpoints from completing",
+      "It prevents autovacuum workers from launching",
+      "It forces all connections to serialize through a single backend"
+    ],
+    "answer": "It retains WAL segments indefinitely, potentially filling pg_wal and disk space",
+    "explanation": "A replication slot pins WAL from the consumer's restart point regardless of whether the consumer is still connected. Since PostgreSQL 13, max_slot_wal_keep_size caps retained WAL and invalidates slots that exceed it.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 78,
+    "question": "Which feature is most likely to break when using pgBouncer in transaction pooling mode?",
+    "options": [
+      "Session-level advisory locks, because successive statements may run on different backend connections",
+      "Transaction-level advisory locks (pg_advisory_xact_lock)",
+      "Simple one-statement queries issued over the extended query protocol",
+      "Explicit BEGIN/COMMIT blocks"
+    ],
+    "answer": "Session-level advisory locks, because successive statements may run on different backend connections",
+    "explanation": "In transaction pooling, a server connection is assigned to a client only for the duration of a transaction, so any session-scoped state (session advisory locks, SET, LISTEN/NOTIFY) leaks across unrelated clients. Transaction-level advisory locks and explicit transaction blocks are safe because they are bounded to one transaction.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 79,
+    "question": "What is the trade-off of enabling hot_standby_feedback on a streaming standby?",
+    "options": [
+      "The standby reports its oldest snapshot xmin to the primary, preventing query cancellations from vacuum cleanup conflicts at the cost of table bloat on the primary",
+      "The standby compresses the WAL stream, reducing network bandwidth but increasing CPU usage",
+      "The primary postpones checkpoints until the standby has caught up",
+      "The standby promotes itself automatically if the primary is unreachable"
+    ],
+    "answer": "The standby reports its oldest snapshot xmin to the primary, preventing query cancellations from vacuum cleanup conflicts at the cost of table bloat on the primary",
+    "explanation": "With hot_standby_feedback, vacuum on the primary cannot remove rows still needed by standby queries, eliminating 'canceling statement due to conflict with recovery' errors. The cost is that dead tuples accumulate on the primary, causing bloat.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 80,
+    "question": "How does the GIN fastupdate mechanism affect index performance characteristics?",
+    "options": [
+      "New insertions accumulate in an unsorted pending list, keeping inserts fast but slowing scans until the list is flushed, with size controlled by gin_pending_list_limit",
+      "All index updates are deferred until the next VACUUM regardless of configuration",
+      "Every insertion immediately merges into the posting tree, making inserts slower but scans optimal",
+      "It compresses posting lists on disk to reduce index size at the cost of update speed"
+    ],
+    "answer": "New insertions accumulate in an unsorted pending list, keeping inserts fast but slowing scans until the list is flushed, with size controlled by gin_pending_list_limit",
+    "explanation": "GIN's fastupdate flag stacks new keys in a pending list instead of merging into the main index structure immediately. Every scan must also scan the pending list, so performance degrades until the list exceeds gin_pending_list_limit and is flushed by cleanup or vacuum.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 81,
+    "question": "What is a key limitation of creating a GIN index on a JSONB column WITH (jsonb_path_ops) instead of the default jsonb_ops?",
+    "options": [
+      "It supports only the @> containment operator, not key/element existence operators like ? or ?|",
+      "It cannot index values nested inside JSON arrays",
+      "It stores the full serialized JSON document in every index entry",
+      "It does not support any equality-based lookups"
+    ],
+    "answer": "It supports only the @> containment operator, not key/element existence operators like ? or ?|",
+    "explanation": "jsonb_path_ops indexes only hash values of keys and values combined into paths, producing a smaller, faster index optimized for containment queries. It cannot answer existence queries (? , ?|, ?&) or other jsonb operators that jsonb_ops supports.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 82,
+    "question": "Under which data condition is a BRIN index most effective?",
+    "options": [
+      "When the physical order of rows on disk is strongly correlated with the indexed column, such as an append-only timestamp column",
+      "When the column contains randomly ordered UUID values and queries use equality predicates",
+      "When the table is small and subject to frequent in-place updates",
+      "When queries frequently require ordered output using ORDER BY on the column"
+    ],
+    "answer": "When the physical order of rows on disk is strongly correlated with the indexed column, such as an append-only timestamp column",
+    "explanation": "BRIN stores only min/max summaries per block range (pages_per_range), making it extremely small. It can eliminate ranges during scans only if values within each range are contiguous, which requires high correlation between logical column order and physical heap layout.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 83,
+    "question": "What mechanism does PostgreSQL's SERIALIZABLE isolation use to detect serialization anomalies?",
+    "options": [
+      "Serializable Snapshot Isolation (SSI), which tracks read-write antidependencies via SIReadLock predicate locks and aborts transactions that could form a dangerous cycle",
+      "Strict two-phase locking on all accessed tables",
+      "Timestamp ordering with commit-time validation against a global sequence",
+      "Conflict counters maintained in the visibility map"
+    ],
+    "answer": "Serializable Snapshot Isolation (SSI), which tracks read-write antidependencies via SIReadLock predicate locks and aborts transactions that could form a dangerous cycle",
+    "explanation": "SSI runs on top of MVCC snapshot isolation and detects rw-antidependency edges that could form a dangerous structure (a cycle) proving the outcome was not serializable. Applications must be prepared to retry transactions aborted with serialization failure (40001).",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 84,
+    "question": "In PostgreSQL, when is the snapshot established for a REPEATABLE READ transaction?",
+    "options": [
+      "At the first non-transaction-control statement, not at the BEGIN command itself",
+      "At the moment the BEGIN command executes",
+      "Freshly for every statement, like READ COMMITTED",
+      "At the first write statement issued in the transaction"
+    ],
+    "answer": "At the first non-transaction-control statement, not at the BEGIN command itself",
+    "explanation": "BEGIN itself does not take a snapshot; REPEATABLE READ captures the snapshot when the first query or DML runs, which is why transactions started long before can still see data committed after their BEGIN. Within the transaction, that single snapshot is reused for all statements.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 85,
+    "question": "When is SELECT ... FOR NO KEY UPDATE preferable to SELECT ... FOR UPDATE?",
+    "options": [
+      "When updating a row without changing its key columns, allowing concurrent transactions to acquire FOR KEY SHARE locks (e.g., for foreign key checks) on that row",
+      "When the row must be locked across multiple sessions for longer durations",
+      "When the query runs under SERIALIZABLE isolation and must avoid predicate locks",
+      "When the table is partitioned and the row may move between partitions"
+    ],
+    "answer": "When updating a row without changing its key columns, allowing concurrent transactions to acquire FOR KEY SHARE locks (e.g., for foreign key checks) on that row",
+    "explanation": "FOR NO KEY UPDATE is a weaker row lock that conflicts with UPDATE/DELETE but not with FOR KEY SHARE. Since foreign key checks take FOR KEY SHARE on referenced rows, using it reduces lock contention for inserts of child rows referencing the updated parent.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 86,
+    "question": "How does pg_advisory_xact_lock differ from pg_advisory_lock?",
+    "options": [
+      "It is released automatically when the transaction commits or rolls back, with no manual unlock call",
+      "It only accepts 32-bit integer keys, unlike the 64-bit form of pg_advisory_lock",
+      "It never blocks, returning false immediately if the lock is held",
+      "It operates in shared mode only, allowing concurrent holders"
+    ],
+    "answer": "It is released automatically when the transaction commits or rolls back, with no manual unlock call",
+    "explanation": "pg_advisory_xact_lock scopes the lock lifetime to the current transaction, eliminating leaked locks from forgotten or crashed sessions. pg_advisory_lock is session-scoped and must be explicitly released with pg_advisory_unlock.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 87,
+    "question": "What is a major operational risk introduced by two-phase commit (PREPARE TRANSACTION) in PostgreSQL?",
+    "options": [
+      "A forgotten in-doubt prepared transaction persists across restarts while holding its locks, blocking VACUUM progress and other transactions until resolved with COMMIT/ROLLBACK PREPARED",
+      "Prepared transactions bypass the WAL and are lost after a crash",
+      "They are automatically rolled back during server restart, causing silent data loss",
+      "They prevent new connections until the cluster is restarted"
+    ],
+    "answer": "A forgotten in-doubt prepared transaction persists across restarts while holding its locks, blocking VACUUM progress and other transactions until resolved with COMMIT/ROLLBACK PREPARED",
+    "explanation": "A prepared transaction is fully durable and survives crashes; if the coordinating application never issues COMMIT PREPARED or ROLLBACK PREPARED, its locks and its xmin pin the vacuum horizon indefinitely. Orphans must be monitored via the pg_prepared_xacts view.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 88,
+    "question": "During EXPLAIN ANALYZE, when does a Bitmap Heap Scan node display a 'Recheck Cond' being applied to many rows?",
+    "options": [
+      "When work_mem was too small to hold an exact bitmap, so the bitmap became 'lossy' and only whole pages are marked, requiring every row on qualifying pages to be rechecked",
+      "When the bitmap index scan used parallel workers whose results must be merged",
+      "When the index is corrupt and entries must be validated against the heap",
+      "When column statistics are stale and the planner adds a defensive filter"
+    ],
+    "answer": "When work_mem was too small to hold an exact bitmap, so the bitmap became 'lossy' and only whole pages are marked, requiring every row on qualifying pages to be rechecked",
+    "explanation": "The bitmap node switches to lossy mode (reported as 'Heap Blocks: lossy=N') when the exact per-TID bitmap exceeds work_mem, storing only page-level bits. The heap scan then evaluates the original condition against each tuple on those pages, visible as Rows Removed by Filter.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 89,
+    "question": "What causes EXPLAIN ANALYZE to report a high 'Heap Fetches' count for an index-only scan?",
+    "options": [
+      "Heap pages are not yet marked all-visible in the visibility map, forcing visibility checks against the heap tuples",
+      "The index is bloated and contains stale TIDs",
+      "The planner chose a non-covering operator class for the indexed columns",
+      "The query references columns stored in TOAST"
+    ],
+    "answer": "Heap pages are not yet marked all-visible in the visibility map, forcing visibility checks against the heap tuples",
+    "explanation": "An index-only scan can return data purely from index tuples only for pages flagged all-visible in the visibility map. Pages recently written or modified, before a vacuum or bulk-load pass marks them, force heap fetches to verify tuple visibility.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 90,
+    "question": "What is the purpose of the INCLUDE clause in a B-tree index definition (CREATE INDEX ... USING btree)?",
+    "options": [
+      "To append non-key columns as payload in index tuples, enabling index-only scans without affecting key ordering or uniqueness enforcement on those columns",
+      "To make the included columns searchable with range predicates in the index",
+      "To store extended statistics for those columns to improve row estimates",
+      "To reduce index size by deduplicating the included columns"
+    ],
+    "answer": "To append non-key columns as payload in index tuples, enabling index-only scans without affecting key ordering or uniqueness enforcement on those columns",
+    "explanation": "INCLUDE columns are stored in leaf tuples but are not part of the search key or the B-tree ordering, so they cannot be used in index qualifiers. This pattern supports covering-index index-only scans and UNIQUE (a) INCLUDE (b) constraints where b must not affect uniqueness.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 91,
+    "question": "What restriction applies to PRIMARY KEY and UNIQUE constraints defined on a partitioned table?",
+    "options": [
+      "The constraint must include every column of the table's partition key",
+      "Only UNIQUE constraints are permitted; PRIMARY KEY is not supported on partitioned tables",
+      "The constraint is enforced only on the default partition",
+      "The constraint must be defined separately on each partition and is not enforced at the parent level"
+    ],
+    "answer": "The constraint must include every column of the table's partition key",
+    "explanation": "A unique constraint is implemented as a B-tree index, and each partition only indexes its own rows; global uniqueness would require scanning all partitions. Including the partition key lets the router direct each insert to exactly one partition, where a local unique index enforces the constraint.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 92,
+    "question": "When does PostgreSQL's executor perform runtime (execution-time) partition pruning?",
+    "options": [
+      "When the partition key is compared to values unknown at plan time, such as prepared-statement parameters or values from a nested loop join",
+      "Only when constraint_exclusion is set to on",
+      "Only at initial plan creation with immutable constants",
+      "Only for subqueries inside a materialized view"
+    ],
+    "answer": "When the partition key is compared to values unknown at plan time, such as prepared-statement parameters or values from a nested loop join",
+    "explanation": "Plan-time pruning only applies to constants known during planning. Runtime pruning extends this to executor parameters (Init-time pruning for prepared-statement params, Exec-time pruning per outer row in nested loop joins), scanning EXPLAIN output as 'Subplans Removed'.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 93,
+    "question": "In a row level security (RLS) policy, how do the USING and WITH CHECK expressions differ?",
+    "options": [
+      "USING filters which existing rows are visible or targeted by SELECT/UPDATE/DELETE, while WITH CHECK validates which new row versions (INSERT or the result of UPDATE) may be written",
+      "USING validates rows being written, while WITH CHECK filters rows on read",
+      "USING applies only to DELETE, while WITH CHECK applies only to SELECT",
+      "They are interchangeable; WITH CHECK defaults to USING when both target the same command"
+    ],
+    "answer": "USING filters which existing rows are visible or targeted by SELECT/UPDATE/DELETE, while WITH CHECK validates which new row versions (INSERT or the result of UPDATE) may be written",
+    "explanation": "USING is the read-side predicate applied against rows already in the table; WITH CHECK is the write-side guard applied to the row as it will be stored. If WITH CHECK is omitted for an ALL policy, the USING expression is applied for both purposes.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 94,
+    "question": "What prerequisite must be satisfied before running REFRESH MATERIALIZED VIEW CONCURRENTLY?",
+    "options": [
+      "The materialized view must have a UNIQUE index on a subset of its columns",
+      "The underlying tables must each have a primary key",
+      "The materialized view must have a replica identity defined",
+      "The materialized view must be stored in the same tablespace as its source tables"
+    ],
+    "answer": "The materialized view must have a UNIQUE index on a subset of its columns",
+    "explanation": "CONCURRENTLY refreshes by computing a diff between the old and new contents using a temporary table, which requires unique rows for identification. This avoids the ACCESS EXCLUSIVE lock of a plain refresh, though it cannot be used while the matview is unpopulated and is slower.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 95,
+    "question": "Which statement correctly describes PostgreSQL procedures created with CREATE PROCEDURE?",
+    "options": [
+      "They are invoked with CALL and may execute COMMIT and ROLLBACK to manage their own transactions",
+      "They can be used inside a SELECT statement like table functions",
+      "They must return a single scalar value to the caller",
+      "They cannot accept parameters with DEFAULT values"
+    ],
+    "answer": "They are invoked with CALL and may execute COMMIT and ROLLBACK to manage their own transactions",
+    "explanation": "Introduced in PostgreSQL 11, procedures are separate from functions: they run via CALL, return no direct value in a query context, and uniquely support transaction control. Functions, by contrast, execute within the caller's transaction and cannot commit or roll back.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 96,
+    "question": "How does the pg_stat_statements extension group logically identical queries for aggregation?",
+    "options": [
+      "By normalizing constant literals into parameters and hashing the normalized query text into a queryid",
+      "By matching the exact query text string character for character",
+      "By hashing the chosen execution plan for each execution",
+      "By aggregating per backend PID and merging at collection time"
+    ],
+    "answer": "By normalizing constant literals into parameters and hashing the normalized query text into a queryid",
+    "explanation": "pg_stat_statements parses each statement and replaces constants with positional parameters, then computes a queryid hash of the normalized form so 'WHERE id = 5' and 'WHERE id = 7' aggregate together. Jitter in literals or formatting that survives normalization can cause queryid fragmentation.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 97,
+    "question": "What distinguishes VACUUM FULL from a plain VACUUM?",
+    "options": [
+      "VACUUM FULL rewrites the entire table and its indexes into freshly compacted files but requires an ACCESS EXCLUSIVE lock, while plain VACUUM works incrementally with only a SHARE UPDATE EXCLUSIVE lock",
+      "VACUUM FULL skips index maintenance to finish faster",
+      "VACUUM FULL runs online and never blocks reads or writes",
+      "VACUUM FULL only truncates the free space map and does not move tuples"
+    ],
+    "answer": "VACUUM FULL rewrites the entire table and its indexes into freshly compacted files but requires an ACCESS EXCLUSIVE lock, while plain VACUUM works incrementally with only a SHARE UPDATE EXCLUSIVE lock",
+    "explanation": "VACUUM FULL rebuilds the relation by copying live tuples into a new relfilenode, returning disk space to the OS, but blocks all access for the duration. For online bloat removal, extensions like pg_repack approximate the rewrite with minimal locking.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 98,
+    "question": "What additional guarantee does synchronous_commit = remote_apply provide compared to remote_flush?",
+    "options": [
+      "The standby has replayed the WAL records and made the committed changes visible to its queries before the primary acknowledges the commit",
+      "The standby has only received the WAL into its OS cache without flushing it to disk",
+      "Two synchronous standbys must acknowledge before the commit returns",
+      "The primary defers the commit acknowledgement until the next checkpoint"
+    ],
+    "answer": "The standby has replayed the WAL records and made the committed changes visible to its queries before the primary acknowledges the commit",
+    "explanation": "The synchronous_commit ladder is: off, local, remote_write (received and written to standby OS, not fsynced), remote_flush (fsynced to standby disk), remote_apply (applied/replayed). Only remote_apply provides read-your-writes consistency against the standby.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 99,
+    "question": "What role does the deadlock_timeout setting play in PostgreSQL lock management?",
+    "options": [
+      "After waiting this duration (default 1 second) on a lock, a backend triggers the deadlock detector to search the wait graph for cycles",
+      "It is the maximum total time any transaction may wait for a lock before being terminated",
+      "It defines the ordering discipline of the lock wait queue",
+      "It controls how long table-level locks are held after the statement completes"
+    ],
+    "answer": "After waiting this duration (default 1 second) on a lock, a backend triggers the deadlock detector to search the wait graph for cycles",
+    "explanation": "Running the deadlock detector on every lock wait would be prohibitively expensive, so a backend first waits deadlock_timeout assuming the blocker will finish soon. If still blocked after the timeout, it runs the detector and aborts with error 40P01 if a cycle is found.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 100,
+    "question": "What capability does the LATERAL keyword add to a join in the FROM clause?",
+    "options": [
+      "The right-hand subquery or set-returning function can reference columns from FROM items that precede it, enabling per-row dependent computation such as top-N per group",
+      "It allows the left-hand table to reference columns produced by the right-hand subquery",
+      "It forces the planner to choose a nested loop join for the pair",
+      "It permits bidirectional column references between all joined relations"
+    ],
+    "answer": "The right-hand subquery or set-returning function can reference columns from FROM items that precede it, enabling per-row dependent computation such as top-N per group",
+    "explanation": "LATERAL makes the right side of the join row-dependent on the left side, effectively a parameterized subquery evaluated once per outer row (similar to CROSS APPLY). It is the standard pattern for N-per-group queries and unnesting arrays correlated to each row.",
+    "difficulty": "Advanced"
+  }
+]
