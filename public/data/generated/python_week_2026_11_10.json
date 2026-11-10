@@ -1,0 +1,1302 @@
+[
+  {
+    "id": 1,
+    "question": "What is the key difference between a list and a tuple in Python?",
+    "options": [
+      "Tuples are mutable; lists are immutable",
+      "Lists are mutable sequences; tuples are immutable sequences",
+      "Tuples can only store numeric values",
+      "Lists automatically sort their elements"
+    ],
+    "answer": "Lists are mutable sequences; tuples are immutable sequences",
+    "explanation": "Lists support in-place modification (append, remove, item assignment), while tuples cannot be changed after creation. Tuples are typically used for fixed collections of heterogeneous data.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 2,
+    "question": "What does dynamic typing mean in Python?",
+    "options": [
+      "Types must be declared before variables are used",
+      "Types are attached to values at runtime, not to variable names",
+      "All variables are strings until explicitly converted",
+      "The interpreter checks every type twice before execution"
+    ],
+    "answer": "Types are attached to values at runtime, not to variable names",
+    "explanation": "In Python, a variable is just a name bound to an object, and the object carries its type. The same name can be rebound to objects of different types during execution.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 3,
+    "question": "How does CPython primarily manage object memory?",
+    "options": [
+      "Manual malloc and free calls by the programmer",
+      "Reference counting plus a cycle-detecting garbage collector",
+      "A mark-sweep collector triggered after every statement",
+      "Operating-system page swapping per variable"
+    ],
+    "answer": "Reference counting plus a cycle-detecting garbage collector",
+    "explanation": "CPython frees objects when their reference count reaches zero. A separate garbage collector detects and reclaims reference cycles that reference counting alone cannot handle.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 4,
+    "question": "Which keyword defines a named function in Python?",
+    "options": [
+      "function",
+      "define",
+      "def",
+      "lambda"
+    ],
+    "answer": "def",
+    "explanation": "The def keyword introduces a named function definition. lambda creates small anonymous functions and cannot replace def for named, multi-statement functions.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 5,
+    "question": "What is the pitfall of using a mutable default argument such as def f(x=[])?",
+    "options": [
+      "Python re-creates the default at every call, so there is no risk",
+      "The mutable default is created once at definition time and shared across calls",
+      "Python raises a SyntaxError for any mutable default",
+      "The default becomes immutable automatically"
+    ],
+    "answer": "The mutable default is created once at definition time and shared across calls",
+    "explanation": "Default values are evaluated once when the def statement executes, not per call. Mutations to the shared default persist between calls, so None is the recommended sentinel default.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 6,
+    "question": "What does the yield keyword do inside a function?",
+    "options": [
+      "Exits the function and discards its state",
+      "Turns the function into a generator that produces values lazily while preserving state",
+      "Declares the function's return type",
+      "Suspends all other threads until resumed"
+    ],
+    "answer": "Turns the function into a generator that produces values lazily while preserving state",
+    "explanation": "Any function containing yield becomes a generator function; calling it returns a generator object. Execution pauses at each yield and resumes with local state intact.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 7,
+    "question": "Which construct guarantees resource cleanup when a block exits, even on an exception?",
+    "options": [
+      "try/finally with manually written cleanup only",
+      "The with statement, which invokes the context manager's __exit__ even on exceptions",
+      "The global statement",
+      "The assert statement"
+    ],
+    "answer": "The with statement, which invokes the context manager's __exit__ even on exceptions",
+    "explanation": "The with statement calls __enter__ on entry and __exit__ on exit, including during exception propagation. This is why it is the standard pattern for opening files and acquiring locks.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 8,
+    "question": "Which concurrency tool is recommended for I/O-bound tasks that use blocking libraries?",
+    "options": [
+      "multiprocessing",
+      "threading",
+      "bytearray",
+      "itertools"
+    ],
+    "answer": "threading",
+    "explanation": "Threads are effective for I/O-bound work because they release the GIL while waiting on blocking I/O. The OS schedules other threads during these waits.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 9,
+    "question": "Which approach bypasses the GIL to achieve parallelism for CPU-bound workloads?",
+    "options": [
+      "threading",
+      "asyncio",
+      "multiprocessing",
+      "functools"
+    ],
+    "answer": "multiprocessing",
+    "explanation": "Each process runs its own Python interpreter with its own GIL, enabling true CPU parallelism. Threads and asyncio cannot parallelize pure CPU-bound Python bytecode.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 10,
+    "question": "asyncio is best suited for which type of workload?",
+    "options": [
+      "CPU-heavy numerical computation",
+      "High-concurrency I/O using async-aware libraries",
+      "Replacing the GIL for thread safety",
+      "Compiling Python code to machine code"
+    ],
+    "answer": "High-concurrency I/O using async-aware libraries",
+    "explanation": "asyncio runs many coroutines on a single thread, interleaving them during await points on I/O waits. It provides no benefit for CPU-bound work and requires async-compatible libraries.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 11,
+    "question": "What does applying a decorator with @decorator above a function do?",
+    "options": [
+      "Permanently deletes the original function's bytecode",
+      "Wraps the function with another function to extend its behavior without modifying it",
+      "Converts the function into a class method automatically",
+      "Compiles the function ahead of execution"
+    ],
+    "answer": "Wraps the function with another function to extend its behavior without modifying it",
+    "explanation": "A decorator is a callable that takes a function and returns a replacement, typically a wrapper adding behavior such as logging or caching. The name is then rebound to the returned object.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 12,
+    "question": "What is the purpose of @functools.wraps in a decorator's wrapper function?",
+    "options": [
+      "Cache the decorated function's results",
+      "Preserve the wrapped function's __name__ and __doc__ metadata",
+      "Force the function to run in a subprocess",
+      "Convert keyword arguments to positional ones"
+    ],
+    "answer": "Preserve the wrapped function's __name__ and __doc__ metadata",
+    "explanation": "Without functools.wraps, the wrapper hides the original function's identity, breaking introspection and debugging tools. functools.wraps copies metadata such as __name__, __doc__, and __wrapped__ onto the wrapper.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 13,
+    "question": "What does the dataclasses module provide?",
+    "options": [
+      "ORM models backed by a database",
+      "Auto-generated methods like __init__ to reduce class boilerplate",
+      "Runtime encryption of class attributes",
+      "Automatic conversion of classes into threads"
+    ],
+    "answer": "Auto-generated methods like __init__ to reduce class boilerplate",
+    "explanation": "@dataclass inspects class-level type annotations and generates __init__, __repr__, and __eq__ (among others) automatically. This removes repetitive boilerplate from data-holding classes.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 14,
+    "question": "Why is pathlib preferred over os.path for path handling?",
+    "options": [
+      "It executes file I/O in parallel threads",
+      "It offers object-oriented, cross-platform path objects with convenient joining and I/O methods",
+      "It removes the need for an operating system",
+      "It guarantees antivirus scanning of every path"
+    ],
+    "answer": "It offers object-oriented, cross-platform path objects with convenient joining and I/O methods",
+    "explanation": "pathlib.Path provides methods like read_text, glob, and the / operator for joining paths, handling platform separators automatically. This is clearer and less error-prone than string-based os.path functions.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 15,
+    "question": "What is the difference between == and is in Python?",
+    "options": [
+      "== compares object identity; is compares values",
+      "== compares values; is compares object identity",
+      "Both compare memory addresses only",
+      "Both compare str() output only"
+    ],
+    "answer": "== compares values; is compares object identity",
+    "explanation": "== invokes the objects' equality logic, while is checks whether two names reference the same object in memory. Using is for value comparison is a common bug source with small integers and strings.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 16,
+    "question": "Which comparison is the idiomatic way to test whether a variable is None?",
+    "options": [
+      "x == None",
+      "x is None",
+      "x.type() == 'None'",
+      "str(x) == 'None'"
+    ],
+    "answer": "x is None",
+    "explanation": "None is a singleton, so identity comparison with is is both faster and unambiguous. Overridden __eq__ methods on arbitrary objects can make == None behave unexpectedly.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 17,
+    "question": "What does the pass statement do?",
+    "options": [
+      "Terminates the current loop",
+      "Skips the remaining loop body for one iteration",
+      "Serves as a null statement placeholder where syntax requires a statement",
+      "Raises NotImplementedError"
+    ],
+    "answer": "Serves as a null statement placeholder where syntax requires a statement",
+    "explanation": "pass performs no operation and is used to satisfy syntax in empty function bodies, classes, or conditionals during development. continue skips to the next iteration and break exits loops entirely.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 18,
+    "question": "What does the expression range(5) return?",
+    "options": [
+      "A list containing [0, 1, 2, 3, 4]",
+      "A lazy range object that produces numbers on demand",
+      "A tuple of five zeros",
+      "A floating-point sequence from 0 to 5"
+    ],
+    "answer": "A lazy range object that produces numbers on demand",
+    "explanation": "range returns a lazy sequence object that computes values only as needed, giving O(1) memory regardless of length. list(range(5)) must be called to materialize an actual list.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 19,
+    "question": "What is the defining property of a Python set?",
+    "options": [
+      "An ordered collection that allows duplicates",
+      "An unordered collection of unique, hashable elements",
+      "A mapping of keys to values",
+      "A fixed-size array of numbers"
+    ],
+    "answer": "An unordered collection of unique, hashable elements",
+    "explanation": "Sets automatically eliminate duplicates and support fast membership tests and set algebra such as union and intersection. Elements must be hashable, so lists cannot be set members.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 20,
+    "question": "How do you create a tuple containing the single element 5?",
+    "options": [
+      "(5)",
+      "tuple(5)",
+      "(5,)",
+      "[5]"
+    ],
+    "answer": "(5,)",
+    "explanation": "The trailing comma, not the parentheses, creates the tuple; (5) is simply the integer 5 in grouping parentheses. tuple(5) raises a TypeError because an int is not iterable.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 21,
+    "question": "What does dict.get(key, default) do when the key is missing?",
+    "options": [
+      "Raises KeyError when the key is missing",
+      "Returns the provided default when the key is missing",
+      "Inserts the missing key with the value None",
+      "Always returns an empty list"
+    ],
+    "answer": "Returns the provided default when the key is missing",
+    "explanation": "get() accesses keys without raising KeyError, returning the given default (or None if omitted). The defaultdict class or setdefault() are used when insertion is desired.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 22,
+    "question": "In Python 3.7+, what ordering guarantee do dictionaries provide?",
+    "options": [
+      "Keys are stored in sorted order",
+      "Dictionaries preserve insertion order as a language guarantee",
+      "Key order is undefined and may change between runs",
+      "Keys are ordered by their hash values"
+    ],
+    "answer": "Dictionaries preserve insertion order as a language guarantee",
+    "explanation": "Since Python 3.7, insertion-order preservation for dicts is part of the language specification, not just an implementation detail of CPython 3.6. Iteration reflects the order in which keys were first inserted.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 23,
+    "question": "What is an f-string in Python?",
+    "options": [
+      "A string that is frozen and cannot be modified",
+      "A formatted string literal that embeds expressions inside {} placeholders",
+      "A string reserved for function names",
+      "A string that disables all escape sequences"
+    ],
+    "answer": "A formatted string literal that embeds expressions inside {} placeholders",
+    "explanation": "F-strings, prefixed with f, evaluate arbitrary expressions at runtime and insert the results into the string. They also support format specifiers such as f'{value:.2f}'.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 24,
+    "question": "What is pip?",
+    "options": [
+      "Python's interactive debugger",
+      "The standard package installer for installing packages from PyPI",
+      "A bytecode optimization pass in the interpreter",
+      "The name of the default Python REPL"
+    ],
+    "answer": "The standard package installer for installing packages from PyPI",
+    "explanation": "pip installs and manages third-party packages published to the Python Package Index. The interactive debugger is pdb, and the default REPL is invoked with the python command.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 25,
+    "question": "What is the purpose of creating a virtual environment with venv?",
+    "options": [
+      "Runs Python inside a hypervisor-based virtual machine",
+      "Isolates a project's dependencies and interpreter from the system environment",
+      "Compresses .py files into deployment archives",
+      "Version-controls source code automatically"
+    ],
+    "answer": "Isolates a project's dependencies and interpreter from the system environment",
+    "explanation": "A venv gives each project its own site-packages and optionally its own interpreter version, preventing dependency version conflicts. Packages installed with pip inside it do not affect the global environment.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 26,
+    "question": "What responsibility does a context manager's __exit__ method have?",
+    "options": [
+      "Initializing the resource before the with block runs",
+      "Performing cleanup, such as releasing the resource when the block ends",
+      "Creating a new thread for the block's execution",
+      "Resolving imports lazily on first access"
+    ],
+    "answer": "Performing cleanup, such as releasing the resource when the block ends",
+    "explanation": "__enter__ acquires the resource and __exit__ releases it, even if the block raises an exception. __exit__ also receives exception details and can suppress propagation by returning True.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 27,
+    "question": "What is a list comprehension?",
+    "options": [
+      "A loop implemented directly in the C standard library",
+      "Concise syntax that builds a list from an iterable, optionally filtering with a condition",
+      "A technique that minifies source code files",
+      "A built-in method that converts lists to tuples"
+    ],
+    "answer": "Concise syntax that builds a list from an iterable, optionally filtering with a condition",
+    "explanation": "Syntax like [x*2 for x in items if x > 0] transforms and filters an iterable into a new list in one expression. It is typically more readable and faster than an equivalent for loop with append.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 28,
+    "question": "What does the built-in len() function return for a Python sequence?",
+    "options": [
+      "The number of elements in the sequence",
+      "The memory size of the object in bytes",
+      "The index of the last element",
+      "The number of references to the object"
+    ],
+    "answer": "The number of elements in the sequence",
+    "explanation": "len() calls the object's __len__ method and reports element count. Memory footprint requires sys.getsizeof, and the last index is len(obj) - 1.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 29,
+    "question": "What happens when you access a list index beyond its bounds?",
+    "options": [
+      "Returns None silently",
+      "Raises IndexError",
+      "Wraps around to the first element",
+      "Truncates the list to fit"
+    ],
+    "answer": "Raises IndexError",
+    "explanation": "Out-of-range item access raises IndexError, protecting against silent logic errors. Slicing, in contrast, clamps out-of-range boundaries instead of raising.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 30,
+    "question": "How are code blocks denoted in Python?",
+    "options": [
+      "Curly braces {}",
+      "Consistent indentation",
+      "The keywords begin and end",
+      "Semicolons at line ends"
+    ],
+    "answer": "Consistent indentation",
+    "explanation": "Python uses indentation level to define block structure, replacing braces used by languages like C or Java. Mixing indentation levels inconsistently raises an IndentationError.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 31,
+    "question": "What does the slice my_list[1:4] return?",
+    "options": [
+      "Elements at indices 1, 2, and 3",
+      "Elements at indices 1 through 4 inclusive",
+      "Only the elements at indices 1 and 4",
+      "Elements at indices 0 through 4"
+    ],
+    "answer": "Elements at indices 1, 2, and 3",
+    "explanation": "Slices include the start index and exclude the stop index, so [1:4] yields indices 1, 2, and 3. This half-open convention makes len(list[a:b]) equal to b - a.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 32,
+    "question": "What does the try/except construct do?",
+    "options": [
+      "Executes the block in parallel threads",
+      "Catches and handles exceptions raised inside the try block",
+      "Marks the block for immediate garbage collection",
+      "Compiles the block to bytecode before running"
+    ],
+    "answer": "Catches and handles exceptions raised inside the try block",
+    "explanation": "Code in the try block runs, and a matching except clause handles the raised exception, preventing a crash. An optional finally clause runs cleanup regardless of whether an exception occurred.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 33,
+    "question": "What happens when executing s = 'hi' followed by s[0] = 'H'?",
+    "options": [
+      "The string becomes 'Hi'",
+      "Raises TypeError because strings are immutable",
+      "Creates a new list containing 'H' and 'i'",
+      "Raises IndexError"
+    ],
+    "answer": "Raises TypeError because strings are immutable",
+    "explanation": "Strings in Python are immutable, so item assignment is not supported and raises TypeError. Modified strings are produced by building new strings, e.g., 'H' + s[1:].",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 34,
+    "question": "What is the purpose of the if __name__ == \"__main__\": idiom?",
+    "options": [
+      "Declares the package name for import resolution",
+      "Ensures the code runs only when the file is executed directly, not on import",
+      "Imports the __main__ module explicitly",
+      "Registers the function as the interpreter's entry point"
+    ],
+    "answer": "Ensures the code runs only when the file is executed directly, not on import",
+    "explanation": "When a module is imported, its __name__ is set to the module name; when run directly, it is set to \"__main__\". The idiom lets a file act as both a reusable module and a runnable script.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 35,
+    "question": "What does the @contextlib.contextmanager decorator do?",
+    "options": [
+      "Creates asynchronous iterators from class definitions",
+      "Turns a generator function into a context manager with a single decorator",
+      "Manages web application request contexts",
+      "Wraps context managers in background threads automatically"
+    ],
+    "answer": "Turns a generator function into a context manager with a single decorator",
+    "explanation": "A generator function with code before yield acts as __enter__ and code after yield acts as __exit__. This avoids writing a full class with __enter__ and __exit__ methods for simple managers.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 36,
+    "question": "What is the primary purpose of functools.wraps when writing decorators?",
+    "options": [
+      "It caches the decorated function's results to avoid recomputation",
+      "It preserves the wrapped function's metadata such as __name__ and __doc__",
+      "It converts the decorated function into a generator",
+      "It forces the decorator to execute only once per interpreter session"
+    ],
+    "answer": "It preserves the wrapped function's metadata such as __name__ and __doc__",
+    "explanation": "functools.wraps copies __name__, __doc__, __module__, and __wrapped__ from the original function onto the wrapper. Without it, introspection tools and tracebacks report the wrapper's identity instead of the original.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 37,
+    "question": "When using @contextlib.contextmanager, what does the yield statement inside the generator correspond to?",
+    "options": [
+      "Code before yield runs at __enter__; code after yield runs at __exit__",
+      "The yield value becomes the exception raised on error",
+      "The generator must yield exactly twice, once for enter and once for exit",
+      "Code before yield runs at __exit__; code after yield runs at __enter__"
+    ],
+    "answer": "Code before yield runs at __enter__; code after yield runs at __exit__",
+    "explanation": "contextmanager wraps the generator so that setup code before yield executes on entry, and cleanup code after yield executes on exit. The yielded value becomes the object bound by the as clause.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 38,
+    "question": "Which contextlib tool lets you combine a variable number of context managers dynamically and guarantees they all exit?",
+    "options": [
+      "contextlib.ExitStack",
+      "contextlib.nested",
+      "contextlib.suppress",
+      "contextlib.redirect_stdout"
+    ],
+    "answer": "contextlib.ExitStack",
+    "explanation": "ExitStack accumulates context managers at runtime and unwinds them in reverse order on block exit, even when the count is unknown until execution. contextlib.nested was removed in Python 3.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 39,
+    "question": "What does asyncio.gather return when all awaitables complete successfully?",
+    "options": [
+      "Results in the order the awaitables finished",
+      "Results in the order the awaitables were passed in",
+      "The first non-None result only",
+      "A dictionary mapping task names to results"
+    ],
+    "answer": "Results in the order the awaitables were passed in",
+    "explanation": "gather runs awaitables concurrently but collects results in the original argument order. First-finished ordering requires as_completed instead.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 40,
+    "question": "What happens when a coroutine executes 'await' on an awaitable that is not yet complete?",
+    "options": [
+      "The event loop suspends the coroutine and runs other ready tasks",
+      "The coroutine busy-waits until the awaitable completes",
+      "A new thread is spawned to run the coroutine",
+      "The event loop blocks the entire process until completion"
+    ],
+    "answer": "The event loop suspends the coroutine and runs other ready tasks",
+    "explanation": "await yields control back to the event loop, which schedules other tasks while the awaited operation is pending. No OS thread or blocking wait is involved.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 41,
+    "question": "Which concurrency model should you pick for a CPU-bound workload (e.g., hashing large files) in CPython?",
+    "options": [
+      "threading, because threads share memory",
+      "multiprocessing, because separate processes bypass the GIL",
+      "asyncio, because tasks switch at await points",
+      "threading combined with time.sleep calls"
+    ],
+    "answer": "multiprocessing, because separate processes bypass the GIL",
+    "explanation": "CPU-bound work cannot progress in parallel under the GIL with threads, and asyncio helps only with I/O waits. Multiprocessing uses separate interpreter processes, each with its own GIL.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 42,
+    "question": "Why do pure-Python CPU-bound threads fail to scale across multiple cores in CPython?",
+    "options": [
+      "Threads cannot share objects in CPython",
+      "The Global Interpreter Lock permits only one thread to execute Python bytecode at a time",
+      "CPython compiles each thread into a separate interpreter instance",
+      "The OS scheduler penalizes multi-threaded Python processes"
+    ],
+    "answer": "The Global Interpreter Lock permits only one thread to execute Python bytecode at a time",
+    "explanation": "The GIL is a mutex that serializes bytecode execution within one interpreter process. Threads still help for I/O-bound work because the GIL is released during blocking calls.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 43,
+    "question": "Which methods does the @dataclass decorator automatically generate by default?",
+    "options": [
+      "__init__, __repr__, and __eq__",
+      "__init__, __del__, and __hash__",
+      "__init__, __iter__, and __next__",
+      "__repr__, __len__, and __call__"
+    ],
+    "answer": "__init__, __repr__, and __eq__",
+    "explanation": "With default settings, @dataclass generates __init__ from the annotated fields, a field-based __repr__, and __eq__ comparing field values. __hash__ is generated only for frozen dataclasses with eq=True.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 44,
+    "question": "How do you correctly declare a mutable default (e.g., a list) in a dataclass field?",
+    "options": [
+      "tags: list = []",
+      "tags: list = field(default_factory=list)",
+      "tags: list = mutable_default([])",
+      "tags: list = list(default=[])"
+    ],
+    "answer": "tags: list = field(default_factory=list)",
+    "explanation": "Dataclasses reject bare mutable defaults like [] because defaults are shared at the class level, mirroring the mutable-default pitfall. default_factory constructs a fresh instance per object.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 45,
+    "question": "What behavior does @dataclass(frozen=True) provide?",
+    "options": [
+      "Instances cannot be pickled",
+      "Assignment to instance attributes raises FrozenInstanceError, enabling safe hashing",
+      "All fields are converted to tuples",
+      "The class cannot be subclassed"
+    ],
+    "answer": "Assignment to instance attributes raises FrozenInstanceError, enabling safe hashing",
+    "explanation": "frozen=True blocks field reassignment after construction with dataclasses.FrozenInstanceError. Because instances are immutable, frozen dataclasses with eq=True also gain a usable __hash__.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 46,
+    "question": "During generator execution, what occurs at a yield statement?",
+    "options": [
+      "The function terminates and local state is discarded",
+      "Execution pauses, local state is preserved, and control returns to the caller",
+      "The generator allocates all remaining values eagerly",
+      "The yield expression immediately returns None to the caller"
+    ],
+    "answer": "Execution pauses, local state is preserved, and control returns to the caller",
+    "explanation": "yield suspends the function, handing the yielded value to the caller while retaining locals and instruction pointer. The next next() call resumes from that point.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 47,
+    "question": "What distinguishes a generator expression from an equivalent list comprehension?",
+    "options": [
+      "Generator expressions execute immediately and store all results in memory",
+      "Generator expressions are lazy, producing values one at a time on demand",
+      "Generator expressions cannot include conditional filters",
+      "Generator expressions can be indexed and sliced like lists"
+    ],
+    "answer": "Generator expressions are lazy, producing values one at a time on demand",
+    "explanation": "A generator expression returns a generator that computes each element only as it is consumed, giving O(1) memory for the pipeline. List comprehensions build the entire list immediately and support indexing.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 48,
+    "question": "What is the effect of 'yield from iterable' inside a generator?",
+    "options": [
+      "It returns the iterable object itself to the caller",
+      "It delegates iteration to the subiterator, forwarding yielded values transparently",
+      "It converts the generator into a coroutine requiring send()",
+      "It flattens only the first level of nested lists"
+    ],
+    "answer": "It delegates iteration to the subiterator, forwarding yielded values transparently",
+    "explanation": "yield from establishes a transparent bidirectional channel to the subgenerator: values, sent values via send(), and thrown exceptions pass straight through. It replaces an explicit for loop over the subiterator.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 49,
+    "question": "What exception signals that a generator has been exhausted?",
+    "options": [
+      "StopIteration",
+      "GeneratorExit",
+      "RuntimeError",
+      "IndexError"
+    ],
+    "answer": "StopIteration",
+    "explanation": "A for loop or next() call receives StopIteration when the generator's body completes. GeneratorExit is instead raised into a generator by close(); raising StopIteration inside a generator body is converted to RuntimeError under PEP 479.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 50,
+    "question": "Which methods must a class implement to satisfy the iterator protocol?",
+    "options": [
+      "__iter__ returning self and __next__ returning the next value",
+      "__next__ returning self and __iter__ raising StopIteration",
+      "__getitem__ and __setitem__",
+      "__enter__ and __exit__"
+    ],
+    "answer": "__iter__ returning self and __next__ returning the next value",
+    "explanation": "An iterator defines __iter__ to return itself, making it usable in for loops, and __next__ to produce the next value or raise StopIteration. __enter__/__exit__ belong to the context manager protocol.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 51,
+    "question": "How is a decorator that accepts arguments (e.g., @retry(times=3)) typically structured?",
+    "options": [
+      "A single function taking both the function and the arguments",
+      "Three nested functions: an argument-receiving factory, a wrapper builder, and the wrapper",
+      "A class-level attribute read at import time",
+      "A global variable set before the decorated definition"
+    ],
+    "answer": "Three nested functions: an argument-receiving factory, a wrapper builder, and the wrapper",
+    "explanation": "The outermost layer receives decorator arguments and returns the actual decorator; that decorator receives the function and returns the wrapper. Without the extra layer, Python would pass the function where the arguments are expected.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 52,
+    "question": "How does @classmethod differ from @staticmethod?",
+    "options": [
+      "classmethod receives the class (cls) as the first argument; staticmethod receives no implicit argument",
+      "classmethod receives the instance as the first argument; staticmethod receives the class",
+      "classmethod can only be called on instances, never on the class",
+      "staticmethod can access and modify class state via cls"
+    ],
+    "answer": "classmethod receives the class (cls) as the first argument; staticmethod receives no implicit argument",
+    "explanation": "classmethod binds the class itself as the first parameter, which supports alternative constructors that work with subclasses. staticmethod strips all implicit binding and behaves like a plain namespaced function.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 53,
+    "question": "What determines the order of attribute lookup in Python's multiple inheritance?",
+    "options": [
+      "Definition order in the class body, left to right",
+      "The Method Resolution Order computed by C3 linearization",
+      "Alphabetical order of base class names",
+      "The order in which the base class modules were imported"
+    ],
+    "answer": "The Method Resolution Order computed by C3 linearization",
+    "explanation": "C3 linearization preserves subclass-to-base ordering while keeping each base's relative order consistent, preventing ambiguous hierarchies. super() calls follow this same MRO sequence.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 54,
+    "question": "What is the primary benefit of defining __slots__ on a class?",
+    "options": [
+      "It enables dynamic addition of arbitrary new attributes at runtime",
+      "It reduces per-instance memory by replacing the instance __dict__ with fixed descriptors",
+      "It automatically generates __eq__ and __repr__",
+      "It makes the class thread-safe for attribute writes"
+    ],
+    "answer": "It reduces per-instance memory by replacing the instance __dict__ with fixed descriptors",
+    "explanation": "__slots__ declares a fixed set of attributes stored in per-class descriptors, eliminating the per-instance __dict__ and shrinking memory for many small objects. Assigning undeclared attributes raises AttributeError.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 55,
+    "question": "In typing, what does Optional[int] mean?",
+    "options": [
+      "The argument may be omitted from the function call",
+      "Union[int, None]",
+      "An int, or a lazily evaluated default",
+      "An int that may be garbage-collected at any time"
+    ],
+    "answer": "Union[int, None]",
+    "explanation": "Optional[X] is exactly an alias for Union[X, None], meaning the value is either X or None. It says nothing about omitted parameters or defaults, which are governed by the signature itself.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 56,
+    "question": "What problem does typing.Protocol solve?",
+    "options": [
+      "It enforces nominal inheritance for interface compliance",
+      "It enables structural typing: any object with matching method signatures satisfies the type",
+      "It converts protocols into runtime-enforced abstract base classes",
+      "It performs runtime type coercion for function arguments"
+    ],
+    "answer": "It enables structural typing: any object with matching method signatures satisfies the type",
+    "explanation": "Protocol classes define static duck typing: a type checker accepts any class exhibiting the protocol's members, regardless of inheritance. Nominal ABCs require explicit subclassing instead.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 57,
+    "question": "Using pathlib, what is the idiomatic way to build a path to 'file.txt' inside a directory object p?",
+    "options": [
+      "p + 'file.txt'",
+      "p / 'file.txt'",
+      "p.concat('file.txt')",
+      "p.merge('file.txt')"
+    ],
+    "answer": "p / 'file.txt'",
+    "explanation": "Path overloads the / operator for cross-platform path joining, producing a new Path object. String concatenation with + fails on Path objects and would ignore separator handling.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 58,
+    "question": "What does contextlib.suppress(FileNotFoundError) do?",
+    "options": [
+      "Logs the exception and continues execution",
+      "Silently ignores the specified exception if raised inside the block",
+      "Suppresses all exceptions raised inside the block",
+      "Defers the exception and re-raises it at interpreter shutdown"
+    ],
+    "answer": "Silently ignores the specified exception if raised inside the block",
+    "explanation": "suppress swallows only the exception types passed to it, as if with an except clause that passes. Other exception types propagate normally.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 59,
+    "question": "What does contextlib.closing(obj) guarantee on block exit?",
+    "options": [
+      "It calls obj.__exit__ when the block exits",
+      "It calls obj.close() whether or not an exception occurred",
+      "It commits pending transactions on obj",
+      "It deletes obj and frees its file descriptor immediately"
+    ],
+    "answer": "It calls obj.close() whether or not an exception occurred",
+    "explanation": "closing wraps objects that have a close() method but lack context manager support, such as sockets. close() runs during exit even when the block raises.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 60,
+    "question": "Which dunder methods define an asynchronous context manager usable with 'async with'?",
+    "options": [
+      "__enter__ and __exit__",
+      "__aenter__ and __aexit__",
+      "__await__ and __aiter__",
+      "__anext__ and __asend__"
+    ],
+    "answer": "__aenter__ and __aexit__",
+    "explanation": "Asynchronous context managers implement __aenter__ and __aexit__, both returning awaitables, allowing suspension during setup and teardown. The synchronous pair __enter__/__exit__ only works with the regular with statement.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 61,
+    "question": "For an object to work with 'async for', its __aiter__ must return an object providing which method?",
+    "options": [
+      "__next__ returning the next value",
+      "__anext__ returning an awaitable that yields the next value or raises StopAsyncIteration",
+      "__iter__ returning a generator",
+      "__aiter__ returning a boolean"
+    ],
+    "answer": "__anext__ returning an awaitable that yields the next value or raises StopAsyncIteration",
+    "explanation": "Async iterators expose __anext__ as a coroutine so iteration can await I/O between items. Exhaustion is signaled with StopAsyncIteration, not StopIteration, which would be an error here.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 62,
+    "question": "What does asyncio.run(coro()) do?",
+    "options": [
+      "Runs the coroutine on the currently running event loop without changes",
+      "Creates a new event loop, runs the coroutine until complete, then closes the loop",
+      "Spawns a background thread to execute the coroutine",
+      "Runs the coroutine with debug mode enabled in all Python versions"
+    ],
+    "answer": "Creates a new event loop, runs the coroutine until complete, then closes the loop",
+    "explanation": "asyncio.run is the standard entry point: it creates a fresh loop, executes the coroutine to completion, and cleans up the loop. It raises RuntimeError if called while a loop is already running in that thread.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 63,
+    "question": "In asyncio streams, what is the role of 'await writer.drain()'?",
+    "options": [
+      "It flushes the write buffer immediately, blocking the event loop until done",
+      "It applies backpressure, suspending the coroutine until the transport buffer drops below its high-water mark",
+      "It closes the stream after flushing remaining data",
+      "It converts the stream into a synchronous writer"
+    ],
+    "answer": "It applies backpressure, suspending the coroutine until the transport buffer drops below its high-water mark",
+    "explanation": "drain() pauses the writing coroutine when the OS transport buffer exceeds its high-water limit, preventing unbounded memory growth when producers outpace the network. It is non-blocking for the event loop itself.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 64,
+    "question": "What does functools.total_ordering require and provide?",
+    "options": [
+      "Requires __eq__ and one ordering method such as __lt__; auto-generates the remaining ordering methods",
+      "Requires all six comparison methods to be defined; provides caching",
+      "Requires __cmp__; generates ordering methods from it",
+      "Requires only __eq__; generates all ordering methods from it"
+    ],
+    "answer": "Requires __eq__ and one ordering method such as __lt__; auto-generates the remaining ordering methods",
+    "explanation": "Given __eq__ plus any one of __lt__, __le__, __gt__, or __ge__, total_ordering fills in the other three. Defining only __eq__ is insufficient because no ordering relation can be derived from equality alone.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 65,
+    "question": "What does itertools.chain('AB', 'CD') yield?",
+    "options": [
+      "'ABCD' as a single string",
+      "['AB', 'CD']",
+      "A, B, C, D as individual elements, lazily",
+      "('AB', 'CD') as a tuple"
+    ],
+    "answer": "A, B, C, D as individual elements, lazily",
+    "explanation": "chain treats each input as an iterable and emits their elements in sequence without building an intermediate list. Evaluation is lazy, pulling from the next iterable only after the previous is exhausted.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 66,
+    "question": "Which synchronization primitive is appropriate for enforcing mutual exclusion around a shared counter updated by multiple threads?",
+    "options": [
+      "threading.Lock",
+      "asyncio.Semaphore",
+      "threading.Timer",
+      "queue.SimpleQueue"
+    ],
+    "answer": "threading.Lock",
+    "explanation": "A threading.Lock serializes acquire/release access to the critical section across OS threads. asyncio primitives coordinate coroutines on one loop and cannot guard OS threads, and Timer is just a delayed call.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 67,
+    "question": "What defines an asynchronous generator?",
+    "options": [
+      "A regular generator wrapped with asyncio.coroutine",
+      "An async def function containing yield, iterated with 'async for'",
+      "A generator that yields coroutines instead of plain values",
+      "A generator that can only be created inside a running event loop"
+    ],
+    "answer": "An async def function containing yield, iterated with 'async for'",
+    "explanation": "Combining async def with yield produces an async generator whose __anext__ is awaitable, enabling awaits between yielded items. It is consumed with async for and cannot be iterated with a plain for loop.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 68,
+    "question": "In CPython, what is the Global Interpreter Lock (GIL)?",
+    "options": [
+      "A lock that must be acquired explicitly for every dict access",
+      "A mutex that allows only one thread to execute Python bytecode at a time within the interpreter process",
+      "A per-object lock automatically applied to all mutable containers",
+      "A compile-time flag that disables threading entirely"
+    ],
+    "answer": "A mutex that allows only one thread to execute Python bytecode at a time within the interpreter process",
+    "explanation": "The GIL is an interpreter-wide mutex simplifying memory management by serializing bytecode execution. It is released during blocking I/O and by C extensions, which is why threads still help I/O-bound work.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 69,
+    "question": "Why do general-purpose decorators typically define their wrapper with *args, **kwargs?",
+    "options": [
+      "To make the wrapper itself a generator",
+      "To forward arbitrary positional and keyword arguments to the wrapped function",
+      "To prevent the wrapped function from raising exceptions",
+      "To memoize every possible argument combination"
+    ],
+    "answer": "To forward arbitrary positional and keyword arguments to the wrapped function",
+    "explanation": "Accepting *args, **kwargs makes the decorator signature-agnostic, passing any call through unchanged. Without it, the decorator would break on functions whose parameters do not match the wrapper's declared signature.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 70,
+    "question": "What does generator.send(value) do?",
+    "options": [
+      "Sends the value to the generator's caller and stops execution",
+      "Resumes the generator, and the suspended yield expression evaluates to the sent value",
+      "Queues the value for the next full iteration pass",
+      "Serializes the generator's state to another process"
+    ],
+    "answer": "Resumes the generator, and the suspended yield expression evaluates to the sent value",
+    "explanation": "send() restarts the generator like next(), but the pending yield evaluates to the provided value, enabling two-way communication. The first call on a just-started generator must be next() or send(None).",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 71,
+    "question": "What guarantee does CPython's Global Interpreter Lock (GIL) provide?",
+    "options": [
+      "Only one thread executes Python bytecode at a time within a single interpreter process",
+      "Threads run concurrently on multiple cores with automatic data synchronization",
+      "All shared data structures are protected by per-object read-write locks",
+      "Python processes never share memory address spaces with each other"
+    ],
+    "answer": "Only one thread executes Python bytecode at a time within a single interpreter process",
+    "explanation": "The GIL is a mutex that serializes bytecode execution per interpreter process. It provides no per-object locking and no multi-core parallelism for pure-Python code; multiprocessing achieves CPU parallelism by using separate processes, each with its own GIL.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 72,
+    "question": "In CPython, which mechanism determines how often the interpreter forcibly releases the GIL between competing threads?",
+    "options": [
+      "sys.setswitchinterval(), which defaults to 5 milliseconds",
+      "A hard-coded limit of 100 bytecodes before a mandatory yield",
+      "Threads must explicitly call gil.release() every few operations",
+      "OS thread priority levels assigned by the scheduler"
+    ],
+    "answer": "sys.setswitchinterval(), which defaults to 5 milliseconds",
+    "explanation": "CPython periodically checks for pending thread switches based on the interval set by sys.setswitchinterval (default 0.005 seconds). Blocking I/O calls release the GIL voluntarily, but the interval governs contention among CPU-bound threads.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 73,
+    "question": "Beyond copying __name__ and __doc__, what additional capability does functools.wraps provide to a wrapper function?",
+    "options": [
+      "It sets the __wrapped__ attribute, allowing inspect.signature to reveal the original function's signature",
+      "It registers the wrapper in a global decorator registry for introspection tools",
+      "It makes the wrapper thread-safe by attaching a reentrant lock",
+      "It converts the wrapper into a coroutine automatically"
+    ],
+    "answer": "It sets the __wrapped__ attribute, allowing inspect.signature to reveal the original function's signature",
+    "explanation": "functools.wraps copies __module__, __name__, __qualname__, __doc__, and __dict__ to the wrapper and sets __wrapped__ to the original. inspect.signature follows __wrapped__ by default, so wrapped functions present the original signature to tooling.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 74,
+    "question": "What constraint applies to a generator function used with @contextlib.contextmanager?",
+    "options": [
+      "It must yield exactly once; failing to yield or yielding again raises RuntimeError",
+      "It must yield inside a with block at module import time",
+      "It must be decorated with @staticmethod to work as a manager",
+      "It must return a value instead of yielding to support __exit__"
+    ],
+    "answer": "It must yield exactly once; failing to yield or yielding again raises RuntimeError",
+    "explanation": "The helper wraps the generator so the single yield maps to __enter__/__exit__. Zero yields or multiple yields cannot map onto the context manager protocol, so contextlib raises RuntimeError in those cases.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 75,
+    "question": "Which capability does contextlib.ExitStack provide that fixed nested with statements do not?",
+    "options": [
+      "Dynamically composing a runtime-determined number of context managers, plus registering arbitrary cleanup callbacks via stack.callback",
+      "Automatic rollback of all managers if any single __exit__ raises",
+      "Parallel execution of all __enter__ calls for performance",
+      "Persistence of context state across interpreter restarts"
+    ],
+    "answer": "Dynamically composing a runtime-determined number of context managers, plus registering arbitrary cleanup callbacks via stack.callback",
+    "explanation": "ExitStack holds a stack of cleanup callbacks entered via enter_context() or callback(), unwinding them in LIFO order at exit. This enables conditional and loop-driven resource acquisition that static with nesting cannot express.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 76,
+    "question": "Why does @dataclass reject a declaration like tags: list = [] and require field(default_factory=list)?",
+    "options": [
+      "A literal mutable default would be shared across all instances, mirroring the classic mutable-default-argument pitfall",
+      "JSON serialization cannot represent empty lists as defaults",
+      "field() is required for any default value, immutable or mutable",
+      "The dataclass machinery forces list attributes to be initialized in __post_init__"
+    ],
+    "answer": "A literal mutable default would be shared across all instances, mirroring the classic mutable-default-argument pitfall",
+    "explanation": "dataclasses detects unhashable defaults like list, dict, and set and raises ValueError at class definition, because storing them as class attributes would share one object among instances. default_factory calls a zero-argument function per instance, producing a fresh default each time.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 77,
+    "question": "What does frozen=True in @dataclass implement?",
+    "options": [
+      "__setattr__ and __delattr__ raise FrozenInstanceError, and a __hash__ is generated from the fields",
+      "Instance attributes become class-level constants accessible without self",
+      "All fields are converted to properties backed by an immutable tuple",
+      "Attribute assignment is silently ignored after __init__ completes"
+    ],
+    "answer": "__setattr__ and __delattr__ raise FrozenInstanceError, and a __hash__ is generated from the fields",
+    "explanation": "frozen=True emits __setattr__/__delattr__ that raise dataclasses.FrozenInstanceError (a subclass of AttributeError). Combined with the default eq=True, the class also gains a hash-based __hash__, making instances usable in sets and as dict keys.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 78,
+    "question": "With asyncio.gather(*aws, return_exceptions=True), what happens when one awaited coroutine raises an exception?",
+    "options": [
+      "The exception instance is stored in the results list at that coroutine's position while sibling tasks continue",
+      "gather immediately cancels all sibling coroutines and re-raises the exception",
+      "gather returns a partial list of only successful results, omitting failed positions",
+      "The exception is routed to the loop's exception handler and gather returns None"
+    ],
+    "answer": "The exception instance is stored in the results list at that coroutine's position while sibling tasks continue",
+    "explanation": "With return_exceptions=True, exceptions from awaitables are treated as results and placed at their corresponding index. With the default False, the first exception propagates immediately, though other tasks are not cancelled by gather itself.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 79,
+    "question": "Which statement correctly distinguishes asyncio.wait() from asyncio.gather() in Python 3.11+?",
+    "options": [
+      "asyncio.wait() requires awaitables already wrapped as Tasks or Futures and returns (done, pending) sets, while gather() accepts bare coroutines and returns results in argument order",
+      "asyncio.wait() returns an ordered result list, while gather() returns two sets of tasks",
+      "asyncio.wait() cancels pending tasks on the first exception, while gather() never cancels anything",
+      "asyncio.wait() mandates a timeout argument, while gather() cannot accept one"
+    ],
+    "answer": "asyncio.wait() requires awaitables already wrapped as Tasks or Futures and returns (done, pending) sets, while gather() accepts bare coroutines and returns results in argument order",
+    "explanation": "Since 3.11, passing coroutines directly to asyncio.wait() raises TypeError; callers must wrap them in create_task(). wait() returns two sets in completion-agnostic form, whereas gather() preserves argument order and unwraps results or exceptions.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 80,
+    "question": "Which protocol must an object implement to be iterable with 'async for'?",
+    "options": [
+      "__aiter__ returning an object with __anext__, an awaitable that raises StopAsyncIteration when exhausted",
+      "__iter__ returning an object with __next__, which raises StopIteration when exhausted",
+      "__await__ returning an iterator whose __next__ raises GeneratorExit",
+      "__call__ returning one awaitable per item"
+    ],
+    "answer": "__aiter__ returning an object with __anext__, an awaitable that raises StopAsyncIteration when exhausted",
+    "explanation": "The asynchronous iterator protocol pairs __aiter__ with __anext__, which must be awaited per step and signals exhaustion with StopAsyncIteration. Regular __iter__/__next__ cannot participate because each step requires an await point.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 81,
+    "question": "Which methods define an asynchronous context manager usable with 'async with'?",
+    "options": [
+      "__aenter__ and __aexit__, both returning awaitables, with __aexit__ receiving exc_type, exc, and traceback",
+      "__enter__ and __exit__, transparently dispatched via run_in_executor",
+      "__aenter__ and __aexit__ required to return booleans synchronously",
+      "__await__ and __release__ defined by an abstract AsyncManager base class"
+    ],
+    "answer": "__aenter__ and __aexit__, both returning awaitables, with __aexit__ receiving exc_type, exc, and traceback",
+    "explanation": "The async with statement awaits __aenter__ on entry and awaits __aexit__ on exit, passing exception information on error. contextlib.asynccontextmanager provides a generator-based shorthand for building such managers.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 82,
+    "question": "When a caller invokes gen.send(42) on a paused generator, what does the suspended 'value = yield item' expression evaluate to?",
+    "options": [
+      "42 — the sent value becomes the result of the paused yield expression",
+      "item — the previously yielded value is reassigned to value",
+      "None — yield expressions never evaluate to caller-supplied data",
+      "42 only if this is the first next() call, otherwise None"
+    ],
+    "answer": "42 — the sent value becomes the result of the paused yield expression",
+    "explanation": "PEP 342 made yield an expression: send() resumes the generator and its argument is the value of the in-progress yield. The first resume must use next() or send(None), because a fresh generator is paused before the first yield.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 83,
+    "question": "What happens when gen.close() is called on a suspended generator?",
+    "options": [
+      "GeneratorExit is raised at the suspension point; if the generator yields a value in response, RuntimeError is raised",
+      "The generator returns None immediately, bypassing any try/finally cleanup blocks",
+      "StopIteration is raised at the suspension point, terminating the generator silently",
+      "The generator restarts from its first statement, discarding all local state"
+    ],
+    "answer": "GeneratorExit is raised at the suspension point; if the generator yields a value in response, RuntimeError is raised",
+    "explanation": "close() throws GeneratorExit into the generator, letting finally blocks run. A generator that catches GeneratorExit and yields again triggers RuntimeError('generator ignored GeneratorExit'); returning normally (StopIteration) is the sanctioned exit.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 84,
+    "question": "What is the core semantics of 'result = yield from subgenerator' inside a generator?",
+    "options": [
+      "It delegates iteration to the subgenerator, transparently forwarding send() and throw(), and evaluates to the subgenerator's return value",
+      "It runs the subgenerator on a separate thread and merges results lazily",
+      "It eagerly materializes the subgenerator's output into a list before yielding",
+      "It exhausts the subgenerator and then terminates the outer generator without returning any value"
+    ],
+    "answer": "It delegates iteration to the subgenerator, transparently forwarding send() and throw(), and evaluates to the subgenerator's return value",
+    "explanation": "PEP 380's yield from creates a bidirectional channel: values yielded by the subgenerator flow to the caller, and sent/thrown values flow into the subgenerator. The expression's value is whatever the subgenerator passed to return, carried via StopIteration.value.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 85,
+    "question": "What does C3 linearization guarantee about a class's MRO (method resolution order)?",
+    "options": [
+      "Each class precedes its parents, base-class ordering from the bases list is preserved, and impossible hierarchies are rejected with a TypeError at class creation",
+      "Classes are ordered strictly by their textual definition order in the source file",
+      "The most-derived base always appears first via a depth-first, left-to-right traversal",
+      "The MRO restarts the search from each base repeatedly until the attribute is located"
+    ],
+    "answer": "Each class precedes its parents, base-class ordering from the bases list is preserved, and impossible hierarchies are rejected with a TypeError at class creation",
+    "explanation": "C3 linearization produces a consistent order where children precede parents and declared base order is honored, while monotonicity rules can make some hierarchies unsolvable, raising TypeError. Python 3 dropped the old depth-first MRO in favor of this algorithm.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 86,
+    "question": "What is the effect of defining __slots__ on a class?",
+    "options": [
+      "Instances replace their per-instance __dict__ with fixed slot descriptors, reducing memory and blocking creation of undeclared attributes",
+      "Attributes are allocated on the C call stack for faster multi-threaded access",
+      "The class becomes immutable, forbidding all attribute assignment after __init__",
+      "Python builds a shared hash table per class that speeds up lookups while increasing per-instance memory"
+    ],
+    "answer": "Instances replace their per-instance __dict__ with fixed slot descriptors, reducing memory and blocking creation of undeclared attributes",
+    "explanation": "__slots__ reserves exactly the named attributes via descriptors at class level, eliminating the instance __dict__ (and __weakref__ unless included). Memory drops significantly for many small objects, and typos in attribute names fail at runtime instead of silently creating attributes.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 87,
+    "question": "In attribute lookup, how do data descriptors (those defining __set__ or __delete__) interact with the instance __dict__?",
+    "options": [
+      "Data descriptors take priority over the instance __dict__, while non-data descriptors are shadowed by it",
+      "The instance __dict__ always wins regardless of descriptor type",
+      "Non-data descriptors take priority over the instance __dict__, while data descriptors do not",
+      "Both descriptor kinds are consulted only after the instance __dict__ lookup fails"
+    ],
+    "answer": "Data descriptors take priority over the instance __dict__, while non-data descriptors are shadowed by it",
+    "explanation": "CPython's lookup checks type(obj).__mro__ for data descriptors first, then the instance __dict__, then non-data descriptors. This precedence is why property (a data descriptor) overrides instance attributes, while plain functions (non-data) can be shadowed by them.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 88,
+    "question": "When is a descriptor's __set_name__ method invoked?",
+    "options": [
+      "Automatically at owner-class creation, receiving the owner class and the attribute name it is assigned to",
+      "Manually by the programmer inside the class's __init_subclass__",
+      "The first time __get__ is called with instance set to None",
+      "Only when the owner class defines a custom metaclass implementing __slots__"
+    ],
+    "answer": "Automatically at owner-class creation, receiving the owner class and the attribute name it is assigned to",
+    "explanation": "PEP 487 hooks __set_name__(owner, name) during type construction so descriptors can learn their attribute name (e.g., for ORM column mapping) without metaclass boilerplate. It fires once per assignment of the descriptor in a class body.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 89,
+    "question": "What is the purpose of defining __init_subclass__ on a base class?",
+    "options": [
+      "It executes at each subclass's definition time, enabling declarative registration or validation without a custom metaclass",
+      "It overrides __init__ in all subclasses to enforce constructor signatures",
+      "It safely initializes class-level mutable defaults for each subclass",
+      "It runs on every instance creation to patch subclass attributes lazily"
+    ],
+    "answer": "It executes at each subclass's definition time, enabling declarative registration or validation without a custom metaclass",
+    "explanation": "PEP 487's __init_subclass__ is an implicit classmethod invoked by type.__new__ whenever a subclass is defined. It is the lightweight, inheritance-friendly replacement for simple metaclass __init__ logic like plugin registries.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 90,
+    "question": "How does a metaclass enforce the singleton pattern for its class?",
+    "options": [
+      "By overriding the metaclass's __call__ to return a cached instance instead of invoking type.__call__ each time",
+      "By overriding the metaclass's __init__ to reuse the first constructed object",
+      "By defining __new__ on the class body that returns a module-level global",
+      "By registering the class in sys.modules so repeated imports return one instance"
+    ],
+    "answer": "By overriding the metaclass's __call__ to return a cached instance instead of invoking type.__call__ each time",
+    "explanation": "The expression MyClass() invokes type(MyClass).__call__, so intercepting __call__ in the metaclass captures every instantiation attempt. Overriding __init__ in the metaclass fires only once per class creation, not per instance, and a class-level __new__ is a per-class, not metaclass-driven, mechanism.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 91,
+    "question": "Which statement about __new__ and __init__ is correct?",
+    "options": [
+      "__new__ is the implicit static method that creates and returns the instance; __init__ receives that instance and must return None",
+      "__new__ receives no arguments beyond cls and mutates self in place",
+      "__init__ constructs the instance and __new__ initializes its attributes",
+      "Both methods are required to return the instance or a TypeError is raised"
+    ],
+    "answer": "__new__ is the implicit static method that creates and returns the instance; __init__ receives that instance and must return None",
+    "explanation": "__new__ allocates the object (and may return an instance of a different class, in which case __init__ is skipped); __init__ only configures the already-created object and returning anything other than None raises TypeError. Immutables like tuple subclasses are typically customized in __new__.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 92,
+    "question": "What occurs when a function declared as def f(item, acc=[]) is called twice, each time appending to acc?",
+    "options": [
+      "Both calls mutate the same list because default arguments are evaluated once at function definition time",
+      "A fresh list is created per call because defaults are re-evaluated at each invocation",
+      "Python raises a SyntaxError whenever a default value is mutable",
+      "The second call raises UnboundLocalError because acc was rebound"
+    ],
+    "answer": "Both calls mutate the same list because default arguments are evaluated once at function definition time",
+    "explanation": "Defaults are stored on the function object (visible in f.__defaults__) and evaluated at def time, so every call without an argument shares the identical object. The idiom acc=None followed by an in-body assignment avoids this aliasing.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 93,
+    "question": "How does CPython's garbage collector complement reference counting?",
+    "options": [
+      "A generational, cycle-detecting collector traverses container objects to reclaim reference cycles that pure refcounting cannot free",
+      "It frees objects the moment refcounts reach zero, functioning as a faster refcounting engine",
+      "It relocates objects in memory to compact the heap and eliminate fragmentation",
+      "It replaces refcounting by marking objects reachable from globals and sweeping the rest"
+    ],
+    "answer": "A generational, cycle-detecting collector traverses container objects to reclaim reference cycles that pure refcounting cannot free",
+    "explanation": "Refcounting reclaims most objects immediately, but unreachable cycles keep counts above zero. The gc module's generational collector searches container objects for such cycles; it never moves objects, since CPython objects have stable addresses.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 94,
+    "question": "What is the key behavioral property of a weakref.ref to an object?",
+    "options": [
+      "It does not increment the referent's refcount, so the object can be collected, and calling the ref returns the object or None",
+      "It holds a strong reference until the ref object itself is deleted",
+      "It resurrects the referent with a refcount of one whenever it is dereferenced",
+      "It serializes the object's state so the object can be reconstructed after collection"
+    ],
+    "answer": "It does not increment the referent's refcount, so the object can be collected, and calling the ref returns the object or None",
+    "explanation": "Weak references observe an object without keeping it alive; once the referent is collected, calling the ref yields None. Callbacks can be attached to react to collection, which underpins caches and the weakref.WeakValueDictionary.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 95,
+    "question": "What does typing.Protocol (PEP 544) enable?",
+    "options": [
+      "Structural subtyping: a class satisfies the protocol if it defines the required members, with no explicit inheritance required",
+      "Runtime-enforced interfaces that raise TypeError at instantiation if any method is missing",
+      "Nominal subtyping that requires every implementer to explicitly inherit from the protocol",
+      "Automatic conversion of duck-typed objects into registered ABCs at runtime"
+    ],
+    "answer": "Structural subtyping: a class satisfies the protocol if it defines the required members, with no explicit inheritance required",
+    "explanation": "Protocol classes specify members checked structurally by static checkers, similar to Go interfaces or TypeScript shapes. Static and runtime checkable (via @runtime_checkable for isinstance checks) nominal inheritance is optional, not required.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 96,
+    "question": "In a TypedDict declared with total=False, what is the type-checking consequence?",
+    "options": [
+      "All keys become optional: checkers permit omission, but accessing an absent key still raises KeyError at runtime",
+      "All keys become required, and the flag disables runtime validation",
+      "Values may be any type while the key set remains fixed",
+      "The dictionary is transformed into a dataclass with Optional fields"
+    ],
+    "answer": "All keys become optional: checkers permit omission, but accessing an absent key still raises KeyError at runtime",
+    "explanation": "total=False marks every key as NotRequired for static checkers; TypedDict imposes no runtime enforcement, so dictionaries remain plain dicts. Individual keys can be re-marked required, and per-key Required/NotRequired overrides exist in newer typing syntax.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 97,
+    "question": "What problem does typing.ParamSpec solve when annotating decorators?",
+    "options": [
+      "It propagates the wrapped callable's parameter and return types through the wrapper so checkers preserve the precise signature",
+      "It restricts decorators to accepting only positional parameters at runtime",
+      "It injects runtime type validation for *args and **kwargs",
+      "It lets a decorator declare one fixed tuple of argument types reused across all decorated functions"
+    ],
+    "answer": "It propagates the wrapped callable's parameter and return types through the wrapper so checkers preserve the precise signature",
+    "explanation": "ParamSpec (PEP 612) captures an arbitrary parameter list as a type variable, letting wrappers be annotated Callable[ParamSpec('P'), ReturnT]. Combined with TypeVar for the return type, a decorator like a retry wrapper stays fully typed for callers.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 98,
+    "question": "In asyncio streams, what is the purpose of awaiting StreamWriter.drain()?",
+    "options": [
+      "It provides flow control: the write pauses while the transport buffer is above its high-water mark until it drains below the low-water mark",
+      "It flushes buffered data to disk to prevent loss on process crash",
+      "It forcibly closes the connection when the peer stops reading",
+      "It coalesces small writes into single TCP segments to maximize throughput"
+    ],
+    "answer": "It provides flow control: the write pauses while the transport buffer is above its high-water mark until it drains below the low-water mark",
+    "explanation": "Write buffers grow without bound unless consumers await drain(), which blocks when buffer size exceeds the high-water limit and resumes below the low-water limit. Omitting it lets fast producers outrun slow readers, causing unbounded memory growth — the canonical asyncio backpressure failure.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 99,
+    "question": "Why does a CPU-bound, pure-Python task fail to speed up under ThreadPoolExecutor?",
+    "options": [
+      "The GIL serializes bytecode execution across threads, so worker threads cannot run Python code in true parallel",
+      "OS threads are forbidden from sharing memory in Python programs",
+      "ThreadPoolExecutor routes all tasks through a single queue-handler thread that becomes the bottleneck",
+      "Thread context switches are categorically slower than process switches, guaranteeing a net slowdown"
+    ],
+    "answer": "The GIL serializes bytecode execution across threads, so worker threads cannot run Python code in true parallel",
+    "explanation": "Multiple threads compete for one interpreter lock, so CPU-bound work proceeds at single-core speed plus switching overhead. CPU-bound speedups require multiprocessing (separate processes, separate GILs), while threads remain useful when C extensions release the GIL or work is I/O-bound.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 100,
+    "question": "Which constraint applies to asyncio synchronization primitives such as asyncio.Lock in modern Python?",
+    "options": [
+      "They are bound to a single running event loop; awaiting a primitive from a different loop's task raises an error",
+      "They are thread-safe by default and may be awaited concurrently from any OS thread",
+      "They transparently upgrade to multiprocessing locks when tasks span process boundaries",
+      "They require an explicit timeout argument or acquire() blocks indefinitely at the OS level"
+    ],
+    "answer": "They are bound to a single running event loop; awaiting a primitive from a different loop's task raises an error",
+    "explanation": "asyncio.Lock and its siblings register waiters on the loop where they are created or first used, and cross-loop use (e.g., via asyncio.run_coroutine_threadsafe from another loop) triggers RuntimeError. For thread-level coordination, use threading.Lock or loop.call_soon_threadsafe bridges instead.",
+    "difficulty": "Advanced"
+  }
+]
