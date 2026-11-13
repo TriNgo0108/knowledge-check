@@ -1,0 +1,1302 @@
+[
+  {
+    "id": 1,
+    "question": "What is the default index type created by a plain CREATE INDEX statement in PostgreSQL?",
+    "options": [
+      "B-tree",
+      "Hash",
+      "GIN",
+      "BRIN"
+    ],
+    "answer": "B-tree",
+    "explanation": "CREATE INDEX builds a B-tree unless the USING clause specifies another access method. B-tree handles equality, range comparisons, sorting, and IS NULL on sortable data types.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 2,
+    "question": "Which index type is the standard choice for accelerating queries that filter inside JSONB columns, arrays, or full-text tsvector data?",
+    "options": [
+      "GIN",
+      "B-tree",
+      "BRIN",
+      "Hash"
+    ],
+    "answer": "GIN",
+    "explanation": "GIN (Generalized Inverted Index) supports containment (@>, <@), overlap (&&), and match (@@) operators on multi-valued columns. It builds slower than B-tree but is significantly faster for reads on such data.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 3,
+    "question": "Which index type is designed for very large tables whose rows are physically ordered on disk, such as time-series or append-only logs?",
+    "options": [
+      "BRIN",
+      "GIN",
+      "Hash",
+      "SP-GiST"
+    ],
+    "answer": "BRIN",
+    "explanation": "BRIN (Block Range Index) stores summary min/max values per block range, relying on physical correlation of data. It is dramatically smaller than a B-tree for such tables.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 4,
+    "question": "Which PostgreSQL index type supports only equality (=) lookups?",
+    "options": [
+      "Hash",
+      "B-tree",
+      "GiST",
+      "BRIN"
+    ],
+    "answer": "Hash",
+    "explanation": "Hash indexes only handle equality comparisons and cannot serve range or ordering queries. Since PostgreSQL 10, they are WAL-logged and crash-safe, but B-tree usually remains the practical choice.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 5,
+    "question": "Which index type is typically used for geometric data, range types, and nearest-neighbor searches?",
+    "options": [
+      "GiST",
+      "Hash",
+      "B-tree",
+      "BRIN"
+    ],
+    "answer": "GiST",
+    "explanation": "GiST (Generalized Search Tree) supports operators such as <<, >>, &&, and <->, making it suitable for shapes, range types, and KNN (nearest-neighbor) searches. B-tree cannot handle these operator classes.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 6,
+    "question": "What best describes the SP-GiST index type?",
+    "options": [
+      "A space-partitioned index for non-balanced structures such as quadtrees, k-d trees, and radix trees",
+      "An inverted index specialized for full-text search",
+      "A block-range index for physically ordered tables",
+      "A hash-based index restricted to equality lookups"
+    ],
+    "answer": "A space-partitioned index for non-balanced structures such as quadtrees, k-d trees, and radix trees",
+    "explanation": "SP-GiST partitions space into non-balanced tree structures and is used for data like IP ranges and phone routing. It supports operators from the GiST family but uses a different internal layout.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 7,
+    "question": "Which set of query operations can a B-tree index accelerate?",
+    "options": [
+      "Equality, range comparisons, sorting, and LIKE 'prefix%'",
+      "Only exact equality matches",
+      "Only JSON containment checks",
+      "Only nearest-neighbor distance searches"
+    ],
+    "answer": "Equality, range comparisons, sorting, and LIKE 'prefix%'",
+    "explanation": "B-tree supports =, <, >, <=, >=, BETWEEN, IN, IS NULL, ORDER BY, and left-anchored LIKE patterns. It is the correct default index for the vast majority of workloads.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 8,
+    "question": "Compared to a B-tree index on the same column, a BRIN index is typically what size?",
+    "options": [
+      "100–1000x smaller",
+      "Approximately the same size",
+      "2–3x larger",
+      "10x larger"
+    ],
+    "answer": "100–1000x smaller",
+    "explanation": "BRIN stores only compact per-block-range min/max summaries instead of one entry per row. This makes it extremely small, but only effective when physical row order matches the indexed column.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 9,
+    "question": "Which index types can never support index-only scans because they cannot reconstruct the indexed value?",
+    "options": [
+      "GIN, BRIN, and Hash",
+      "B-tree only",
+      "GiST and SP-GiST",
+      "B-tree and BRIN"
+    ],
+    "answer": "GIN, BRIN, and Hash",
+    "explanation": "GIN, BRIN, and hash indexes never store enough information to rebuild the indexed value, so every match requires a heap fetch. B-tree always supports index-only scans; GiST and SP-GiST support them for some operator classes.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 10,
+    "question": "What is the effect of building an index with CREATE INDEX CONCURRENTLY?",
+    "options": [
+      "The table remains available for reads and writes during the build",
+      "Multiple indexes are created in parallel",
+      "The index is built entirely in memory",
+      "The index automatically compresses its pages"
+    ],
+    "answer": "The table remains available for reads and writes during the build",
+    "explanation": "CONCURRENTLY avoids taking a lock that blocks writes, at the cost of a longer, two-phase build. It cannot run inside a transaction block.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 11,
+    "question": "What is a partial index in PostgreSQL?",
+    "options": [
+      "An index built over only the rows that satisfy a WHERE clause",
+      "An index that covers only some columns of a composite key",
+      "An index with incomplete pages due to a crash",
+      "An index defined on a function result"
+    ],
+    "answer": "An index built over only the rows that satisfy a WHERE clause",
+    "explanation": "A partial index stores entries only for rows matching its WHERE predicate, shrinking size when queries target a small slice of rows. It is an option on B-tree indexes, not a separate index type.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 12,
+    "question": "What is the purpose of the INCLUDE clause in CREATE INDEX?",
+    "options": [
+      "To store non-key columns in the index so queries can be answered via index-only scans",
+      "To include the index automatically in every query plan",
+      "To include associated triggers with the index",
+      "To attach the index to a partitioned parent table"
+    ],
+    "answer": "To store non-key columns in the index so queries can be answered via index-only scans",
+    "explanation": "INCLUDE adds payload columns to the index without adding them to the B-tree key. This enables index-only scans for queries retrieving those columns.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 13,
+    "question": "What is an expression index?",
+    "options": [
+      "An index built on the result of a function or expression, such as LOWER(email)",
+      "An index that spans multiple columns",
+      "An index whose definition is stored as JSON",
+      "An index that automatically repairs itself"
+    ],
+    "answer": "An index built on the result of a function or expression, such as LOWER(email)",
+    "explanation": "Expression indexes index the computed output of an expression, so queries using the same expression can use the index. A plain column index cannot serve WHERE LOWER(email) = ... efficiently.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 14,
+    "question": "Which psql meta-command lists all tables in the currently connected database?",
+    "options": [
+      "\\dt",
+      "\\l",
+      "\\du",
+      "\\df"
+    ],
+    "answer": "\\dt",
+    "explanation": "\\dt lists tables in the current database; \\di lists indexes, \\df lists functions, and \\l lists databases. The shortcut \\d alone requires an object name to describe it.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 15,
+    "question": "Which psql meta-command lists all databases in the cluster?",
+    "options": [
+      "\\l",
+      "\\dt",
+      "\\du",
+      "\\conninfo"
+    ],
+    "answer": "\\l",
+    "explanation": "\\l (list) shows all databases with their owners, encodings, and collations. \\conninfo only displays information about the current connection.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 16,
+    "question": "What is the default TCP port on which a PostgreSQL server listens?",
+    "options": [
+      "5432",
+      "3306",
+      "1521",
+      "6379"
+    ],
+    "answer": "5432",
+    "explanation": "PostgreSQL's default port is 5432, historically known as the 'postmaster' port. 3306 is MySQL, 1521 is Oracle, and 6379 is Redis.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 17,
+    "question": "What does the SERIAL pseudo-type do when used in a column definition?",
+    "options": [
+      "Creates an integer column whose default value comes from an auto-incrementing sequence",
+      "Creates a fixed-length text column with sequential validation",
+      "Creates a column that enforces foreign key ordering",
+      "Creates a timestamp column that updates on every row change"
+    ],
+    "answer": "Creates an integer column whose default value comes from an auto-incrementing sequence",
+    "explanation": "SERIAL creates an integer/integer-backed column with a sequence-owned default, equivalent to manually creating a sequence and setting DEFAULT nextval(). Since PostgreSQL 10, the SQL-standard IDENTITY column is the recommended alternative.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 18,
+    "question": "What is the key difference between the json and jsonb data types?",
+    "options": [
+      "jsonb stores a decomposed binary representation that supports indexing and efficient processing, while json stores text as entered",
+      "json is faster to process because it stores parsed binary data",
+      "jsonb can only store arrays, not objects",
+      "There is no difference; jsonb is just an alias for json"
+    ],
+    "answer": "jsonb stores a decomposed binary representation that supports indexing and efficient processing, while json stores text as entered",
+    "explanation": "jsonb parses input into a binary format, allowing GIN indexing and faster repeated access, but slightly slower input due to parsing overhead. json preserves exact input text including key order and duplicate keys.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 19,
+    "question": "What is the primary purpose of the VACUUM command in PostgreSQL?",
+    "options": [
+      "To reclaim storage occupied by dead tuples left behind by UPDATE and DELETE operations",
+      "To rebuild every index in the database",
+      "To compress and archive WAL files",
+      "To collect planner statistics on table contents"
+    ],
+    "answer": "To reclaim storage occupied by dead tuples left behind by UPDATE and DELETE operations",
+    "explanation": "Under MVCC, UPDATE and DELETE mark old row versions as dead rather than removing them. VACUUM reclaims that space for reuse and prevents transaction ID wraparound.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 20,
+    "question": "What does the ANALYZE command do in PostgreSQL?",
+    "options": [
+      "Collects statistics about table contents that the query planner uses to choose plans",
+      "Reclaims storage from dead tuples",
+      "Verifies referential integrity of foreign keys",
+      "Repairs corrupted data pages"
+    ],
+    "answer": "Collects statistics about table contents that the query planner uses to choose plans",
+    "explanation": "ANALYZE samples tables and stores statistics such as distinct values and histograms in pg_statistic. The autovacuum daemon runs it automatically, but it can be invoked manually after bulk data changes.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 21,
+    "question": "What does the EXPLAIN statement do?",
+    "options": [
+      "Displays the execution plan the planner has chosen for a statement without running it",
+      "Executes the query and displays its result rows",
+      "Lists all indexes that exist on a table",
+      "Shows the DDL statement used to create a table"
+    ],
+    "answer": "Displays the execution plan the planner has chosen for a statement without running it",
+    "explanation": "EXPLAIN shows the plan tree with estimated costs and row counts. Adding ANALYZE actually executes the query and reports real timings and row counts.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 22,
+    "question": "Which command shows actual execution times and row counts for a query in addition to its plan?",
+    "options": [
+      "EXPLAIN ANALYZE",
+      "EXPLAIN VERBOSE",
+      "EXPLAIN COSTS",
+      "EXPLAIN PLAN"
+    ],
+    "answer": "EXPLAIN ANALYZE",
+    "explanation": "EXPLAIN ANALYZE executes the statement and annotates the plan with real runtime measurements. EXPLAIN VERBOSE only prints additional plan detail; EXPLAIN PLAN is not valid PostgreSQL syntax.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 23,
+    "question": "What is the default transaction isolation level in PostgreSQL?",
+    "options": [
+      "READ COMMITTED",
+      "SERIALIZABLE",
+      "REPEATABLE READ",
+      "READ UNCOMMITTED"
+    ],
+    "answer": "READ COMMITTED",
+    "explanation": "READ COMMITTED means each statement sees a snapshot including transactions committed before it began. PostgreSQL accepts READ UNCOMMITTED syntax but treats it as READ COMMITTED.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 24,
+    "question": "Which SQL construct implements an 'upsert' (insert-or-update) in PostgreSQL?",
+    "options": [
+      "INSERT ... ON CONFLICT DO UPDATE",
+      "REPLACE INTO",
+      "UPSERT INTO",
+      "UPDATE OR INSERT"
+    ],
+    "answer": "INSERT ... ON CONFLICT DO UPDATE",
+    "explanation": "ON CONFLICT DO UPDATE (introduced in PostgreSQL 9.5) inserts a row or, on a unique constraint violation, updates the existing one. REPLACE INTO and UPDATE OR INSERT are MySQL/other-database syntaxes not valid in PostgreSQL.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 25,
+    "question": "What does the RETURNING clause do in an INSERT, UPDATE, or DELETE statement?",
+    "options": [
+      "Returns the rows affected by the statement as a result set",
+      "Returns rows to their prior state by undoing the change",
+      "Returns a server-side cursor for paginated reads",
+      "Returns control to the caller after committing"
+    ],
+    "answer": "Returns the rows affected by the statement as a result set",
+    "explanation": "RETURNING lets a DML statement output the inserted, updated, or deleted rows, avoiding a follow-up SELECT. It is commonly used to fetch sequence-generated primary keys immediately after an insert.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 26,
+    "question": "How does the ILIKE operator differ from LIKE in PostgreSQL?",
+    "options": [
+      "ILIKE performs case-insensitive pattern matching",
+      "ILIKE performs exact string equality instead of patterns",
+      "ILIKE matches regular expressions instead of wildcards",
+      "ILIKE is simply an alias for LIKE with identical behavior"
+    ],
+    "answer": "ILIKE performs case-insensitive pattern matching",
+    "explanation": "ILIKE matches the pattern while ignoring case, whereas LIKE is case-sensitive. Both use % and _ wildcards; neither is a regex matcher.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 27,
+    "question": "Does PostgreSQL automatically create an index on a foreign key column?",
+    "options": [
+      "No, the referencing column must be indexed manually when needed",
+      "Yes, a B-tree index is created automatically",
+      "Yes, but only for tables with more than 1,000 rows",
+      "Yes, but only when ON DELETE CASCADE is specified"
+    ],
+    "answer": "No, the referencing column must be indexed manually when needed",
+    "explanation": "PostgreSQL creates an index automatically for primary keys and unique constraints, but not for foreign key columns. Joins and cascaded deletes on unindexed foreign keys can be very slow.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 28,
+    "question": "When a PRIMARY KEY constraint is added to a table, what does PostgreSQL do automatically?",
+    "options": [
+      "Creates a unique B-tree index on the key column(s)",
+      "Creates a GIN index on the key column(s)",
+      "Creates no index at all",
+      "Creates a BRIN index on the key column(s)"
+    ],
+    "answer": "Creates a unique B-tree index on the key column(s)",
+    "explanation": "Enforcing a PRIMARY KEY requires fast uniqueness checking, so PostgreSQL builds a unique B-tree index behind the constraint. The same applies to UNIQUE constraints.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 29,
+    "question": "Which psql meta-command displays the structure (columns, types, indexes) of a specific table?",
+    "options": [
+      "\\d tablename",
+      "\\dt tablename",
+      "\\l tablename",
+      "\\i tablename"
+    ],
+    "answer": "\\d tablename",
+    "explanation": "\\d followed by a relation name shows its columns, types, and indexes. \\dt only lists table names, \\l lists databases, and \\i executes a script file.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 30,
+    "question": "Which psql meta-command lists all database roles and users?",
+    "options": [
+      "\\du",
+      "\\dt",
+      "\\l",
+      "\\df"
+    ],
+    "answer": "\\du",
+    "explanation": "\\du displays roles, their attributes, and memberships. \\dt lists tables, \\l lists databases, and \\df lists functions.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 31,
+    "question": "Why does column order matter in a multicolumn B-tree index?",
+    "options": [
+      "The index is most effective when queries constrain the leading columns; later columns help only if earlier ones are constrained",
+      "Column order is irrelevant to the planner",
+      "The last column in the index is treated as the primary key",
+      "Only text columns may be placed first in a composite index"
+    ],
+    "answer": "The index is most effective when queries constrain the leading columns; later columns help only if earlier ones are constrained",
+    "explanation": "A composite B-tree sorts first by the leading column, then the next, and so on. A query filtering only on a trailing column generally cannot use the index efficiently.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 32,
+    "question": "What does MVCC (Multi-Version Concurrency Control) provide in PostgreSQL?",
+    "options": [
+      "Each transaction reads a consistent snapshot, allowing readers and writers to proceed without blocking each other",
+      "All rows are locked exclusively during any read operation",
+      "Automatic replication of data across multiple servers",
+      "A shared memory cache for frequently accessed pages"
+    ],
+    "answer": "Each transaction reads a consistent snapshot, allowing readers and writers to proceed without blocking each other",
+    "explanation": "MVCC keeps multiple row versions so readers never block writers and vice versa. The cost is dead tuples that VACUUM must eventually reclaim.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 33,
+    "question": "A query orders results by proximity using the <-> distance operator on geometric point data. Which index type can accelerate this?",
+    "options": [
+      "GiST",
+      "Hash",
+      "BRIN",
+      "Hash or BRIN"
+    ],
+    "answer": "GiST",
+    "explanation": "GiST operator classes support ordered nearest-neighbor scans using the <-> distance operator. Hash and BRIN indexes cannot serve ordering or distance-based retrieval.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 34,
+    "question": "Which psql meta-command connects the session to a different database?",
+    "options": [
+      "\\c dbname",
+      "\\l dbname",
+      "\\d dbname",
+      "\\i dbname"
+    ],
+    "answer": "\\c dbname",
+    "explanation": "\\c (or \\connect) establishes a new connection to the named database. \\l lists databases, \\d describes objects, and \\i runs a script file.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 35,
+    "question": "What information does a BRIN index store for each block range of a table?",
+    "options": [
+      "The minimum and maximum values of the indexed column within that range",
+      "A full copy of every indexed row in that range",
+      "A hash bucket mapping every value to its row location",
+      "An inverted list of every token appearing in that range"
+    ],
+    "answer": "The minimum and maximum values of the indexed column within that range",
+    "explanation": "BRIN stores compact per-block-range summaries (min/max), enabling the planner to skip ranges that cannot contain matching rows. This is why it is tiny but only effective on physically correlated data.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 36,
+    "question": "Which index access method does PostgreSQL use by default when executing CREATE INDEX without specifying a type?",
+    "options": [
+      "Hash",
+      "GIN",
+      "B-tree",
+      "BRIN"
+    ],
+    "answer": "B-tree",
+    "explanation": "CREATE INDEX defaults to B-tree unless USING specifies otherwise. B-tree handles equality, range, and sort operations for most scalar data types.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 37,
+    "question": "Which index type is the appropriate choice for accelerating JSONB containment queries that use the '@>' operator?",
+    "options": [
+      "BRIN",
+      "GIN",
+      "Hash",
+      "SP-GiST"
+    ],
+    "answer": "GIN",
+    "explanation": "GIN is an inverted index that maps each key/value within the JSONB document to the containing row, making containment operators like '@>' efficient. BRIN and Hash cannot service containment queries.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 38,
+    "question": "What information does a BRIN index store for each block range of a table?",
+    "options": [
+      "A full copy of every indexed value in sorted order",
+      "Only the minimum and maximum values per block range",
+      "A bitmap of which rows contain NULL values",
+      "Row identifiers (TIDs) for every row in the range"
+    ],
+    "answer": "Only the minimum and maximum values per block range",
+    "explanation": "BRIN stores compact min/max summaries per block range. If a query's range falls outside a block range's min/max, that entire range can be skipped, which is why BRIN works best on physically ordered data.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 39,
+    "question": "What operator limitation applies to hash indexes in PostgreSQL?",
+    "options": [
+      "They support only the equality operator (=)",
+      "They support only range predicates such as BETWEEN",
+      "They support only prefix matching via LIKE",
+      "They support only ORDER BY operations"
+    ],
+    "answer": "They support only the equality operator (=)",
+    "explanation": "Hash indexes distribute entries by hash value, destroying ordering, so only equality lookups can be answered. Range and sort operations require B-tree.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 40,
+    "question": "Why were hash indexes discouraged in PostgreSQL versions prior to 10?",
+    "options": [
+      "They were limited to integer key columns",
+      "Changes to hash indexes were not written to WAL, so they could not be replicated or crash-recovered reliably",
+      "They required a manual REHASH after every VACUUM",
+      "They could not coexist with B-tree indexes on the same column"
+    ],
+    "answer": "Changes to hash indexes were not written to WAL, so they could not be replicated or crash-recovered reliably",
+    "explanation": "Before PostgreSQL 10, hash index operations bypassed WAL, meaning they were not replicated via streaming replication and could become corrupt after a crash. PostgreSQL 10 made hash indexes fully WAL-logged.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 41,
+    "question": "Which operator, when supported by a GiST operator class, enables nearest-neighbor (KNN) ordering such as finding the closest point to a target?",
+    "options": [
+      "&&",
+      "<->",
+      "@>",
+      "~"
+    ],
+    "answer": "<->",
+    "explanation": "The distance operator '<->' is ORDER BY-aware in GiST (and SP-GiST) indexes, enabling KNN index scans such as ORDER BY point <-> target. The other operators test overlap, containment, or pattern match.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 42,
+    "question": "What condition must hold for a B-tree index scan to be executed as an index-only scan?",
+    "options": [
+      "The table must have been CLUSTERed on the index key",
+      "The Visibility Map must mark the referenced heap pages as all-visible",
+      "The index must include every column of the table",
+      "The query must use only equality predicates"
+    ],
+    "answer": "The Visibility Map must mark the referenced heap pages as all-visible",
+    "explanation": "Index-only scans still need to verify row visibility, and the Visibility Map lets PostgreSQL skip heap fetches for all-visible pages. If many pages are not all-visible, the plan degenerates toward heap fetches, which is why regular VACUUM matters.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 43,
+    "question": "What is the effect of the INCLUDE clause in CREATE INDEX ... ON t (col) INCLUDE (extra)?",
+    "options": [
+      "It restricts the index to rows where extra is not NULL",
+      "It stores extra as non-searchable payload, enabling index-only scans without enlarging the search key",
+      "It forces PostgreSQL to create a second index on extra",
+      "It makes the index unique across col and extra combined"
+    ],
+    "answer": "It stores extra as non-searchable payload, enabling index-only scans without enlarging the search key",
+    "explanation": "INCLUDE columns are stored in leaf tuples but are not part of the search key or its uniqueness constraint. This supports covering-index (index-only scan) queries while keeping the key compact.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 44,
+    "question": "What distinguishes a partial index from a standard B-tree index?",
+    "options": [
+      "It indexes only rows that satisfy a WHERE predicate, reducing size and maintenance cost",
+      "It indexes only a subset of the table's columns",
+      "It stores entries in hash-bucket order instead of sorted order",
+      "It cannot be used by the query planner unless explicitly hinted"
+    ],
+    "answer": "It indexes only rows that satisfy a WHERE predicate, reducing size and maintenance cost",
+    "explanation": "A partial index built with CREATE INDEX ... WHERE contains entries only for matching rows. It is ideal for hot subsets of data, shrinking the index and reducing write overhead.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 45,
+    "question": "Which statement correctly creates an expression index to support case-insensitive lookups on an email column?",
+    "options": [
+      "CREATE INDEX idx ON users (lower(email));",
+      "CREATE INDEX idx ON users WHERE lower(email);",
+      "ALTER TABLE users ADD INDEX idx (lower(email));",
+      "CREATE INDEX idx ON users (email ILIKE '%');"
+    ],
+    "answer": "CREATE INDEX idx ON users (lower(email));",
+    "explanation": "Expression indexes index the result of a function or expression, so queries using lower(email) = 'value' can use the index. ALTER TABLE ... ADD INDEX is not valid PostgreSQL syntax.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 46,
+    "question": "Which characteristic applies to CREATE INDEX CONCURRENTLY?",
+    "options": [
+      "It builds the index using parallel workers and blocks all reads",
+      "It allows concurrent INSERT/UPDATE/DELETE operations but cannot run inside a transaction block",
+      "It takes an ACCESS EXCLUSIVE lock on the table for the duration of the build",
+      "It completes in a single table scan with no possibility of failure"
+    ],
+    "answer": "It allows concurrent INSERT/UPDATE/DELETE operations but cannot run inside a transaction block",
+    "explanation": "CONCURRENTLY builds the index without a long lock blocking writes, using two table scans and waiting for concurrent transactions to finish; therefore it cannot run inside a transaction block and may leave an INVALID index if it fails.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 47,
+    "question": "Given a multicolumn B-tree index on columns (a, b), how effectively does it serve a query that filters only on column b?",
+    "options": [
+      "As effectively as a dedicated single-column index on b",
+      "It cannot be used efficiently unless the leading column a is also constrained",
+      "It is used efficiently only if b is declared UNIQUE",
+      "PostgreSQL automatically reorders the index definition to put b first"
+    ],
+    "answer": "It cannot be used efficiently unless the leading column a is also constrained",
+    "explanation": "B-tree search requires constraints on leading columns because entries are sorted by a, then b. Without a constraint on a, the planner cannot prune the index tree effectively (skip scans only arrived in PostgreSQL 18).",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 48,
+    "question": "Which system catalog table stores the list of index access methods available to PostgreSQL?",
+    "options": [
+      "pg_index",
+      "pg_am",
+      "pg_class",
+      "pg_opclass"
+    ],
+    "answer": "pg_am",
+    "explanation": "pg_am (access method) catalogs index types such as btree, hash, gist, gin, and brin. pg_index describes individual indexes, pg_class lists relations, and pg_opclass defines operator classes.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 49,
+    "question": "Under a non-C locale collation, what is required for a B-tree index to accelerate LIKE 'abc%' queries on a text column?",
+    "options": [
+      "Nothing; any B-tree index on the column is usable",
+      "An index using the text_pattern_ops operator class (or one built under the C collation)",
+      "A GIN index with a pattern operator class",
+      "The query must be rewritten using position() instead of LIKE"
+    ],
+    "answer": "An index using the text_pattern_ops operator class (or one built under the C collation)",
+    "explanation": "In non-C collations, B-tree ordering is locale-based and does not match LIKE's character-by-character prefix semantics, so a text_pattern_ops operator class (or a C-locale index) is needed for the planner to use the index.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 50,
+    "question": "How does the typical size of a BRIN index on well-correlated time-series data compare to an equivalent B-tree index?",
+    "options": [
+      "Roughly the same size",
+      "About 2 to 5 times larger",
+      "Roughly 100-1000x smaller",
+      "Exactly one page per table row"
+    ],
+    "answer": "Roughly 100-1000x smaller",
+    "explanation": "Because BRIN stores only min/max summaries per block range, its size is a tiny fraction of a B-tree's. The tradeoff is that BRIN is lossy: it narrows candidate ranges but cannot directly pinpoint individual rows.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 51,
+    "question": "When choosing between GIN and GiST for full-text search over tsvector columns, what is the accepted tradeoff?",
+    "options": [
+      "GIN offers faster lookups but slower updates; GiST updates faster but queries slower",
+      "GIN offers faster updates but slower lookups; GiST queries faster but updates slower",
+      "GIN supports only equality; GiST supports only prefix search",
+      "Both perform identically; the choice is purely stylistic"
+    ],
+    "answer": "GIN offers faster lookups but slower updates; GiST updates faster but queries slower",
+    "explanation": "GIN's inverted structure makes lookups very fast but inserts and updates expensive, while GiST is cheaper to maintain. GIN is the usual choice for read-heavy text search workloads.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 52,
+    "question": "How does PostgreSQL's MVCC model affect concurrent reads and writes?",
+    "options": [
+      "Readers block writers and writers block readers to guarantee snapshot correctness",
+      "Readers do not block writers and writers do not block readers, since each transaction reads a consistent snapshot",
+      "Writers block readers, but readers never block writers",
+      "All concurrency is serialized through a single global database lock"
+    ],
+    "answer": "Readers do not block writers and writers do not block readers, since each transaction reads a consistent snapshot",
+    "explanation": "MVCC retains old row versions so queries read a consistent snapshot without acquiring read locks. Obsolete rows become dead tuples that VACUUM reclaims later.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 53,
+    "question": "What is the key difference between plain VACUUM and VACUUM FULL?",
+    "options": [
+      "VACUUM FULL reclaims space in place without locks; plain VACUUM rewrites the table",
+      "Plain VACUUM marks dead tuple space as reusable without heavy locking; VACUUM FULL rewrites the table into a new file and requires an ACCESS EXCLUSIVE lock",
+      "VACUUM FULL only updates statistics; plain VACUUM only removes dead tuples",
+      "Both operations rewrite the table, but VACUUM FULL uses parallel workers"
+    ],
+    "answer": "Plain VACUUM marks dead tuple space as reusable without heavy locking; VACUUM FULL rewrites the table into a new file and requires an ACCESS EXCLUSIVE lock",
+    "explanation": "Plain VACUUM makes dead space reusable within the existing file but does not shrink it. VACUUM FULL compacts the table via a full rewrite, returning disk space to the OS at the cost of an exclusive lock.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 54,
+    "question": "Why is VACUUM FREEZE important in PostgreSQL?",
+    "options": [
+      "It prevents transaction ID wraparound by replacing old XIDs with a special frozen XID",
+      "It compacts indexes without locking the table",
+      "It converts all indexes on the table to B-tree format",
+      "It disables autovacuum for the frozen table"
+    ],
+    "answer": "It prevents transaction ID wraparound by replacing old XIDs with a special frozen XID",
+    "explanation": "Transaction IDs are 32-bit and eventually wrap around; frozen rows are treated as 'in the past' by all future transactions. Anti-wraparound autovacuum freezing is mandatory for long-lived clusters.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 55,
+    "question": "What is the default transaction isolation level in PostgreSQL?",
+    "options": [
+      "READ UNCOMMITTED",
+      "READ COMMITTED",
+      "REPEATABLE READ",
+      "SERIALIZABLE"
+    ],
+    "answer": "READ COMMITTED",
+    "explanation": "In READ COMMITTED, each statement sees a fresh snapshot including recently committed changes. PostgreSQL accepts READ UNCOMMITTED syntactically but treats it as READ COMMITTED.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 56,
+    "question": "Which concurrency control method does PostgreSQL use to implement SERIALIZABLE isolation since version 9.1?",
+    "options": [
+      "Two-phase locking at the table level",
+      "Serializable Snapshot Isolation (SSI)",
+      "Pessimistic row locks acquired at SELECT time",
+      "Application-level advisory locks"
+    ],
+    "answer": "Serializable Snapshot Isolation (SSI)",
+    "explanation": "SSI builds on MVCC snapshots and detects dangerous read-write dependency patterns among concurrent transactions, aborting those that could produce serialization anomalies.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 57,
+    "question": "What is the primary purpose of the Write-Ahead Log (WAL) in PostgreSQL?",
+    "options": [
+      "To store query execution plans for reuse",
+      "To guarantee durability and crash recovery by logging changes before data pages are flushed",
+      "To keep an audit trail of all SQL statements executed",
+      "To buffer reads from the operating system cache"
+    ],
+    "answer": "To guarantee durability and crash recovery by logging changes before data pages are flushed",
+    "explanation": "Changes are recorded in WAL and flushed at commit before the data files, enabling replay after a crash. WAL also serves as the basis for streaming replication and point-in-time recovery.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 58,
+    "question": "What happens to dead tuples produced by UPDATE and DELETE before VACUUM processes them?",
+    "options": [
+      "They are immediately overwritten by new inserts",
+      "They remain on disk, consuming space and slowing scans until VACUUM reclaims them",
+      "They are moved to an undo tablespace",
+      "They are automatically compressed into history tables"
+    ],
+    "answer": "They remain on disk, consuming space and slowing scans until VACUUM reclaims them",
+    "explanation": "MVCC marks old row versions invisible rather than deleting them; they occupy space as bloat until VACUUM marks the space reusable. PostgreSQL has no undo tablespace.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 59,
+    "question": "What additional behavior does EXPLAIN ANALYZE provide over plain EXPLAIN?",
+    "options": [
+      "It estimates costs without executing anything",
+      "It actually executes the query and reports real row counts, timings, and loop counts",
+      "It automatically rewrites the query for better performance",
+      "It displays the server configuration for query tuning"
+    ],
+    "answer": "It actually executes the query and reports real row counts, timings, and loop counts",
+    "explanation": "EXPLAIN alone produces planner estimates; adding ANALYZE runs the plan and shows actual rows and time per node. Be aware that ANALYZE genuinely executes the statement, including any data-modifying effects.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 60,
+    "question": "What is the effect of lowering random_page_cost relative to seq_page_cost (e.g., toward SSD-appropriate values)?",
+    "options": [
+      "The planner becomes more inclined to choose index scans over sequential scans",
+      "The planner prefers sequential scans and merge joins",
+      "It increases the maximum number of parallel workers",
+      "It disables the use of BRIN indexes"
+    ],
+    "answer": "The planner becomes more inclined to choose index scans over sequential scans",
+    "explanation": "random_page_cost models the cost of a nonsequential page fetch (default 4.0 vs 1.0 for sequential). Lowering it reflects faster random I/O on SSDs and shifts plan choices toward index access paths.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 61,
+    "question": "What does the work_mem configuration parameter control?",
+    "options": [
+      "The total memory available to PostgreSQL for caching table pages",
+      "The memory allocated per sort or hash operation before it spills to temporary disk files",
+      "The memory reserved for WAL buffers at commit",
+      "The maximum total memory a single client session may allocate"
+    ],
+    "answer": "The memory allocated per sort or hash operation before it spills to temporary disk files",
+    "explanation": "work_mem is granted per sort or hash node, not per query, so a single complex query may consume it multiple times. Values that are too small cause external merge sorts and temp-file usage.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 62,
+    "question": "What is the role of shared_buffers in PostgreSQL?",
+    "options": [
+      "It caches table and index pages in shared memory for reuse across all backends",
+      "It stores prepared statement plans for all sessions",
+      "It holds uncommitted transaction rows until commit",
+      "It determines the size of WAL segment files"
+    ],
+    "answer": "It caches table and index pages in shared memory for reuse across all backends",
+    "explanation": "shared_buffers is the main page cache shared by all server processes, typically sized around 25% of system RAM, and works in tandem with the operating system page cache.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 63,
+    "question": "Why must the referencing (child) column of a foreign key typically be indexed manually in PostgreSQL?",
+    "options": [
+      "Because foreign keys require a UNIQUE constraint on the child column",
+      "Because PostgreSQL does not create an index on the referencing column; its absence slows cascaded deletes and joins",
+      "Because the foreign key constraint is enforced exclusively by scanning that index",
+      "Because indexes on foreign keys are created automatically but disabled by default"
+    ],
+    "answer": "Because PostgreSQL does not create an index on the referencing column; its absence slows cascaded deletes and joins",
+    "explanation": "PostgreSQL automatically creates an index only on the referenced (unique/primary key) side. The referencing side gets no index, so ON DELETE CASCADE operations or frequent joins on it may trigger slow sequential scans.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 64,
+    "question": "What qualifies an UPDATE as a Heap-Only Tuple (HOT) update in PostgreSQL?",
+    "options": [
+      "The update modifies at least one indexed column",
+      "No indexed column changed and the new tuple fits on the same page, so no new index entries are needed",
+      "The update is executed with a FOR UPDATE lock",
+      "The update targets a table without any primary key"
+    ],
+    "answer": "No indexed column changed and the new tuple fits on the same page, so no new index entries are needed",
+    "explanation": "HOT updates skip insertion into all indexes because index entries point to the page and the HOT chain leads to the newest row version. This reduces index bloat; a lowered fillfactor reserves page space to enable it.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 65,
+    "question": "What does the fillfactor storage parameter control for tables and indexes?",
+    "options": [
+      "The maximum number of tuples a table may contain",
+      "The percentage of each page packed during creation, leaving free space for future updates",
+      "The ratio of B-tree leaf pages to internal pages",
+      "The fraction of table pages kept resident in shared_buffers"
+    ],
+    "answer": "The percentage of each page packed during creation, leaving free space for future updates",
+    "explanation": "A lower fillfactor (e.g., 70-90) reserves free space per page so updated rows can remain on-page, favoring HOT updates and reducing page splits in indexes.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 66,
+    "question": "Which column of the pg_stat_user_indexes view identifies a candidate unused index?",
+    "options": [
+      "idx_size",
+      "idx_scan",
+      "idx_cache_ratio",
+      "idx_last_rebuild"
+    ],
+    "answer": "idx_scan",
+    "explanation": "idx_scan counts index scans since statistics were last reset; an index with idx_scan = 0 over a representative workload is a removal candidate. Reset and observe statistics over a full business cycle before dropping production indexes.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 67,
+    "question": "Why can a standard B-tree index not accelerate a LIKE '%suffix' pattern (wildcard at the start)?",
+    "options": [
+      "Because B-tree comparisons ignore case by default",
+      "Because B-tree entries are sorted by prefix, and a leading wildcard prevents range pruning of the tree",
+      "Because LIKE patterns require a hash-based lookup",
+      "Because suffix searches are supported only by BRIN indexes"
+    ],
+    "answer": "Because B-tree entries are sorted by prefix, and a leading wildcard prevents range pruning of the tree",
+    "explanation": "B-tree searches locate entries via ordered ranges that depend on a known prefix. With a leading wildcard, every entry is a candidate, so the planner falls back to a sequential scan or a pg_trgm GIN index.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 68,
+    "question": "For a read-heavy application filtering a tsvector column with the @@ operator, which index type is typically recommended?",
+    "options": [
+      "Hash",
+      "BRIN",
+      "GIN",
+      "SP-GiST"
+    ],
+    "answer": "GIN",
+    "explanation": "GIN accelerates the @@ text-search operator over tsvector with fast lookups. GiST is a viable alternative only when update speed matters more than read speed.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 69,
+    "question": "Which category of data structures is SP-GiST designed to index?",
+    "options": [
+      "Balanced multiway trees used for sorted scalar data",
+      "Non-balanced, space-partitioning structures such as quadtrees, k-d trees, and radix trees",
+      "Append-only, time-ordered block ranges",
+      "Inverted lists over multi-valued documents"
+    ],
+    "answer": "Non-balanced, space-partitioning structures such as quadtrees, k-d trees, and radix trees",
+    "explanation": "SP-GiST (space-partitioned GiST) supports naturally unbalanced partitioned search trees, such as those used for IP prefixes, phone routing, and point data.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 70,
+    "question": "For a GIN-indexed array column, what does the && operator test?",
+    "options": [
+      "Whether the array contains all elements of the right-hand array",
+      "Whether the two arrays overlap, i.e., share at least one common element",
+      "Whether the array is strictly contained within the right-hand array",
+      "Whether both arrays are byte-for-byte identical"
+    ],
+    "answer": "Whether the two arrays overlap, i.e., share at least one common element",
+    "explanation": "'&&' is the overlap operator (at least one common element), '@>' requires the left side to contain all right-side elements, and '<@' requires containment within the right side. GIN indexes accelerate all three.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 71,
+    "question": "A CREATE INDEX CONCURRENTLY statement fails mid-build (e.g., due to a deadlock). What is the state of the index afterward?",
+    "options": [
+      "The index is automatically dropped and the table is unchanged",
+      "The index remains but is marked INVALID, is ignored by the planner, and must be dropped and rebuilt",
+      "The index is valid but contains incomplete entries until a REINDEX is run",
+      "The build is retried automatically in the background until it succeeds"
+    ],
+    "answer": "The index remains but is marked INVALID, is ignored by the planner, and must be dropped and rebuilt",
+    "explanation": "CONCURRENTLY builds cannot run inside a transaction, so a failure cannot be rolled back; the index is left with indisvalid = false. It is still maintained by writes but never used for reads until dropped and recreated.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 72,
+    "question": "Why does an index-only scan fall back to heap fetches when the visibility map does not mark pages as all-visible?",
+    "options": [
+      "The visibility map is required to decrypt column values stored in the index",
+      "Without the all-visible bit, PostgreSQL cannot confirm tuple visibility from an MVCC snapshot and must check the heap",
+      "Index-only scans require heap access to reconstruct the B-tree ordering of results",
+      "Heap fetches are performed to update index statistics in real time"
+    ],
+    "answer": "Without the all-visible bit, PostgreSQL cannot confirm tuple visibility from an MVCC snapshot and must check the heap",
+    "explanation": "Index tuples do not carry MVCC visibility information, so the scan relies on the all-visible bit to skip heap checks. Recently modified pages, or pages missed by vacuum, force heap fetches.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 73,
+    "question": "What is the consequence of GIN's fastupdate mechanism when the pending list exceeds gin_pending_list_limit?",
+    "options": [
+      "The pending list is silently truncated and unindexed entries are lost",
+      "Insertion of the pending-list entries into the main index structure is forced, potentially stalling the inserting transaction for an extended time",
+      "The GIN index switches to sequential scans until a manual VACUUM is run",
+      "The pending list is flushed only during the next autovacuum cycle"
+    ],
+    "answer": "Insertion of the pending-list entries into the main index structure is forced, potentially stalling the inserting transaction for an extended time",
+    "explanation": "With fastupdate enabled, new entries are buffered, but when the limit is exceeded the inserting transaction must merge the entire pending list into the index. This causes unpredictable latency spikes; VACUUM or gin_clean_pending_list can flush it proactively.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 74,
+    "question": "What limits BRIN index effectiveness on a table where the indexed column's values are randomly distributed across pages?",
+    "options": [
+      "BRIN cannot be created on columns lacking a btree operator class",
+      "Each BRIN entry summarizes a range of pages with min/max bounds, so overlapping ranges cause almost every query to scan the whole table",
+      "BRIN requires the table to be physically reordered with CLUSTER before any operator is supported",
+      "BRIN only supports the equality operator, making range predicates impossible"
+    ],
+    "answer": "Each BRIN entry summarizes a range of pages with min/max bounds, so overlapping ranges cause almost every query to scan the whole table",
+    "explanation": "BRIN stores compact per-block-range summaries, so its pruning power depends entirely on strong physical correlation between column order and row storage. With random ordering, the min/max ranges overlap and eliminate almost nothing.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 75,
+    "question": "A query filters a jsonb column with the '@>' containment operator. Which index access method can accelerate it?",
+    "options": [
+      "B-tree",
+      "Hash",
+      "GIN",
+      "BRIN"
+    ],
+    "answer": "GIN",
+    "explanation": "GIN's jsonb operator classes index the keys and values inside the document, enabling containment and existence operators like @>, ?, and ?|. Hash and BRIN support only scalar equality/range operators, and B-tree cannot search inside documents.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 76,
+    "question": "What does the INCLUDE clause of CREATE INDEX provide that a plain multicolumn B-tree index does not?",
+    "options": [
+      "The INCLUDE columns participate in B-tree key ordering, improving sort performance",
+      "INCLUDE columns are stored in index tuples to enable index-only scans but are not part of the search key ordering",
+      "INCLUDE columns are automatically propagated to indexes on all partitions",
+      "INCLUDE builds a bitmap of the included values to accelerate bitmap scans"
+    ],
+    "answer": "INCLUDE columns are stored in index tuples to enable index-only scans but are not part of the search key ordering",
+    "explanation": "INCLUDE turns the index into a covering index: payload columns ride along in the tuple for index-only scans. They impose no ordering or constraint enforcement, unlike leading key columns.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 77,
+    "question": "Under what conditions does PostgreSQL perform a Heap-Only Tuple (HOT) update?",
+    "options": [
+      "When no indexed column's value is modified and the new tuple version fits on the same page",
+      "When the update is executed by a superuser session with replication privileges",
+      "When fillfactor is set to 100 and the table has just been vacuumed",
+      "When the updated row is the first tuple on its page"
+    ],
+    "answer": "When no indexed column's value is modified and the new tuple version fits on the same page",
+    "explanation": "HOT updates skip index maintenance entirely, using a page-level HOT chain, which is only possible when no index covers a changed column and the new version fits on the same page. A lowered fillfactor preserves page free space to enable this.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 78,
+    "question": "What is the primary reason a long-running open transaction degrades VACUUM effectiveness?",
+    "options": [
+      "It holds an ACCESS EXCLUSIVE lock that prevents VACUUM from acquiring ShareUpdateExclusive",
+      "Its snapshot pins the xmin horizon, preventing VACUUM from removing any tuples dead after that point",
+      "It blocks the WAL archiver, causing all checkpoints to be postponed",
+      "It inflates the lock table, slowing autovacuum worker startup"
+    ],
+    "answer": "Its snapshot pins the xmin horizon, preventing VACUUM from removing any tuples dead after that point",
+    "explanation": "VACUUM cannot remove a dead tuple if any transaction might still need it, and an open transaction's snapshot pins the oldest xmin globally. Even a fast vacuum cannot reclaim space until the horizon advances, driving table and index bloat.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 79,
+    "question": "What protective action does PostgreSQL take when transaction ID wraparound becomes imminent (the xidStopLimit threshold)?",
+    "options": [
+      "It automatically restarts the cluster into single-user mode",
+      "It refuses to assign new XIDs, rejecting commands with 'database is not accepting commands to avoid wraparound data loss'",
+      "It silently widens transaction IDs to 64 bits at the storage layer",
+      "It deletes all rows whose inserting transaction is older than two billion XIDs"
+    ],
+    "answer": "It refuses to assign new XIDs, rejecting commands with 'database is not accepting commands to avoid wraparound data loss'",
+    "explanation": "XIDs are 32-bit and compared with modular arithmetic, so wraparound would make old rows appear 'in the future' and violate visibility. The server halts XID assignment at xidStopLimit until aggressive anti-wraparound vacuum advances the frozen horizon.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 80,
+    "question": "What is the precise trade-off of setting synchronous_commit = off?",
+    "options": [
+      "Committed transactions may be lost after a crash, but there is no risk of corruption and WAL is still eventually flushed",
+      "WAL generation is skipped entirely, making point-in-time recovery impossible",
+      "fsync is disabled on data files as well, introducing torn-page corruption risk",
+      "The server automatically converts all replication to asynchronous mode"
+    ],
+    "answer": "Committed transactions may be lost after a crash, but there is no risk of corruption and WAL is still eventually flushed",
+    "explanation": "With synchronous_commit off, COMMIT returns before the WAL record is flushed; if the OS crashes before the flush, those commits are lost. This differs from fsync = off, which does risk corruption; full_page_writes still protects data integrity.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 81,
+    "question": "What is the primary operational risk of an inactive physical replication slot left on the primary?",
+    "options": [
+      "The standby automatically reconnects and forces deletion of the slot",
+      "The primary retains every WAL segment the slot requires, potentially filling the disk",
+      "The primary promotes the standby automatically to release the slot",
+      "Checkpoint intervals shrink progressively to flush WAL faster"
+    ],
+    "answer": "The primary retains every WAL segment the slot requires, potentially filling the disk",
+    "explanation": "Replication slots guarantee WAL retention for their consumer, so a dead standby with an active slot prevents WAL recycling indefinitely. max_slot_wal_keep_size (PG13+) caps this, otherwise marking the slot as invalid.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 82,
+    "question": "For a table included in a logical replication publication, what is required for UPDATE and DELETE operations to replicate to subscribers?",
+    "options": [
+      "The table must have a trigger named identically on both publisher and subscriber",
+      "The table must have a replica identity (e.g., a primary key or REPLICA IDENTITY FULL) so changed rows can be identified",
+      "The table must be defined WITH OIDS on both sides of the replication",
+      "The subscription must have been created with copy_data = true"
+    ],
+    "answer": "The table must have a replica identity (e.g., a primary key or REPLICA IDENTITY FULL) so changed rows can be identified",
+    "explanation": "Logical decoding emits old row keys for UPDATE/DELETE using the REPLICA IDENTITY setting; without one, those operations on the table are not published (INSERTs still work). REPLICA IDENTITY FULL sends the entire old row but is costlier.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 83,
+    "question": "What failure mode does the full_page_writes setting protect against?",
+    "options": [
+      "Lost commits when the WAL archive falls behind the primary",
+      "Torn pages: a partially written page on disk after a crash, which WAL replay cannot repair from a partial record alone",
+      "Duplicate key violations after a failover to the standby",
+      "Wraparound of the WAL segment numbering sequence"
+    ],
+    "answer": "Torn pages: a partially written page on disk after a crash, which WAL replay cannot repair from a partial record alone",
+    "explanation": "Because PostgreSQL pages are typically larger than the OS/filesystem block size, a crash can leave a page half-written. full_page_writes logs the entire page after each checkpoint modification so replay can restore a complete page image.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 84,
+    "question": "In EXPLAIN (ANALYZE, BUFFERS) output, what does a high 'shared read' count combined with a low 'shared hit' count indicate?",
+    "options": [
+      "The plan is dominated by index-only scans",
+      "Pages were fetched from the OS or disk because they were not present in shared_buffers",
+      "The query executes exclusively inside parallel workers, which bypass the buffer cache",
+      "The sort spilled to temporary files on disk"
+    ],
+    "answer": "Pages were fetched from the OS or disk because they were not present in shared_buffers",
+    "explanation": "Shared hit counts pages served from PostgreSQL's shared buffer cache; shared read counts pages that had to be read in (possibly served by the OS cache, but a miss for Postgres). High read with low hit signals insufficient shared_buffers, cache eviction, or a single-pass workload.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 85,
+    "question": "What is the effect of raising default_statistics_target (e.g., from 100 to 500)?",
+    "options": [
+      "It increases histogram buckets and rows sampled per column during ANALYZE, improving estimate accuracy at the cost of ANALYZE and planning time",
+      "It increases the number of parallel workers that ANALYZE may launch",
+      "It increases how frequently autovacuum's analyze pass is triggered",
+      "It increases the sample size maintained by CREATE INDEX for planner hints"
+    ],
+    "answer": "It increases histogram buckets and rows sampled per column during ANALYZE, improving estimate accuracy at the cost of ANALYZE and planning time",
+    "explanation": "The statistics target controls both the number of histogram buckets per column and the sample size (about 300 times the target rows). Larger targets resolve skew in high-cardinality or correlated data but slow ANALYZE and can complicate plan enumeration.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 86,
+    "question": "Which condition most strongly favors a nested loop join with an inner index scan over a hash join?",
+    "options": [
+      "Both relations are large and of similar estimated size",
+      "The outer relation is estimated to return few rows after filtering, and the inner relation has a usable index on the join key",
+      "The join condition uses inequality operators on unindexed columns",
+      "work_mem is too small to hold a hash table for the smaller relation"
+    ],
+    "answer": "The outer relation is estimated to return few rows after filtering, and the inner relation has a usable index on the join key",
+    "explanation": "A nested loop costs one inner-side lookup per outer row, so it wins when the outer row count is small and each lookup is cheap via an index. Hash joins excel when both sides are large enough to amortize the build and probe phases.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 87,
+    "question": "What advantage does runtime partition pruning in declarative partitioning have over inheritance-based constraint exclusion?",
+    "options": [
+      "It can eliminate partitions based on parameterized values (e.g., prepared statement parameters) at execution time, which constraint exclusion cannot",
+      "It automatically creates matching indexes on every new partition",
+      "It rewrites the query plan to introduce parallel workers per partition",
+      "It converts range partitions to hash partitions when parameters change"
+    ],
+    "answer": "It can eliminate partitions based on parameterized values (e.g., prepared statement parameters) at execution time, which constraint exclusion cannot",
+    "explanation": "Constraint exclusion operates only at plan time with literal constants and fails with generic prepared plans. Declarative partitioning prunes at plan time and again at executor startup/rescans, using actual parameter values.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 88,
+    "question": "Why does a plain SELECT never block on rows being modified by an in-flight UPDATE in PostgreSQL?",
+    "options": [
+      "SELECT statements are granted lower priority in the lock manager than DML statements",
+      "Readers evaluate a snapshot and ignore uncommitted versions, returning the last version visible to the snapshot",
+      "SELECTs acquire SHARE row locks that are compatible with UPDATE's EXCLUSIVE locks",
+      "UPDATEs operate on a shadow copy of the table that SELECTs never access"
+    ],
+    "answer": "Readers evaluate a snapshot and ignore uncommitted versions, returning the last version visible to the snapshot",
+    "explanation": "Under MVCC, the new tuple version carries an in-progress xmax that readers treat as invisible, so they read the prior committed version without locking. Only SELECT ... FOR UPDATE/SHARE takes row locks and waits.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 89,
+    "question": "What distinguishes session-level advisory locks (pg_advisory_lock) from transaction-level advisory locks (pg_advisory_xact_lock)?",
+    "options": [
+      "Session-level locks are held until explicitly unlocked or the session ends; transaction-level locks are released automatically at commit or rollback",
+      "Session-level locks persist across sessions; transaction-level locks are visible to all backends",
+      "Session-level locks are always shared mode; transaction-level locks are always exclusive mode",
+      "Session-level locks operate on tables; transaction-level locks operate on individual rows"
+    ],
+    "answer": "Session-level locks are held until explicitly unlocked or the session ends; transaction-level locks are released automatically at commit or rollback",
+    "explanation": "Session-level advisory locks have no transactional scope and require pg_advisory_unlock, risking leaks if the application forgets. Transaction-level advisory locks inherit transaction semantics, so they are released automatically and never outlive a failure.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 90,
+    "question": "Since PostgreSQL 9.6, each page tracked by the visibility map carries two bits. What do they indicate?",
+    "options": [
+      "all-visible and all-frozen",
+      "dirty and clean",
+      "locked and unlocked",
+      "hot-updated and cold-updated"
+    ],
+    "answer": "all-visible and all-frozen",
+    "explanation": "The all-visible bit enables index-only scans to skip heap fetches; the all-frozen bit lets aggressive vacuum skip pages entirely during anti-wraparound freezing. The map itself is small (2 bits per 8 KB page) and losslessly rebuildable by VACUUM.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 91,
+    "question": "Which query feature prevents PostgreSQL from using a parallel query plan?",
+    "options": [
+      "An ORDER BY clause on an unindexed column",
+      "A cursor declared with DECLARE ... CURSOR",
+      "A WHERE clause containing a correlated scalar subquery",
+      "Use of a window function with PARTITION BY"
+    ],
+    "answer": "A cursor declared with DECLARE ... CURSOR",
+    "explanation": "Queries executed through cursors are never parallelized because partial results cannot satisfy cursor semantics, even when FETCH ALL is intended. Correlated subqueries and window functions can appear inside parallel plans as parallel-restricted or partial nodes.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 92,
+    "question": "Under SERIALIZABLE isolation using Serializable Snapshot Isolation (SSI), when does PostgreSQL raise a serialization failure?",
+    "options": [
+      "Whenever two transactions take conflicting row locks on the same row",
+      "When SSI detects a dangerous read-write dependency cycle that could produce a non-serializable outcome",
+      "Only when the deadlock detector finds an actual cycle in the waits-for graph",
+      "When predicate locks exceed max_pred_locks_per_transaction, immediately aborting the holder"
+    ],
+    "answer": "When SSI detects a dangerous read-write dependency cycle that could produce a non-serializable outcome",
+    "explanation": "SSI tracks rw-conflicts via predicate locks and aborts a transaction in a detected dangerous cycle to preserve serializability. It is optimistic: conflicts trigger the 40001 serialization_failure error, which the client must retry.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 93,
+    "question": "What is the main operational hazard of forgotten prepared transactions ('in-doubt' two-phase-commit transactions)?",
+    "options": [
+      "They consume CPU by periodically re-executing the original query",
+      "They hold their locks and pin the xmin horizon, blocking VACUUM and other transactions indefinitely",
+      "They are automatically committed once max_prepared_transactions seconds elapse",
+      "They replay continuously against standbys, corrupting the replica"
+    ],
+    "answer": "They hold their locks and pin the xmin horizon, blocking VACUUM and other transactions indefinitely",
+    "explanation": "A prepared transaction remains in-progress in pg_prepared_xacts until COMMIT/ROLLBACK PREPARED, holding all locks and contributing to the vacuum horizon. Orphans from crashed coordinators silently cause bloat and lock contention, which is why max_prepared_transactions defaults to 0.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 94,
+    "question": "What does PostgreSQL's TOAST mechanism do with large column values?",
+    "options": [
+      "Stores them out-of-line in a TOAST table, optionally compressed, when they exceed the page-size threshold",
+      "Encrypts them transparently using the pgcrypto extension",
+      "Splits them across multiple B-tree index entries in a dedicated index",
+      "Converts them to bytea and stores them in a large object"
+    ],
+    "answer": "Stores them out-of-line in a TOAST table, optionally compressed, when they exceed the page-size threshold",
+    "explanation": "Values exceeding roughly a quarter of a page (about 2 KB) are compressed and/or moved out of line into the table's pg_toast relation, replaced in the main tuple by an 18-byte pointer. This keeps the main heap at one tuple per page while allowing values up to ~1 GB.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 95,
+    "question": "For a query to use an index created as CREATE INDEX ON t (lower(email)), what must the query do?",
+    "options": [
+      "Reference the raw column directly with an equality predicate on t.email",
+      "Repeat the identical expression, e.g., WHERE lower(email) = 'x@y.z'",
+      "Disable sequential scans with SET enable_seqscan = off",
+      "Define the same expression in a materialized view before querying"
+    ],
+    "answer": "Repeat the identical expression, e.g., WHERE lower(email) = 'x@y.z'",
+    "explanation": "The planner matches predicate expressions against index expressions literally; lower(email) does not match an index on email, and vice versa. Some expression forms like constants folded through functions also fail to match.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 96,
+    "question": "Why does a plain B-tree index fail to accelerate LIKE 'abc%' on text in a non-C collation locale?",
+    "options": [
+      "LIKE is implemented exclusively as a sequential-scan operator with no index support",
+      "The collation-aware B-tree ordering does not match the byte-wise prefix ordering LIKE optimization requires; text_pattern_ops is needed",
+      "B-tree index entries cannot store text values longer than 255 characters",
+      "LIKE requires a pattern hash that only Hash indexes can provide"
+    ],
+    "answer": "The collation-aware B-tree ordering does not match the byte-wise prefix ordering LIKE optimization requires; text_pattern_ops is needed",
+    "explanation": "LIKE prefix optimization assumes characters sort in memcmp order, which holds in the C locale but not under ICU/glibc collations where ordering rules differ. The text_pattern_ops operator class provides byte-wise comparisons so the index can bound the prefix range.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 97,
+    "question": "Which column in pg_stat_user_indexes primarily identifies candidate unused indexes for removal?",
+    "options": [
+      "idx_scan, which counts index scans since statistics were last reset",
+      "idx_tup_read, which counts WAL records generated for the index",
+      "relpages, which counts live tuples covered by the index",
+      "idx_blks_hit, which counts lock waits attributable to the index"
+    ],
+    "answer": "idx_scan, which counts index scans since statistics were last reset",
+    "explanation": "idx_scan tallies index scan initiations per index; zero or near-zero over a representative workload period flags an unused index. Judgments must span seasonal workloads and account for statistics resets.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 98,
+    "question": "What distinguishes VACUUM FULL from plain VACUUM?",
+    "options": [
+      "VACUUM FULL removes dead tuples in place while holding only a ShareUpdateExclusive lock",
+      "VACUUM FULL rewrites the entire table and its indexes into new relation files, requires an ACCESS EXCLUSIVE lock, and returns space to the OS",
+      "VACUUM FULL only advances the frozen horizon and marks pages all-visible without touching storage",
+      "VACUUM FULL delegates all compaction work to autovacuum workers over time"
+    ],
+    "answer": "VACUUM FULL rewrites the entire table and its indexes into new relation files, requires an ACCESS EXCLUSIVE lock, and returns space to the OS",
+    "explanation": "Plain VACUUM is a concurrent, non-compacting cleanup that leaves space available for reuse within the relation. VACUUM FULL rebuilds the table compactly via an internal copy, reclaiming disk space but blocking all access for the duration.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 99,
+    "question": "Which wal_level must the primary server use to support logical replication publications?",
+    "options": [
+      "minimal",
+      "replica",
+      "logical",
+      "archive"
+    ],
+    "answer": "logical",
+    "explanation": "wal_level = logical adds the information logical decoding needs (e.g., replica identity columns and transaction metadata in WAL). It requires a restart and increases WAL volume slightly compared to replica.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 100,
+    "question": "Why were hash indexes discouraged before PostgreSQL 10?",
+    "options": [
+      "They could not store indexed values longer than 32 bytes",
+      "They were not WAL-logged, making them unsafe for replication and point-in-time recovery",
+      "They required a dedicated non-default tablespace to function",
+      "They were limited to 10,000 entries per bucket page"
+    ],
+    "answer": "They were not WAL-logged, making them unsafe for replication and point-in-time recovery",
+    "explanation": "Pre-10 hash index operations bypassed WAL, so crash recovery could corrupt them and standbys had no way to replicate them. PostgreSQL 10 made hash indexes fully WAL-logged, making them crash-safe and replication-compatible.",
+    "difficulty": "Advanced"
+  }
+]
