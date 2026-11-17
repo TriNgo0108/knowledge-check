@@ -1,0 +1,1302 @@
+[
+  {
+    "id": 1,
+    "question": "Which SQL statement is used to retrieve data from a database table?",
+    "options": [
+      "INSERT",
+      "SELECT",
+      "UPDATE",
+      "ALTER"
+    ],
+    "answer": "SELECT",
+    "explanation": "SELECT queries data from one or more tables. INSERT adds rows, UPDATE modifies existing rows, and ALTER changes table structure.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 2,
+    "question": "What is the function of the WHERE clause in a SQL query?",
+    "options": [
+      "Sorts the result set by a specified column",
+      "Filters individual rows based on a specified condition",
+      "Groups rows for aggregate calculations",
+      "Combines rows from two tables"
+    ],
+    "answer": "Filters individual rows based on a specified condition",
+    "explanation": "WHERE evaluates a predicate against each row and keeps only rows where the condition is true. Sorting uses ORDER BY, grouping uses GROUP BY, and combining rows uses JOIN.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 3,
+    "question": "Which JOIN type returns only the rows that have matching values in both tables?",
+    "options": [
+      "LEFT JOIN",
+      "RIGHT JOIN",
+      "INNER JOIN",
+      "FULL OUTER JOIN"
+    ],
+    "answer": "INNER JOIN",
+    "explanation": "INNER JOIN returns only rows where the join condition matches in both tables. LEFT/RIGHT/FULL OUTER joins also preserve unmatched rows from one or both sides.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 4,
+    "question": "In a LEFT JOIN, what appears in columns from the right table when no matching row exists?",
+    "options": [
+      "The row is omitted from the result",
+      "Zero values",
+      "Empty strings",
+      "NULL values"
+    ],
+    "answer": "NULL values",
+    "explanation": "A LEFT JOIN returns all rows from the left table; when there is no match in the right table, the right table's columns are filled with NULL.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 5,
+    "question": "Why should SELECT * generally be avoided in production queries?",
+    "options": [
+      "It is not valid in the SQL standard",
+      "It retrieves unnecessary columns, increasing I/O and network overhead",
+      "It automatically disables index usage",
+      "It prevents the use of WHERE clauses"
+    ],
+    "answer": "It retrieves unnecessary columns, increasing I/O and network overhead",
+    "explanation": "SELECT * fetches every column, transferring and processing more data than needed and preventing covering-index optimizations. It is valid SQL but inefficient for targeted reads.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 6,
+    "question": "What is the primary purpose of creating an index on a column?",
+    "options": [
+      "To enforce referential integrity between tables",
+      "To speed up data retrieval for queries filtering or joining on that column",
+      "To compress table storage on disk",
+      "To prevent duplicate rows from being inserted"
+    ],
+    "answer": "To speed up data retrieval for queries filtering or joining on that column",
+    "explanation": "An index is a lookup structure (typically a B-Tree) that lets the engine find rows without scanning the whole table. Uniqueness is enforced by constraints, not indexes in general.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 7,
+    "question": "Which clause is used to filter results after a GROUP BY aggregation?",
+    "options": [
+      "WHERE",
+      "HAVING",
+      "ORDER BY",
+      "DISTINCT"
+    ],
+    "answer": "HAVING",
+    "explanation": "HAVING filters aggregated groups, allowing conditions on aggregates like SUM or COUNT. WHERE filters individual rows before grouping and cannot reference aggregates.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 8,
+    "question": "How does COUNT(column_name) differ from COUNT(*)?",
+    "options": [
+      "COUNT(column_name) counts only non-NULL values in that column",
+      "COUNT(column_name) counts only distinct values",
+      "COUNT(*) counts only non-NULL rows",
+      "They always return identical results"
+    ],
+    "answer": "COUNT(column_name) counts only non-NULL values in that column",
+    "explanation": "COUNT(column_name) skips rows where that column is NULL, while COUNT(*) counts every row regardless of NULLs. Use COUNT(DISTINCT col) for unique values.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 9,
+    "question": "Which condition correctly tests for NULL values in a WHERE clause?",
+    "options": [
+      "column_name = NULL",
+      "column_name == NULL",
+      "column_name IS NULL",
+      "column_name EQUALS NULL"
+    ],
+    "answer": "column_name IS NULL",
+    "explanation": "NULL represents an unknown value, so equality comparisons with NULL evaluate to unknown and never match. SQL provides the IS NULL and IS NOT NULL predicates for this test.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 10,
+    "question": "What is a PRIMARY KEY constraint?",
+    "options": [
+      "A column that is automatically encrypted",
+      "A column or set of columns that uniquely identifies each row and cannot contain NULL",
+      "An index created on any foreign column",
+      "A reference from one table to another table's rows"
+    ],
+    "answer": "A column or set of columns that uniquely identifies each row and cannot contain NULL",
+    "explanation": "A primary key guarantees row uniqueness and non-nullability, and is typically backed by an index. A reference to another table is a foreign key.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 11,
+    "question": "What does the TRUNCATE TABLE statement do?",
+    "options": [
+      "Removes all rows while keeping the table structure, typically faster than an unfiltered DELETE",
+      "Deletes the table structure along with its data",
+      "Removes only rows that match a WHERE condition",
+      "Renames the table to a new name"
+    ],
+    "answer": "Removes all rows while keeping the table structure, typically faster than an unfiltered DELETE",
+    "explanation": "TRUNCATE deallocates the table's data pages rather than removing rows individually, making it faster than DELETE without a WHERE clause. DROP TABLE removes the structure entirely.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 12,
+    "question": "What is the effect of the DISTINCT keyword in a SELECT statement?",
+    "options": [
+      "It removes duplicate rows from the result set",
+      "It sorts the result set in ascending order",
+      "It filters out rows containing NULL",
+      "It combines the results of two queries"
+    ],
+    "answer": "It removes duplicate rows from the result set",
+    "explanation": "DISTINCT eliminates duplicate combinations of the selected columns, returning only unique rows. Sorting is done by ORDER BY and query combination by UNION.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 13,
+    "question": "What is the difference between UNION and UNION ALL?",
+    "options": [
+      "UNION ALL removes duplicates; UNION keeps every row",
+      "UNION removes duplicates; UNION ALL keeps all rows including duplicates",
+      "UNION works only on numeric columns; UNION ALL works on text",
+      "There is no difference; they are aliases"
+    ],
+    "answer": "UNION removes duplicates; UNION ALL keeps all rows including duplicates",
+    "explanation": "UNION performs a distinct operation across both result sets, adding sorting/deduplication cost. UNION ALL simply concatenates results and is faster when duplicates are acceptable.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 14,
+    "question": "In a LIKE pattern, what does the % wildcard match?",
+    "options": [
+      "Exactly one character",
+      "Zero or more characters",
+      "Only numeric characters",
+      "Only a percent sign literal"
+    ],
+    "answer": "Zero or more characters",
+    "explanation": "% matches any sequence of zero or more characters, so 'jo%' matches 'jo', 'john', etc. The underscore (_) matches exactly one character.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 15,
+    "question": "In a LIKE pattern, what does the _ (underscore) wildcard match?",
+    "options": [
+      "Zero or more characters",
+      "Exactly one character",
+      "An underscore literal only",
+      "Exactly two characters"
+    ],
+    "answer": "Exactly one character",
+    "explanation": "The underscore matches any single character in that position, so 'j_n' matches 'jan' or 'jon' but not 'john'. Percent (%) matches variable-length sequences.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 16,
+    "question": "What does the IN operator do in a WHERE clause?",
+    "options": [
+      "Checks whether a value matches any value in a provided list or subquery",
+      "Checks whether a value falls within a numeric range",
+      "Joins two tables on a common column",
+      "Tests whether a column contains NULL"
+    ],
+    "answer": "Checks whether a value matches any value in a provided list or subquery",
+    "explanation": "IN is shorthand for a chain of OR equality comparisons against a list or subquery result. Range testing uses BETWEEN and NULL testing uses IS NULL.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 17,
+    "question": "How does the BETWEEN operator treat its boundary values?",
+    "options": [
+      "It excludes both boundary values",
+      "It includes both boundary values",
+      "It includes only the lower boundary",
+      "It includes only the upper boundary"
+    ],
+    "answer": "It includes both boundary values",
+    "explanation": "BETWEEN is inclusive on both ends, so value BETWEEN 1 AND 10 matches 1 and 10 as well as everything between. Exclusive ranges require explicit > and < comparisons.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 18,
+    "question": "What is the default sort direction of the ORDER BY clause when no direction is specified?",
+    "options": [
+      "Descending (DESC)",
+      "Ascending (ASC)",
+      "The physical insertion order of rows",
+      "A database-defined random order"
+    ],
+    "answer": "Ascending (ASC)",
+    "explanation": "ORDER BY defaults to ascending order; DESC must be stated explicitly for descending sorts. Without ORDER BY, SQL provides no guaranteed row order at all.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 19,
+    "question": "What is the purpose of a FOREIGN KEY constraint?",
+    "options": [
+      "To uniquely identify rows within its own table",
+      "To enforce referential integrity between rows in two tables",
+      "To encrypt column data at rest",
+      "To accelerate full table scans"
+    ],
+    "answer": "To enforce referential integrity between rows in two tables",
+    "explanation": "A foreign key ensures values in one table's column match values in the referenced table's primary/unique key, preventing orphaned rows. Unique row identification within a table is the primary key's role.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 20,
+    "question": "Which constraint guarantees that a column can never store NULL values?",
+    "options": [
+      "UNIQUE",
+      "NOT NULL",
+      "DEFAULT",
+      "CHECK"
+    ],
+    "answer": "NOT NULL",
+    "explanation": "NOT NULL rejects INSERT or UPDATE attempts that leave the column unset. UNIQUE prevents duplicates but still permits NULLs in most database systems.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 21,
+    "question": "Which constraint rejects values that do not satisfy a specified boolean condition?",
+    "options": [
+      "CHECK",
+      "DEFAULT",
+      "UNIQUE",
+      "FOREIGN KEY"
+    ],
+    "answer": "CHECK",
+    "explanation": "A CHECK constraint enforces a domain rule such as CHECK (price >= 0). DEFAULT supplies a value when none is given, and UNIQUE enforces distinctness.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 22,
+    "question": "Which aggregate function returns the largest value in a column?",
+    "options": [
+      "SUM",
+      "AVG",
+      "MAX",
+      "COUNT"
+    ],
+    "answer": "MAX",
+    "explanation": "MAX scans the values in the column and returns the highest one, ignoring NULLs. SUM totals values, AVG averages them, and COUNT counts them.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 23,
+    "question": "What does the GROUP BY clause do in a query with aggregate functions?",
+    "options": [
+      "Groups rows that share the same column values so aggregates are computed per group",
+      "Filters rows before aggregation based on a condition",
+      "Sorts the final result set",
+      "Merges two queries into one result set"
+    ],
+    "answer": "Groups rows that share the same column values so aggregates are computed per group",
+    "explanation": "GROUP BY partitions rows into groups, producing one aggregate result (e.g., SUM, COUNT) per group. Pre-aggregation row filtering is done with WHERE; sorting is ORDER BY.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 24,
+    "question": "What does the LIMIT clause do in databases that support it (e.g., MySQL, PostgreSQL)?",
+    "options": [
+      "Restricts the maximum number of rows returned by the query",
+      "Limits the number of columns that can be selected",
+      "Caps the size of the database tables",
+      "Prevents concurrent modifications to the table"
+    ],
+    "answer": "Restricts the maximum number of rows returned by the query",
+    "explanation": "LIMIT bounds the result set size, often paired with ORDER BY for top-N queries. SQL Server uses the equivalent TOP syntax.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 25,
+    "question": "Why are high-cardinality columns (e.g., email, user_id) good candidates for indexing?",
+    "options": [
+      "They produce highly selective indexes that narrow results efficiently",
+      "They automatically become clustered indexes",
+      "They require less storage for the index structure",
+      "They cannot be queried without an index"
+    ],
+    "answer": "They produce highly selective indexes that narrow results efficiently",
+    "explanation": "High cardinality means many distinct values, so an index lookup eliminates most rows immediately. Low-cardinality columns (e.g., a boolean flag) benefit far less from standalone indexes.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 26,
+    "question": "What is the main drawback of adding too many indexes to a table?",
+    "options": [
+      "SELECT queries become permanently slower",
+      "INSERT, UPDATE, and DELETE operations slow down due to index maintenance overhead",
+      "The database automatically drops constraints",
+      "NULL values are no longer allowed in the table"
+    ],
+    "answer": "INSERT, UPDATE, and DELETE operations slow down due to index maintenance overhead",
+    "explanation": "Every data modification must also update each index on the table, adding write cost and storage. Indexing requires balancing read speed against write overhead.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 27,
+    "question": "Which index structure is the default in most relational databases and is efficient for both equality lookups and range queries?",
+    "options": [
+      "Hash index",
+      "Bitmap index",
+      "B-Tree index",
+      "Inverted index"
+    ],
+    "answer": "B-Tree index",
+    "explanation": "B-Tree indexes keep keys sorted, supporting equality searches, range scans (>, BETWEEN), and ORDER BY efficiently. Hash indexes handle only exact equality, and bitmap indexes suit low-cardinality data.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 28,
+    "question": "What is a covering index?",
+    "options": [
+      "An index that contains all the columns a query needs, so the table itself need not be accessed",
+      "An index that spans multiple tables in a join",
+      "An index that encrypts the indexed column",
+      "An index created automatically on every foreign key"
+    ],
+    "answer": "An index that contains all the columns a query needs, so the table itself need not be accessed",
+    "explanation": "Because the index holds every required column, the engine answers the query directly from the index without extra row lookups. This dramatically reduces I/O for frequently run queries.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 29,
+    "question": "What is a composite index?",
+    "options": [
+      "An index defined on two or more columns of a table",
+      "An index built only on computed expressions",
+      "Two separate single-column indexes merged at query time",
+      "An index that the database creates on every primary key automatically"
+    ],
+    "answer": "An index defined on two or more columns of a table",
+    "explanation": "A composite index orders entries by the first column, then the second, and so on, which benefits queries filtering or joining on multiple columns. Column order in the index definition matters for which leading prefixes can be used.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 30,
+    "question": "Why can a table have only one clustered index?",
+    "options": [
+      "Because database licensing restricts index counts",
+      "Because the clustered index determines the physical storage order of rows, and rows can be stored in only one order",
+      "Because clustered indexes cannot coexist with primary keys",
+      "Because clustered indexes are limited to one column per database"
+    ],
+    "answer": "Because the clustered index determines the physical storage order of rows, and rows can be stored in only one order",
+    "explanation": "A clustered index sorts and stores the actual table rows according to its key, and a single set of rows has only one physical order. All additional indexes are non-clustered and store pointers instead.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 31,
+    "question": "What does examining a query's execution plan reveal?",
+    "options": [
+      "The query's revision history in version control",
+      "The physical layout of data files on disk",
+      "The steps the optimizer will use to execute the query, such as scans, seeks, and join strategies",
+      "The user permissions required to run the query"
+    ],
+    "answer": "The steps the optimizer will use to execute the query, such as scans, seeks, and join strategies",
+    "explanation": "Execution plans expose how the database intends to access data, revealing bottlenecks like full table scans or row-by-row subquery evaluation. This makes them the primary diagnostic tool for query tuning.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 32,
+    "question": "How does choosing appropriate data types improve query performance?",
+    "options": [
+      "Smaller, correct data types reduce storage size and speed up scans and comparisons",
+      "They automatically create indexes on the column",
+      "They disable transaction logging for the table",
+      "They convert all values to uppercase for faster matching"
+    ],
+    "answer": "Smaller, correct data types reduce storage size and speed up scans and comparisons",
+    "explanation": "Compact types mean more rows fit per page, reducing I/O and memory use during scans and joins. Oversized types (e.g., storing numbers as text) waste space and slow comparisons.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 33,
+    "question": "What is a Common Table Expression (CTE) in SQL?",
+    "options": [
+      "A permanent table stored in the database catalog",
+      "A named temporary result set defined with the WITH clause for the duration of a single query",
+      "A special type of index for analytical queries",
+      "A stored procedure that runs automatically on inserts"
+    ],
+    "answer": "A named temporary result set defined with the WITH clause for the duration of a single query",
+    "explanation": "A CTE, declared with WITH, exists only while its defining query executes and can be referenced like a table, improving readability and enabling recursion. It is not persisted in the schema.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 34,
+    "question": "What is the purpose of the AS keyword in a SELECT statement such as SELECT name AS customer_name?",
+    "options": [
+      "It assigns an alias to a column or table in the query's results",
+      "It sorts the result set by the column",
+      "It casts the column to a string type",
+      "It renames the column permanently in the table"
+    ],
+    "answer": "It assigns an alias to a column or table in the query's results",
+    "explanation": "AS provides a temporary alias used in the output (and for table references within the query); it never changes the underlying schema. CAST, not AS, performs type conversion.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 35,
+    "question": "Which statement modifies values in existing rows of a table?",
+    "options": [
+      "INSERT",
+      "SELECT",
+      "UPDATE",
+      "TRUNCATE"
+    ],
+    "answer": "UPDATE",
+    "explanation": "UPDATE changes column values in rows matching its WHERE clause. INSERT adds new rows, SELECT reads them, and TRUNCATE removes all rows.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 36,
+    "question": "What defines a covering index in query optimization?",
+    "options": [
+      "An index that stores table rows in sorted physical order",
+      "An index that contains all the columns a query needs, eliminating table lookups",
+      "An index created on a computed column",
+      "An index that automatically covers all other indexes on the table"
+    ],
+    "answer": "An index that contains all the columns a query needs, eliminating table lookups",
+    "explanation": "A covering index includes every column referenced by a query, so the engine can answer it entirely from the index. This avoids costly key lookups back to the base table, dramatically reducing I/O.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 37,
+    "question": "A table has a composite index on (last_name, first_name). Which query can the optimizer NOT efficiently serve with an index seek on this index?",
+    "options": [
+      "WHERE last_name = 'Smith' AND first_name = 'John'",
+      "WHERE last_name = 'Smith'",
+      "WHERE first_name = 'John'",
+      "WHERE last_name = 'Smith' ORDER BY first_name"
+    ],
+    "answer": "WHERE first_name = 'John'",
+    "explanation": "B-tree composite indexes follow the leftmost-prefix rule; skipping the leading column prevents a direct seek. The optimizer must fall back to a full index scan for such queries.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 38,
+    "question": "Why can a table have only ONE clustered index?",
+    "options": [
+      "Clustered indexes require a dedicated filegroup per index",
+      "The clustered index defines the physical sort order of the table's data rows, and rows can only be physically ordered one way",
+      "Clustered indexes are limited to primary key columns by the ANSI standard",
+      "Multiple clustered indexes would violate referential integrity constraints"
+    ],
+    "answer": "The clustered index defines the physical sort order of the table's data rows, and rows can only be physically ordered one way",
+    "explanation": "A clustered index dictates the physical storage order of rows, and a table can be physically sorted only one way. Non-clustered indexes store separate pointer structures, so many can coexist.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 39,
+    "question": "Given an indexed column order_date, why is WHERE YEAR(order_date) = 2023 typically slower than WHERE order_date >= '2023-01-01' AND order_date < '2024-01-01'?",
+    "options": [
+      "The YEAR function is not available in all SQL dialects",
+      "Applying a function to the column makes the predicate non-SARGable, preventing an index seek",
+      "Range predicates cannot use indexes in any database system",
+      "The second query returns fewer rows, so it is inherently faster"
+    ],
+    "answer": "Applying a function to the column makes the predicate non-SARGable, preventing an index seek",
+    "explanation": "Wrapping an indexed column in a function forces per-row evaluation and prevents index seeks. Rewriting as a range predicate is SARGable and allows direct B-tree navigation.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 40,
+    "question": "Why does LIKE '%Smith' generally fail to use a B-tree index on customer_name?",
+    "options": [
+      "LIKE operators are never optimized in SQL",
+      "The leading wildcard removes the ability to seek on a known prefix of the ordered index",
+      "String comparisons bypass the buffer cache",
+      "B-tree indexes only store the first character of indexed strings"
+    ],
+    "answer": "The leading wildcard removes the ability to seek on a known prefix of the ordered index",
+    "explanation": "B-tree entries are ordered by their leading characters, so a seek requires a known prefix. A leading % forces a full index or table scan, while a trailing wildcard like 'Smith%' can still seek.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 41,
+    "question": "SELECT ... WHERE id NOT IN (SELECT ref_id FROM t2) returns zero rows even though matches seem possible. What is the most likely cause?",
+    "options": [
+      "The outer query's WHERE clause is evaluated before the FROM clause",
+      "The subquery returns at least one NULL, making NOT IN evaluate to UNKNOWN for every row",
+      "NOT IN is not supported with subqueries and silently fails",
+      "The id column contains duplicate values, which NOT IN cannot handle"
+    ],
+    "answer": "The subquery returns at least one NULL, making NOT IN evaluate to UNKNOWN for every row",
+    "explanation": "If the subquery result contains NULL, `x NOT IN (...)` can never evaluate to TRUE, so all rows are filtered out. NOT EXISTS is NULL-safe and is the preferred alternative.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 42,
+    "question": "What characterizes a correlated subquery's execution behavior in a naive execution model?",
+    "options": [
+      "It is evaluated once and its result set is cached for all outer rows",
+      "It is logically evaluated once per row of the outer query, referencing outer-query columns",
+      "It must always appear in the SELECT clause",
+      "It cannot reference any columns from the outer query"
+    ],
+    "answer": "It is logically evaluated once per row of the outer query, referencing outer-query columns",
+    "explanation": "A correlated subquery references columns from the outer query, so conceptually it runs once per candidate outer row. Rewriting as a JOIN often enables a single set-based pass instead.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 43,
+    "question": "Two rows tie for rank 1 in a partition. What ranks do RANK() and DENSE_RANK() assign the next row?",
+    "options": [
+      "RANK() assigns 2 and DENSE_RANK() assigns 2",
+      "RANK() assigns 3 and DENSE_RANK() assigns 2",
+      "RANK() assigns 2 and DENSE_RANK() assigns 3",
+      "RANK() assigns 3 and DENSE_RANK() assigns 3"
+    ],
+    "answer": "RANK() assigns 3 and DENSE_RANK() assigns 2",
+    "explanation": "RANK() leaves gaps after ties (1, 1, 3), while DENSE_RANK() assigns consecutive values (1, 1, 2). ROW_NUMBER() would assign unique sequential numbers regardless of ties.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 44,
+    "question": "What is the key structural difference between AVG() OVER (PARTITION BY dept) and AVG(...) GROUP BY dept?",
+    "options": [
+      "GROUP BY is faster because it uses indexes and window functions cannot",
+      "The window version keeps all original rows and appends the per-department average, while GROUP BY collapses rows to one per department",
+      "Window functions can only be applied to numeric columns, while GROUP BY works on any type",
+      "GROUP BY partitions data on disk, while window functions partition it in memory only"
+    ],
+    "answer": "The window version keeps all original rows and appends the per-department average, while GROUP BY collapses rows to one per department",
+    "explanation": "Window functions compute aggregates over a partition without reducing row count, enabling row-level and group-level values in one result. GROUP BY collapses each partition to a single output row.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 45,
+    "question": "In an execution plan, what is the performance implication of an 'Index Scan' versus an 'Index Seek' on a large table?",
+    "options": [
+      "A scan reads the entire index structure, while a seek navigates directly to matching entries",
+      "A seek reads the entire index structure, while a scan navigates directly to matching entries",
+      "A scan is always faster because it reads sequentially from disk",
+      "Both operators perform identical work; the label only reflects the SQL syntax used"
+    ],
+    "answer": "A scan reads the entire index structure, while a seek navigates directly to matching entries",
+    "explanation": "An Index Seek uses the B-tree structure to jump directly to qualifying keys, making it efficient for selective predicates. An Index Scan processes every index entry, which is costly on large tables.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 46,
+    "question": "When does a query optimizer typically choose a HASH JOIN over a NESTED LOOPS join?",
+    "options": [
+      "When both inputs are small and an index exists on the inner table's join key",
+      "When inputs are large, unsorted, and lack useful indexes on the join keys",
+      "When the query contains an ORDER BY clause on the join key",
+      "When the join condition uses non-equality operators such as < or >"
+    ],
+    "answer": "When inputs are large, unsorted, and lack useful indexes on the join keys",
+    "explanation": "Hash joins build an in-memory hash table from one input and probe it with the other, suiting large unsorted inputs. Nested loops favor a small outer input with an indexed inner table; merge joins favor sorted inputs.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 47,
+    "question": "What is the primary downside of adding too many indexes to a heavily written table?",
+    "options": [
+      "Each INSERT, UPDATE, and DELETE must also maintain every index, slowing write operations",
+      "Indexes consume CPU only during SELECT statements, making reads slower",
+      "Too many indexes disable the query optimizer's statistics collection",
+      "Indexes over a certain count cause the table to become read-only"
+    ],
+    "answer": "Each INSERT, UPDATE, and DELETE must also maintain every index, slowing write operations",
+    "explanation": "Every data modification must update all indexes on the table, adding overhead to DML operations. A balanced strategy indexes only columns that measurably benefit query performance.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 48,
+    "question": "Why is UNION ALL typically faster than UNION for combining result sets?",
+    "options": [
+      "UNION ALL uses parallel execution threads automatically",
+      "UNION performs a distinct/deduplication step (sort or hash) that UNION ALL skips",
+      "UNION ALL bypasses the database's query parser",
+      "UNION converts all columns to strings before comparison, adding overhead"
+    ],
+    "answer": "UNION performs a distinct/deduplication step (sort or hash) that UNION ALL skips",
+    "explanation": "UNION removes duplicate rows, requiring an expensive sort or hash-deduplicate operation. UNION ALL simply concatenates results, preserving duplicates at no extra cost.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 49,
+    "question": "What is the difference between COUNT(*) and COUNT(email) on a table where some email values are NULL?",
+    "options": [
+      "COUNT(*) counts all rows; COUNT(email) counts only rows where email is not NULL",
+      "COUNT(*) counts only non-NULL rows; COUNT(email) counts all rows",
+      "Both always return identical results in any table",
+      "COUNT(email) throws an error when NULLs are present"
+    ],
+    "answer": "COUNT(*) counts all rows; COUNT(email) counts only rows where email is not NULL",
+    "explanation": "COUNT(*) counts every row regardless of content, while COUNT(column) skips NULL values in that column. COUNT(DISTINCT column) goes further and counts only unique non-NULL values.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 50,
+    "question": "Which statement accurately distinguishes TRUNCATE TABLE from DELETE without a WHERE clause?",
+    "options": [
+      "TRUNCATE removes rows one at a time and fires row-level triggers; DELETE deallocates pages",
+      "TRUNCATE deallocates data pages and typically logs minimally; DELETE removes rows individually with full row logging",
+      "TRUNCATE cannot be used on tables that contain data; DELETE requires data",
+      "TRUNCATE is slower because it scans every row before removal"
+    ],
+    "answer": "TRUNCATE deallocates data pages and typically logs minimally; DELETE removes rows individually with full row logging",
+    "explanation": "TRUNCATE deallocates the table's data pages with minimal logging, making it much faster, but it fires no row-level triggers. DELETE logs each removed row and supports a WHERE clause for selective removal.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 51,
+    "question": "Which components are required in a recursive CTE that walks an employee-manager hierarchy?",
+    "options": [
+      "An anchor query, a recursive member referencing the CTE itself, and a termination condition, combined with UNION ALL",
+      "Two separate CTEs declared in the WITH clause and a CROSS JOIN between them",
+      "A stored procedure with a cursor looping over the hierarchy",
+      "A self-join in the main query with a GROUP BY on manager_id"
+    ],
+    "answer": "An anchor query, a recursive member referencing the CTE itself, and a termination condition, combined with UNION ALL",
+    "explanation": "A recursive CTE consists of an anchor member (base rows) and a recursive member that references the CTE itself, joined by UNION ALL. Recursion stops when the recursive member returns no new rows, typically enforced by a condition inside the join or WHERE.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 52,
+    "question": "A VARCHAR index column is compared to a numeric literal (WHERE account_code = 12345). What performance risk arises in engines with strict type precedence, such as SQL Server?",
+    "options": [
+      "The numeric literal is converted to VARCHAR, preserving index seeks in all cases",
+      "The VARCHAR column is implicitly converted to a numeric type for every row, preventing an index seek and forcing a scan",
+      "The comparison fails with a type mismatch error before execution",
+      "The optimizer automatically creates a temporary index on the numeric value"
+    ],
+    "answer": "The VARCHAR column is implicitly converted to a numeric type for every row, preventing an index seek and forcing a scan",
+    "explanation": "Because numeric types outrank VARCHAR in SQL Server's precedence rules, the column is converted per row, breaking SARGability. Matching the literal's data type to the column type preserves index seeks.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 53,
+    "question": "Why does deep pagination with OFFSET 100000 LIMIT 10 degrade, and what is the standard alternative?",
+    "options": [
+      "OFFSET triggers a table lock on skipped rows; use a full outer join instead",
+      "OFFSET must scan and discard all skipped rows; keyset pagination filters with WHERE key > last_seen_value on an indexed column",
+      "OFFSET disables the buffer pool; use UNION ALL to paginate manually",
+      "OFFSET recalculates row numbers for every row; use COUNT(*) to fetch pages"
+    ],
+    "answer": "OFFSET must scan and discard all skipped rows; keyset pagination filters with WHERE key > last_seen_value on an indexed column",
+    "explanation": "OFFSET still produces and discards every row before the offset point, so cost grows linearly with page depth. Keyset (seek) pagination jumps directly past seen keys using an indexed predicate, keeping cost constant.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 54,
+    "question": "How do table and column statistics influence query optimization?",
+    "options": [
+      "Statistics store query results so identical queries can skip execution",
+      "The optimizer uses statistics on data distribution for cardinality estimation, which drives join strategy and index selection",
+      "Statistics physically reorder rows to match index definitions",
+      "Statistics are only collected when a query fails and must be rebuilt manually"
+    ],
+    "answer": "The optimizer uses statistics on data distribution for cardinality estimation, which drives join strategy and index selection",
+    "explanation": "Statistics summarize column value distributions via histograms and density, letting the optimizer estimate how many rows each predicate returns. Stale statistics cause bad estimates and poor plans, so updates after bulk data changes are critical.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 55,
+    "question": "Why should foreign key columns typically be indexed, beyond general join performance?",
+    "options": [
+      "The SQL standard requires an index on every foreign key",
+      "Indexing FK columns speeds up joins and accelerates referential checks during parent-row deletes/updates",
+      "Foreign key columns cannot store NULL values unless they are indexed",
+      "Unindexed foreign keys cause clustered indexes to fragment automatically"
+    ],
+    "answer": "Indexing FK columns speeds up joins and accelerates referential checks during parent-row deletes/updates",
+    "explanation": "Most engines do not auto-create indexes on foreign keys. Without one, deleting or updating a parent row forces a full scan of the child table to verify referential integrity.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 56,
+    "question": "What problem do CROSS APPLY (SQL Server) or LATERAL (PostgreSQL) joins solve that plain JOINs cannot express directly?",
+    "options": [
+      "They allow the right side to reference columns from each row of the left side, enabling correlated per-row table expressions such as TOP-N-per-group",
+      "They enforce referential integrity between the joined tables",
+      "They automatically deduplicate rows produced by outer joins",
+      "They convert non-equality join predicates into hash joins"
+    ],
+    "answer": "They allow the right side to reference columns from each row of the left side, enabling correlated per-row table expressions such as TOP-N-per-group",
+    "explanation": "LATERAL/CROSS APPLY lets the right-side table expression depend on the current left row, so a subquery like 'top 3 orders per customer' runs per row. Standard joins require both sides to be independent of each other.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 57,
+    "question": "Why does the predicate WHERE manager_id = NULL return no rows even when NULL manager_id values exist?",
+    "options": [
+      "NULL comparisons with = evaluate to UNKNOWN, and WHERE only keeps rows where the predicate is TRUE",
+      "NULL values are physically excluded from WHERE clause evaluation",
+      "The = operator automatically converts NULL to an empty string",
+      "NULL comparisons require an explicit index on the column"
+    ],
+    "answer": "NULL comparisons with = evaluate to UNKNOWN, and WHERE only keeps rows where the predicate is TRUE",
+    "explanation": "Any comparison with NULL yields UNKNOWN under SQL's three-valued logic, and rows are returned only when the predicate is TRUE. Use IS NULL / IS NOT NULL to test for NULLs.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 58,
+    "question": "What distinguishes WHERE from HAVING in an aggregate query?",
+    "options": [
+      "WHERE filters rows before grouping; HAVING filters groups after aggregation is computed",
+      "WHERE filters groups after aggregation; HAVING filters rows before grouping",
+      "WHERE works only with indexed columns; HAVING works only with foreign keys",
+      "HAVING is evaluated by the storage engine; WHERE is evaluated by the optimizer"
+    ],
+    "answer": "WHERE filters rows before grouping; HAVING filters groups after aggregation is computed",
+    "explanation": "WHERE eliminates rows before GROUP BY forms aggregates, so it cannot reference aggregate functions. HAVING filters grouped results on values like COUNT(*) or SUM(x); pushing filters into WHERE when possible is more efficient.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 59,
+    "question": "Why is a standalone B-tree index on a low-cardinality column like 'status' (3 distinct values) usually ineffective?",
+    "options": [
+      "Low-cardinality columns cannot be indexed at all",
+      "Each index key matches a large fraction of rows, so the optimizer prefers a full scan over random seek lookups",
+      "Low-cardinality indexes are automatically converted to clustered indexes",
+      "B-tree structures collapse when duplicate keys exceed a fixed threshold"
+    ],
+    "answer": "Each index key matches a large fraction of rows, so the optimizer prefers a full scan over random seek lookups",
+    "explanation": "High selectivity is required for a seek to beat a sequential scan; three distinct values each match roughly a third of the table. Such columns can still help as trailing columns in composite or covering indexes.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 60,
+    "question": "What does the PIVOT relational operator accomplish?",
+    "options": [
+      "Rotates unique row values from one column into multiple columns in the output, applying an aggregation",
+      "Converts all columns of a table into a single JSON array",
+      "Physically partitions a table across multiple filegroups",
+      "Reorders table rows to match an index definition"
+    ],
+    "answer": "Rotates unique row values from one column into multiple columns in the output, applying an aggregation",
+    "explanation": "PIVOT transforms rows into columns, aggregating a value column per pivoted key — e.g., spreading monthly sales across month columns. UNPIVOT performs the reverse transformation.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 61,
+    "question": "What is the appropriate stance toward optimizer hints like FORCE INDEX or OPTION (LOOP JOIN)?",
+    "options": [
+      "They should be applied to every query to guarantee optimal plans",
+      "Use sparingly and as a last resort when the optimizer's chosen plan is demonstrably poor, since they can hurt as data changes",
+      "Hints are deprecated and ignored by all modern database engines",
+      "Hints replace the need for indexes and statistics entirely"
+    ],
+    "answer": "Use sparingly and as a last resort when the optimizer's chosen plan is demonstrably poor, since they can hurt as data changes",
+    "explanation": "Hints override cost-based decisions, which can fix a misjudged plan but becomes harmful when data volume or distribution shifts. Correcting statistics, indexing, or query structure is preferred before resorting to hints.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 62,
+    "question": "How does choosing proper data types (e.g., INT over VARCHAR for IDs, adequately sized VARCHAR lengths) improve performance?",
+    "options": [
+      "Smaller, appropriate types reduce row size, letting more rows fit per page, which cuts I/O and speeds scans and sorts",
+      "Data types affect storage only; query performance is determined solely by CPU speed",
+      "Any column stored as TEXT is automatically indexed and therefore faster",
+      "Oversized types improve performance by padding rows for alignment"
+    ],
+    "answer": "Smaller, appropriate types reduce row size, letting more rows fit per page, which cuts I/O and speeds scans and sorts",
+    "explanation": "Compact data types increase rows-per-page density, reducing disk and memory I/O for scans, joins, and sorts. Correct types also prevent implicit conversions that break index usage.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 63,
+    "question": "When is rewriting a correlated subquery as a JOIN most beneficial?",
+    "options": [
+      "When the subquery returns aggregated values used in the outer SELECT, converting row-by-row evaluation into a single set-based pass",
+      "When the subquery is evaluated only once and returns a constant",
+      "When the outer table has fewer rows than the subquery's table",
+      "JOIN rewrites are never beneficial because subqueries are always optimized identically"
+    ],
+    "answer": "When the subquery returns aggregated values used in the outer SELECT, converting row-by-row evaluation into a single set-based pass",
+    "explanation": "Correlated subqueries in the SELECT list can force per-row execution; a JOIN with GROUP BY achieves the same result in one set-based pass. Modern optimizers sometimes rewrite this automatically, but explicit joins make plans more predictable.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 64,
+    "question": "A query uses LEFT JOIN orders o ON c.id = o.customer_id but then adds WHERE o.amount > 100. What is the semantic effect?",
+    "options": [
+      "The join behaves like an INNER JOIN because the WHERE filter discards rows where o is NULL",
+      "The LEFT JOIN semantics are preserved and unmatched customers still appear",
+      "The filter is applied before the join, keeping all customers",
+      "The query is invalid because WHERE cannot reference right-table columns after an outer join"
+    ],
+    "answer": "The join behaves like an INNER JOIN because the WHERE filter discards rows where o is NULL",
+    "explanation": "A right-table predicate in WHERE eliminates the NULL-extended rows, reducing the LEFT JOIN to INNER JOIN behavior. To preserve unmatched rows, place the filter in the ON clause or explicitly handle NULLs.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 65,
+    "question": "How can an index eliminate the SORT operator from a query with ORDER BY created_at DESC LIMIT 20?",
+    "options": [
+      "Any index on the table automatically satisfies every ORDER BY clause",
+      "An index on created_at stores entries in key order, so the engine can read the first 20 entries directly without sorting",
+      "The SORT operator is eliminated by adding a GROUP BY clause",
+      "LIMIT forces the engine to sort only 20 rows regardless of indexes"
+    ],
+    "answer": "An index on created_at stores entries in key order, so the engine can read the first 20 entries directly without sorting",
+    "explanation": "A B-tree index physically maintains key order, so an ORDER BY matching the index key order lets the engine read rows sequentially from the index top. This turns a full sort into a cheap top-N index read.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 66,
+    "question": "An execution plan shows a Table Scan (Seq Scan) on a 10-million-row table for a query filtering a non-indexed column. What does this indicate?",
+    "options": [
+      "The optimizer is reading the table sequentially to build a missing index automatically",
+      "Every row must be read because no index exists to locate matching rows directly",
+      "The table is corrupted and must be rebuilt before indexes can be used",
+      "The query will fail at runtime because scans are prohibited on large tables"
+    ],
+    "answer": "Every row must be read because no index exists to locate matching rows directly",
+    "explanation": "Without a usable index on the filtered column, the engine has no shortcut and must evaluate every row. Examining the plan is how you spot this bottleneck and decide whether a new index is justified by selectivity and query frequency.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 67,
+    "question": "Which access patterns is a B-tree index best suited for?",
+    "options": [
+      "Equality lookups, range predicates, and ORDER BY-compatible ordered retrieval",
+      "Full-text keyword searches with relevance ranking",
+      "Random writes with strict O(1) insertion guarantees",
+      "Bitmap-style aggregation over columns with very few distinct values"
+    ],
+    "answer": "Equality lookups, range predicates, and ORDER BY-compatible ordered retrieval",
+    "explanation": "B-trees keep keys sorted with logarithmic search time, excelling at equality and range conditions plus ordered scans. Full-text search and low-distinct-value analytics typically require specialized structures like inverted or bitmap indexes.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 68,
+    "question": "What advantage do GROUPING SETS / ROLLUP provide over multiple separate GROUP BY queries?",
+    "options": [
+      "They compute several aggregation levels in a single pass over the data",
+      "They automatically create indexes for each aggregation level",
+      "They eliminate the need for aggregate functions like SUM",
+      "They allow GROUP BY to reference columns not present in the SELECT list"
+    ],
+    "answer": "They compute several aggregation levels in a single pass over the data",
+    "explanation": "GROUPING SETS (with ROLLUP as a special case) produce multiple grouping-level result sets — e.g., by day, by month, and grand total — in one table scan. Separate GROUP BY queries would repeat the scan and aggregation work.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 69,
+    "question": "Which expression computes a running total of amount ordered by order_date within each customer partition?",
+    "options": [
+      "SUM(amount) OVER (PARTITION BY customer_id ORDER BY order_date ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)",
+      "SUM(amount) GROUP BY customer_id, order_date",
+      "SUM(amount) OVER (PARTITION BY customer_id ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING)",
+      "SUM(amount) OVER (ORDER BY order_date RANGE BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING)"
+    ],
+    "answer": "SUM(amount) OVER (PARTITION BY customer_id ORDER BY order_date ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)",
+    "explanation": "The frame from UNBOUNDED PRECEDING to CURRENT ROW accumulates all prior plus current rows, restarting per customer via PARTITION BY. The third option computes a moving 3-row window, and the fourth sums the entire ordered set.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 70,
+    "question": "What is a filtered (partial) index, and when is it advantageous?",
+    "options": [
+      "An index built only on rows satisfying a WHERE predicate — smaller and efficient for queries targeting a frequent subset (e.g., WHERE status = 'active')",
+      "An index that filters out duplicate values automatically during creation",
+      "An index maintained only while the query optimizer is running",
+      "An index with no WHERE clause that behaves like a full unique index"
+    ],
+    "answer": "An index built only on rows satisfying a WHERE predicate — smaller and efficient for queries targeting a frequent subset (e.g., WHERE status = 'active')",
+    "explanation": "Filtered indexes (SQL Server filtered index, PostgreSQL partial index) include only rows matching a predicate, shrinking size and write-maintenance cost. Queries whose predicates align with the definition can seek efficiently into that small subset.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 71,
+    "question": "Given a composite B-tree index on columns (customer_id, order_date), which query pattern can perform an efficient index seek?",
+    "options": [
+      "A filter on order_date alone, without any predicate on customer_id",
+      "A filter on customer_id, optionally combined with a range predicate on order_date",
+      "An OR predicate alternating between customer_id and order_date",
+      "A filter on order_date combined with an inequality on a non-indexed column"
+    ],
+    "answer": "A filter on customer_id, optionally combined with a range predicate on order_date",
+    "explanation": "B-tree composite indexes obey the leftmost prefix rule: a seek requires predicates on the leading column(s). Filtering only on a trailing column forces an index or full scan instead of a seek.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 72,
+    "question": "What is the typical performance consequence of wrapping an indexed column in a function, e.g., WHERE UPPER(name) = 'SMITH'?",
+    "options": [
+      "The optimizer rewrites the predicate and performs an index seek on the original column",
+      "The predicate becomes non-SARGable, preventing a standard index seek unless a matching expression index exists",
+      "The query executes normally because string functions are evaluated at the storage engine level",
+      "The function forces the query to run in a serial execution plan"
+    ],
+    "answer": "The predicate becomes non-SARGable, preventing a standard index seek unless a matching expression index exists",
+    "explanation": "Applying a function to the column prevents direct use of the index keys unless a function-based/expression index on the same expression exists. The non-SARGable predicate typically degrades to a full or index scan.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 73,
+    "question": "What is the primary purpose of INCLUDE columns in a nonclustered index in SQL Server?",
+    "options": [
+      "They participate in the B-tree key ordering to accelerate range scans",
+      "They are appended to the leaf level only, enabling covering (index-only) scans without affecting key structure",
+      "They enforce uniqueness across the index without a unique constraint",
+      "They reduce the page count of the clustered index"
+    ],
+    "answer": "They are appended to the leaf level only, enabling covering (index-only) scans without affecting key structure",
+    "explanation": "INCLUDE columns are stored only in the leaf level, keeping the key narrow while allowing the index to satisfy queries without table lookups. This avoids key-size overhead and doesn't influence seek ordering.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 74,
+    "question": "Under which conditions does a nested loops join typically outperform hash and merge join algorithms?",
+    "options": [
+      "When both inputs are large, unsorted, and evenly distributed",
+      "When the outer input is small and the inner input has a supporting index on the join key",
+      "When the join must produce a massive intermediate result requiring spilling",
+      "When both inputs are already sorted on the join key"
+    ],
+    "answer": "When the outer input is small and the inner input has a supporting index on the join key",
+    "explanation": "Nested loops cost scales with outer_rows × inner_lookup_cost, so a small outer input with fast indexed inner probes wins. Sorted inputs favor merge joins, while large unsorted inputs favor hash joins.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 75,
+    "question": "What happens in a hash join when the build-side input exceeds the memory grant allocated by the optimizer?",
+    "options": [
+      "The query fails immediately with an out-of-memory error",
+      "The join converts to a nested loops join at runtime",
+      "The hash table is partitioned and spilled to disk (grace hash join), causing significant I/O overhead",
+      "The engine silently drops duplicate rows to shrink the hash table"
+    ],
+    "answer": "The hash table is partitioned and spilled to disk (grace hash join), causing significant I/O overhead",
+    "explanation": "Oversized build inputs are partitioned into multiple buckets processed in phases, spilling to tempdb/swap areas. This dramatically degrades performance, often visible in execution plans as spill warnings.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 76,
+    "question": "Parameter sniffing causes performance degradation primarily because:",
+    "options": [
+      "Parameters are re-evaluated on every execution, forcing recompilation each time",
+      "The cached plan compiled for the first execution's parameter values is reused even when data distribution is highly skewed",
+      "Parameterized queries cannot use cached execution plans",
+      "The optimizer discards statistics when parameters are detected"
+    ],
+    "answer": "The cached plan compiled for the first execution's parameter values is reused even when data distribution is highly skewed",
+    "explanation": "A plan optimized for an atypical first-call parameter (e.g., a value matching 90% of rows) is cached and reused for values with opposite selectivity. This plan reuse on skewed distributions produces seeks/scans and memory grants inappropriate for subsequent executions.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 77,
+    "question": "According to the SQL standard isolation levels, which level prevents phantom reads?",
+    "options": [
+      "READ COMMITTED",
+      "REPEATABLE READ",
+      "SNAPSHOT",
+      "SERIALIZABLE"
+    ],
+    "answer": "SERIALIZABLE",
+    "explanation": "In the SQL standard, only SERIALIZABLE prevents phantoms, typically via key-range (predicate) locking. Standard REPEATABLE READ prevents non-repeatable reads but permits new rows matching the query to appear; PostgreSQL's stricter snapshot-based REPEATABLE READ is an implementation-specific exception.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 78,
+    "question": "In PostgreSQL, what is the consequence of dead tuples from MVCC updates not being removed by VACUUM?",
+    "options": [
+      "Updates become invisible until a checkpoint occurs",
+      "Table and index bloat degrades scans, and transaction ID wraparound can eventually force a protective shutdown",
+      "The write-ahead log grows indefinitely and cannot be recycled",
+      "Indexes are automatically rebuilt to reclaim the space"
+    ],
+    "answer": "Table and index bloat degrades scans, and transaction ID wraparound can eventually force a protective shutdown",
+    "explanation": "MVCC leaves dead tuples in place until VACUUM reclaims them, so accumulation causes bloat that slows scans. Critically, unvacuumed old rows hold back the transaction ID horizon, risking wraparound failure at the 32-bit XID limit.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 79,
+    "question": "A LEFT JOIN followed by a WHERE clause filtering on a right-table column (e.g., WHERE o.status = 'shipped') effectively behaves as which join type?",
+    "options": [
+      "It remains a LEFT JOIN, returning unmatched left rows with NULL right columns",
+      "An INNER JOIN, because NULL-extended rows are eliminated by the filter",
+      "A FULL OUTER JOIN, since both sides are constrained",
+      "A CROSS JOIN, because the filter forces a Cartesian evaluation"
+    ],
+    "answer": "An INNER JOIN, because NULL-extended rows are eliminated by the filter",
+    "explanation": "Any comparison against a non-NULL right-table value evaluates UNKNOWN for NULL-extended rows, so the WHERE clause discards them. This silently converts the outer join semantics to an inner join; the condition belongs in the ON clause to preserve outer join behavior.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 80,
+    "question": "What does the query 'SELECT ... WHERE id NOT IN (SELECT ref FROM t)' return if the subquery result contains at least one NULL?",
+    "options": [
+      "Rows whose id is absent from the non-NULL subquery values",
+      "Zero rows, because comparisons with NULL evaluate to UNKNOWN",
+      "An error indicating the subquery must be NULL-safe",
+      "All rows from the outer table, with NULLs treated as wildcards"
+    ],
+    "answer": "Zero rows, because comparisons with NULL evaluate to UNKNOWN",
+    "explanation": "id NOT IN (…, NULL) is TRUE only if id differs from every value, but the comparison id <> NULL yields UNKNOWN, so no row satisfies the predicate. NOT EXISTS is the NULL-safe alternative for anti-join logic.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 81,
+    "question": "In a recursive CTE (WITH RECURSIVE), what condition terminates the iteration?",
+    "options": [
+      "An explicit loop counter variable that must be decremented each pass",
+      "The recursive term returning an empty result set for the current iteration",
+      "Automatic termination after exactly one recursion depth",
+      "The UNION keyword, which forces deduplication and thereby stops recursion"
+    ],
+    "answer": "The recursive term returning an empty result set for the current iteration",
+    "explanation": "The engine repeatedly executes the recursive term seeded with the previous iteration's rows and stops when that term produces no rows. Using UNION (vs UNION ALL) additionally discards duplicates, which guarantees termination for cyclic data but is not itself the termination mechanism.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 82,
+    "question": "When a window aggregate uses OVER (ORDER BY x) without an explicit frame clause, what is the default frame?",
+    "options": [
+      "ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW",
+      "RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW, which includes peer rows with equal x values",
+      "RANGE BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING",
+      "ROWS BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING"
+    ],
+    "answer": "RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW, which includes peer rows with equal x values",
+    "explanation": "With ORDER BY present, the default frame is RANGE UNBOUNDED PRECEDING to CURRENT ROW, meaning ties (peers) on the ORDER BY key are all included in the aggregate. The ROWS equivalent would differ on duplicate key values, which is a common source of running-total errors.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 83,
+    "question": "Why does keyset (seek) pagination outperform OFFSET/FETCH pagination at deep page offsets?",
+    "options": [
+      "Keyset pagination exploits deferred materialization, while OFFSET requires materializing all rows first",
+      "OFFSET must still traverse and discard all preceding rows before returning the requested window",
+      "OFFSET/FETCH disables index usage entirely on the ORDER BY column",
+      "Keyset pagination bypasses the query optimizer using stored procedures"
+    ],
+    "answer": "OFFSET must still traverse and discard all preceding rows before returning the requested window",
+    "explanation": "OFFSET N forces the engine to walk N rows (even if the index supplies them in order) before emitting results, so cost grows linearly with page depth. Keyset pagination seeks directly past the last-seen key, keeping cost constant per page.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 84,
+    "question": "What trade-off does configuring a low fill factor on an index introduce?",
+    "options": [
+      "It compresses index pages, reducing total I/O for all workloads",
+      "It leaves free space per page to defer page splits, at the cost of more pages and deeper scans",
+      "It forces the index to be rebuilt on every data modification",
+      "It disables the leaf-level page links to speed up inserts"
+    ],
+    "answer": "It leaves free space per page to defer page splits, at the cost of more pages and deeper scans",
+    "explanation": "A low fill factor (e.g., 70%) reserves page space for future inserts, reducing fragmentation and split churn on random-write workloads. The penalty is a larger index footprint, meaning more pages to read for scans and lookups.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 85,
+    "question": "Why is TRUNCATE TABLE substantially faster than an unqualified DELETE for removing all rows?",
+    "options": [
+      "TRUNCATE bypasses the transaction log entirely and cannot be rolled back",
+      "TRUNCATE deallocates data pages and logs page deallocations rather than logging each deleted row",
+      "TRUNCATE executes with an exclusive lock at the row level instead of the table level",
+      "TRUNCATE performs a parallel scan-and-delete across all indexes simultaneously"
+    ],
+    "answer": "TRUNCATE deallocates data pages and logs page deallocations rather than logging each deleted row",
+    "explanation": "TRUNCATE is a DDL operation that releases the table's data pages and records only those deallocations, avoiding per-row log entries and trigger firing. It remains transactional (rollback-capable) in major engines, contrary to the common misconception that it is non-logged.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 86,
+    "question": "In SQL Server, when does lock escalation typically occur during a single statement?",
+    "options": [
+      "Immediately when the statement acquires its first intent lock",
+      "When the statement accumulates roughly 5,000 locks on a single object, attempting to convert them to a table-level lock",
+      "Only when a deadlock is detected between two statements",
+      "When the transaction isolation level is raised to SERIALIZABLE"
+    ],
+    "answer": "When the statement accumulates roughly 5,000 locks on a single object, attempting to convert them to a table-level lock",
+    "explanation": "The lock manager attempts escalation at a threshold of about 5,000 locks per statement per object to reduce memory overhead of maintaining fine-grained locks. This trades concurrency for memory efficiency and can block other readers/writers at the table level.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 87,
+    "question": "How does PostgreSQL's UNIQUE constraint treat multiple NULL values in the constrained column?",
+    "options": [
+      "Only one NULL is permitted, since NULL is compared as equal to itself in unique checks",
+      "Multiple NULLs are permitted, because NULLs are considered distinct from each other in uniqueness comparisons",
+      "The insert fails with a type-mismatch error when a second NULL is attempted",
+      "NULLs are automatically replaced with a sentinel value before comparison"
+    ],
+    "answer": "Multiple NULLs are permitted, because NULLs are considered distinct from each other in uniqueness comparisons",
+    "explanation": "Standard three-valued logic makes NULL <> NULL, so duplicate detection never flags two NULLs. PostgreSQL 15 added NULLS NOT DISTINCT to opt into treating NULLs as duplicates for unique indexes.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 88,
+    "question": "How should an index be provisioned to efficiently serve the predicate WHERE lower(email) = 'user@example.com'?",
+    "options": [
+      "Create a regular index on email; the optimizer will traverse it case-insensitively",
+      "Create an expression/functional index on lower(email) matching the exact predicate expression",
+      "Create a bitmap index on email, which is inherently case-insensitive",
+      "Add a clustered index on email and disable case sensitivity at the server level"
+    ],
+    "answer": "Create an expression/functional index on lower(email) matching the exact predicate expression",
+    "explanation": "The index keys must equal the searchable expression, so an index on lower(email) allows a direct seek. A plain index on email stores the original casing and cannot match the function-transformed predicate.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 89,
+    "question": "What does partition pruning accomplish for a query against a partitioned table?",
+    "options": [
+      "It distributes query execution across all partitions in parallel by default",
+      "It excludes partitions whose value ranges cannot match the query predicates, restricting scans to relevant partitions",
+      "It automatically creates indexes on the partition key for each partition",
+      "It merges small partitions at query time to reduce metadata overhead"
+    ],
+    "answer": "It excludes partitions whose value ranges cannot match the query predicates, restricting scans to relevant partitions",
+    "explanation": "The optimizer (or executor, for runtime pruning) compares predicates like a range or equality on the partition key against partition bounds and eliminates non-qualifying partitions. This reduces I/O proportionally to the excluded data and complements, but does not replace, per-partition indexes.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 90,
+    "question": "For GROUP BY ROLLUP(a, b), which grouping sets are generated?",
+    "options": [
+      "All 2^n permutations: (a,b), (a), (b), and the grand total",
+      "Hierarchical aggregations only: (a,b), (a), and the grand total",
+      "Only (a,b) plus the grand total",
+      "(a,b) and (b) subtotal, but never the grand total"
+    ],
+    "answer": "Hierarchical aggregations only: (a,b), (a), and the grand total",
+    "explanation": "ROLLUP produces subtotals along the hierarchy of its argument list from right to left, ending in the grand total — it never generates (b) alone. CUBE is the operator that produces all 2^n grouping combinations.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 91,
+    "question": "How do most optimizers implement a correlated EXISTS (SELECT 1 …) predicate?",
+    "options": [
+      "As a full scan of the inner table for every outer row, counting all matches",
+      "As a semi-join that stops probing the inner table at the first matching row",
+      "As a left outer join that materializes the entire inner table once",
+      "As an anti-join returning rows where no correlation exists"
+    ],
+    "answer": "As a semi-join that stops probing the inner table at the first matching row",
+    "explanation": "EXISTS only tests match existence, so the engine short-circuits after one hit (semi-join semantics) without deduplicating full result rows. This is why EXISTS is preferred over IN or COUNT for existence checks on large inner tables.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 92,
+    "question": "Why does SELECT * undermine covering-index benefits?",
+    "options": [
+      "SELECT * disables the query cache for the entire session",
+      "It requires every column, forcing heap/clustered lookups for columns not present in the covering index",
+      "SELECT * causes the optimizer to scan every index on the table to assemble column metadata",
+      "It prevents the use of any index because column order is undefined"
+    ],
+    "answer": "It requires every column, forcing heap/clustered lookups for columns not present in the covering index",
+    "explanation": "An index-only (covering) scan is possible only when all referenced columns exist in the index. Selecting all columns guarantees at least one referenced column falls outside any nonclustered index, forcing key/row lookups per row.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 93,
+    "question": "What is the 'write skew' anomaly that snapshot isolation fails to prevent?",
+    "options": [
+      "A transaction reads uncommitted data written by a concurrent transaction",
+      "Two transactions read an overlapping data set, then each writes to disjoint rows, jointly violating an invariant neither would violate alone",
+      "A committed transaction's changes disappear after a crash because the log was not flushed",
+      "A transaction's writes are applied twice due to a retried network request"
+    ],
+    "answer": "Two transactions read an overlapping data set, then each writes to disjoint rows, jointly violating an invariant neither would violate alone",
+    "explanation": "Snapshot isolation detects write-write conflicts only on the same rows, so transactions writing disjoint rows both commit despite acting on stale snapshots. The classic example is two on-call doctors each removing themselves after seeing the other is on call, leaving no one on duty.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 94,
+    "question": "What distinguishes a LATERAL join (CROSS APPLY) from a conventional subquery in the FROM clause?",
+    "options": [
+      "LATERAL joins can only be used with aggregate functions",
+      "The right-hand side may reference columns from FROM items that precede it, and is re-evaluated per row of the left side",
+      "LATERAL joins always produce a Cartesian product of both inputs",
+      "LATERAL joins execute on a separate connection to avoid locking contention"
+    ],
+    "answer": "The right-hand side may reference columns from FROM items that precede it, and is re-evaluated per row of the left side",
+    "explanation": "LATERAL (and SQL Server's CROSS APPLY) permits the right-hand table expression to correlate with earlier FROM items, enabling per-row derived tables such as top-N-per-group. Regular subqueries in FROM cannot reference sibling FROM items.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 95,
+    "question": "How does SQL Server select the deadlock victim when it detects a deadlock cycle?",
+    "options": [
+      "The transaction that started first is always chosen as the victim",
+      "The transaction with the least estimated cost to roll back is chosen, unless DEADLOCK_PRIORITY overrides this",
+      "Both transactions are terminated and must be retried by the application",
+      "The transaction holding the fewest locks is always chosen as the victim"
+    ],
+    "answer": "The transaction with the least estimated cost to roll back is chosen, unless DEADLOCK_PRIORITY overrides this",
+    "explanation": "By default the engine kills the participant whose undo is cheapest, minimizing wasted work; SET DEADLOCK_PRIORITY lets sessions opt in as victims or opt out. The surviving transaction completes normally, and the victim receives error 1205 for retry handling.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 96,
+    "question": "In PostgreSQL, what is the benefit of a Bitmap Heap Scan (bitmap index scan followed by heap access) over a plain index scan?",
+    "options": [
+      "It skips the heap entirely by storing row data inside the index",
+      "It builds a bitmap of matching tuples so heap pages are visited once in sequential order, reducing random I/O for many matching rows",
+      "It eliminates the need for VACUUM on the scanned table",
+      "It locks only the bitmap pages instead of the heap pages during execution"
+    ],
+    "answer": "It builds a bitmap of matching tuples so heap pages are visited once in sequential order, reducing random I/O for many matching rows",
+    "explanation": "The index scan phase populates a bitmap of page/tuple identifiers, then the heap phase fetches pages in physical order, collapsing many random reads into fewer sequential ones. Bitmaps can also be AND/OR-ed to combine multiple indexes before heap access.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 97,
+    "question": "Which LIKE pattern can still use a B-tree index seek on the searched column?",
+    "options": [
+      "LIKE '%smith'",
+      "LIKE '_smith%'",
+      "LIKE 'smith%'",
+      "LIKE '%smith%'"
+    ],
+    "answer": "LIKE 'smith%'",
+    "explanation": "A pattern with a literal prefix corresponds to a range seek [smith, smithÿ) in the B-tree's sorted key space. Leading wildcards destroy prefix information, forcing a scan (absent trigram/ft indexes).",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 98,
+    "question": "What structural requirement must be satisfied for a sort-merge join to execute in its cheapest form?",
+    "options": [
+      "Both inputs must be sorted on the join keys, whether via existing indexes or explicit sort operators",
+      "The outer input must be hashed into memory before merging begins",
+      "The join predicate must be an inequality such as < or BETWEEN",
+      "Both inputs must reside entirely in the buffer pool for the merge to proceed"
+    ],
+    "answer": "Both inputs must be sorted on the join keys, whether via existing indexes or explicit sort operators",
+    "explanation": "Merge joins consume both inputs as ordered streams, so the optimizer either seeks sorted inputs from indexes or inserts sort operators. If the required order is already provided by indexes, the merge join can even stream without materialization.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 99,
+    "question": "What is the most direct performance consequence of stale table statistics (e.g., after large bulk modifications without ANALYZE/UPDATE STATISTICS)?",
+    "options": [
+      "Queries fail because the optimizer cannot locate a valid plan cache entry",
+      "Cardinality estimates diverge from reality, leading to wrong join algorithms, join order, and memory grants",
+      "Indexes are automatically marked invalid until statistics are refreshed",
+      "The transaction isolation level degrades to READ UNCOMMITTED for affected tables"
+    ],
+    "answer": "Cardinality estimates diverge from reality, leading to wrong join algorithms, join order, and memory grants",
+    "explanation": "The optimizer relies on histograms and density data to estimate row counts; outdated statistics skew those estimates and propagate errors through plan choices like seek vs scan or hash vs nested loops. Refreshing statistics (and recompiling affected plans) restores accurate costing.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 100,
+    "question": "In SQL Server, what is the key structural distinction between a clustered and a nonclustered index?",
+    "options": [
+      "A clustered index stores only pointers to heap pages, while a nonclustered index stores the full rows",
+      "The clustered index's leaf level IS the table data itself, sorted by the key, and only one clustered index can exist per table",
+      "A clustered index is limited to 900 rows, while nonclustered indexes are unlimited",
+      "Nonclustered indexes are always covering, while clustered indexes never cover queries"
+    ],
+    "answer": "The clustered index's leaf level IS the table data itself, sorted by the key, and only one clustered index can exist per table",
+    "explanation": "A clustered index orders the physical row storage, so its leaf pages contain the actual data rows — permitting exactly one per table. Nonclustered indexes hold key values plus row locators and can be numerous, with their leaves pointing back to the clustered key.",
+    "difficulty": "Advanced"
+  }
+]
