@@ -1,0 +1,1302 @@
+[
+  {
+    "id": 1,
+    "question": "What is the primary function of Amazon EC2?",
+    "options": [
+      "Providing resizable virtual servers in the cloud",
+      "Providing durable object storage over HTTPS",
+      "Running serverless functions on demand",
+      "Registering and managing domain names"
+    ],
+    "answer": "Providing resizable virtual servers in the cloud",
+    "explanation": "EC2 (Elastic Compute Cloud) is AWS's web service for launching and scaling virtual machines. S3 handles object storage, Lambda provides serverless compute, and Route 53 manages DNS.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 2,
+    "question": "Which EC2 purchasing option provides discounts of up to 90% in exchange for allowing AWS to reclaim the capacity at any time?",
+    "options": [
+      "On-Demand Instances",
+      "Spot Instances",
+      "Reserved Instances",
+      "Dedicated Hosts"
+    ],
+    "answer": "Spot Instances",
+    "explanation": "Spot Instances let you bid on unused EC2 capacity at steep discounts but can be interrupted when AWS needs the capacity back. Reserved Instances offer discounts only in exchange for a 1-3 year commitment.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 3,
+    "question": "How much warning does AWS provide before it reclaims an EC2 Spot Instance?",
+    "options": [
+      "A two-minute interruption notice",
+      "A 24-hour interruption notice",
+      "A one-hour interruption notice",
+      "No notice is provided at all"
+    ],
+    "answer": "A two-minute interruption notice",
+    "explanation": "AWS emits an interruption signal two minutes before reclaiming a Spot Instance, giving workloads time to checkpoint or drain. Applications should be fault-tolerant and designed to handle this interruption.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 4,
+    "question": "Which EC2 pricing model is best suited for steady-state, predictable workloads running 24/7 over multiple years?",
+    "options": [
+      "Reserved Instances",
+      "Spot Instances",
+      "On-Demand Instances",
+      "Per-second burst capacity"
+    ],
+    "answer": "Reserved Instances",
+    "explanation": "Reserved Instances provide significant discounts in exchange for a 1-year or 3-year commitment, making them ideal for stable, long-running workloads. Spot and On-Demand lack long-term commitment pricing benefits.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 5,
+    "question": "What is an Amazon Machine Image (AMI)?",
+    "options": [
+      "A template containing the operating system and software configuration used to launch an EC2 instance",
+      "A snapshot of an S3 bucket's contents",
+      "A network routing table for a VPC",
+      "A log archive stored in CloudWatch Logs"
+    ],
+    "answer": "A template containing the operating system and software configuration used to launch an EC2 instance",
+    "explanation": "An AMI defines the base OS, application server, and settings from which EC2 instances are launched. Regularly updating AMIs is a recommended security practice to ensure instances start with patched software.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 6,
+    "question": "What is the purpose of the 'User Data' field when launching an EC2 instance?",
+    "options": [
+      "To run automation scripts, such as package installation, during instance bootstrapping",
+      "To store the instance's billing history",
+      "To define the root account password permanently",
+      "To configure S3 bucket permissions for the instance"
+    ],
+    "answer": "To run automation scripts, such as package installation, during instance bootstrapping",
+    "explanation": "User Data executes scripts automatically at first launch, enabling automated configuration (bootstrapping) of instances. It is commonly used to install software, apply updates, or join configuration management systems.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 7,
+    "question": "How should an application running on an EC2 instance securely access an S3 bucket without embedding long-lived credentials in code?",
+    "options": [
+      "Attaching an IAM role to the instance",
+      "Hardcoding an IAM access key in environment variables",
+      "Using the AWS root account credentials",
+      "Creating a presigned URL valid for 10 years"
+    ],
+    "answer": "Attaching an IAM role to the instance",
+    "explanation": "IAM roles deliver temporary, automatically rotated credentials to EC2 instances via instance metadata, eliminating the need to store static keys. Hardcoded keys and root credentials violate security best practices.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 8,
+    "question": "What is the primary goal of an EC2 Auto Scaling group?",
+    "options": [
+      "To automatically add or remove instances to match demand and maintain availability",
+      "To encrypt EBS volumes at rest",
+      "To provide a managed DNS service for instances",
+      "To distribute static content to edge locations globally"
+    ],
+    "answer": "To automatically add or remove instances to match demand and maintain availability",
+    "explanation": "Auto Scaling groups monitor demand and adjust instance counts to maintain application availability and control costs. Content distribution is handled by CloudFront, not Auto Scaling.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 9,
+    "question": "Amazon EBS provides which type of storage?",
+    "options": [
+      "Block-level storage volumes that attach to EC2 instances",
+      "Object storage accessible via HTTP APIs",
+      "Fully managed relational databases",
+      "Cold archival tape storage"
+    ],
+    "answer": "Block-level storage volumes that attach to EC2 instances",
+    "explanation": "EBS (Elastic Block Store) delivers persistent block storage volumes for use with EC2, behaving like virtual hard disks. S3 is object storage, and Glacier is archival storage.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 10,
+    "question": "By default, what happens to the root EBS volume of an EC2 instance when the instance is terminated?",
+    "options": [
+      "The volume is deleted along with the instance",
+      "The volume remains available and is billed indefinitely",
+      "The volume is converted into an S3 object",
+      "The volume is automatically snapshotted to a private registry"
+    ],
+    "answer": "The volume is deleted along with the instance",
+    "explanation": "The default 'Delete on Termination' setting for root volumes is enabled, so the volume is removed when the instance terminates. Important data should be saved via EBS snapshots before termination.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 11,
+    "question": "Which statement correctly describes a security group?",
+    "options": [
+      "It is stateful: return traffic is automatically allowed regardless of inbound rules",
+      "It is stateless: return traffic must be explicitly allowed by rules",
+      "It operates at the subnet level rather than the instance level",
+      "It can only deny traffic, never allow it"
+    ],
+    "answer": "It is stateful: return traffic is automatically allowed regardless of inbound rules",
+    "explanation": "Security groups are stateful firewalls at the instance level; if traffic is allowed in, the response traffic is automatically allowed out. NACLs, by contrast, are stateless and operate at the subnet level.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 12,
+    "question": "At what level do Network Access Control Lists (NACLs) operate?",
+    "options": [
+      "At the subnet level",
+      "At the individual instance level",
+      "At the AWS account level",
+      "At the Availability Zone level"
+    ],
+    "answer": "At the subnet level",
+    "explanation": "NACLs act as a stateless firewall for all instances within a subnet, evaluating traffic in numbered rule order. Security groups operate at the individual instance (ENI) level.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 13,
+    "question": "What is the default inbound behavior of a newly created security group?",
+    "options": [
+      "All inbound traffic is denied until rules are added",
+      "All inbound traffic is allowed from any source",
+      "Only SSH on port 22 is allowed",
+      "Only HTTP on port 80 is allowed"
+    ],
+    "answer": "All inbound traffic is denied until rules are added",
+    "explanation": "New security groups deny all inbound traffic by default while allowing all outbound traffic. Administrators must explicitly add inbound rules, following a default-deny security posture.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 14,
+    "question": "An IAM role differs from an IAM user primarily because a role:",
+    "options": [
+      "Provides temporary credentials that AWS services or users can assume",
+      "Provides permanent access keys tied to a single person",
+      "Can only be used by the root account",
+      "Cannot be attached to EC2 instances"
+    ],
+    "answer": "Provides temporary credentials that AWS services or users can assume",
+    "explanation": "IAM roles issue short-term, automatically rotating credentials via the Security Token Service. This makes them ideal for services like EC2 and Lambda, which assume roles instead of holding static keys.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 15,
+    "question": "Which security concept states that users and services should be granted only the permissions required to perform their tasks?",
+    "options": [
+      "The principle of least privilege",
+      "Defense in depth",
+      "The shared responsibility model",
+      "Multi-factor authentication"
+    ],
+    "answer": "The principle of least privilege",
+    "explanation": "Least privilege means granting the minimum permissions necessary, reducing the blast radius of compromised credentials. Defense in depth is layered controls, and MFA verifies identity, not authorization scope.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 16,
+    "question": "In what format are IAM policy documents written?",
+    "options": [
+      "JSON",
+      "XML",
+      "YAML",
+      "CSV"
+    ],
+    "answer": "JSON",
+    "explanation": "IAM policies are structured as JSON documents containing Effect, Action, Resource, and Condition elements. This format is also used for resource-based policies like S3 bucket policies.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 17,
+    "question": "What is an AWS Availability Zone?",
+    "options": [
+      "One or more physically separate data centers within a Region",
+      "A geographical area containing multiple AWS Regions",
+      "A dedicated physical server reserved for one customer",
+      "A CDN edge location for content caching"
+    ],
+    "answer": "One or more physically separate data centers within a Region",
+    "explanation": "Each Region contains multiple isolated Availability Zones connected by low-latency links, enabling fault-tolerant architectures. Deploying across AZs protects against single-data-center failures.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 18,
+    "question": "What is the advertised durability of Amazon S3 Standard storage?",
+    "options": [
+      "99.999999999% (eleven nines) of objects over a given year",
+      "99.99% (four nines) of objects over a given year",
+      "99.999% (five nines) of objects over a given year",
+      "100% guaranteed with no exceptions"
+    ],
+    "answer": "99.999999999% (eleven nines) of objects over a given year",
+    "explanation": "S3 Standard is engineered for 11 nines of durability by redundantly storing objects across multiple facilities. Durability describes the likelihood of object loss, distinct from availability.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 19,
+    "question": "Which S3 storage class is designed for frequently accessed data requiring millisecond access times?",
+    "options": [
+      "S3 Standard",
+      "S3 Glacier Flexible Retrieval",
+      "S3 Glacier Deep Archive",
+      "S3 One Zone-IA"
+    ],
+    "answer": "S3 Standard",
+    "explanation": "S3 Standard delivers high durability, availability, and millisecond access for frequently accessed data at a higher per-GB price. Glacier classes trade retrieval time for dramatically lower storage cost.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 20,
+    "question": "What does S3 Intelligent-Tiering do automatically?",
+    "options": [
+      "Moves objects between access tiers based on their usage patterns to optimize cost",
+      "Replicates objects across all AWS Regions",
+      "Encrypts objects with customer-provided keys",
+      "Deletes objects after exactly 30 days"
+    ],
+    "answer": "Moves objects between access tiers based on their usage patterns to optimize cost",
+    "explanation": "Intelligent-Tiering monitors object access patterns and automatically shifts objects between frequent and infrequent access tiers without performance impact or lifecycle fees. It removes the need to predict access patterns manually.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 21,
+    "question": "Which S3 storage class offers the lowest cost for long-term archival data that is rarely retrieved and can tolerate hours of retrieval time?",
+    "options": [
+      "S3 Glacier Deep Archive",
+      "S3 Standard-IA",
+      "S3 One Zone-IA",
+      "S3 Standard"
+    ],
+    "answer": "S3 Glacier Deep Archive",
+    "explanation": "Glacier Deep Archive is the cheapest S3 class, designed for data retained 7-10+ years with retrieval times measured in hours. Standard-IA classes cost more but offer faster access.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 22,
+    "question": "What is the main purpose of an S3 Lifecycle policy?",
+    "options": [
+      "To automatically transition or expire objects to reduce storage costs over time",
+      "To automatically encrypt all objects upon upload",
+      "To create a new bucket when the current one fills up",
+      "To log every API call made against a bucket"
+    ],
+    "answer": "To automatically transition or expire objects to reduce storage costs over time",
+    "explanation": "Lifecycle rules move infrequently accessed data to cheaper classes (e.g., Glacier) or delete expired objects automatically. This automates cost optimization without manual intervention.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 23,
+    "question": "How does enabling S3 Versioning protect data?",
+    "options": [
+      "It preserves previous versions of objects, protecting against accidental deletion or overwrite",
+      "It replicates objects to another AWS Region in real time",
+      "It compresses objects to reduce storage costs",
+      "It records audit logs of who accessed the bucket"
+    ],
+    "answer": "It preserves previous versions of objects, protecting against accidental deletion or overwrite",
+    "explanation": "With versioning enabled, a delete action adds a delete marker rather than removing data, and overwrites create new version IDs. Previous versions can be restored, guarding against user error.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 24,
+    "question": "What does Server-Side Encryption (SSE) in Amazon S3 protect against?",
+    "options": [
+      "Unauthorized access to data at rest stored within S3",
+      "Accidental deletion of objects by users",
+      "DDoS attacks targeting the S3 service endpoint",
+      "Network failures during cross-region replication"
+    ],
+    "answer": "Unauthorized access to data at rest stored within S3",
+    "explanation": "SSE encrypts objects as they are written to disk and decrypts them for authorized requests, protecting data at rest. Deletion protection is handled by versioning, not encryption.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 25,
+    "question": "Which S3 feature can automatically invoke an AWS Lambda function when a new object is uploaded?",
+    "options": [
+      "S3 Event Notifications",
+      "S3 Lifecycle rules",
+      "S3 Transfer Acceleration",
+      "Requester Pays"
+    ],
+    "answer": "S3 Event Notifications",
+    "explanation": "S3 Event Notifications detect events like object creation and can send them to Lambda, SQS, or SNS, enabling event-driven workflows. Lifecycle rules manage storage transitions, not function invocation.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 26,
+    "question": "What problem does S3 Multipart Upload solve?",
+    "options": [
+      "It uploads large objects in parts, enabling parallelism and recovery from failed part uploads",
+      "It converts objects between storage classes during upload",
+      "It grants anonymous read access to uploaded objects",
+      "It duplicates objects across Availability Zones automatically"
+    ],
+    "answer": "It uploads large objects in parts, enabling parallelism and recovery from failed part uploads",
+    "explanation": "Multipart Upload splits large objects into independent parts uploaded in parallel and assembled on completion. If a part fails, only that part is retried, improving throughput and reliability for large files.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 27,
+    "question": "What type of compute service is AWS Lambda?",
+    "options": [
+      "A serverless, event-driven function-as-a-service platform",
+      "A managed Kubernetes control plane service",
+      "A physical dedicated server offering",
+      "A virtual private network service"
+    ],
+    "answer": "A serverless, event-driven function-as-a-service platform",
+    "explanation": "Lambda runs code in response to events without any server provisioning or management by the user. It belongs to the Function-as-a-Service (FaaS) category of serverless computing.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 28,
+    "question": "What is the maximum execution time for a single AWS Lambda function invocation?",
+    "options": [
+      "15 minutes",
+      "1 hour",
+      "24 hours",
+      "Unlimited"
+    ],
+    "answer": "15 minutes",
+    "explanation": "Lambda enforces a hard timeout cap of 15 minutes per invocation, making it unsuitable for long-running jobs. Workloads exceeding this limit should use EC2, containers, or Step Functions to split the work.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 29,
+    "question": "How is AWS Lambda priced?",
+    "options": [
+      "Per request and per compute time consumed, with no charge while the function is idle",
+      "Per provisioned virtual machine hour, billed continuously",
+      "Per gigabyte of data stored per month",
+      "A flat monthly fee per deployed function"
+    ],
+    "answer": "Per request and per compute time consumed, with no charge while the function is idle",
+    "explanation": "Lambda charges based on the number of invocations and compute duration measured in GB-seconds of memory allocation. This pay-per-use model means zero cost during idle periods, unlike always-on servers.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 30,
+    "question": "Which statement best contrasts EC2 and Lambda?",
+    "options": [
+      "EC2 runs applications on servers you manage continuously, while Lambda executes code on demand without server management",
+      "EC2 is a serverless service, while Lambda requires explicit server provisioning",
+      "EC2 provides object storage, while Lambda provides block storage",
+      "Lambda only supports Python, while EC2 supports any language"
+    ],
+    "answer": "EC2 runs applications on servers you manage continuously, while Lambda executes code on demand without server management",
+    "explanation": "EC2 provides persistent virtual servers the user must size, patch, and pay for continuously. Lambda abstracts infrastructure entirely and only bills for actual invocation time.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 31,
+    "question": "In an event-driven architecture where uploading an image to S3 generates a thumbnail, which service most naturally executes the thumbnail code?",
+    "options": [
+      "AWS Lambda triggered by the S3 upload event",
+      "An EC2 instance polling the bucket once per hour",
+      "Amazon S3 Transfer Acceleration",
+      "AWS Direct Connect"
+    ],
+    "answer": "AWS Lambda triggered by the S3 upload event",
+    "explanation": "An S3 event notification can directly invoke a Lambda function on each upload, executing only when needed with zero idle cost. Polling EC2 adds latency and continuous cost, and the other options are networking services.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 32,
+    "question": "Which service is used to collect metrics, store logs, and set alarms for AWS resources such as EC2 and Lambda?",
+    "options": [
+      "Amazon CloudWatch",
+      "AWS CloudTrail",
+      "Amazon Route 53",
+      "AWS Config"
+    ],
+    "answer": "Amazon CloudWatch",
+    "explanation": "CloudWatch is the monitoring and observability service for metrics, logs, and alarms across AWS resources. CloudTrail records API call history, and Route 53 is a DNS service.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 33,
+    "question": "Which AWS tool lets you set custom spending thresholds and receive alerts when costs exceed them?",
+    "options": [
+      "AWS Budgets",
+      "AWS Trusted Advisor",
+      "Amazon CloudFront",
+      "AWS Organizations"
+    ],
+    "answer": "AWS Budgets",
+    "explanation": "AWS Budgets lets you define cost or usage budgets and triggers alerts via email or SNS when thresholds are approached or exceeded. Trusted Advisor provides best-practice recommendations, not cost alerting.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 34,
+    "question": "Which AWS service provides machine learning-based recommendations for rightsizing EC2 instances?",
+    "options": [
+      "AWS Compute Optimizer",
+      "Amazon EC2 Auto Scaling",
+      "AWS Cost Explorer",
+      "Amazon CloudTrail"
+    ],
+    "answer": "AWS Compute Optimizer",
+    "explanation": "Compute Optimizer analyzes utilization telemetry with machine learning to recommend optimal instance types, preventing over-provisioning. Auto Scaling adjusts instance count reactively; it does not recommend instance sizes.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 35,
+    "question": "Under the AWS Shared Responsibility Model, who is responsible for encrypting data stored in an S3 bucket?",
+    "options": [
+      "The customer",
+      "AWS exclusively, in all cases",
+      "Neither party; encryption is impossible in S3",
+      "The customer's internet service provider"
+    ],
+    "answer": "The customer",
+    "explanation": "AWS secures the underlying infrastructure ('security of the cloud'), while customers are responsible for protecting their data ('security in the cloud'), including enabling encryption. AWS provides SSE mechanisms, but activating them is the customer's responsibility.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 36,
+    "question": "How does AWS notify workloads before an EC2 Spot Instance is reclaimed?",
+    "options": [
+      "An email is sent to the account owner 24 hours in advance",
+      "A two-minute interruption notice is emitted to instance metadata and Amazon EventBridge",
+      "The instance is terminated immediately with no advance notification",
+      "The AWS Console displays a permanent warning banner 30 days before interruption"
+    ],
+    "answer": "A two-minute interruption notice is emitted to instance metadata and Amazon EventBridge",
+    "explanation": "EC2 emits an interruption event two minutes before reclaiming a Spot Instance, accessible via instance metadata (169.254.169.254) and EventBridge. Applications should checkpoint state within that window.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 37,
+    "question": "An S3 Lifecycle policy transitioned an object to the Glacier storage class. What must happen before the object's data can be read?",
+    "options": [
+      "The object must be transitioned back to S3 Standard-IA via a new lifecycle rule",
+      "A restore request must be initiated, and retrieval can take minutes to hours",
+      "The object must be re-uploaded to the bucket",
+      "Access is immediate, but request costs are higher than S3 Standard"
+    ],
+    "answer": "A restore request must be initiated, and retrieval can take minutes to hours",
+    "explanation": "Archived objects are not immediately retrievable; a Restore operation makes a temporary copy available for a specified duration. Retrieval time depends on the chosen tier (Expedited, Standard, or Bulk).",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 38,
+    "question": "How is an AWS Lambda function typically triggered when a new object is uploaded to an S3 bucket?",
+    "options": [
+      "S3 continuously polls the Lambda function for pending work",
+      "Lambda subscribes to the bucket's internal metadata index",
+      "An S3 event notification invokes the Lambda function asynchronously",
+      "The Lambda function scans the bucket on a fixed schedule"
+    ],
+    "answer": "An S3 event notification invokes the Lambda function asynchronously",
+    "explanation": "Configuring an s3:ObjectCreated:* event notification causes S3 to invoke the function asynchronously upon object upload. The event payload includes the bucket name and object key.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 39,
+    "question": "What is the fundamental difference between security groups and network ACLs in a VPC?",
+    "options": [
+      "Security groups operate at the subnet level, while NACLs operate at the instance level",
+      "Security groups are stateless, while NACLs are stateful",
+      "Security groups are stateful and evaluate all rules, while NACLs are stateless and evaluate rules in numbered order",
+      "Security groups support explicit deny rules, while NACLs only support allow rules"
+    ],
+    "answer": "Security groups are stateful and evaluate all rules, while NACLs are stateless and evaluate rules in numbered order",
+    "explanation": "Security groups are instance-level and stateful, automatically permitting return traffic. NACLs are subnet-level and stateless, requiring explicit rules in both directions and processing rules by rule number.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 40,
+    "question": "Which statement about S3 Intelligent-Tiering is accurate?",
+    "options": [
+      "It charges retrieval fees when objects move back to the frequent access tier",
+      "It automatically moves objects between frequent and infrequent access tiers based on usage, with no retrieval fees",
+      "It requires a manually configured lifecycle transition rule to function",
+      "It stores all objects in a single tier regardless of access frequency"
+    ],
+    "answer": "It automatically moves objects between frequent and infrequent access tiers based on usage, with no retrieval fees",
+    "explanation": "Intelligent-Tiering monitors access patterns and moves objects not accessed for 30 days to Infrequent Access and 90 days to Archive tiers. There are no retrieval fees, only a small monthly monitoring charge for eligible objects.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 41,
+    "question": "An application running on an EC2 instance needs to read from an S3 bucket. What is the recommended way to provide credentials?",
+    "options": [
+      "Embed long-lived IAM user access keys in the application's configuration file",
+      "Retrieve temporary credentials for the instance's attached IAM role from the instance metadata service",
+      "Store root account credentials in an encrypted environment variable",
+      "Hard-code the S3 bucket policy directly into the application code"
+    ],
+    "answer": "Retrieve temporary credentials for the instance's attached IAM role from the instance metadata service",
+    "explanation": "IAM roles deliver temporary, automatically rotated credentials via the metadata service at 169.254.169.254. This eliminates long-lived keys that could leak from configuration files or code.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 42,
+    "question": "With S3 versioning enabled, what happens when a DELETE request is issued against an object?",
+    "options": [
+      "All versions of the object are permanently and immediately destroyed",
+      "The request fails unless the caller specifies a specific version ID",
+      "S3 inserts a delete marker as the newest version, preserving prior versions",
+      "The object is automatically moved to the Glacier storage class"
+    ],
+    "answer": "S3 inserts a delete marker as the newest version, preserving prior versions",
+    "explanation": "A versioned DELETE creates a delete marker rather than removing data. Deleting the marker itself restores the object, making versioning a defense against accidental deletion.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 43,
+    "question": "In an EC2 Auto Scaling group, what happens when an instance fails its health check?",
+    "options": [
+      "The instance is stopped and restarted in place",
+      "The instance is marked unhealthy, terminated, and replaced with a new instance",
+      "The group suspends all scaling activity until manual intervention",
+      "Traffic is rerouted to the instance's standby duplicate"
+    ],
+    "answer": "The instance is marked unhealthy, terminated, and replaced with a new instance",
+    "explanation": "Auto Scaling terminates instances failing EC2 or ELB health checks and launches replacements according to the launch template. This self-healing behavior maintains desired capacity automatically.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 44,
+    "question": "What causes a Lambda cold start?",
+    "options": [
+      "The function exceeding its provisioned concurrency limit",
+      "Initialization of a new execution environment, including loading code and initializing the runtime",
+      "An S3 event notification arriving while another invocation is still in progress",
+      "The function returning before the client disconnects"
+    ],
+    "answer": "Initialization of a new execution environment, including loading code and initializing the runtime",
+    "explanation": "Cold starts occur when Lambda must provision and initialize a fresh execution environment for a request. Provisioned concurrency and SnapStart are the primary mitigation techniques.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 45,
+    "question": "What advantage does SSE-KMS provide over SSE-S3 for encrypting S3 objects?",
+    "options": [
+      "SSE-KMS encrypts data at no additional charge, while SSE-S3 is billed per key",
+      "SSE-KMS uses AWS-managed keys with no permissions enforcement",
+      "SSE-KMS provides per-key usage auditing via CloudTrail and independent key-level access controls",
+      "SSE-KMS removes the need for TLS during data transfer"
+    ],
+    "answer": "SSE-KMS provides per-key usage auditing via CloudTrail and independent key-level access controls",
+    "explanation": "SSE-KMS uses an AWS KMS key, so every kms:Decrypt call is logged in CloudTrail and access can be restricted via key policies. TLS is still required for both SSE options.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 46,
+    "question": "Which practice best reduces the impact of Spot capacity interruptions on a workload?",
+    "options": [
+      "Running all Spot capacity in a single Availability Zone with one instance type",
+      "Purchasing a Reserved Instance to back every Spot allocation",
+      "Diversifying across multiple instance types, families, and Availability Zones",
+      "Disabling the interruption handler so instances shut down without cleanup"
+    ],
+    "answer": "Diversifying across multiple instance types, families, and Availability Zones",
+    "explanation": "Spot capacity pools fluctuate independently, so spreading workloads across many pools increases the chance of stable capacity. Single-pool deployments are far more exposed to a single interruption event.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 47,
+    "question": "When is multipart upload required for an S3 object?",
+    "options": [
+      "Whenever the object exceeds 100 MB",
+      "For any object destined for the S3 Standard storage class",
+      "For objects larger than 5 GB, since a single PUT supports a maximum of 5 GB",
+      "Whenever the bucket has versioning enabled"
+    ],
+    "answer": "For objects larger than 5 GB, since a single PUT supports a maximum of 5 GB",
+    "explanation": "A single PUT operation is limited to 5 GB, while multipart upload supports objects up to 5 TB. AWS recommends multipart for objects over 100 MB for resilience and parallelism.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 48,
+    "question": "Why are IAM roles preferred over IAM users for granting EC2 instances access to AWS services?",
+    "options": [
+      "Roles eliminate the need for a VPC",
+      "Roles provide temporary, automatically rotated credentials via the metadata service",
+      "Roles grant root-level administrative permissions by default",
+      "Roles bypass the need for security group rules"
+    ],
+    "answer": "Roles provide temporary, automatically rotated credentials via the metadata service",
+    "explanation": "IAM roles issue short-lived STS credentials that EC2 refreshes automatically through the metadata service. This removes the operational and security burden of managing long-lived access keys.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 49,
+    "question": "When S3 Requester Pays is enabled on a bucket, how are costs allocated?",
+    "options": [
+      "The requester pays storage, and the bucket owner pays requests and data transfer",
+      "The bucket owner pays storage costs, while the requester pays request and data transfer costs",
+      "All costs are split evenly between the owner and the requester",
+      "AWS covers request costs, and the owner pays storage and transfer"
+    ],
+    "answer": "The bucket owner pays storage costs, while the requester pays request and data transfer costs",
+    "explanation": "Requester Pays shifts request and data transfer charges to the calling party, who must include the x-amz-request-payer header. This is useful for distributing large shared datasets without incurring download costs yourself.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 50,
+    "question": "What is the primary function of AWS Budgets?",
+    "options": [
+      "Consolidated billing across multiple AWS accounts",
+      "Real-time blocking of API calls that would incur charges",
+      "Automatically right-sizing EC2 instances",
+      "Alerting when actual or forecasted cost or usage exceeds defined thresholds"
+    ],
+    "answer": "Alerting when actual or forecasted cost or usage exceeds defined thresholds",
+    "explanation": "AWS Budgets triggers alerts via email or SNS when actual or forecasted spend crosses custom thresholds, and can optionally take actions such as applying IAM policies. It is a monitoring tool, not a hard spending blocker.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 51,
+    "question": "What does S3 Object Lambda do?",
+    "options": [
+      "Runs a Lambda function on a schedule to clean up bucket contents",
+      "Invokes a Lambda function to transform object data on the fly as it is retrieved through an Object Lambda Access Point",
+      "Uses Lambda to replicate objects across Regions asynchronously",
+      "Compresses objects at upload time using a Lambda trigger"
+    ],
+    "answer": "Invokes a Lambda function to transform object data on the fly as it is retrieved through an Object Lambda Access Point",
+    "explanation": "GET requests through an S3 Object Lambda Access Point trigger a Lambda function that can redact, resize, or enrich data during retrieval. The original object in the backing bucket remains unchanged.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 52,
+    "question": "By default, when does EC2 user data execute on a Linux instance?",
+    "options": [
+      "On every reboot, before the operating system loads",
+      "Once, during the initial launch of the instance",
+      "Continuously as a background daemon",
+      "Only when triggered manually through AWS Systems Manager"
+    ],
+    "answer": "Once, during the initial launch of the instance",
+    "explanation": "User data scripts run a single time at first boot, typically processed by cloud-init on Linux. Repeat execution must be explicitly enabled via instance metadata and script logic.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 53,
+    "question": "Which services can be configured as destinations for S3 event notifications?",
+    "options": [
+      "EC2, Elastic Load Balancing, Route 53, and Direct Connect",
+      "DynamoDB, Redshift, Kinesis Data Firehose, and Glue",
+      "CloudTrail, Config, GuardDuty, and Macie",
+      "Lambda, SNS, SQS, and EventBridge"
+    ],
+    "answer": "Lambda, SNS, SQS, and EventBridge",
+    "explanation": "S3 event notifications can fan out to Lambda, SNS topics, SQS queues, or Amazon EventBridge. EventBridge provides additional filtering and routing to a broader set of targets.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 54,
+    "question": "What is the effect of setting a reserved concurrency value on a Lambda function?",
+    "options": [
+      "It dedicates and caps that number of concurrent executions for the function",
+      "It pre-warms the function to eliminate cold starts",
+      "It guarantees the function completes within its timeout period",
+      "It limits the function to one invocation per second"
+    ],
+    "answer": "It dedicates and caps that number of concurrent executions for the function",
+    "explanation": "Reserved concurrency both guarantees a pool of environments for the function and sets its maximum concurrency ceiling. Setting it to zero disables the function entirely.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 55,
+    "question": "What is the typical retrieval time for an object in S3 Glacier Deep Archive using Standard retrieval?",
+    "options": [
+      "A few seconds",
+      "Within 5 minutes",
+      "Up to 12 hours",
+      "Up to 12 days"
+    ],
+    "answer": "Up to 12 hours",
+    "explanation": "Glacier Deep Archive Standard retrieval completes within approximately 12 hours, with Bulk retrieval taking up to 48 hours. No expedited option exists for Deep Archive.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 56,
+    "question": "Which AWS service automates the creation, retention, and deletion of EBS snapshots?",
+    "options": [
+      "AWS Systems Manager Patch Manager",
+      "Amazon Data Lifecycle Manager",
+      "Amazon S3 Lifecycle",
+      "AWS Service Catalog"
+    ],
+    "answer": "Amazon Data Lifecycle Manager",
+    "explanation": "Data Lifecycle Manager (DLM) creates policies to automate EBS snapshot and AMI lifecycle management on a schedule. This prevents unmanaged snapshot sprawl and reduces storage costs.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 57,
+    "question": "How does AWS PrivateLink help reduce data transfer costs between a VPC and an AWS service?",
+    "options": [
+      "It compresses traffic, lowering per-GB charges",
+      "It routes traffic over the AWS backbone without traversing the public internet or NAT gateways",
+      "It provides a 10 percent discount on inter-Availability Zone transfer",
+      "It converts all data transfer charges into a single flat endpoint fee"
+    ],
+    "answer": "It routes traffic over the AWS backbone without traversing the public internet or NAT gateways",
+    "explanation": "PrivateLink interface endpoints keep traffic inside the AWS network, avoiding NAT gateway processing charges and internet egress costs. It also improves the security posture by eliminating public paths.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 58,
+    "question": "In AWS Lambda, how does memory allocation affect function performance?",
+    "options": [
+      "Memory only affects the size of environment variables",
+      "Memory is capped at 512 MB per function",
+      "CPU power and network bandwidth scale proportionally with the allocated memory",
+      "Increasing memory extends the maximum execution timeout"
+    ],
+    "answer": "CPU power and network bandwidth scale proportionally with the allocated memory",
+    "explanation": "Lambda allocates vCPU linearly with memory, reaching one full vCPU at roughly 1,769 MB. The timeout ceiling remains 15 minutes regardless of the memory setting.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 59,
+    "question": "In which scenario is an S3 bucket policy required rather than an IAM policy?",
+    "options": [
+      "When granting permissions to IAM users within your own account only",
+      "When granting another AWS account access to objects in your bucket",
+      "When encrypting objects with SSE-S3",
+      "When enabling S3 versioning on the bucket"
+    ],
+    "answer": "When granting another AWS account access to objects in your bucket",
+    "explanation": "Bucket policies are resource-based and can grant cross-account access directly. IAM policies are identity-based and only control principals within the account that owns them.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 60,
+    "question": "How are EC2 Spot Instance prices determined?",
+    "options": [
+      "Fixed permanently at 50 percent of the On-Demand price",
+      "Determined by customer bids, as with the legacy Spot model",
+      "Set by AWS based on long-term supply and demand, capped at the On-Demand rate",
+      "Identical to the On-Demand price with an automatic subscription discount"
+    ],
+    "answer": "Set by AWS based on long-term supply and demand, capped at the On-Demand rate",
+    "explanation": "Spot prices adjust gradually with long-term capacity trends and never exceed the On-Demand rate. Customers pay the current Spot price in effect, not a price they configure.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 61,
+    "question": "What level of durability does Amazon S3 Standard provide for stored objects?",
+    "options": [
+      "99.99% durability",
+      "99.9% durability",
+      "99.999999999% (11 nines) durability",
+      "A 100% contractual durability guarantee"
+    ],
+    "answer": "99.999999999% (11 nines) durability",
+    "explanation": "S3 Standard redundantly stores objects across a minimum of three Availability Zones, yielding 11 nines of durability. Its designed availability is 99.99%, which is a separate metric.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 62,
+    "question": "What is the purpose of a default cooldown period in an EC2 Auto Scaling group?",
+    "options": [
+      "It delays instance launch until AMI copying completes",
+      "It pauses billing during idle periods",
+      "It prevents additional scaling actions until the effects of previous activities become observable",
+      "It throttles application requests to instances behind the load balancer"
+    ],
+    "answer": "It prevents additional scaling actions until the effects of previous activities become observable",
+    "explanation": "The cooldown period (default 300 seconds) lets metrics stabilize after a scaling event before another simple scaling action fires. Target tracking and step scaling policies handle stabilization internally instead.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 63,
+    "question": "What is the maximum execution timeout for a single AWS Lambda function invocation?",
+    "options": [
+      "5 minutes",
+      "15 minutes",
+      "1 hour",
+      "24 hours"
+    ],
+    "answer": "15 minutes",
+    "explanation": "Lambda enforces a hard limit of 900 seconds per invocation. Workloads requiring longer execution should use Step Functions state machines or containers such as AWS Fargate.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 64,
+    "question": "Which workload is appropriate for hosting directly on an S3 website endpoint?",
+    "options": [
+      "A PHP application backed by an RDS database",
+      "A static site built with HTML, CSS, and client-side JavaScript",
+      "A server-side rendered Node.js application requiring persistent processes",
+      "A legacy ASP.NET application requiring IIS runtime support"
+    ],
+    "answer": "A static site built with HTML, CSS, and client-side JavaScript",
+    "explanation": "S3 website hosting serves static content only, with no server-side execution capability. Dynamic processing requires pairing S3 with CloudFront, API Gateway, or a compute service.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 65,
+    "question": "Which EC2 placement group should be used to achieve the lowest inter-instance network latency?",
+    "options": [
+      "Spread placement group",
+      "Partition placement group",
+      "Cluster placement group",
+      "Regional placement group"
+    ],
+    "answer": "Cluster placement group",
+    "explanation": "Cluster placement groups pack instances tightly within a single Availability Zone for low latency and high throughput networking. Spread groups maximize isolation, and partition groups isolate hardware for big data topologies.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 66,
+    "question": "What does an S3 Lifecycle expiration rule do?",
+    "options": [
+      "Transitions objects to an archive tier after a period of inactivity",
+      "Blocks public access after a retention window elapses",
+      "Permanently deletes objects or object versions after a specified number of days",
+      "Renames objects with a date suffix before scheduling deletion"
+    ],
+    "answer": "Permanently deletes objects or object versions after a specified number of days",
+    "explanation": "Expiration rules remove data after a defined age, permanently deleting current versions or cleaning up noncurrent versions. This is distinct from transition rules, which change storage classes without deleting data.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 67,
+    "question": "How does AWS Compute Optimizer generate its right-sizing recommendations?",
+    "options": [
+      "By comparing your AWS bills against public price lists",
+      "By analyzing CloudWatch utilization metrics with machine learning",
+      "By running synthetic load tests against your instances",
+      "By polling CloudTrail logs for API call patterns"
+    ],
+    "answer": "By analyzing CloudWatch utilization metrics with machine learning",
+    "explanation": "Compute Optimizer ingests resource utilization telemetry and applies machine learning to identify optimal instance types and sizes. Recommendations include performance risk ratings for each option.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 68,
+    "question": "What encryption behavior applies by default to new objects uploaded to an S3 bucket today?",
+    "options": [
+      "Objects remain unencrypted until a bucket policy forces server-side encryption",
+      "Objects are encrypted client-side using the AWS SDK default key",
+      "S3 automatically encrypts new objects server-side with SSE-S3",
+      "Encryption is applied only if the bucket has versioning enabled"
+    ],
+    "answer": "S3 automatically encrypts new objects server-side with SSE-S3",
+    "explanation": "Since January 2023, S3 applies default encryption with SSE-S3 (AES-256) to every new object automatically. Bucket policies can require a stronger option such as SSE-KMS or DSSE.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 69,
+    "question": "According to AWS best practices, how should a Lambda function access database credentials?",
+    "options": [
+      "Store them in plaintext environment variables for fastest access",
+      "Encode them directly into the deployment package",
+      "Retrieve them at runtime from AWS Secrets Manager or Systems Manager Parameter Store",
+      "Hard-code them in the function handler behind an obfuscation routine"
+    ],
+    "answer": "Retrieve them at runtime from AWS Secrets Manager or Systems Manager Parameter Store",
+    "explanation": "Secrets Manager and Parameter Store provide KMS-encrypted storage, optional rotation, and fine-grained IAM access. Lambda environment variables are convenient for configuration but not the recommended store for secrets.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 70,
+    "question": "What happens when S3 Block Public Access is enabled at the AWS account level?",
+    "options": [
+      "It overrides any bucket policy or ACL that would grant public access",
+      "It converts existing public buckets to Requester Pays",
+      "It only applies to buckets created after the setting is enabled",
+      "It disables all IAM policies referencing S3 in that account"
+    ],
+    "answer": "It overrides any bucket policy or ACL that would grant public access",
+    "explanation": "Account-level Block Public Access settings apply to every bucket in the account and take precedence over bucket policies, ACLs, and access point policies. Existing and future buckets are both covered.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 71,
+    "question": "How are EC2 Spot Instance interruption notices delivered, and how much warning do they provide?",
+    "options": [
+      "A thirty-second warning delivered via SNS push notification to the instance's IAM role",
+      "A two-minute warning delivered via Amazon EventBridge and the instance metadata service (spot/instance-action)",
+      "A five-minute warning delivered via CloudWatch alarm on the Spot Request status",
+      "No warning is provided; interruption occurs immediately upon reclamation"
+    ],
+    "answer": "A two-minute warning delivered via Amazon EventBridge and the instance metadata service (spot/instance-action)",
+    "explanation": "Spot reclaims capacity with a two-minute notice published via an EventBridge event and the instance metadata spot/instance-action endpoint. Workloads must checkpoint or drain state within this window to survive interruption gracefully.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 72,
+    "question": "What distinguishes Instance Metadata Service Version 2 (IMDSv2) from IMDSv1?",
+    "options": [
+      "IMDSv2 requires a session token obtained via an HTTP PUT request, mitigating SSRF and header-injection attacks",
+      "IMDSv2 encrypts metadata payloads with customer-managed KMS keys",
+      "IMDSv2 restricts metadata access to the instance's primary ENI MAC address",
+      "IMDSv2 raises the default hop limit to 3 to support container workloads"
+    ],
+    "answer": "IMDSv2 requires a session token obtained via an HTTP PUT request, mitigating SSRF and header-injection attacks",
+    "explanation": "IMDSv2 is session-oriented: clients first request a token with a PUT call, which naive SSRF payloads cannot perform, then present that token on subsequent GETs. Token TTL and hop-limit restrictions further harden access.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 73,
+    "question": "When transitioning objects to S3 Standard-IA via a Lifecycle rule, which constraints apply?",
+    "options": [
+      "Objects must be at least 90 days old with no minimum object size",
+      "Objects of any age can transition, provided they exceed 5 MB",
+      "Objects must be at least 24 hours old and encrypted with SSE-KMS",
+      "Objects must be at least 30 days old and at least 128 KB for automatic transitions to Standard-IA"
+    ],
+    "answer": "Objects must be at least 30 days old and at least 128 KB for automatic transitions to Standard-IA",
+    "explanation": "Lifecycle transitions to Standard-IA require a 30-day minimum age, and objects smaller than 128 KB are not transitioned because proportional early-removal charges would erase IA savings.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 74,
+    "question": "In an S3 multipart upload, what is the minimum size and maximum count for individual parts?",
+    "options": [
+      "Minimum 1 MB per part and a maximum of 1,000 parts",
+      "Minimum 5 MB per part (except the last) and a maximum of 10,000 parts",
+      "Minimum 100 KB per part and a maximum of 5,000 parts",
+      "Minimum 10 MB per part with no upper bound on part count"
+    ],
+    "answer": "Minimum 5 MB per part (except the last) and a maximum of 10,000 parts",
+    "explanation": "Each part except the last must be between 5 MB and 5 GB, and up to 10,000 parts yield the 5 TB maximum object size. Parts upload in parallel and are assembled by CompleteMultipartUpload.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 75,
+    "question": "How does S3 Object Lambda deliver transformed data to client applications?",
+    "options": [
+      "An Object Lambda Access Point intercepts GET requests and invokes a Lambda function to transform data on retrieval",
+      "An S3 event notification triggers a Lambda function that writes transformed copies to a second bucket",
+      "A CloudFront function rewrites object content at the edge before serving it",
+      "An S3 Batch Operations job pre-invokes the Lambda function on every object in the bucket"
+    ],
+    "answer": "An Object Lambda Access Point intercepts GET requests and invokes a Lambda function to transform data on retrieval",
+    "explanation": "Object Lambda Access Points invoke a Lambda function during GET/HEAD requests and return transformed data without storing derived copies. A supporting access point retrieves the original object from the underlying bucket.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 76,
+    "question": "What problem does Lambda Provisioned Concurrency primarily solve?",
+    "options": [
+      "Throttling at the account's concurrent execution limit",
+      "Data inconsistency in DynamoDB during parallel invocations",
+      "Cold-start latency, by keeping pre-initialized execution environments ready",
+      "Cost overruns from redundant execution environments"
+    ],
+    "answer": "Cold-start latency, by keeping pre-initialized execution environments ready",
+    "explanation": "Provisioned Concurrency pre-initializes a configurable number of execution environments so invocations bypass initialization delay. Reserved Concurrency only caps or reserves execution slots and does not keep environments warm.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 77,
+    "question": "What is the maximum execution timeout for a single AWS Lambda function invocation?",
+    "options": [
+      "300 seconds (5 minutes)",
+      "900 seconds (15 minutes)",
+      "3,600 seconds (1 hour)",
+      "86,400 seconds (24 hours)"
+    ],
+    "answer": "900 seconds (15 minutes)",
+    "explanation": "Lambda enforces a hard 900-second per-invocation timeout. Workloads exceeding this limit must be decomposed using patterns such as Step Functions orchestration or SQS chaining.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 78,
+    "question": "How does Lambda's CPU allocation relate to the configured memory setting?",
+    "options": [
+      "CPU power scales proportionally with memory; 1,769 MB allocates the equivalent of one full vCPU",
+      "Every function receives exactly one vCPU regardless of its memory setting",
+      "Additional vCPUs are allocated only above the 3,008 MB threshold",
+      "Memory and CPU are fully independent settings configured at deploy time"
+    ],
+    "answer": "CPU power scales proportionally with memory; 1,769 MB allocates the equivalent of one full vCPU",
+    "explanation": "Lambda allocates CPU linearly with memory, with 1,769 MB corresponding to one full vCPU and functions above 10,240 MB receiving multiple vCPUs. Tuning memory therefore also tunes CPU, network, and cost per invocation.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 79,
+    "question": "How can a Lambda function consuming an SQS batch avoid reprocessing entire batches when individual messages fail?",
+    "options": [
+      "Set the SQS visibility timeout to zero so failed messages reappear instantly",
+      "Attach a function URL with reserved concurrency to isolate failing invocations",
+      "Route failures to a Lambda destination instead of the queue's dead-letter queue",
+      "Enable ReportBatchItemFailures so only the failed message IDs are returned for retry"
+    ],
+    "answer": "Enable ReportBatchItemFailures so only the failed message IDs are returned for retry",
+    "explanation": "The ReportBatchItemFailures function response type lets the handler return a partial result listing only failed message identifiers, making just those messages visible again for retry. Without it, the entire batch is retried.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 80,
+    "question": "What does EC2 Auto Scaling Predictive Scaling use to schedule future capacity?",
+    "options": [
+      "Real-time target health check statistics published by the load balancer",
+      "Manual capacity plans uploaded to the Auto Scaling group as JSON",
+      "Machine-learning forecasts derived from historical CloudWatch load metrics",
+      "Weekly cost aggregates pulled from AWS Cost Explorer"
+    ],
+    "answer": "Machine-learning forecasts derived from historical CloudWatch load metrics",
+    "explanation": "Predictive scaling builds ML forecasts from historical load data and generates scheduled actions that provision capacity ahead of recurring traffic patterns. It complements, rather than replaces, reactive target-tracking policies.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 81,
+    "question": "What is the hard limit on running instances per Availability Zone within a single Spread Placement Group?",
+    "options": [
+      "Seven",
+      "Twelve",
+      "One hundred",
+      "Unlimited, bounded only by the account vCPU limit"
+    ],
+    "answer": "Seven",
+    "explanation": "Spread Placement Groups allow a maximum of seven running instances per Availability Zone, each placed on distinct underlying hardware to minimize correlated failure. Partition placement groups scale far larger but partition instead of strictly spreading.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 82,
+    "question": "What capability does an Elastic Fabric Adapter (EFA) provide that standard ENA networking does not?",
+    "options": [
+      "Automatic public IPv4 assignment for each attached instance",
+      "OS-bypass access to the network interface via SR-IOV, reducing latency for HPC and ML workloads",
+      "Hardware TLS termination performed at the NIC level",
+      "Cross-account ENI attachment for shared compute clusters"
+    ],
+    "answer": "OS-bypass access to the network interface via SR-IOV, reducing latency for HPC and ML workloads",
+    "explanation": "EFA exposes SR-IOV-based OS-bypass so communication libraries (e.g., libfabric, NVIDIA GPUDirect-compatible stacks) can bypass the kernel TCP/IP path for lower, more consistent latency, targeting HPC and distributed ML training.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 83,
+    "question": "Why must stateless Network ACLs include rules for ephemeral return ports when Security Groups do not?",
+    "options": [
+      "Security Groups automatically write ephemeral port rules into the attached NACL",
+      "Ephemeral port rules are required only for traffic initiated by load balancers",
+      "NACLs operate at Layer 7, where return traffic uses dynamic ports",
+      "NACLs evaluate each packet independently with no connection tracking, so return traffic must be explicitly allowed"
+    ],
+    "answer": "NACLs evaluate each packet independently with no connection tracking, so return traffic must be explicitly allowed",
+    "explanation": "NACLs are stateless packet filters applied to every packet in isolation, so responses from servers on ephemeral ports require an explicit inbound rule covering the ephemeral range. Security Groups are stateful and automatically permit return traffic of allowed sessions.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 84,
+    "question": "In AWS authorization evaluation, what is the precedence order among statements?",
+    "options": [
+      "An explicit deny in any policy overrides every allow, including in SCPs and resource-based policies",
+      "Resource-based policies always override identity-based policies",
+      "SCPs apply only when no resource-based policy exists",
+      "The most recently modified policy statement takes precedence"
+    ],
+    "answer": "An explicit deny in any policy overrides every allow, including in SCPs and resource-based policies",
+    "explanation": "During evaluation, an explicit deny anywhere in the applicable policy set — identity, resource, SCP, or permission boundary — wins unconditionally. Absent a deny, the request needs at least one allow and must pass every boundary.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 85,
+    "question": "What is the core mechanism of KMS envelope encryption?",
+    "options": [
+      "All data is streamed to the KMS service for encryption before storage",
+      "A static customer-managed key is embedded in the application binary",
+      "KMS generates a data key used to encrypt data locally; only the encrypted data key is stored alongside the ciphertext",
+      "HSMs stream raw key material directly to the storage device"
+    ],
+    "answer": "KMS generates a data key used to encrypt data locally; only the encrypted data key is stored alongside the ciphertext",
+    "explanation": "Envelope encryption uses a KMS key only to protect a per-object data key returned in both plaintext and encrypted forms. Data is encrypted locally, and the encrypted data key is persisted with the ciphertext for later decryption via KMS.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 86,
+    "question": "Which configuration is mandatory before enabling Cross-Region Replication on an S3 bucket?",
+    "options": [
+      "Both buckets must use the same customer-managed KMS key",
+      "Versioning must be enabled on both the source and destination buckets",
+      "Both buckets must belong to the same AWS account",
+      "Ownership verification must be disabled on the destination bucket"
+    ],
+    "answer": "Versioning must be enabled on both the source and destination buckets",
+    "explanation": "Replication operates on object versions, so versioning must be enabled on both source and destination, with an IAM role granting S3 read on the source and write on the destination. Buckets may span accounts, and different KMS keys are supported.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 87,
+    "question": "What is the retrieval time for an object under the Glacier Flexible Retrieval 'Expedited' option?",
+    "options": [
+      "Typically 1–5 minutes",
+      "Typically 3–5 hours",
+      "Typically 5–12 hours",
+      "Typically 10–30 seconds"
+    ],
+    "answer": "Typically 1–5 minutes",
+    "explanation": "Expedited retrievals for Glacier Flexible Retrieval complete in one to five minutes for archives under 250 MB, though AWS may fall back to Standard timing during peak demand. Standard takes 3–5 hours and Bulk takes 5–12 hours.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 88,
+    "question": "How does S3 Intelligent-Tiering manage objects without performance impact or retrieval fees?",
+    "options": [
+      "It maintains dual copies in Standard and Glacier to enable instant tier switching",
+      "It charges retrieval fees whenever objects return to the Frequent Access tier",
+      "It monitors access patterns and moves objects to the Infrequent Access tier after 30 days without access, with no retrieval fees",
+      "It transitions all objects to Deep Archive after 30 days of inactivity"
+    ],
+    "answer": "It monitors access patterns and moves objects to the Infrequent Access tier after 30 days without access, with no retrieval fees",
+    "explanation": "Intelligent-Tiering monitors per-object access and moves objects untouched for 30 consecutive days to the Infrequent Access tier, with optional Archive (90 days) and Deep Archive (180 days) tiers. It charges a small monitoring fee but imposes no retrieval fees or penalties.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 89,
+    "question": "What does the 'capacity-optimized' Spot allocation strategy do?",
+    "options": [
+      "Selects pools with the lowest current Spot market price",
+      "Distributes instances evenly across every specified Availability Zone",
+      "Reuses reserved capacity purchased for On-Demand workloads",
+      "Launches into the pools with the most available spare capacity, minimizing interruption probability"
+    ],
+    "answer": "Launches into the pools with the most available spare capacity, minimizing interruption probability",
+    "explanation": "The capacity-optimized strategy directs Spot launches to the pools with the greatest spare capacity, statistically reducing interruption frequency. The capacity-optimized-prioritized variant layers instance-type priority hints on top of this behavior.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 90,
+    "question": "How did Lambda's Hyperplane ENI change networking for VPC-attached functions?",
+    "options": [
+      "It removed the need for NAT gateways when calling public AWS APIs",
+      "It introduced per-VPC shared ENIs reused across functions, eliminating per-function ENI setup and reducing cold-start latency",
+      "It encrypts all VPC traffic at the ENI layer by default",
+      "It provisions one dedicated ENI per concurrent execution environment"
+    ],
+    "answer": "It introduced per-VPC shared ENIs reused across functions, eliminating per-function ENI setup and reducing cold-start latency",
+    "explanation": "Hyperplane ENIs create a managed, reusable network interface per function per VPC per AZ shared across invocations, replacing the original per-environment cross-account ENI model. This reduced VPC-attach cold-start latency from tens of seconds to roughly one second.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 91,
+    "question": "Which Lambda feature resumes function execution from a pre-initialized state snapshot, and for which runtime was it introduced?",
+    "options": [
+      "SnapStart, launched for Java 11 and later runtimes",
+      "WarmStart, launched for Python 3.9 and later",
+      "HyperStart, launched for Node.js 18 and later",
+      "SnapStart, launched for .NET 6 and later"
+    ],
+    "answer": "SnapStart, launched for Java 11 and later runtimes",
+    "explanation": "Lambda SnapStart captures a snapshot of the initialized execution environment after the init phase and resumes new invocations from cached memory state, cutting Java cold-start latency by up to 10x. It was introduced specifically for Java 11 and later.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 92,
+    "question": "What does the ALB/NLB deregistration delay (connection draining) control?",
+    "options": [
+      "The interval between health check probes on a failing target",
+      "The maximum idle TCP connection time before the load balancer closes sessions",
+      "The time the load balancer keeps in-flight connections open before fully deregistering a target",
+      "The grace period before a newly registered target receives traffic"
+    ],
+    "answer": "The time the load balancer keeps in-flight connections open before fully deregistering a target",
+    "explanation": "Deregistration delay allows in-flight requests to complete after a target is removed from the target group, defaulting to 300 seconds. Health checks cease during deregistration, while new requests route to remaining targets.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 93,
+    "question": "What does ALB 'slow start mode' accomplish for newly registered targets?",
+    "options": [
+      "Gradually ramps the request volume to a newly registered target over a configurable window so it can warm up",
+      "Halts health checks until the target completes its warm-up script",
+      "Restricts the target to one concurrent connection during its first minute",
+      "Disables cross-zone balancing until the target reports healthy"
+    ],
+    "answer": "Gradually ramps the request volume to a newly registered target over a configurable window so it can warm up",
+    "explanation": "Slow start mode linearly increases the share of traffic sent to a new target over a configurable duration between 30 seconds and 15 minutes. This prevents cold targets (with empty caches or pending JIT compilation) from being overwhelmed immediately.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 94,
+    "question": "What infrastructure underlies S3 Transfer Acceleration, and what workloads benefit most?",
+    "options": [
+      "Direct Connect links between the client's data center and the nearest AWS edge",
+      "Global Accelerator anycast IPs terminating TLS at the origin bucket",
+      "S3 replication channels that pre-stage objects in destination regions",
+      "CloudFront edge locations forwarding uploads across the optimized AWS backbone; ideal for long-distance large-object transfers"
+    ],
+    "answer": "CloudFront edge locations forwarding uploads across the optimized AWS backbone; ideal for long-distance large-object transfers",
+    "explanation": "Transfer Acceleration uses globally distributed CloudFront edge locations so the long-haul segment of the upload traverses the optimized AWS backbone. It adds a per-GB fee and benefits geographically distant clients uploading large objects.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 95,
+    "question": "What does the S3 Replication Time Control (RTC) SLA guarantee?",
+    "options": [
+      "100% of objects are replicated within 24 hours of upload",
+      "99.99% of new objects are replicated within 15 minutes, backed by service credits",
+      "All objects replicate within one hour, with no SLA or credits",
+      "99.999999999% of objects replicate within five minutes"
+    ],
+    "answer": "99.99% of new objects are replicated within 15 minutes, backed by service credits",
+    "explanation": "RTC guarantees via SLA that 99.99% of new, modified, and deleted objects replicate within 15 minutes, with automatic retries and diagnostic metrics (Elapsed Time, Time Sent). Customers receive service credits if the SLA is breached.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 96,
+    "question": "Which prerequisite must be satisfied before enabling S3 MFA Delete?",
+    "options": [
+      "Versioning must be enabled on the bucket and delete requests must carry the MFA header",
+      "Default encryption must be set to SSE-KMS before activation",
+      "Object Lock in governance mode must be active",
+      "The bucket must be attached to a CloudFront Origin Access Identity"
+    ],
+    "answer": "Versioning must be enabled on the bucket and delete requests must carry the MFA header",
+    "explanation": "MFA Delete requires bucket versioning, and destructive operations — permanently deleting object versions or changing the versioning state — must include the x-amz-mfa header with a valid device serial, token, and code.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 97,
+    "question": "What latency improvement does Amazon DynamoDB Accelerator (DAX) provide and for which access pattern?",
+    "options": [
+      "Millisecond-level writes through asynchronous multi-table commits",
+      "Strongly consistent microsecond reads across global table replicas",
+      "Microsecond read latency for eventually consistent reads via an in-memory item and query cache",
+      "Automatic multi-Region replication with sub-second convergence"
+    ],
+    "answer": "Microsecond read latency for eventually consistent reads via an in-memory item and query cache",
+    "explanation": "DAX is an in-memory, write-through caching layer that serves eventually consistent GetItem, Query, and Scan requests in microseconds, with item and query caches. Strongly consistent reads bypass DAX and go directly to the table.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 98,
+    "question": "In IMDSv2, why is the default response hop limit set to 1, and when must it be raised?",
+    "options": [
+      "It limits metadata bandwidth on large instance types",
+      "It restricts responses to the primary interface; it must be raised to 2 for containerized workloads",
+      "It blocks IPv6 responses and must be raised to enable dual-stack metadata",
+      "It throttles token issuance for high-frequency automation scripts"
+    ],
+    "answer": "It restricts responses to the primary interface; it must be raised to 2 for containerized workloads",
+    "explanation": "A hop limit of 1 confines IMDSv2 responses to traffic originating on the instance itself, defeating misrouting and forwarded requests. Container network bridges add a hop, so the limit must be increased (typically to 2), commonly via bootstrap user data before containers launch.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 99,
+    "question": "Which AWS capability enables shell access to EC2 instances without opening inbound ports or managing SSH keys?",
+    "options": [
+      "AWS Systems Manager Session Manager, which uses the SSM Agent over an outbound TLS channel",
+      "The Instance Metadata Service issuing temporary SSH credentials",
+      "The EC2 Serial Console gated by hardware MFA",
+      "NAT gateway port forwarding to the instance's primary ENI"
+    ],
+    "answer": "AWS Systems Manager Session Manager, which uses the SSM Agent over an outbound TLS channel",
+    "explanation": "Session Manager tunnels interactive shell traffic through the SSM Agent's outbound HTTPS connection to Systems Manager endpoints, requiring no inbound ports, bastion hosts, or stored SSH keys. Sessions can be centrally logged to S3/CloudWatch and audited via CloudTrail.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 100,
+    "question": "How does a VPC Gateway Endpoint for Amazon S3 differ from an S3 Interface Endpoint (PrivateLink)?",
+    "options": [
+      "The Gateway Endpoint provisions an ENI with a private IP and bills hourly",
+      "The Gateway Endpoint supports cross-Region access, unlike Interface Endpoints",
+      "The Gateway Endpoint resolves public IPs through Route 53 private hosted zones",
+      "The Gateway Endpoint is free of charge, uses route table entries, and supports only S3 and DynamoDB"
+    ],
+    "answer": "The Gateway Endpoint is free of charge, uses route table entries, and supports only S3 and DynamoDB",
+    "explanation": "Gateway endpoints are implemented as route table targets, incur no endpoint charges, and are limited to S3 and DynamoDB within the same Region. Interface endpoints are ENI-based PrivateLink resources billed hourly plus per-GB, supporting most other AWS services.",
+    "difficulty": "Advanced"
+  }
+]
