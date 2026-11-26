@@ -1,0 +1,1302 @@
+[
+  {
+    "id": 1,
+    "question": "What type of indexing does the .loc[] accessor use in pandas?",
+    "options": [
+      "Integer position-based indexing",
+      "Label-based indexing",
+      "Boolean column indexing only",
+      "Hash-based key indexing"
+    ],
+    "answer": "Label-based indexing",
+    "explanation": ".loc[] selects rows and columns by their index labels, not integer positions. In contrast, .iloc[] uses integer position-based indexing.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 2,
+    "question": "Which pandas accessor selects data by integer position along the index?",
+    "options": [
+      ".loc[]",
+      ".at[]",
+      ".iloc[]",
+      ".idx[]"
+    ],
+    "answer": ".iloc[]",
+    "explanation": ".iloc[] is strictly integer position-based, so df.iloc[0] returns the first row regardless of index labels. .loc[] would interpret 0 as a label, not a position.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 3,
+    "question": "For a DataFrame with integer index labels 1 through 5, what does df.loc[1:3] return?",
+    "options": [
+      "Rows with labels 1 and 2, excluding label 3",
+      "Rows with labels 1, 2, and 3, including the end label",
+      "Rows at integer positions 1 and 2 only",
+      "An error, because .loc[] requires single labels"
+    ],
+    "answer": "Rows with labels 1, 2, and 3, including the end label",
+    "explanation": ".loc[] slices are label-based and inclusive of the end label. .iloc[] slices are position-based and exclude the end position, which is a common source of bugs.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 4,
+    "question": "How many rows does df.head() return by default?",
+    "options": [
+      "3",
+      "5",
+      "10",
+      "All rows"
+    ],
+    "answer": "5",
+    "explanation": "head() defaults to returning the first 5 rows, though you can pass an argument like df.head(10) to change this. Similarly, tail() defaults to the last 5 rows.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 5,
+    "question": "What does the df.info() method provide?",
+    "options": [
+      "Descriptive statistics like mean and std for numeric columns",
+      "A concise summary including column dtypes, non-null counts, and memory usage",
+      "The first and last rows of the DataFrame",
+      "A count of unique values in each column"
+    ],
+    "answer": "A concise summary including column dtypes, non-null counts, and memory usage",
+    "explanation": "info() prints the DataFrame's shape, each column's dtype, non-null value counts, and memory usage. Descriptive statistics come from describe(), not info().",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 6,
+    "question": "What does df.describe() return by default for a numeric DataFrame?",
+    "options": [
+      "Column names and their data types",
+      "Count, mean, std, min, quartiles, and max for each numeric column",
+      "The number of missing values per column",
+      "A random sample of rows from the DataFrame"
+    ],
+    "answer": "Count, mean, std, min, quartiles, and max for each numeric column",
+    "explanation": "describe() generates basic descriptive statistics for numeric columns by default. When applied to non-numeric columns with include='object', it returns counts, unique values, top values, and frequencies instead.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 7,
+    "question": "What is the effect of calling df.dropna() with no arguments?",
+    "options": [
+      "It replaces all NaN values with zero",
+      "It removes all rows containing at least one NaN value",
+      "It removes all columns containing NaN values",
+      "It drops duplicate rows from the DataFrame"
+    ],
+    "answer": "It removes all rows containing at least one NaN value",
+    "explanation": "By default dropna() works on rows (axis=0) and drops any row with at least one missing value. Passing subset=[...] restricts the check to specific columns, and how='all' only drops rows where every value is NaN.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 8,
+    "question": "Which method replaces NaN values in a DataFrame with a specified value?",
+    "options": [
+      "df.replace_na()",
+      "df.fillna(value)",
+      "df.interpolate_na()",
+      "df.mask_na(value)"
+    ],
+    "answer": "df.fillna(value)",
+    "explanation": "fillna() fills missing entries with a supplied value while keeping all rows, unlike dropna() which discards incomplete rows. A common pattern is df.fillna('unknown') to label gaps explicitly.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 9,
+    "question": "What does df.isna().sum() compute?",
+    "options": [
+      "The total number of rows in the DataFrame",
+      "The count of NaN values in each column",
+      "The sum of all numeric values, ignoring NaN",
+      "A boolean mask marking missing cells"
+    ],
+    "answer": "The count of NaN values in each column",
+    "explanation": "isna() produces a boolean DataFrame (True where missing), and summing booleans counts the True values per column. This is the standard first step for locating missing data before deciding to drop or fill.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 10,
+    "question": "When aggregating with methods like mean(), how does pandas handle NaN values by default?",
+    "options": [
+      "It raises an error if any NaN is present",
+      "It treats NaN as zero and includes it in the calculation",
+      "It skips NaN values and computes over the remaining values",
+      "It returns NaN unless dropna() is called first"
+    ],
+    "answer": "It skips NaN values and computes over the remaining values",
+    "explanation": "Aggregations like mean(), sum(), and count() exclude NaN by default (skipna=True). This means you often do not need to clean missing data before computing grouped summaries.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 11,
+    "question": "What data structure does df['column_name'] return?",
+    "options": [
+      "A DataFrame with one row",
+      "A NumPy matrix",
+      "A Series",
+      "A Python list"
+    ],
+    "answer": "A Series",
+    "explanation": "Selecting a single column with [] returns a pandas Series, which carries its own index. To select multiple columns and get back a DataFrame, you must pass a list: df[['col1', 'col2']].",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 12,
+    "question": "How do you select multiple columns, 'col1' and 'col2', from a DataFrame?",
+    "options": [
+      "df['col1', 'col2']",
+      "df[['col1', 'col2']]",
+      "df.select('col1', 'col2')",
+      "df.columns['col1', 'col2']"
+    ],
+    "answer": "df[['col1', 'col2']]",
+    "explanation": "A list of column names passed inside double brackets returns a new DataFrame with those columns. Using df['col1', 'col2'] without the inner list raises a KeyError because it is treated as a single tuple key.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 13,
+    "question": "What is the result of filtering with df[df['age'] > 30]?",
+    "options": [
+      "It returns a Series of boolean values for each row",
+      "It returns only the rows where the condition is True",
+      "It modifies df in place, removing rows where age <= 30",
+      "It returns the 'age' column sorted in descending order"
+    ],
+    "answer": "It returns only the rows where the condition is True",
+    "explanation": "The inner expression produces a boolean mask, and indexing the DataFrame with it keeps only rows where the mask is True. This filtering returns a new DataFrame and does not mutate the original.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 14,
+    "question": "Which operator correctly combines two filtering conditions in pandas?",
+    "options": [
+      "and",
+      "&&",
+      "&",
+      "+"
+    ],
+    "answer": "&",
+    "explanation": "Pandas requires element-wise bitwise operators (& for AND, | for OR) when combining boolean masks, with each condition wrapped in parentheses. The Python keywords 'and'/'or' raise an ambiguity error because Series truth values are undefined.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 15,
+    "question": "What does df.groupby('column1').sum() produce?",
+    "options": [
+      "A DataFrame sorted by 'column1' in ascending order",
+      "A single total sum of all numeric columns",
+      "Sum of numeric columns computed separately for each unique value of 'column1'",
+      "A new column containing cumulative sums of 'column1'"
+    ],
+    "answer": "Sum of numeric columns computed separately for each unique value of 'column1'",
+    "explanation": "groupby() splits rows into groups by the key column's unique values, and sum() aggregates each group independently. This mirrors the SQL GROUP BY clause and is the workhorse for per-category summaries.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 16,
+    "question": "What is the purpose of the .agg() method after a groupby() call?",
+    "options": [
+      "To apply one or more aggregation functions to each group, producing a summary per group",
+      "To sort each group's rows by value",
+      "To merge the grouped data back with the original DataFrame",
+      "To drop groups containing missing values"
+    ],
+    "answer": "To apply one or more aggregation functions to each group, producing a summary per group",
+    "explanation": "agg() lets you specify aggregations such as 'mean', 'sum', or 'max'—either a single function or multiple functions per column. It answers questions like 'for each group, what is the average?' analogous to SQL GROUP BY with aggregate functions.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 17,
+    "question": "By default, what does pd.merge(df1, df2, on='key') use as the join type?",
+    "options": [
+      "Outer join",
+      "Left join",
+      "Inner join",
+      "Cross join"
+    ],
+    "answer": "Inner join",
+    "explanation": "The how parameter defaults to 'inner', keeping only rows where the key exists in both DataFrames. Use how='left', 'right', or 'outer' to change which rows are retained.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 18,
+    "question": "What does pd.concat([df1, df2]) do by default?",
+    "options": [
+      "Appends the rows of df2 below df1's rows (axis=0)",
+      "Appends the columns of df2 beside df1's columns (axis=1)",
+      "Merges the DataFrames on their shared column names",
+      "Joins the DataFrames on their index labels"
+    ],
+    "answer": "Appends the rows of df2 below df1's rows (axis=0)",
+    "explanation": "concat() stacks DataFrames along axis=0 by default, appending rows vertically. Passing axis=1 instead appends columns side by side.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 19,
+    "question": "By default, df1.join(df2) joins the DataFrames on what?",
+    "options": [
+      "A specified key column",
+      "The index labels",
+      "The first column of each DataFrame",
+      "All columns with matching names"
+    ],
+    "answer": "The index labels",
+    "explanation": "join() is a convenience method for joining on indexes by default (a left join on index). To join on a column instead, use merge() with the on parameter, or pass on='col' to join() if the key is a column in the caller.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 20,
+    "question": "What does df.pivot_table() primarily do?",
+    "options": [
+      "Reshapes a DataFrame from wide format to long format",
+      "Creates a spreadsheet-style table that aggregates values by grouping on specified columns",
+      "Sorts the DataFrame by multiple columns simultaneously",
+      "Removes duplicate combinations of column values"
+    ],
+    "answer": "Creates a spreadsheet-style table that aggregates values by grouping on specified columns",
+    "explanation": "pivot_table() groups data by index/columns parameters and applies an aggregation function (mean by default) to values. It is the standard tool for producing summarized cross-tabulations of a dataset.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 21,
+    "question": "What does pd.melt(df) do to a DataFrame?",
+    "options": [
+      "Spreads rows into columns to widen the table",
+      "Gathers columns into rows, converting wide format to long format",
+      "Combines multiple DataFrames into one",
+      "Computes rolling statistics across columns"
+    ],
+    "answer": "Gathers columns into rows, converting wide format to long format",
+    "explanation": "melt() unpivots a wide DataFrame into long format, producing 'variable' and 'value' columns that store former column names and their values. It is the inverse operation of pivoting and is essential for tidy-data workflows.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 22,
+    "question": "What does df.sort_values('mpg', ascending=False) do?",
+    "options": [
+      "Orders rows by 'mpg' from highest to lowest",
+      "Orders rows by 'mpg' from lowest to highest",
+      "Sorts the index labels in descending order",
+      "Sorts columns alphabetically in reverse"
+    ],
+    "answer": "Orders rows by 'mpg' from highest to lowest",
+    "explanation": "sort_values() orders rows by the given column, and ascending=False reverses the direction to descending. To sort by the index instead of a column, use sort_index().",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 23,
+    "question": "What does the df.shape attribute return?",
+    "options": [
+      "A tuple of (number of rows, number of columns)",
+      "A tuple of (number of columns, number of rows)",
+      "The total number of cells in the DataFrame",
+      "The memory footprint of the DataFrame"
+    ],
+    "answer": "A tuple of (number of rows, number of columns)",
+    "explanation": "shape returns (rows, columns) as a tuple, so df.shape[0] gives the row count. It is an attribute, not a method, so it is called without parentheses.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 24,
+    "question": "What does df['col'].value_counts() return?",
+    "options": [
+      "The sum of numeric values in 'col'",
+      "The number of NaN values in 'col'",
+      "A Series counting occurrences of each unique value in 'col'",
+      "The total number of distinct values in 'col'"
+    ],
+    "answer": "A Series counting occurrences of each unique value in 'col'",
+    "explanation": "value_counts() tallies how many times each unique value appears, sorted by frequency by default. To get just the count of distinct values, use df['col'].nunique().",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 25,
+    "question": "What does df['col'].apply(lambda x: x + 10) do?",
+    "options": [
+      "Adds 10 to the column name",
+      "Applies the function to each element of the column and returns the transformed values",
+      "Applies the function to the entire Series at once as a single value",
+      "Raises a TypeError because apply() works only on DataFrames"
+    ],
+    "answer": "Applies the function to each element of the column and returns the transformed values",
+    "explanation": "apply() on a Series invokes the function once per element and returns a new Series of results. Assigning the result to a new column, like df['plus10'] = df['col'].apply(...), is a common transformation pattern.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 26,
+    "question": "What does df.rename(columns={'y': 'year'}) do?",
+    "options": [
+      "Renames the column 'y' to 'year' and returns a new DataFrame by default",
+      "Renames the row index label 'y' to 'year'",
+      "Permanently modifies the DataFrame in place with no way to avoid it",
+      "Deletes the column 'y' and creates a new 'year' column"
+    ],
+    "answer": "Renames the column 'y' to 'year' and returns a new DataFrame by default",
+    "explanation": "rename() with the columns parameter maps old names to new names and returns a new DataFrame unless inplace=True is set. It does not drop or duplicate any columns.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 27,
+    "question": "What does df.reset_index() do by default?",
+    "options": [
+      "Deletes the current index without keeping any record of it",
+      "Sorts the DataFrame by its current index",
+      "Replaces the index with default integers and moves the old index into a new column",
+      "Sets the first column as the new index"
+    ],
+    "answer": "Replaces the index with default integers and moves the old index into a new column",
+    "explanation": "reset_index() inserts the previous index as a regular column named 'index' (or the index's name) and assigns a fresh 0-based integer index. Pass drop=True to discard the old index instead of keeping it as a column.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 28,
+    "question": "Which method removes duplicate rows from a DataFrame?",
+    "options": [
+      "df.drop_duplicates()",
+      "df.drop_nulls()",
+      "df.unique()",
+      "df.deduplicate()"
+    ],
+    "answer": "df.drop_duplicates()",
+    "explanation": "drop_duplicates() removes rows that exactly duplicate earlier rows, keeping the first occurrence by default. df.unique() exists only on Series and returns unique values, not deduplicated DataFrames.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 29,
+    "question": "What is the purpose of the .astype() method in pandas?",
+    "options": [
+      "To convert a column's values to a specified data type",
+      "To compute the type of each column automatically",
+      "To filter rows by their type",
+      "To compare the dtypes of two DataFrames"
+    ],
+    "answer": "To convert a column's values to a specified data type",
+    "explanation": "astype() casts a Series or DataFrame to a given dtype, e.g., df['col'].astype('float') or .astype('category'). It is part of the standard data-cleaning toolkit alongside dropna(), fillna(), and drop_duplicates().",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 30,
+    "question": "What does df.dtypes return?",
+    "options": [
+      "A Series mapping each column name to its data type",
+      "A single dtype shared by all columns",
+      "A list of row index labels",
+      "The number of numeric columns only"
+    ],
+    "answer": "A Series mapping each column name to its data type",
+    "explanation": "dtypes returns a Series with the dtype of each column, such as int64, float64, or object. It is useful for verifying that type conversions via astype() succeeded.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 31,
+    "question": "What does df.drop(columns=['Length', 'Height']) do?",
+    "options": [
+      "Drops rows whose values in 'Length' or 'Height' are missing",
+      "Removes the 'Length' and 'Height' columns from the resulting DataFrame",
+      "Deletes the columns permanently from the original object in place",
+      "Sets the 'Length' and 'Height' values to NaN"
+    ],
+    "answer": "Removes the 'Length' and 'Height' columns from the resulting DataFrame",
+    "explanation": "drop() with columns= removes the specified columns and returns a new DataFrame unless inplace=True is used. To drop rows, you pass index labels to the index parameter instead.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 32,
+    "question": "What does df['col'].nunique() return?",
+    "options": [
+      "The number of rows in 'col'",
+      "The number of distinct values in 'col'",
+      "A list of all unique values in 'col'",
+      "The frequency of the most common value in 'col'"
+    ],
+    "answer": "The number of distinct values in 'col'",
+    "explanation": "nunique() returns an integer count of unique values in the column, excluding NaN by default. To see the unique values themselves, use df['col'].unique(); to see their frequencies, use value_counts().",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 33,
+    "question": "Which function loads a CSV file into a pandas DataFrame?",
+    "options": [
+      "pd.load_csv()",
+      "pd.read_csv()",
+      "pd.csv_to_df()",
+      "pd.open_csv()"
+    ],
+    "answer": "pd.read_csv()",
+    "explanation": "pd.read_csv() parses a CSV file into a DataFrame, with parameters for delimiters, headers, dtypes, and more. The corresponding write function is df.to_csv().",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 34,
+    "question": "What is a pandas Series?",
+    "options": [
+      "A two-dimensional table with rows and columns",
+      "A one-dimensional labeled array capable of holding a single data type",
+      "A collection of multiple DataFrames",
+      "An unordered set of key-value pairs"
+    ],
+    "answer": "A one-dimensional labeled array capable of holding a single data type",
+    "explanation": "A Series is a single column of data with an associated index, analogous to one DataFrame column. A DataFrame, by contrast, is a two-dimensional table of Series sharing a common index.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 35,
+    "question": "What does the .assign() method do on a DataFrame?",
+    "options": [
+      "Adds or transforms columns and returns a new DataFrame without mutating the original",
+      "Assigns a new index to the DataFrame in place",
+      "Assigns a group label to each row for groupby()",
+      "Overwrites the DataFrame's columns with new names permanently"
+    ],
+    "answer": "Adds or transforms columns and returns a new DataFrame without mutating the original",
+    "explanation": "assign() creates or overwrites columns functionally, returning a new DataFrame so the original stays unchanged. This makes it ideal for clean, readable method chaining, unlike direct column assignment which mutates the original.",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 36,
+    "question": "A DataFrame has a default integer index (0-5). What is the result of comparing df.loc[1:3] and df.iloc[1:3]?",
+    "options": [
+      "df.loc[1:3] returns rows at positions 1 and 2; df.iloc[1:3] returns rows at labels 1, 2, and 3",
+      "Both return rows at labels 1, 2, and 3, including the endpoint",
+      "df.loc[1:3] returns rows at labels 1, 2, and 3; df.iloc[1:3] returns rows at positions 1 and 2",
+      "Both return rows at positions 1 and 2, excluding the endpoint"
+    ],
+    "answer": "df.loc[1:3] returns rows at labels 1, 2, and 3; df.iloc[1:3] returns rows at positions 1 and 2",
+    "explanation": ".loc is label-based, and its slices include the stop label, so rows 1, 2, and 3 are returned. .iloc is position-based and follows standard Python slicing semantics, excluding the stop position.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 37,
+    "question": "What does calling df.groupby('region') alone return, before any aggregation is applied?",
+    "options": [
+      "A new DataFrame with one pre-summed row per group",
+      "A GroupBy object that stores grouping information lazily until an aggregation is applied",
+      "A list of tuples mapping each group key to its row positions",
+      "A Series of the unique group key values"
+    ],
+    "answer": "A GroupBy object that stores grouping information lazily until an aggregation is applied",
+    "explanation": "groupby() returns a DataFrameGroupBy object that only holds the split logic; no computation occurs until an aggregation such as sum(), mean(), or agg() is invoked. This lazy evaluation mirrors SQL's GROUP BY needing an aggregate function.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 38,
+    "question": "In pd.merge(df1, df2, on='key'), what is the default value of the how parameter?",
+    "options": [
+      "left",
+      "outer",
+      "right",
+      "inner"
+    ],
+    "answer": "inner",
+    "explanation": "pd.merge() defaults to how='inner', retaining only rows whose key values exist in both DataFrames. Outer, left, and right joins must be requested explicitly.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 39,
+    "question": "What does pd.concat([df1, df2], axis=1) do?",
+    "options": [
+      "Appends df2's columns to the right of df1's columns, aligning rows by index label",
+      "Appends df2's rows below df1's rows, ignoring the index",
+      "Performs an inner join on the shared key columns of both DataFrames",
+      "Stacks the DataFrames into a single Series"
+    ],
+    "answer": "Appends df2's columns to the right of df1's columns, aligning rows by index label",
+    "explanation": "With axis=1, concat performs a horizontal join, aligning rows on the index label (outer join by default) and filling gaps with NaN. Appending rows is axis=0, the default.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 40,
+    "question": "In df.pivot_table(index='a', columns='b', values='c'), what aggregation is applied to duplicate index/column pairs by default?",
+    "options": [
+      "count",
+      "mean",
+      "sum",
+      "first"
+    ],
+    "answer": "mean",
+    "explanation": "pivot_table() defaults to aggfunc='mean', so duplicated (index, columns) entries are averaged. Other functions like 'sum' or 'count' must be passed explicitly.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 41,
+    "question": "What is the default behavior of df.dropna() with no arguments?",
+    "options": [
+      "Drops rows only where every value is NaN (axis=0, how='all')",
+      "Drops columns containing at least one NaN value (axis=1, how='any')",
+      "Drops rows containing at least one NaN value (axis=0, how='any')",
+      "Replaces NaN values with the column mean and drops nothing"
+    ],
+    "answer": "Drops rows containing at least one NaN value (axis=0, how='any')",
+    "explanation": "The defaults are axis=0 and how='any', so any row with at least one missing value is removed. Passing subset=[...] restricts the NaN check to specific columns, and how='all' requires every value in the row to be NaN.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 42,
+    "question": "What does df.fillna(method='ffill') do?",
+    "options": [
+      "Backfills NaN values using the next valid observation",
+      "Propagates the last valid observation forward to fill subsequent NaN values",
+      "Fills NaN values with the cumulative forward mean of the column",
+      "Fills NaN values only in the first row of the DataFrame"
+    ],
+    "answer": "Propagates the last valid observation forward to fill subsequent NaN values",
+    "explanation": "method='ffill' (equivalent to df.ffill()) replaces each NaN with the most recent preceding valid value along the axis. Backfill ('bfill') is the opposite, using the next valid observation.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 43,
+    "question": "Which method applies a function element-wise to every cell of an entire DataFrame (not a Series)?",
+    "options": [
+      "DataFrame.apply()",
+      "Series.map()",
+      "DataFrame.applymap()",
+      "DataFrame.eval()"
+    ],
+    "answer": "DataFrame.applymap()",
+    "explanation": "applymap() applies the function to each individual element of the DataFrame. DataFrame.apply() operates on whole rows or columns (axis=0/1), and Series.map() is element-wise but Series-only.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 44,
+    "question": "By default, how does df['col'].value_counts() order and treat its output?",
+    "options": [
+      "Sorts counts in descending order of frequency and excludes NaN values by default",
+      "Sorts counts in ascending order of frequency and includes NaN",
+      "Preserves the original row order of the DataFrame and includes NaN",
+      "Sorts by the unique value labels alphabetically and excludes NaN"
+    ],
+    "answer": "Sorts counts in descending order of frequency and excludes NaN values by default",
+    "explanation": "value_counts() returns unique values sorted by count in descending order, with dropna=True excluding missing values. Passing dropna=False includes NaN as a countable category.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 45,
+    "question": "What does df.reset_index() do by default (drop=False)?",
+    "options": [
+      "Discards the current index entirely and assigns a new RangeIndex",
+      "Moves the current index into a new column and assigns a new default integer index",
+      "Sorts the DataFrame rows by the current index values",
+      "Swaps the index with the first column of the DataFrame"
+    ],
+    "answer": "Moves the current index into a new column and assigns a new default integer index",
+    "explanation": "With the default drop=False, the existing index labels are inserted as a regular column named 'index' (or the index name), and a fresh RangeIndex is applied. drop=True discards the old index instead of preserving it.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 46,
+    "question": "In df.sort_values('col'), where are NaN values placed by default?",
+    "options": [
+      "At the beginning of the result",
+      "Dropped from the result entirely",
+      "At the end of the result",
+      "In their original positions"
+    ],
+    "answer": "At the end of the result",
+    "explanation": "The na_position parameter defaults to 'last', placing NaN at the end regardless of the ascending setting. Use na_position='first' to place them at the start.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 47,
+    "question": "What does df[df['age'] > 30] return?",
+    "options": [
+      "A Series of booleans indicating which rows satisfy the condition",
+      "A DataFrame containing only the rows where the condition evaluates to True",
+      "A DataFrame with rows where the condition is True or NaN",
+      "The integer positions of all rows where age exceeds 30"
+    ],
+    "answer": "A DataFrame containing only the rows where the condition evaluates to True",
+    "explanation": "The inner expression df['age'] > 30 produces a boolean Series (the mask), and indexing the DataFrame with it keeps only rows where the mask is True. The boolean Series itself is produced before the outer indexing operation.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 48,
+    "question": "What is the structure of the result of df.groupby('cat').agg(['mean', 'max']) on numeric columns?",
+    "options": [
+      "A DataFrame with a MultiIndex on columns: one level for the original column name, one for the aggregation function",
+      "A Series with a MultiIndex of group keys and function names",
+      "A DataFrame with the functions as rows and the original columns unchanged",
+      "A list of separate DataFrames, one per aggregation function"
+    ],
+    "answer": "A DataFrame with a MultiIndex on columns: one level for the original column name, one for the aggregation function",
+    "explanation": "Applying multiple aggregation functions produces a column MultiIndex whose top level holds the original column names and whose second level holds the function names. Group keys occupy the row index.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 49,
+    "question": "How does grouped.transform('mean') differ from grouped.apply() in terms of output shape?",
+    "options": [
+      "transform returns one row per group, while apply returns the original length",
+      "transform returns a scalar per group, while apply returns a full-length object",
+      "transform returns an object with the same index and length as the original, broadcasting group-level results back to each row",
+      "transform and apply always return objects of identical shape"
+    ],
+    "answer": "transform returns an object with the same index and length as the original, broadcasting group-level results back to each row",
+    "explanation": "transform() broadcasts each group's result back to every member row, preserving the original index, which makes it ideal for adding group-derived columns. Aggregations like mean() instead collapse to one row per group.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 50,
+    "question": "What does df.unstack() do to a DataFrame or Series with a MultiIndex?",
+    "options": [
+      "Pivots the innermost column level into new index rows, producing a longer object",
+      "Pivots the innermost index level into new columns, producing a wider object",
+      "Removes all levels of the MultiIndex, leaving a flat index",
+      "Sorts the MultiIndex levels in descending order"
+    ],
+    "answer": "Pivots the innermost index level into new columns, producing a wider object",
+    "explanation": "unstack() rotates the innermost index level into column headers, widening the object. stack() is its inverse, moving the innermost column level down into the index.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 51,
+    "question": "What join does df1.join(df2) perform by default, and on what?",
+    "options": [
+      "An inner join on the shared key columns of both DataFrames",
+      "A right join on df2's index",
+      "An outer join on the union of both indexes",
+      "A left join on df1's index"
+    ],
+    "answer": "A left join on df1's index",
+    "explanation": "DataFrame.join() defaults to how='left', matching df2's index against df1's index. This makes it index-oriented, unlike merge(), which defaults to an inner join on shared columns.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 52,
+    "question": "What happens when df['col'].astype(int) is called on a column containing non-convertible values like 'abc'?",
+    "options": [
+      "It silently replaces unconvertible values with NaN",
+      "It raises a ValueError because astype() performs a strict cast by default",
+      "It coerces unconvertible values to 0 and continues",
+      "It returns the original column unchanged"
+    ],
+    "answer": "It raises a ValueError because astype() performs a strict cast by default",
+    "explanation": "astype() requires every value to be convertible to the target dtype and raises ValueError otherwise. To tolerate invalid entries and coerce them to NaN, pd.to_numeric(..., errors='coerce') is used instead.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 53,
+    "question": "What is the default behavior of df.drop_duplicates() with no arguments?",
+    "options": [
+      "Keeps the last occurrence of each fully duplicated row, considering all columns",
+      "Removes all duplicates, including the first occurrence",
+      "Keeps the first occurrence of each fully duplicated row, considering all columns",
+      "Considers only the first column when identifying duplicates"
+    ],
+    "answer": "Keeps the first occurrence of each fully duplicated row, considering all columns",
+    "explanation": "The defaults are keep='first' and subset=None, meaning all columns are compared and only the first occurrence of each duplicate row is retained. keep='last' or keep=False alter which copies survive.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 54,
+    "question": "What does df.isna().sum() return?",
+    "options": [
+      "A Series indexed by column name, giving the count of missing values in each column",
+      "A single integer equal to the total number of NaN values in the DataFrame",
+      "A DataFrame of booleans marking the position of each NaN",
+      "A Series indexed by row, giving the count of missing values in each row"
+    ],
+    "answer": "A Series indexed by column name, giving the count of missing values in each column",
+    "explanation": "isna() produces a boolean DataFrame where True marks missing entries, and summing (True treated as 1) yields a per-column count Series. To get a total, chain another .sum().",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 55,
+    "question": "By default, which columns does df.describe() include?",
+    "options": [
+      "All columns, both numeric and non-numeric",
+      "Only columns without any missing values",
+      "Only datetime and categorical columns",
+      "Only numeric columns (int and float dtypes)"
+    ],
+    "answer": "Only numeric columns (int and float dtypes)",
+    "explanation": "By default describe() summarizes numeric columns with statistics like count, mean, and std. Include object, categorical, or datetime columns via include='all' or a specific dtype list.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 56,
+    "question": "What distinguishes df.assign(new_col=...) from df['new_col'] = ...?",
+    "options": [
+      "assign returns a new DataFrame without modifying the original, making it suitable for method chaining",
+      "assign modifies the DataFrame in place and returns None",
+      "assign can only add constant values, not computed expressions",
+      "assign automatically drops rows containing NaN in the new column"
+    ],
+    "answer": "assign returns a new DataFrame without modifying the original, making it suitable for method chaining",
+    "explanation": "assign() is a non-mutating operation that returns a copy with the new column, enabling clean chained pipelines. Direct assignment df['new_col'] = ... mutates the original DataFrame in place.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 57,
+    "question": "When pd.merge(df1, df2, on='key') encounters overlapping non-key column names, what happens by default?",
+    "options": [
+      "The merge fails with a MergeError",
+      "The overlapping columns are suffixed '_x' (from df1) and '_y' (from df2)",
+      "The overlapping columns are dropped from the result",
+      "The values of the overlapping columns are averaged"
+    ],
+    "answer": "The overlapping columns are suffixed '_x' (from df1) and '_y' (from df2)",
+    "explanation": "The suffixes parameter defaults to ('_x', '_y'), disambiguating identically named columns from the left and right DataFrames. Custom suffixes like ('_2023', '_2024') can be supplied to keep results readable.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 58,
+    "question": "What does setting indicator=True in pd.merge() produce?",
+    "options": [
+      "A boolean column marking rows that contain any NaN",
+      "A printed warning for every unmatched row",
+      "A '_merge' column with categorical values 'left_only', 'right_only', or 'both' for each row",
+      "A '_match' column containing the match count for each key"
+    ],
+    "answer": "A '_merge' column with categorical values 'left_only', 'right_only', or 'both' for each row",
+    "explanation": "indicator=True appends a categorical column named '_merge' recording each row's provenance in the join. It is commonly used to audit merge results or simulate full outer joins with source tracking.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 59,
+    "question": "What does df['col'].nunique() count by default?",
+    "options": [
+      "The number of distinct values, including NaN as a separate value",
+      "The number of distinct values, excluding NaN by default",
+      "The total number of non-null values",
+      "The frequency of the most common value"
+    ],
+    "answer": "The number of distinct values, excluding NaN by default",
+    "explanation": "nunique() defaults to dropna=True, counting only distinct non-missing values. This differs from len(df['col'].unique()), which includes NaN as an entry in the array of unique values.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 60,
+    "question": "In df['col'].rank(), what does method='average' (the default) assign to tied values?",
+    "options": [
+      "The average of the ranks that the tied values would collectively occupy",
+      "The lowest rank of the tied group, assigned to every member",
+      "The highest rank of the tied group, assigned to every member",
+      "A rank based on the original row order"
+    ],
+    "answer": "The average of the ranks that the tied values would collectively occupy",
+    "explanation": "With method='average', two values tied for ranks 2 and 3 each receive 2.5. Alternatives include min, max, first, and dense, which handle ties differently.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 61,
+    "question": "A DataFrame contains duplicate (index, column) pairs for a pivot. How do df.pivot() and df.pivot_table() behave?",
+    "options": [
+      "Both raise a ValueError on duplicate entries",
+      "pivot_table() raises an error; pivot() silently keeps the first occurrence",
+      "Both resolve duplicates automatically by averaging",
+      "pivot() raises a ValueError on duplicates; pivot_table() resolves them via an aggregation function"
+    ],
+    "answer": "pivot() raises a ValueError on duplicates; pivot_table() resolves them via an aggregation function",
+    "explanation": "pivot() requires unique index/column combinations and raises 'ValueError: Index contains duplicate entries' otherwise. pivot_table() tolerates duplicates by aggregating them with aggfunc (mean by default).",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 62,
+    "question": "What columns does pd.melt(df, id_vars=['id']) produce, assuming all remaining columns are melted?",
+    "options": [
+      "Only the id_vars columns, with all other data discarded",
+      "The id_vars columns plus two new columns named 'variable' and 'value'",
+      "The id_vars columns plus one column per original value column",
+      "A single column combining variable names and their values"
+    ],
+    "answer": "The id_vars columns plus two new columns named 'variable' and 'value'",
+    "explanation": "melt() converts a wide DataFrame to long format: id_vars columns are repeated as identifier columns, 'variable' holds the former column names, and 'value' holds their data. Restrict melted columns via value_vars.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 63,
+    "question": "Which pattern avoids the SettingWithCopyWarning when modifying a filtered subset of a DataFrame?",
+    "options": [
+      "df[df['col'] > 5]['col2'] = 0",
+      "df['col2'][df['col'] > 5] = 0",
+      "df.loc[df['col'] > 5, 'col2'] = 0",
+      "df.at[df['col'] > 5, 'col2'] = 0"
+    ],
+    "answer": "df.loc[df['col'] > 5, 'col2'] = 0",
+    "explanation": "Chained assignment (indexing twice in separate operations) may operate on a temporary copy, triggering SettingWithCopyWarning. A single .loc operation with both the row mask and column label writes to the original DataFrame directly.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 64,
+    "question": "By default (as_index=True), what happens to the grouping keys after df.groupby('region').sum()?",
+    "options": [
+      "The grouping keys become the index of the resulting DataFrame",
+      "The grouping keys remain a regular column in the result",
+      "The grouping keys are discarded from the result",
+      "The grouping keys become the columns of the resulting DataFrame"
+    ],
+    "answer": "The grouping keys become the index of the resulting DataFrame",
+    "explanation": "With the default as_index=True, group keys are promoted to the row index of the aggregated result. Pass as_index=False to keep them as ordinary columns, or call reset_index() afterward.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 65,
+    "question": "What is the default join behavior of pd.concat([df1, df2]) when stacking vertically (axis=0) with non-identical columns?",
+    "options": [
+      "join='inner': the result contains only the columns shared by both DataFrames",
+      "join='outer': the result contains the union of columns, with NaN where a column is absent",
+      "join='left': only df1's columns are retained",
+      "concat raises an error when the column sets differ"
+    ],
+    "answer": "join='outer': the result contains the union of columns, with NaN where a column is absent",
+    "explanation": "concat defaults to join='outer', keeping every column from all DataFrames and filling absent entries with NaN. Pass join='inner' to restrict the result to columns present in all inputs.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 66,
+    "question": "What does df.query(\"age > 30 and city == 'NYC'\") do?",
+    "options": [
+      "Filters rows using a string expression evaluated as a boolean mask, using numexpr for acceleration if installed",
+      "Executes the expression as SQL against an external database",
+      "Returns only the columns mentioned in the expression",
+      "Applies the expression to the DataFrame index rather than its columns"
+    ],
+    "answer": "Filters rows using a string expression evaluated as a boolean mask, using numexpr for acceleration if installed",
+    "explanation": "query() parses the string into a boolean mask over the columns and returns the matching rows, falling back to standard Python evaluation when numexpr is unavailable. Column names are referenced directly without the df[...] syntax.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 67,
+    "question": "What is the key difference between pd.cut() and pd.qcut()?",
+    "options": [
+      "cut assigns bins by quantiles; qcut assigns equal-width bins",
+      "cut assigns equal-width bins based on value ranges; qcut assigns bins by quantiles for roughly equal frequencies",
+      "cut works only on numeric data; qcut works only on strings",
+      "cut returns a DataFrame; qcut returns a Series"
+    ],
+    "answer": "cut assigns equal-width bins based on value ranges; qcut assigns bins by quantiles for roughly equal frequencies",
+    "explanation": "pd.cut(x, 4) divides the value range into four equal-width intervals, while pd.qcut(x, 4) uses quartiles so each bin contains approximately the same number of observations. Both return a Categorical/Series of bin labels.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 68,
+    "question": "In pd.merge(df1, df2, on='key', how='left'), what happens to rows in df1 whose key has no match in df2?",
+    "options": [
+      "They are dropped from the result",
+      "They are kept, with NaN values in df2's columns",
+      "They are kept, with zeros filling df2's columns",
+      "They raise a KeyError during the merge"
+    ],
+    "answer": "They are kept, with NaN values in df2's columns",
+    "explanation": "A left join preserves every row of the left DataFrame; unmatched right-side columns are filled with NaN. An inner join (the default) would drop these rows entirely.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 69,
+    "question": "What happens to values in a Series that are absent as keys when applying s.map(some_dict)?",
+    "options": [
+      "They raise a KeyError",
+      "They are left unchanged",
+      "They become NaN in the resulting Series",
+      "They are removed from the Series"
+    ],
+    "answer": "They become NaN in the resulting Series",
+    "explanation": "Series.map() with a dictionary maps each value through the dict lookup, and unmatched values become NaN. In contrast, Series.replace() leaves unmatched values untouched, a frequent source of confusion between the two.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 70,
+    "question": "What distinguishes df.at from df.iat for scalar access?",
+    "options": [
+      "at accesses by integer position; iat accesses by row/column label",
+      "at can retrieve entire rows; iat retrieves only single columns",
+      "at and iat are aliases of loc and iloc with identical performance characteristics",
+      "at accesses a single value by row/column label; iat accesses a single value by integer position"
+    ],
+    "answer": "at accesses a single value by row/column label; iat accesses a single value by integer position",
+    "explanation": "at and iat are optimized accessors restricted to exactly one scalar element: at uses labels (like loc) and iat uses positions (like iloc). This constraint makes them faster than loc/iloc for single-cell reads and writes.",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 71,
+    "question": "Given a DataFrame with a default integer index, what distinguishes `df.loc[1:3]` from `df.iloc[1:3]`?",
+    "options": [
+      "`.loc[1:3]` includes the row with label 3, while `.iloc[1:3]` excludes position 3 and returns rows at positions 1 and 2 only",
+      "`.loc[1:3]` excludes the endpoint, while `.iloc[1:3]` includes it",
+      "Both return identical rows because integer labels always align with integer positions",
+      "`.iloc[1:3]` raises a KeyError when the index is integer-based"
+    ],
+    "answer": "`.loc[1:3]` includes the row with label 3, while `.iloc[1:3]` excludes position 3 and returns rows at positions 1 and 2 only",
+    "explanation": ".loc is label-based with an inclusive stop label, while .iloc is position-based and follows Python's exclusive-end slicing convention. This asymmetry is a classic source of off-by-one-row bugs.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 72,
+    "question": "What condition triggers pandas' SettingWithCopyWarning?",
+    "options": [
+      "Assigning to a target selected via chained indexing (e.g., `df[mask]['col'] = x`), where pandas cannot determine whether the target is a view or a copy",
+      "Using .loc for assignment instead of .iloc",
+      "Calling apply() on a DataFrame with mixed dtypes",
+      "Modifying a DataFrame that was loaded via read_csv"
+    ],
+    "answer": "Assigning to a target selected via chained indexing (e.g., `df[mask]['col'] = x`), where pandas cannot determine whether the target is a view or a copy",
+    "explanation": "Chained indexing may operate on a temporary copy, so the assignment might not affect the original DataFrame. The warning signals this ambiguity; the fix is a single .loc assignment combining row and column selection.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 73,
+    "question": "By default, how does `groupby()` handle rows whose group key is NaN?",
+    "options": [
+      "Rows with NaN keys are silently excluded from all groups (dropna=True)",
+      "NaN keys form their own group labeled NaN",
+      "groupby() raises a ValueError on NaN keys",
+      "NaN keys are coerced to 0 and grouped together"
+    ],
+    "answer": "Rows with NaN keys are silently excluded from all groups (dropna=True)",
+    "explanation": "Since pandas 0.23, groupby's default dropna=True omits NaN group keys from the result. Passing dropna=False creates an explicit NaN group.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 74,
+    "question": "Which statement correctly distinguishes `groupby().transform()` from `groupby().agg()`?",
+    "options": [
+      "transform returns an object with the same index and length as the original DataFrame, suitable for direct column assignment",
+      "transform returns one row per group like agg, but with computed columns",
+      "transform cannot be applied to multiple columns at once",
+      "agg must always return a scalar, while transform must return a Series per column"
+    ],
+    "answer": "transform returns an object with the same index and length as the original DataFrame, suitable for direct column assignment",
+    "explanation": "transform broadcasts group-level results back to each original row (same shape/index), enabling operations like `df['z'] = df.groupby('k')['v'].transform('mean')`. agg collapses to one row per group.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 75,
+    "question": "What happens when `pd.merge(df1, df2, on='key', validate='one_to_one')` encounters duplicate values of 'key' in either frame?",
+    "options": [
+      "A MergeError is raised before the merge is computed",
+      "Duplicate rows are dropped automatically",
+      "The merge silently proceeds with many-to-many semantics",
+      "A warning is issued and only the first occurrence of each key is used"
+    ],
+    "answer": "A MergeError is raised before the merge is computed",
+    "explanation": "The validate parameter checks key uniqueness before performing the join, raising MergeError if the check fails. It is a defensive contract for merge cardinality, not a deduplication mechanism.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 76,
+    "question": "What is the consequence of `pd.concat([df1, df2])` when both frames share overlapping index labels and `ignore_index` is not set?",
+    "options": [
+      "The result can contain duplicate index labels, causing ambiguous .loc selections downstream",
+      "concat automatically deduplicates the index",
+      "concat raises an InvalidIndexError",
+      "Overlapping rows are merged by index"
+    ],
+    "answer": "The result can contain duplicate index labels, causing ambiguous .loc selections downstream",
+    "explanation": "concat performs no index-uniqueness checking by default, so duplicate labels persist. Set ignore_index=True to reset, or verify_integrity=True to raise an error on duplicates.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 77,
+    "question": "Given a DataFrame containing duplicate (index, columns) combinations, which behavior is correct?",
+    "options": [
+      "`df.pivot()` raises ValueError, while `df.pivot_table()` aggregates the duplicates using aggfunc (default 'mean')",
+      "Both raise ValueError",
+      "pivot_table() raises ValueError, while pivot() aggregates with mean",
+      "Both aggregate automatically using the mean"
+    ],
+    "answer": "`df.pivot()` raises ValueError, while `df.pivot_table()` aggregates the duplicates using aggfunc (default 'mean')",
+    "explanation": "pivot() is a pure reshaping operation and cannot resolve duplicate entries, raising 'Index contains duplicate entries'. pivot_table() is a groupby-based aggregation that collapses duplicates via aggfunc.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 78,
+    "question": "What is the fundamental difference between `pd.cut()` and `pd.qcut()`?",
+    "options": [
+      "cut bins by equal-width value ranges; qcut bins by quantiles so each bin receives approximately equal frequency",
+      "cut is restricted to continuous data; qcut is restricted to categorical data",
+      "cut returns integer codes only; qcut returns Interval objects",
+      "cut assigns labels alphabetically; qcut assigns labels by frequency rank"
+    ],
+    "answer": "cut bins by equal-width value ranges; qcut bins by quantiles so each bin receives approximately equal frequency",
+    "explanation": "pd.cut divides the value range into equal-width intervals, which may yield unbalanced counts. pd.qcut uses sample quantiles to produce roughly equal-sized bins. Both return Categorical values backed by Intervals.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 79,
+    "question": "Which statement about `pd.merge_asof()` is correct?",
+    "options": [
+      "It joins on the nearest key value rather than exact equality, requires the join keys to be sorted, and defaults to direction='backward'",
+      "It performs an exact inner join restricted to datetime columns",
+      "It merges on the union of both indexes regardless of sort order",
+      "It requires sorted keys and joins only on exact matches"
+    ],
+    "answer": "It joins on the nearest key value rather than exact equality, requires the join keys to be sorted, and defaults to direction='backward'",
+    "explanation": "merge_asof is designed for time-series alignment: each left row is matched to the most recent (backward) right key at or before it, with 'forward' and 'nearest' as alternatives. Both key columns must be sorted.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 80,
+    "question": "By default, what column names does `pd.melt(df)` assign to the melted variable and value columns?",
+    "options": [
+      "'variable' and 'value'",
+      "'var' and 'val'",
+      "'key' and 'val'",
+      "'column' and 'value'"
+    ],
+    "answer": "'variable' and 'value'",
+    "explanation": "melt names its output columns 'variable' and 'value' unless overridden via the var_name and value_name parameters. Without id_vars specified, all columns are melted.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 81,
+    "question": "When calling `df['col'].map({'a': 1, 'b': 2})` on a column containing the value 'c', what happens to the 'c' element?",
+    "options": [
+      "It becomes NaN in the result",
+      "A KeyError is raised",
+      "The original value 'c' is retained",
+      "It is coerced to 0"
+    ],
+    "answer": "It becomes NaN in the result",
+    "explanation": "Series.map with a dict or Series performs a lookup substitution; keys with no matching entry yield NaN. To preserve unmatched values, chain .fillna() with the original column or apply a function.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 82,
+    "question": "Since pandas 2.1, what changed regarding `DataFrame.applymap()`?",
+    "options": [
+      "It was deprecated and renamed to DataFrame.map(), unifying element-wise application with Series.map",
+      "It was removed entirely with no replacement",
+      "It now operates column-wise instead of element-wise",
+      "It was renamed to DataFrame.apply()"
+    ],
+    "answer": "It was deprecated and renamed to DataFrame.map(), unifying element-wise application with Series.map",
+    "explanation": "pandas 2.1 introduced DataFrame.map as the element-wise method and deprecated applymap to resolve inconsistent naming. DataFrame.apply remains the row/column-wise (axis-based) method.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 83,
+    "question": "How does `pd.NA` differ from `np.nan` in equality comparisons?",
+    "options": [
+      "pd.NA propagates: `pd.NA == pd.NA` returns pd.NA, whereas `np.nan == np.nan` returns False",
+      "`pd.NA == pd.NA` returns True; `np.nan == np.nan` returns NaN",
+      "Both comparisons return True",
+      "Both comparisons raise a TypeError"
+    ],
+    "answer": "pd.NA propagates: `pd.NA == pd.NA` returns pd.NA, whereas `np.nan == np.nan` returns False",
+    "explanation": "pd.NA implements Kleene three-valued logic: comparisons involving NA propagate NA rather than returning a truth value. np.nan is IEEE-754, so it compares unequal to itself.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 84,
+    "question": "What distinguishes pandas' nullable 'Int64' dtype from NumPy's 'int64'?",
+    "options": [
+      "'Int64' is an extension dtype that can hold pd.NA, while NumPy int64 has no missing-value representation",
+      "Int64 stores values as floats internally to encode missingness",
+      "Int64 is faster because it uses 32-bit storage",
+      "Int64 coerces missing values to zero"
+    ],
+    "answer": "'Int64' is an extension dtype that can hold pd.NA, while NumPy int64 has no missing-value representation",
+    "explanation": "The capitalized 'Int64' extension dtype supports true integer semantics with NA values via pd.NA. NumPy int64 cannot represent missing data, which is why pandas historically cast integer columns containing NaN to float64.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 85,
+    "question": "By default, what does `df.stack()` do with NaN entries in the resulting long-form Series?",
+    "options": [
+      "It drops the NaN pairs from the result (dropna=True), producing a shorter Series",
+      "It keeps all NaN pairs in the result",
+      "It fills NaN with 0",
+      "It raises an error whenever any NaN is present"
+    ],
+    "answer": "It drops the NaN pairs from the result (dropna=True), producing a shorter Series",
+    "explanation": "Classic stack() defaults to dropna=True, removing column-to-row pairs that would be NaN. Setting dropna=False retains them; in pandas 2.1+, future_stack=True enforces the new behavior of always keeping NaN.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 86,
+    "question": "In `df['x'].rolling(window=5, min_periods=2).mean()`, what does `min_periods=2` control?",
+    "options": [
+      "The minimum number of non-NaN observations required in a window to produce a value; windows with fewer yield NaN",
+      "The number of leading rows of the result that are discarded",
+      "The minimum window width, truncating the series",
+      "The number of decimal places retained in the output"
+    ],
+    "answer": "The minimum number of non-NaN observations required in a window to produce a value; windows with fewer yield NaN",
+    "explanation": "min_periods lowers the threshold for computing a value in partially filled windows. By default it equals the window size, so the first window-size-1 outputs are NaN; setting it lower lets early windows and windows sparse with NaN still compute.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 87,
+    "question": "Which statement correctly describes `df.resample('D').mean()`?",
+    "options": [
+      "It requires a DatetimeIndex (or an 'on' column via a time-based Grouper) and groups rows into daily buckets, computing the mean of numeric columns per bucket",
+      "It selects one representative row per day",
+      "It interpolates missing days in the time series",
+      "It groups rows by day-of-week regardless of the index type"
+    ],
+    "answer": "It requires a DatetimeIndex (or an 'on' column via a time-based Grouper) and groups rows into daily buckets, computing the mean of numeric columns per bucket",
+    "explanation": "resample is time-frequency binning: it needs a DatetimeIndex, PeriodIndex, or an 'on'/'level' argument, then applies an aggregation per frequency bucket. Missing buckets can be filled afterward via .asfreq() or .ffill(), not by resample itself.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 88,
+    "question": "How do you reference a local Python variable inside a `df.query()` expression?",
+    "options": [
+      "Prefix it with @, e.g., `df.query('col > @threshold')`",
+      "Wrap it in backticks, e.g., `df.query('col > `threshold`')`",
+      "It must be interpolated into the query string via f-strings",
+      "It must be registered globally with pd.set_option"
+    ],
+    "answer": "Prefix it with @, e.g., `df.query('col > @threshold')`",
+    "explanation": "The @ sigil pulls variables from the calling scope's local and global namespaces. Backticks serve a different purpose: quoting column names containing spaces or special characters.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 89,
+    "question": "When `df['col'].explode()` is applied to a column containing list-like values, what happens to a row whose value is an empty list []?",
+    "options": [
+      "The row expands into a single row containing NaN in that column",
+      "The row is dropped from the result entirely",
+      "An error is raised",
+      "The empty list is retained unchanged"
+    ],
+    "answer": "The row expands into a single row containing NaN in that column",
+    "explanation": "explode flattens each list-like element into separate rows; an empty list has no elements, so the documented behavior is to emit one row with NaN. Scalar (non-list) values are kept as-is.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 90,
+    "question": "In a groupby context, what distinguishes `df.groupby('k').size()` from `df.groupby('k').count()`?",
+    "options": [
+      "size counts all rows per group including NaN values; count counts non-NaN values per column per group",
+      "size excludes NaN while count includes them",
+      "size returns a DataFrame; count returns a Series",
+      "They are always identical in output"
+    ],
+    "answer": "size counts all rows per group including NaN values; count counts non-NaN values per column per group",
+    "explanation": "size is a pure row count per group and ignores NaN entirely. count performs a non-NaN tally for every column, yielding one value per column per group.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 91,
+    "question": "What is the difference between `rank(method='dense')` and `rank(method='min')` for a series with tied values?",
+    "options": [
+      "dense assigns consecutive ranks with no gaps between tie groups; min assigns every tie the minimum rank, leaving gaps in subsequent ranks",
+      "dense ranks ties in order of appearance; min ranks ties alphabetically",
+      "dense and min are aliases for the same method",
+      "dense starts ranks at 0; min starts ranks at 1"
+    ],
+    "answer": "dense assigns consecutive ranks with no gaps between tie groups; min assigns every tie the minimum rank, leaving gaps in subsequent ranks",
+    "explanation": "For values [10, 10, 20], method='min' yields [1, 1, 3] while method='dense' yields [1, 1, 2]. Both give ties the same rank; they differ only in whether the next distinct value skips ranks.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 92,
+    "question": "With `pd.merge(df1, df2, how='outer', indicator=True)`, what does the resulting `_merge` column contain?",
+    "options": [
+      "Categorical values 'left_only', 'right_only', or 'both' indicating each row's provenance",
+      "The original row index from each source frame",
+      "A boolean True/False per row",
+      "A count of how many rows matched each key"
+    ],
+    "answer": "Categorical values 'left_only', 'right_only', or 'both' indicating each row's provenance",
+    "explanation": "indicator=True appends a categorical '_merge' column tagging whether each output row exists only in the left frame, only in the right frame, or in both. A custom name can be given via indicator='colname', which is useful for anti-join detection.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 93,
+    "question": "Why is `df.itertuples()` generally preferred over `df.iterrows()` for row iteration?",
+    "options": [
+      "itertuples yields namedtuples without constructing a Series per row, making it substantially faster",
+      "itertuples allows safe modification of the DataFrame during iteration",
+      "iterrows returns immutable objects and cannot be unpacked",
+      "itertuples preserves arbitrary nested dtypes that iterrows drops"
+    ],
+    "answer": "itertuples yields namedtuples without constructing a Series per row, making it substantially faster",
+    "explanation": "iterrows builds a Series for every row, which incurs Series construction overhead and can upcast dtypes. itertuples returns lightweight namedtuples (with index=True by default) and is typically several times faster.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 94,
+    "question": "What does `pd.read_csv(path, chunksize=1000)` return?",
+    "options": [
+      "A TextFileReader iterator that yields DataFrames of up to 1000 rows per chunk",
+      "A single DataFrame truncated to the first 1000 rows",
+      "An eagerly loaded list of 1000-row DataFrames",
+      "A generator yielding NumPy arrays per chunk"
+    ],
+    "answer": "A TextFileReader iterator that yields DataFrames of up to 1000 rows per chunk",
+    "explanation": "With chunksize, read_csv returns a lazy TextFileReader object; iterating over it produces DataFrames of at most chunksize rows. This enables out-of-core processing of files larger than memory.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 95,
+    "question": "What is the purpose of the `df.at[]` and `df.iat[]` accessors?",
+    "options": [
+      "Fast scalar access by label (at) or by integer position (iat); they support only single-value get and set",
+      "Vectorized access to entire columns or row slices",
+      "Thread-safe accessors for concurrent modification",
+      "Access restricted to MultiIndex DataFrames"
+    ],
+    "answer": "Fast scalar access by label (at) or by integer position (iat); they support only single-value get and set",
+    "explanation": "at and iat are optimized for retrieving or setting exactly one element, bypassing the generality of loc/iloc. Passing arrays or slices to them raises a ValueError.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 96,
+    "question": "How do `df.where(cond)` and `df.mask(cond)` differ?",
+    "options": [
+      "where keeps values where cond is True and replaces where cond is False; mask does the inverse, replacing values where cond is True",
+      "where replaces only NaN; mask replaces all values",
+      "where operates on the index; mask operates on columns",
+      "They are exact aliases with identical behavior"
+    ],
+    "answer": "where keeps values where cond is True and replaces where cond is False; mask does the inverse, replacing values where cond is True",
+    "explanation": "Both accept an `other` argument (defaulting to NaN) for the replaced values, but their condition semantics are mirrored. where(cond, x, axis) is also the pandas analogue of NumPy's conditional selection.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 97,
+    "question": "Under pandas' Copy-on-Write (CoW) mode, what is the effect of `sub = df[df['a'] > 0]; sub['b'] = 1`?",
+    "options": [
+      "The assignment is safe: sub is lazily copied upon modification, so the original df is never mutated",
+      "A SettingWithCopyWarning is raised and df is partially modified",
+      "sub becomes a true view sharing memory, so both DataFrames are mutated",
+      "CoW forbids this chained assignment at runtime with an exception"
+    ],
+    "answer": "The assignment is safe: sub is lazily copied upon modification, so the original df is never mutated",
+    "explanation": "CoW defers copying until the first write: filtering returns a lazy reference, and the modification triggers a copy of only the affected blocks. This eliminates the view-vs-copy ambiguity of chained assignment; CoW becomes the default in pandas 3.0.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 98,
+    "question": "When grouping on a categorical column with `observed=True`, what changes in the groupby result?",
+    "options": [
+      "Only categories actually present in the data appear as group keys, avoiding empty groups and cross-product explosion with multiple categoricals",
+      "All categories defined in the CategoricalDtype appear, including empty groups",
+      "The categorical column is coerced to object dtype before grouping",
+      "Group keys are re-sorted lexically by their observed string values"
+    ],
+    "answer": "Only categories actually present in the data appear as group keys, avoiding empty groups and cross-product explosion with multiple categoricals",
+    "explanation": "With observed=False (the historical default), groupby materializes every defined category, producing empty groups and the cartesian product of categories when grouping on multiple categoricals. observed=True restricts keys to those observed in the data.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 99,
+    "question": "Why is `pd.get_dummies(df, drop_first=True)` recommended when encoding features for linear regression?",
+    "options": [
+      "It removes one level per categorical variable to avoid perfect multicollinearity (the dummy variable trap)",
+      "It reduces memory usage by eliminating redundant columns in every scenario",
+      "It drops rows containing unseen categories",
+      "It produces ordinal integer encodings instead of one-hot columns"
+    ],
+    "answer": "It removes one level per categorical variable to avoid perfect multicollinearity (the dummy variable trap)",
+    "explanation": "Keeping all k dummy columns creates a linearly dependent design matrix because the k columns sum to the intercept, causing singular matrices in OLS. Dropping one level makes the reference level implicit.",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": 100,
+    "question": "What does `df.reindex(['a', 'b', 'z'])` do when 'z' is not present in the current index?",
+    "options": [
+      "It conforms the DataFrame to the new index, adding a row labeled 'z' filled with NaN",
+      "It raises a KeyError for the missing label",
+      "It silently ignores 'z' and returns only existing labels",
+      "It interpolates values for 'z' from neighboring rows by default"
+    ],
+    "answer": "It conforms the DataFrame to the new index, adding a row labeled 'z' filled with NaN",
+    "explanation": "reindex realigns data to a specified index, inserting NaN wherever a requested label is missing; a default can be supplied via fill_value. Unlike selection with .loc, reindex never raises on absent labels — missing entries are materialized.",
+    "difficulty": "Advanced"
+  }
+]
